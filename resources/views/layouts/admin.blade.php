@@ -10,15 +10,10 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/utility.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/template/css/style.css') }}">
 
-    <style>
-        .centermodals{
-            height: 100vh;
-            display: flex;
-            align-items: center;
-        }
-    </style>
 </head>
 <body>
     <div id="app">
@@ -73,7 +68,7 @@
             </div>
         </nav> --}}
 
-        <main class="centermodals">
+        <main>
             @yield('content')
         </main>
     </div>
