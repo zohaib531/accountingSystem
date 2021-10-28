@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.loginLayout')
 
 @section('content')
 <div class="mainLoginPage  row m-0">
