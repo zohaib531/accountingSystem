@@ -13,6 +13,7 @@
     <!-- Chartist -->
     <link rel="stylesheet" href="{{ asset('assets/template/plugins/chartist/css/chartist.min.css ') }}">
     <link rel="stylesheet" href="{{ asset('assets/template/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/template/plugins/sweetalert/sweetalert.css') }}">
     <!-- Custom Stylesheet -->
     <link href="{{ asset('assets/template/css/style.css') }}" rel="stylesheet">
 
@@ -21,7 +22,7 @@
 </head>
 
 <body>
-
+<input type="hidden" value="{{ csrf_token() }}" id="laravelToken">
     <!--*******************
         Preloader start
     ********************-->
@@ -51,10 +52,7 @@
                     <b class="logo-abbr">
                         <h4 class="text-white">IS</h4>
                     </b>
-                    {{-- <b class="logo-abbr"><img src="{{ asset('assets/template/images/logo.png') }}" alt=""> </b> --}}
-                    {{-- <span class="logo-compact"><img src="{{ asset('assets/template/images/logo-compact.png') }}" alt=""></span> --}}
                     <span class="brand-title">
-                        {{-- <img src="{{ asset('assets/template/images/logo-text.png') }}" alt=""> --}}
                         <h4 class="text-white">Invertory System</h4>
                     </span>
                 </a>
@@ -203,47 +201,10 @@
     <script src="{{ asset('assets/template/js/settings.js') }}"></script>
     <script src="{{ asset('assets/template/js/gleek.js') }}"></script>
     <script src="{{ asset('assets/template/js/styleSwitcher.js') }}"></script>
-
-    <!-- Chartjs -->
-    <script src="{{ asset('assets/template/plugins/chart.js/Chart.bundle.min.js') }}"></script>
-    <!-- Circle progress -->
-    <script src="{{ asset('assets/template/plugins/circle-progress/circle-progress.min.js') }}"></script>
-    <!-- Datamap -->
-    <script src="{{ asset('assets/template/plugins/d3v3/index.js') }}"></script>
-    <script src="{{ asset('assets/template/plugins/topojson/topojson.min.js') }}"></script>
-    <script src="{{ asset('assets/template/plugins/datamaps/datamaps.world.min.js') }}"></script>
-    <!-- Morrisjs -->
-    <script src="{{ asset('assets/template/plugins/raphael/raphael.min.js') }}"></script>
-    <script src="{{ asset('assets/template/plugins/morris/morris.min.js') }}"></script>
-    <!-- Pignose Calender -->
-    <script src="{{ asset('assets/template/plugins/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('assets/template/plugins/pg-calendar/js/pignose.calendar.min.js') }}"></script>
-    <!-- ChartistJS -->
-    <script src="{{ asset('assets/template/plugins/chartist/js/chartist.min.js') }}"></script>
-    <script src="{{ asset('assets/template/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js') }}"></script>
-
-
-
     <script src="{{ asset('assets/template/js/dashboard/dashboard-1.js') }}"></script>
-
+    <script src="{{ asset('assets/template/plugins/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{asset('assets/js/custom.js')}}"></script>
     @yield('script')
-
-    <script>
-        function delete_resource(target_url,return_url){
-            $.ajax({
-                type: 'post',
-                url: target_url,
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    _method:"delete"
-                },
-                success: function(data) {
-                        window.location = return_url;
-                }
-            });
-        }
-    </script>
-
 </body>
 
 </html>

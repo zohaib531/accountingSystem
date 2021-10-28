@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <h4 class="card-title text-center">Update Category</h4>
                     <div class="form-validation">
-                        <form class="form-valide" id="edit-form">
+                        <form class="form-valide" id="update-form">
                             @csrf
                             @method('put')
                             <div class="form-group row">
@@ -30,7 +30,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-8 ml-auto">
-                                    <button type="button" class="btn btn-primary" onclick="edit_resource({{ $category->id }});">Update</button>
+                                    <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('categories.update',$category->id) }}','{{route('categories.index')}}','post','','update-form');">Update</button>
                                 </div>
                             </div>
                         </form>
@@ -45,40 +45,7 @@
 @endsection
 
 @section('script')
-<script src="{{asset('assets/template/plugins/validation/jquery.validate.min.js')}}"></script>
-<script src="{{asset('assets/template/plugins/validation/jquery.validate-init.js')}}"></script>
-
-
-<script>
-    function edit_resource(id) {
-        var myform = document.getElementById("edit-form");
-        var fd = new FormData(myform);
-        fd.append("_token", "{{ csrf_token() }}");
-        var c_url = '{{ route("categories.update", ":id") }}';
-        c_url = c_url.replace(':id',id);
-        $.ajax({
-            url: c_url,
-            type: "post",
-            processData: false,
-            contentType: false,
-            data: fd,
-            success: function(data) {
-                if (data.success == true) {
-                        window.location = "{{ route('categories.index') }}";
-                } else {
-                        console.log('chal rha');
-                    if (data.hasOwnProperty("message")) {
-                        var wrapper = document.createElement("div");
-                        var err = "";
-                        $.each(data.message, function(i, e) {
-                            err += "<p>" + e + "</p>";
-                        });
-                        wrapper.innerHTML = err;
-                    }
-                }
-            },
-        });
-    }
-</script>
+    <script src="{{asset('assets/template/plugins/validation/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('assets/template/plugins/validation/jquery.validate-init.js')}}"></script>
 
 @endsection

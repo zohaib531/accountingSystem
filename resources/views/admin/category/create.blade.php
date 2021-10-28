@@ -28,7 +28,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-8 ml-auto">
-                                    <button type="button" class="btn btn-primary" onclick="create_resource();">Submit</button>
+                                    <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('categories.store') }}','{{route('categories.index')}}','post','','create-form');">Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -43,38 +43,7 @@
 @endsection
 
 @section('script')
-<script src="{{asset('assets/template/plugins/validation/jquery.validate.min.js')}}"></script>
-<script src="{{asset('assets/template/plugins/validation/jquery.validate-init.js')}}"></script>
+    <script src="{{asset('assets/template/plugins/validation/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('assets/template/plugins/validation/jquery.validate-init.js')}}"></script>
 
-<script>
-
-        function create_resource(){
-            var myform = document.getElementById("create-form");
-            var fd = new FormData(myform);
-            fd.append("_token", "{{ csrf_token() }}");
-            $.ajax({
-                url: "{{ route('categories.store') }}",
-                type: "post",
-                processData: false,
-                contentType: false,
-                data: fd,
-                success: function (data) {
-                    console.log(data);
-                    if (data.success == true) {
-                            // window.location='{{ route("categories.index") }}';
-                    } else {
-                        // if (data.hasOwnProperty("message")) {
-                        //     var wrapper = document.createElement("div");
-                        //     var err = "";
-                        //     $.each(data.message, function (i, e) {
-                        //         err += "<p>" + e + "</p>";
-                        //     });
-                        //     wrapper.innerHTML = err;
-                        // }
-                    }
-                },
-            });
-        }
-
-</script>
 @endsection

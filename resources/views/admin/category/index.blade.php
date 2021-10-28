@@ -41,12 +41,8 @@
                                     <td>{{$category->title}}</td>
                                     <td>
                                         {{-- <button class="btn btn-info" >Update</button> --}}
-
-
-                                        <a href="{{url('admin/categories/'.$category->id.'/edit')}}">
-                                            <button class="btn btn-success text-white">Update</button>
-                                        </a>
-                                        <button class="btn btn-danger" onclick="delete_resource('{{ route('categories.destroy',$category->id) }}','{{ route('categories.index') }}')">Delete</button>
+                                        <a href="{{url('admin/categories/'.$category->id.'/edit')}}"><button class="btn btn-success text-white">Update</button></a>
+                                        <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('categories.destroy',$category->id) }}','{{route('categories.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
                                     </td>
                                 </tr>
                                 @endforeach
