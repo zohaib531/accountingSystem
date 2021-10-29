@@ -48,19 +48,7 @@ class CategoryController extends Controller
 
         $category = new Category();
         $category->title = $request->title;
-        $category->save();
-        $updateCat = Category::findOrFail($category->id);
-        if($category->id <=9){
-            $updateCat->cat_id =  '0'.$category->id;
-        }elseif($category->id ==10){
-            $updateCat->cat_id =  number_format($category->id);
-
-        }else{
-            $updateCat->cat_id =  number_format($category->id)+1;
-
-        }
-        $updateCat->save();
-        if($updateCat->save()){
+        if($category->save()){
             return response()->json(['success' => true, 'message' =>'Category has been added successfully']);
         }
     }
