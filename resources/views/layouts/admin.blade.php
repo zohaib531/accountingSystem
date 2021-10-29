@@ -142,11 +142,20 @@
                     </li>
                     <li>
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-user menu-icon"></i><span class="nav-text">Categories</span>
+                            <i class="icon-list menu-icon"></i><span class="nav-text">Categories</span>
                         </a>
                         <ul aria-expanded="false">
                             <li><a href="{{route('categories.index')}}">All categories</a></li>
                             <li><a href="{{route('categories.create')}}">Create category</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-vector menu-icon"></i><span class="nav-text">Sub-Categories</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('sub-categories.index')}}">Sub categories</a></li>
+                            <li><a href="{{route('sub-categories.create')}}">Create sub category</a></li>
                         </ul>
                     </li>
 

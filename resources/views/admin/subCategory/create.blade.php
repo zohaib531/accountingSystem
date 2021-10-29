@@ -5,7 +5,7 @@
     <div class="col p-md-0">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="{{route('categories.create')}}">Create category</a></li>
+            <li class="breadcrumb-item active"><a href="{{route('sub-categories.create')}}">Create sub category</a></li>
         </ol>
     </div>
 </div>
@@ -16,9 +16,22 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title text-center">Create Category</h4>
+                    <h4 class="card-title text-center">Create Sub Category</h4>
                     <div class="form-validation">
                         <form class="form-valide" id="create-form">
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label" for="val-skill">Best Skill <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-6">
+                                    <select class="form-control" id="val-skill" name="val-skill">
+                                        <option value="" disabled selected>Please select</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{$category->title}}">{{$category->title}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="form-group row">
                                 <label class="col-lg-4 col-form-label text-right" for="val-category">Category title<span class="text-danger">*</span>
                                 </label>
@@ -28,7 +41,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-8 ml-auto">
-                                    <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('categories.store') }}','{{route('categories.index')}}','post','','create-form');">Submit</button>
+                                    <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('sub-categories.store') }}','{{route('sub-categories.index')}}','post','','create-form');">Submit</button>
                                 </div>
                             </div>
                         </form>

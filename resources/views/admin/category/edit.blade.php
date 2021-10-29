@@ -5,7 +5,7 @@
     <div class="col p-md-0">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="{{route('categories.create')}}">Create user</a></li>
+            <li class="breadcrumb-item active"><a href="{{route('categories.create')}}">Update Category</a></li>
         </ol>
     </div>
 </div>

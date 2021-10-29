@@ -12,7 +12,7 @@
     <div class="col p-md-0">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="{{route('categories.index')}}">All categories</a></li>
+            <li class="breadcrumb-item active"><a href="{{route('sub-categories.index')}}">All sub category</a></li>
         </ol>
     </div>
 </div>
@@ -23,7 +23,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title text-center">All Categories</h4>
+                    <h4 class="card-title text-center">All Sub Category</h4>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered zero-configuration">
                             <thead>
@@ -34,15 +34,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($categories as $key=> $category)
+                                @foreach ($subCategories as $key=> $sub_category)
                                 <tr>
 
-                                    <td>{{$category->id}}</td>
-                                    <td>{{$category->title}}</td>
+                                    <td>{{$sub_category->id}}</td>
+                                    <td>{{$sub_category->title}}</td>
                                     <td>
                                         {{-- <button class="btn btn-info" >Update</button> --}}
-                                        <a href="{{url('admin/categories/'.$category->id.'/edit')}}"><button class="btn btn-success text-white">Update</button></a>
-                                        <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('categories.destroy',$category->id) }}','{{route('categories.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
+                                        <a href="{{url('admin/sub-categories/'.$sub_category->id.'/edit')}}"><button class="btn btn-success text-white">Update</button></a>
+                                        <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('sub_category.destroy',$sub_category->id) }}','{{route('sub_category.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
                                     </td>
                                 </tr>
                                 @endforeach

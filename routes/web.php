@@ -39,5 +39,6 @@ Route::middleware(['auth','admincheck'])->prefix('admin')->group(function(){
     Route::view('/dashboard','admin.index')->name('dashboard');
     Route::resource('users', UserController::class);
     Route::resource('categories', CategoryController::class);
+    Route::resource('sub-categories', SubCategoryController::class);
 });
 
