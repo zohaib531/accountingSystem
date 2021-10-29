@@ -18,7 +18,7 @@ class AdminCheck
     {
         if(Auth::check())
         {
-            if(Auth::user()->role=='admin')
+            if(Auth::user()->hasRole('superadmin') || Auth::user()->hasRole('user'))
             {
                 return $next($request);
             }
