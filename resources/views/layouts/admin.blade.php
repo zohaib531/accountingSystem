@@ -21,7 +21,7 @@
 
 </head>
 
-<body>
+<body oncontextmenu="return false">
 <input type="hidden" value="{{ csrf_token() }}" id="laravelToken">
     <!--*******************
         Preloader start
@@ -74,7 +74,7 @@
                     </div>
                 </div>
                 <div class="header-left">
-                    <div class="input-group icons">
+                    {{-- <div class="input-group icons">
                         <div class="input-group-prepend">
                             <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
                         </div>
@@ -84,7 +84,7 @@
                                 <input type="text" class="form-control" placeholder="Search">
                             </form>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="header-right">
                     <ul class="clearfix">
@@ -213,7 +213,11 @@
     <script src="{{ asset('assets/template/js/dashboard/dashboard-1.js') }}"></script>
     <script src="{{ asset('assets/template/plugins/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{asset('assets/js/custom.js')}}"></script>
+    <script src="{{asset('assets/js/protectCode.js')}}"></script>
     @yield('script')
+
+
+
 </body>
 
 </html>

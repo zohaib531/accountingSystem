@@ -42,7 +42,7 @@
                                     <td>
                                         {{-- <button class="btn btn-info" >Update</button> --}}
                                         <a href="{{url('admin/sub-categories/'.$sub_category->id.'/edit')}}"><button class="btn btn-success text-white">Update</button></a>
-                                        <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('sub_category.destroy',$sub_category->id) }}','{{route('sub_category.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
+                                        <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('sub-categories.destroy',$sub_category->id) }}','{{route('sub-categories.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
                                     </td>
                                 </tr>
                                 @endforeach

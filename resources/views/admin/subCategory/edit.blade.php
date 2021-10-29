@@ -25,12 +25,12 @@
                                 <label class="col-lg-4 col-form-label text-right" for="val-category">Category title<span class="text-danger">*</span>
                                 </label>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="val-category" name="title" value="{{ $category->title }}" placeholder="Enter a category title..">
+                                    <input type="text" class="form-control" id="val-category" name="title" value="{{ $categories->title }}" placeholder="Enter a category title..">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-8 ml-auto">
-                                    <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('sub_categories.update',$category->id) }}','{{route('sub_categories.index')}}','post','','update-form');">Update</button>
+                                    <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('sub_categories.update',$categories->id) }}','{{route('sub_categories.index')}}','post','','update-form');">Update</button>
                                 </div>
                             </div>
                         </form>
