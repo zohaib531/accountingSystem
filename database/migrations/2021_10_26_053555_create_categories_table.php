@@ -19,6 +19,8 @@ class CreateCategoriesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+
+        DB::statement('ALTER TABLE categories MODIFY id INT(2) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT');
     }
 
     /**
