@@ -29,7 +29,7 @@
                         <table class="table table-striped table-bordered zero-configuration">
                             <thead>
                                 <tr>
-                                    <th>Sr</th>
+                                    <th>#</th>
                                     <th>Title</th>
                                     <th class="text-right w-25">Action</th>
                                 </tr>
@@ -38,11 +38,11 @@
                                 @foreach ($categories as $key=> $category)
                                 <tr>
 
-                                    <td>{{$category->id}}</td>
+                                    <td>{{++$key}}</td>
                                     <td>{{$category->title}}</td>
                                     <td class="text-right">
                                         {{-- <button class="btn btn-info" >Update</button> --}}
-                                        <a href="{{route('categories.edit',$category->id)}}"><button class="btn btn-success text-white">Update</button></a>
+                                        <a href="{{route('categories.edit',$category->id)}}"><button class="btn btn-info text-white">Update</button></a>
                                         <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('categories.destroy',$category->id) }}','{{route('categories.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
                                     </td>
                                 </tr>

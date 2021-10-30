@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','All users')
+@section('title','Product List')
 
 @section('style')
     <link href="{{asset('assets/template/plugins/tables/css/datatable/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
@@ -13,7 +13,7 @@
     <div class="col p-md-0">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="{{route('users.index')}}">All users</a></li>
+            <li class="breadcrumb-item active"><a href="{{route('categories.index')}}">All categories</a></li>
         </ol>
     </div>
 </div>
@@ -24,30 +24,35 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title text-center">All users</h4>
+                    <h4 class="card-title text-center">All Categories</h4>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered zero-configuration">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th class="text-right">Action</th>
+                                    <th>Title</th>
+                                    <th class="text-right w-25">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $key=> $user)
+                                {{-- @foreach ($categories as $key=> $category)
                                 <tr>
                                     <td>{{++$key}}</td>
-                                    <td>{{$user->name}}</td>
-                                    <td>{{$user->email}}</td>
+                                    <td>{{$category->title}}</td>
                                     <td class="text-right">
-                                        {{-- <a href="{{route('users.edit',$user->id)}}"><button class="btn btn-info text-white">Update</button></a> --}}
-                                        <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('users.destroy',$user->id) }}','{{route('users.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
+                                        <a href="{{route('categories.edit',$category->id)}}"><button class="btn btn-info text-white">Update</button></a>
+                                        <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('categories.destroy',$category->id) }}','{{route('categories.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
                                     </td>
                                 </tr>
-                                @endforeach
-
+                                @endforeach --}}
+                                <tr>
+                                    <td>1</td>
+                                    <td>Some title</td>
+                                    <td class="text-right">
+                                        <a href="#"><button class="btn btn-info text-white">Update</button></a>
+                                        <button class="btn btn-danger">Delete</button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

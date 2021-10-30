@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Validator;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -23,7 +24,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.usermanagement.users.index');
+        $users = User::all();
+        return view('admin.usermanagement.users.index',compact('users'));
     }
 
     /**
@@ -44,7 +46,24 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validations = Validator::make($request->all(),[
+            'username'=>'required',
+            'email'=>'required',
+            'password'=>'required | min:8'
+        ]);
+
+        if($validations->fails())
+        {
+            return response()->json(['success' => false, 'message' => $validations->errors()]);
+        }
+
+        $user = new User();
+        $user->name = $request->username;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        if($user->save()){
+            return response()->json(['success' => true, 'message' =>'User has been added successfully']);
+        }
     }
 
     /**
@@ -66,7 +85,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        // $user = User::where('id',$id)->first();
+        // return view('admin.usermanagement.users.edit',compact('user'));
     }
 
     /**
@@ -78,7 +98,24 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // $validations = Validator::make($request->all(),[
+        //     'username'=>'required',
+        //     'email'=>'required',
+        //     'password'=>'required | min:8'
+        // ]);
+
+        // if($validations->fails())
+        // {
+        //     return response()->json(['success' => false, 'message' => $validations->errors()]);
+        // }
+
+        // $user = User::find($id);
+        // $user->name = $request->username;
+        // $user->email = $request->email;
+        // $user->password = $request->password;
+        // if($user->save()){
+        //     return response()->json(['success' => true, 'message' =>'User has been updated successfully']);
+        // }
     }
 
     /**
@@ -89,6 +126,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(User::where('id',$id)->delete()){
+            return response()->json(['success' => true, 'message' =>'User has been deleted successfully']);
+        }
     }
 }

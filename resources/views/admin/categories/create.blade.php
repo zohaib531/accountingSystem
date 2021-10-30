@@ -29,7 +29,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-8 ml-auto">
-                                    <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('categories.store') }}','{{route('categories.index')}}','post','','create-form');">Submit</button>
+                                    <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('categories.store') }}','{{route('categories.index')}}','post','','create-form');">Save</button>
                                 </div>
                             </div>
                         </form>
@@ -39,6 +39,9 @@
         </div>
     </div>
 </div>
+
+
+
 <!-- #/ container -->
 
 @endsection
