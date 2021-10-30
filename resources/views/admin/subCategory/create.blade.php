@@ -33,10 +33,10 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-lg-4 col-form-label text-right" for="val-title">Category title<span class="text-danger">*</span>
+                                <label class="col-lg-4 col-form-label text-right" for="val-title">Sub category title<span class="text-danger">*</span>
                                 </label>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="val-title" name="title" placeholder="Enter a category title..">
+                                    <input type="text" class="form-control" id="val-title" name="title" placeholder="Enter sub category..">
                                 </div>
                             </div>
                             <div class="form-group row">

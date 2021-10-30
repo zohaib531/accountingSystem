@@ -5,7 +5,7 @@
     <div class="col p-md-0">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="#">Update sub category</a></li>
+            <li class="breadcrumb-item active"><a href="{{route('sub-categories.create')}}">Edit sub category</a></li>
         </ol>
     </div>
 </div>
@@ -22,29 +22,15 @@
                             @csrf
                             @method('put')
                             <div class="form-group row">
-                                <label class="col-lg-4 col-form-label text-right" for="val-category">Select Category <span class="text-danger">*</span>
+                                <label class="col-lg-4 col-form-label text-right" for="val-category">Category title<span class="text-danger">*</span>
                                 </label>
                                 <div class="col-lg-6">
-                                    <select class="form-control" id="val-category" name="category_id">
-                                        <option value="" disabled>Please select</option>
-                                        @foreach ($categories as $cat)
-
-                                            <option value="{{$cat->id}}" {{$category->id==$cat->id?'selected':''}}>{{$cat->title}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="col-lg-4 col-form-label text-right" for="val-title">Sub category title<span class="text-danger">*</span>
-                                </label>
-                                <div class="col-lg-6">
-                                    <input type="text" class="form-control" value="{{$category->title}}" id="val-title" name="title" placeholder="Enter sub category..">
+                                    <input type="text" class="form-control" id="val-category" name="title" value="{{ $category->title }}" placeholder="Enter a category title..">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-8 ml-auto">
-                                    <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('sub-categories.update',$category->id) }}','{{route('sub-categories.index')}}','post','','update-form');">Update</button>
+                                    <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('sub_categories.update',$category->id) }}','{{route('sub-categories.index')}}','post','','update-form');">Update</button>
                                 </div>
                             </div>
                         </form>

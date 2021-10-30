@@ -30,7 +30,7 @@
                                 <tr>
                                     <th>Sr</th>
                                     <th>Title</th>
-                                    <th>Action</th>
+                                    <th class="text-right w-25">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,7 +39,7 @@
 
                                     <td>{{$sub_category->id}}</td>
                                     <td>{{$sub_category->title}}</td>
-                                    <td>
+                                    <td class="text-right">
                                         {{-- <button class="btn btn-info" >Update</button> --}}
                                         <a href="{{url('admin/sub-categories/'.$sub_category->id.'/edit')}}"><button class="btn btn-success text-white">Update</button></a>
                                         <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('sub-categories.destroy',$sub_category->id) }}','{{route('sub-categories.index')}}','delete','Are you sure you want to delete?','');">Delete</button>

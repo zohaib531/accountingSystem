@@ -78,8 +78,9 @@ class SubCategoryController extends Controller
      */
     public function edit($id)
     {
-        // $category = Category::where('id',$id)->first();
-        // return view('admin.subCategory.edit',compact('category'));
+        $categories = Category::all();
+        $category = SubCategory::where('id',$id)->first();
+        return view('admin.subCategory.edit',compact('categories','category'));
     }
 
     /**
@@ -91,7 +92,22 @@ class SubCategoryController extends Controller
      */
     public function update(Request $request, SubCategory $subCategory)
     {
-        //
+        $validations = Validator::make($request->all(),[
+            'title'=>'required || unique:categories',
+            'category_id'=>'required'
+        ]);
+
+        if($validations->fails())
+        {
+            return response()->json(['success' => false, 'message' => $validations->errors()]);
+        }
+        
+        $subCategory->title = $request->title;
+        $subCategory->category_id = $request->category_id;
+        if($subCategory->save()){
+
+            return response()->json(['success' => true, 'message' =>'Sub category has been updated successfully']);
+        }
     }
 
     /**
@@ -100,9 +116,9 @@ class SubCategoryController extends Controller
      * @param  \App\SubCategory  $subCategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SubCategory $subCategory)
+    public function destroy($subCategory)
     {
-        if(SubCategory::where('id',$id)->delete()){
+        if(SubCategory::where('id',$subCategory)->delete()){
             return response()->json(['success' => true, 'message' =>'Sub category has been deleted successfully']);
         }
     }
