@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('title','Category List')
 
 @section('style')
     <link href="{{asset('assets/template/plugins/tables/css/datatable/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
