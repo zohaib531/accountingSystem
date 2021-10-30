@@ -53,7 +53,7 @@
                         <h4 class="text-white">IS</h4>
                     </b>
                     <span class="brand-title">
-                        <h4 class="text-white">Invertory System</h4>
+                        <h4 class="text-white">Inventory System</h4>
                     </span>
                 </a>
             </div>
