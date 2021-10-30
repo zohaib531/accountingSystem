@@ -20,23 +20,23 @@
                     <div class="form-validation">
                         <form class="form-valide" id="create-form">
                             <div class="form-group row">
-                                <label class="col-lg-4 col-form-label" for="val-skill">Best Skill <span class="text-danger">*</span>
+                                <label class="col-lg-4 col-form-label text-right" for="val-category">Select Category <span class="text-danger">*</span>
                                 </label>
                                 <div class="col-lg-6">
-                                    <select class="form-control" id="val-skill" name="val-skill">
+                                    <select class="form-control" id="val-category" name="category_id">
                                         <option value="" disabled selected>Please select</option>
                                         @foreach ($categories as $category)
-                                            <option value="{{$category->title}}">{{$category->title}}</option>
+                                            <option value="{{str_pad($category->code, 2, '0', STR_PAD_LEFT)}}">{{$category->title}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-lg-4 col-form-label text-right" for="val-category">Category title<span class="text-danger">*</span>
+                                <label class="col-lg-4 col-form-label text-right" for="val-title">Category title<span class="text-danger">*</span>
                                 </label>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="val-category" name="title" placeholder="Enter a category title..">
+                                    <input type="text" class="form-control" id="val-title" name="title" placeholder="Enter a category title..">
                                 </div>
                             </div>
                             <div class="form-group row">

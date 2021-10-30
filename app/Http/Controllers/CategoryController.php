@@ -49,6 +49,8 @@ class CategoryController extends Controller
         $category = new Category();
         $category->title = $request->title;
         if($category->save()){
+            $category->code =  str_pad($category->id, 2, '0', STR_PAD_LEFT);
+            $category->save();
             return response()->json(['success' => true, 'message' =>'Category has been added successfully']);
         }
     }

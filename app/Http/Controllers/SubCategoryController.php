@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\SubCategory;
 use Illuminate\Http\Request;
+use Validator;
 
 class SubCategoryController extends Controller
 {
@@ -39,7 +40,8 @@ class SubCategoryController extends Controller
     public function store(Request $request)
     {
         $validations = Validator::make($request->all(),[
-            'title'=>'required || unique:categories'
+            'title'=>'required || unique:categories',
+            'category_id'=>'required'
         ]);
 
         if($validations->fails())
@@ -49,7 +51,10 @@ class SubCategoryController extends Controller
 
         $subCategories = new SubCategory();
         $subCategories->title = $request->title;
+        $subCategories->category_id = str_pad($request->category_id, 2, '0', STR_PAD_LEFT);
         if($subCategories->save()){
+            $subCategories->code =  str_pad($subCategories->id, 2, '0', STR_PAD_LEFT);
+            $subCategories->save();
             return response()->json(['success' => true, 'message' =>'Sub category has been added successfully']);
         }
     }
@@ -71,9 +76,10 @@ class SubCategoryController extends Controller
      * @param  \App\SubCategory  $subCategory
      * @return \Illuminate\Http\Response
      */
-    public function edit(SubCategory $subCategory)
+    public function edit($id)
     {
-        //
+        // $category = Category::where('id',$id)->first();
+        // return view('admin.subCategory.edit',compact('category'));
     }
 
     /**
