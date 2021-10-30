@@ -41,14 +41,6 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
-        $role = Auth::user()->role;
-        switch ($role) {
-            case "admin":
-                return 'admin/users';
-                break;
-                default:
-                return '/user';
-                break;
-            }
+        return 'admin/dashboard';
     }
 }

@@ -16,13 +16,14 @@ class AdminCheck
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::check())
-        {
-            if(Auth::user()->hasRole('superadmin') || Auth::user()->hasRole('user'))
-            {
-                return $next($request);
-            }
-        }
-        return redirect()->route('login');
+        // if(Auth::check())
+        // {
+        //     if(Auth::user()->hasRole('superadmin') || Auth::user()->hasRole('user'))
+        //     {
+        //         return $next($request);
+        //     }
+        // }
+        // return redirect()->route('login');
+        return $next($request);
     }
 }

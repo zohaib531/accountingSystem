@@ -8,6 +8,14 @@ use Validator;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:view-categories', ['only' => ['index']]);
+        $this->middleware('permission:create-category', ['only' => ['create', 'store']]);
+        $this->middleware('permission:update-category', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:delete-category', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
