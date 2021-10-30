@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>{{ config('app.name', 'Inventory System') }}</title>
+    <title>@yield('title')</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/template/images/favicon') }}') }}">
     <!-- Pignose Calender -->
@@ -131,41 +131,46 @@
             <div class="nk-nav-scroll">
                 <ul class="metismenu" id="menu">
                     <li class="nav-label">Dashboard</li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-user menu-icon"></i><span class="nav-text">Users</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="{{route('users.index')}}">All users</a></li>
-                            <li><a href="{{route('users.create')}}">Create user</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-list menu-icon"></i><span class="nav-text">Categories</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="{{route('categories.index')}}">All categories</a></li>
-                            <li><a href="{{route('categories.create')}}">Create category</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-vector menu-icon"></i><span class="nav-text">Sub-Categories</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="{{route('sub-categories.index')}}">Sub categories</a></li>
-                            <li><a href="{{route('sub-categories.create')}}">Create sub category</a></li>
-                        </ul>
-                    </li>
+                    @if(auth()->user()->can('view-users') || auth()->user()->can('create-user'))
 
-                    <li>
-                        <a href="widgets.html" aria-expanded="false">
-                            <i class="icon-badge menu-icon"></i><span class="nav-text">Widget</span>
-                        </a>
-                    </li>
+                        <li>
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="icon-user menu-icon"></i><span class="nav-text">User Management</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                @can('view-roles') <li><a href="{{route('roles.index')}}">All Roles</a></li> @endcan
+                                @can('view-users') <li><a href="{{route('users.index')}}">All Users</a></li> @endcan
+                                @can('create-user') <li><a href="{{route('users.create')}}">Create User</a></li> @endcan
+                            </ul>
+                        </li>
 
+                    @endif
+                    
+                    @if(auth()->user()->can('view-categories') || auth()->user()->can('create-category'))
+                        <li>
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="icon-list menu-icon"></i><span class="nav-text">Categories</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                @can('view-categories') <li><a href="{{route('categories.index')}}">All categories</a></li> @endcan
+                                @can('create-category') <li><a href="{{route('categories.create')}}">Create category</a></li> @endcan
+                                
+                            </ul>
+                        </li>
+                    @endif
+                   
 
+                    @if(auth()->user()->can('view-sub-categories') || auth()->user()->can('create-sub-category'))
+                        <li>
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="icon-vector menu-icon"></i><span class="nav-text">Sub-Categories</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                @can('view-sub-categories') <li><a href="{{route('sub-categories.index')}}">Sub categories</a></li> @endcan
+                                @can('create-sub-category') <li><a href="{{route('sub-categories.create')}}">Create sub category</a></li> @endcan   
+                            </ul>
+                        </li>
+                    @endif
                 </ul>
             </div>
         </div>

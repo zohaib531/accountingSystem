@@ -9,6 +9,15 @@ use Validator;
 
 class SubCategoryController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:view-sub-categories', ['only' => ['index']]);
+        $this->middleware('permission:create-sub-category', ['only' => ['create', 'store']]);
+        $this->middleware('permission:update-sub-category', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:delete-sub-category', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
