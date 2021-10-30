@@ -41,6 +41,6 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
-        return 'admin/dashboard';
+        return '/dashboard';
     }
 }
