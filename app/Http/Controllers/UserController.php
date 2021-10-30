@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
+use Validator;
 
 class UserController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('permission:view-users', ['only' => ['index']]);
@@ -22,7 +23,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.users.index');
+        return view('admin.usermanagement.users.index');
     }
 
     /**
@@ -32,7 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        return view('admin.usermanagement.users.create');
     }
 
     /**

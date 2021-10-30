@@ -26,7 +26,7 @@ class SubCategoryController extends Controller
     public function index()
     {
         $subCategories = SubCategory::all();
-        return view('admin.subCategory.index',compact('subCategories'));
+        return view('admin.subcategories.index',compact('subCategories'));
     }
 
     /**
@@ -37,7 +37,7 @@ class SubCategoryController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.subCategory.create',compact('categories'));
+        return view('admin.subcategories.create',compact('categories'));
     }
 
     /**
@@ -89,7 +89,7 @@ class SubCategoryController extends Controller
     {
         $categories = Category::all();
         $category = SubCategory::where('id',$id)->first();
-        return view('admin.subCategory.edit',compact('categories','category'));
+        return view('admin.subcategories.edit',compact('categories','category'));
     }
 
     /**
@@ -110,7 +110,7 @@ class SubCategoryController extends Controller
         {
             return response()->json(['success' => false, 'message' => $validations->errors()]);
         }
-        
+
         $subCategory->title = $request->title;
         $subCategory->category_id = $request->category_id;
         if($subCategory->save()){
