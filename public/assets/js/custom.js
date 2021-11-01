@@ -67,3 +67,14 @@ function commonFunction(confirmation=false,targetUrl,returnUrl,method,msg='',for
     }
 
 }
+
+// function for edit data using modal
+function editResource(targetUrl,targetTag) {
+    $.ajax({
+        type: 'get',
+        url: targetUrl,
+        success: function(data) {
+            $(targetTag).html(data);
+        }
+    });
+}
