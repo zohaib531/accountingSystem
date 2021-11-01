@@ -147,16 +147,7 @@
                     @endif
 
                     @if(auth()->user()->can('view-categories') || auth()->user()->can('create-category'))
-                        <li>
-                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                                <i class="icon-list menu-icon"></i><span class="nav-text">Categories</span>
-                            </a>
-                            <ul aria-expanded="false">
-                                @can('view-categories') <li><a href="{{route('categories.index')}}">All categories</a></li> @endcan
-                                @can('create-category') <li><a href="{{route('categories.create')}}">Create category</a></li> @endcan
-
-                            </ul>
-                        </li>
+                        @can('view-categories')<li><a href="{{route('categories.index')}}" aria-expanded="false"><i class="icon-list menu-icon"></i><span class="nav-text">Categories</span> </a></li>@endcan
                     @endif
 
 
