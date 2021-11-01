@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('title','Create user')
 @section('content')
 
 <div class="row page-titles mx-0">
@@ -18,28 +19,28 @@
                 <div class="card-body">
                     <h4 class="card-title text-center">Create user</h4>
                     <div class="form-validation">
-                        <form class="form-valide" >
+                        <form class="form-valide" id="create-form">
                             <div class="form-group row">
-                                <label class="col-lg-4 col-form-label" for="val-username">Username <span class="text-danger">*</span></label>
+                                <label class="col-lg-4 col-form-label text-right" for="val-username">Username <span class="text-danger">*</span></label>
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control" id="val-username" name="username" placeholder="Enter a username..">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-lg-4 col-form-label" for="val-email">Email <span class="text-danger">*</span> </label>
+                                <label class="col-lg-4 col-form-label text-right" for="val-email">Email <span class="text-danger">*</span> </label>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="val-email" name="email" placeholder="User valid email..">
+                                    <input type="email" class="form-control" id="val-email" name="email" placeholder="Enter email..">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-lg-4 col-form-label" for="val-password">Password <span class="text-danger">*</span></label>
+                                <label class="col-lg-4 col-form-label text-right" for="val-password">Password <span class="text-danger">*</span></label>
                                 <div class="col-lg-6">
-                                    <input type="password" class="form-control" id="password" name="val-password" placeholder="User password..">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter password..">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-8 ml-auto">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('users.store') }}','{{route('users.index')}}','post','','create-form');">Save</button>
                                 </div>
                             </div>
                         </form>

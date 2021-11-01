@@ -1,11 +1,12 @@
 @extends('layouts.admin')
+@section('title','Edit Product')
 @section('content')
 
 <div class="row page-titles mx-0">
     <div class="col p-md-0">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="{{route('sub-categories.create')}}">Edit sub category</a></li>
+            <li class="breadcrumb-item active"><a href="{{route('categories.create')}}">Update Category</a></li>
         </ol>
     </div>
 </div>
@@ -16,7 +17,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title text-center">Update Sub Category</h4>
+                    <h4 class="card-title text-center">Update Category</h4>
                     <div class="form-validation">
                         <form class="form-valide" id="update-form">
                             @csrf
@@ -30,7 +31,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-8 ml-auto">
-                                    <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('sub_categories.update',$category->id) }}','{{route('sub-categories.index')}}','post','','update-form');">Update</button>
+                                    <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('categories.update',$category->id) }}','{{route('categories.index')}}','post','','update-form');">Update</button>
                                 </div>
                             </div>
                         </form>

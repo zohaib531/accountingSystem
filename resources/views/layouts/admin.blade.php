@@ -97,11 +97,11 @@
                                 <div class="dropdown-content-body">
                                     <ul>
                                         <li>
-                                            <a href="app-profile.html"><i class="icon-user"></i> <span>Profile</span></a>
+                                            <a href="#"><i class="icon-user"></i> <span>Profile</span></a>
                                         </li>
                                         <hr class="my-2">
                                         <li>
-                                            <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
+                                            <a href="#"><i class="icon-lock"></i> <span>Lock Screen</span></a>
                                         </li>
                                         <li>
                                             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -145,7 +145,7 @@
                         </li>
 
                     @endif
-                    
+
                     @if(auth()->user()->can('view-categories') || auth()->user()->can('create-category'))
                         <li>
                             <a class="has-arrow" href="javascript:void()" aria-expanded="false">
@@ -154,11 +154,11 @@
                             <ul aria-expanded="false">
                                 @can('view-categories') <li><a href="{{route('categories.index')}}">All categories</a></li> @endcan
                                 @can('create-category') <li><a href="{{route('categories.create')}}">Create category</a></li> @endcan
-                                
+
                             </ul>
                         </li>
                     @endif
-                   
+
 
                     @if(auth()->user()->can('view-sub-categories') || auth()->user()->can('create-sub-category'))
                         <li>
@@ -167,7 +167,19 @@
                             </a>
                             <ul aria-expanded="false">
                                 @can('view-sub-categories') <li><a href="{{route('sub-categories.index')}}">Sub categories</a></li> @endcan
-                                @can('create-sub-category') <li><a href="{{route('sub-categories.create')}}">Create sub category</a></li> @endcan   
+                                @can('create-sub-category') <li><a href="{{route('sub-categories.create')}}">Create sub category</a></li> @endcan
+                            </ul>
+                        </li>
+                    @endif
+
+                    @if(auth()->user()->can('view-products') || auth()->user()->can('create-product'))
+                        <li>
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="icon-vector menu-icon"></i><span class="nav-text">Products</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                @can('view-products') <li><a href="{{route('products.index')}}">Product list</a></li> @endcan
+                                @can('create-product') <li><a href="{{route('products.create')}}">Create product</a></li> @endcan
                             </ul>
                         </li>
                     @endif
