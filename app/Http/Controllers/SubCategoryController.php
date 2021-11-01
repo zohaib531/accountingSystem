@@ -25,8 +25,9 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
+        $categories = Category::all();
         $subCategories = SubCategory::all();
-        return view('admin.subcategories.index',compact('subCategories'));
+        return view('admin.subcategories.index',compact('categories','subCategories'));
     }
 
     /**
@@ -89,7 +90,7 @@ class SubCategoryController extends Controller
     {
         $categories = Category::all();
         $category = SubCategory::where('id',$id)->first();
-        return view('admin.subcategories.edit',compact('categories','category'));
+        return view('admin.subcategories.edit',compact('categories','category'))->render();
     }
 
     /**

@@ -150,18 +150,12 @@
                         @can('view-categories')<li><a href="{{route('categories.index')}}" aria-expanded="false"><i class="icon-list menu-icon"></i><span class="nav-text">Categories</span> </a></li>@endcan
                     @endif
 
-
                     @if(auth()->user()->can('view-sub-categories') || auth()->user()->can('create-sub-category'))
-                        <li>
-                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                                <i class="icon-vector menu-icon"></i><span class="nav-text">Sub-Categories</span>
-                            </a>
-                            <ul aria-expanded="false">
-                                @can('view-sub-categories') <li><a href="{{route('sub-categories.index')}}">Sub categories</a></li> @endcan
-                                @can('create-sub-category') <li><a href="{{route('sub-categories.create')}}">Create sub category</a></li> @endcan
-                            </ul>
-                        </li>
+                        @can('view-sub-categories')<li><a href="{{route('sub-categories.index')}}" aria-expanded="false"><i class="icon-vector menu-icon"></i><span class="nav-text">Sub-Categories</span> </a></li>@endcan
                     @endif
+
+
+
 
                     @if(auth()->user()->can('view-products') || auth()->user()->can('create-product'))
                         <li>
@@ -174,6 +168,7 @@
                             </ul>
                         </li>
                     @endif
+                    
                 </ul>
             </div>
         </div>

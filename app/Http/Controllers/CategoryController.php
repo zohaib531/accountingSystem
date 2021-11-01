@@ -83,7 +83,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::where('id',$id)->first();
-        return view('admin.categories.edit',compact('category'));
+        return view('admin.categories.edit',compact('category'))->render();
     }
 
     /**

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Sub category List')
+@section('title','Inventory | Sub category')
 
 @section('style')
     <link href="{{asset('assets/template/plugins/tables/css/datatable/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
@@ -24,13 +24,21 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title text-center">All Sub Category</h4>
+                    <div class="row m-0">
+                        <div class="col-6 text-right">
+                            <h4 class="card-title">All Sub Category</h4>
+                        </div>
+                        <div class="col-6 text-right">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addsubcategory">Add new +</button>
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered zero-configuration">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Title</th>
+                                    {{-- <th>Category</th> --}}
+                                    <th>Sub category</th>
                                     <th class="text-right w-25">Action</th>
                                 </tr>
                             </thead>
@@ -39,9 +47,13 @@
                                 <tr>
 
                                     <td>{{++$key}}</td>
+                                    {{-- @foreach ($categories as $cat)
+                                    <td>{{$category->category_id==$cat->id?'selected':''}} $cat->title</td>
+                                    @endforeach --}}
                                     <td>{{$sub_category->title}}</td>
                                     <td class="text-right">
-                                        <a href="{{route('sub-categories.edit',$sub_category->id)}}"><button class="btn btn-info text-white">Update</button></a>
+                                            <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateSubCategory" onclick="editResource('{{ route('sub-categories.edit', $sub_category->id) }}','.updateModalSubCategory')">Update</button>
+
                                         <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('sub-categories.destroy',$sub_category->id) }}','{{route('sub-categories.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
                                     </td>
                                 </tr>
@@ -55,6 +67,62 @@
     </div>
 </div>
 <!-- #/ container -->
+
+
+<!--Add subcategory modal start-->
+
+<div class="modal fade addsubcategory" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Sub Category</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+               <div class="form-validation my-5">
+                   <form class="form-valide" id="create-form">
+                        <div class="form-group row">
+                            <label class="col-lg-4 col-form-label text-right" for="val-category">Select Category <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-6">
+                                <select class="form-control" id="val-category" name="category_id">
+                                    <option value="" disabled selected>Please select</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{str_pad($category->code, 2, '0', STR_PAD_LEFT)}}">{{$category->title}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-4 col-form-label text-right" for="val-title">Sub category title<span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" id="val-title" name="title" placeholder="Enter sub category..">
+                            </div>
+                        </div>
+                   </form>
+               </div>
+           </div>
+           <div class="modal-footer">
+               <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('sub-categories.store') }}','{{route('sub-categories.index')}}','post','','create-form');">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Add subcategory modal start-->
+
+ <!--Update category modal start-->
+
+ <div class="modal fade updateSubCategory" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content updateModalSubCategory">
+
+        </div>
+    </div>
+</div>
+<!--Update category modal start-->
 
 
 @endsection
