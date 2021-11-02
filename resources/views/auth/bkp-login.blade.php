@@ -37,7 +37,7 @@
                                     <p class="login-form__footer">Dont have account? <a href="page-register.html" class="text-primary">Sign Up</a> now</p>
                                 </div> --}}
                                 <div class="col-6">
-                                    @if (Route::has('password.request'))
+                                @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>

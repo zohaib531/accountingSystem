@@ -3,15 +3,15 @@
     <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
     </button>
 </div>
-<div class="modal-body">
+<div class="modal-body px-5">
    <div class="form-validation my-5">
     <form class="form-valide" id="update-form">
         @csrf
         @method('put')
         <div class="form-group row">
-            <label class="col-lg-4 col-form-label text-right" for="val-category">Select Category <span class="text-danger">*</span>
+            <label class="col-lg-3 col-form-label" for="val-category">Select Category <span class="text-danger">*</span>
             </label>
-            <div class="col-lg-6">
+            <div class="col-lg-9">
                 <select class="form-control" id="val-category" name="category_id">
                     <option value="" disabled>Please select</option>
                     @foreach ($categories as $cat)
@@ -22,9 +22,9 @@
         </div>
 
         <div class="form-group row">
-            <label class="col-lg-4 col-form-label text-right" for="val-title">Sub category title<span class="text-danger">*</span>
+            <label class="col-lg-3 col-form-label" for="val-title">Sub category title<span class="text-danger">*</span>
             </label>
-            <div class="col-lg-6">
+            <div class="col-lg-9">
                 <input type="text" class="form-control" value="{{$category->title}}" id="val-title" name="title" placeholder="Enter sub category..">
             </div>
         </div>

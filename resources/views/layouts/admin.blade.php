@@ -99,10 +99,10 @@
                                         <li>
                                             <a href="#"><i class="icon-user"></i> <span>Profile</span></a>
                                         </li>
-                                        <hr class="my-2">
+                                        {{-- <hr class="my-2">
                                         <li>
                                             <a href="#"><i class="icon-lock"></i> <span>Lock Screen</span></a>
-                                        </li>
+                                        </li> --}}
                                         <li>
                                             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                 <i class="icon-key"></i>
@@ -138,9 +138,8 @@
                                 <i class="icon-user menu-icon"></i><span class="nav-text">User Management</span>
                             </a>
                             <ul aria-expanded="false">
-                                @can('view-roles') <li><a href="{{route('roles.index')}}">All Roles</a></li> @endcan
-                                @can('view-users') <li><a href="{{route('users.index')}}">All Users</a></li> @endcan
-                                @can('create-user') <li><a href="{{route('users.create')}}">Create User</a></li> @endcan
+                                @can('view-roles') <li><a href="{{route('roles.index')}}">Roles</a></li> @endcan
+                                @can('view-users') <li><a href="{{route('users.index')}}">Users</a></li> @endcan
                             </ul>
                         </li>
 
@@ -168,7 +167,7 @@
                             </ul>
                         </li>
                     @endif
-                    
+
                 </ul>
             </div>
         </div>

@@ -4,13 +4,13 @@
     <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
     </button>
 </div>
-<div class="modal-body">
+<div class="modal-body px-5">
    <div class="form-validation my-5">
        <form class="form-valide" id="update-form">
            @csrf
            @method('put')
            <div class="form-group row">
-               <label class="col-lg-2 col-form-label text-right" for="update-category">Category title<span class="text-danger">*</span></label>
+               <label class="col-lg-2 col-form-label" for="update-category">Category title<span class="text-danger">*</span></label>
                <div class="col-lg-10">
                    <input type="text" class="form-control" id="update-category" value="{{ $category->title }}"  name="title" placeholder="Enter a category title..">
                </div>

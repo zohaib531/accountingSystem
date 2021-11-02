@@ -36,31 +36,20 @@
                             </span>
                         @enderror
 					</p>
-					<!-- <p class="field">
-                        <div class="row m-0 justify-content-center">
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input me-0" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-					</p> -->
                     <div class="form-group row justify-content-center">
                             <div class="col-md-8">
-                                <button type="submit" class="btn btn-primary px-4">
+                                <button type="submit" class="btn btn-primary px-5">
                                     {{ __('Login') }}
                                 </button>
-
-                                <!-- @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif -->
                             </div>
+                            <div class="col-10 p-0 text-right">
+                                @if (Route::has('password.request'))
+                                   <a class="btn btn-link" href="{{ route('password.request') }}">
+                                       {{ __('Forgot Your Password?') }}
+                                   </a>
+                               @endif
+                            </div>
+
                         </div>
 				</form>
 			</div>
