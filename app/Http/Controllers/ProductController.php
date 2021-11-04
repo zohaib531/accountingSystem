@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Product;
+use App\SubCategory;
 use Illuminate\Http\Request;
+use Validator;
+use App\Traits\ImageUploadTrait;
+
 
 class ProductController extends Controller
 {
+    use ImageUploadTrait;
     /**
      * Display a listing of the resource.
      *
@@ -14,9 +20,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // $products = Product::all();
-        // return view('admin.products.index',compact('products'));
-        return view('admin.products.index');
+        $products = Product::all();
+        return view('admin.products.index',compact('products'));
     }
 
     /**
@@ -26,7 +31,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.products.create');
+        $categories = Category::all();
+        $sub_categories = SubCategory::all();
+        Product::orderBy('id','desc')->first()!=null?$productCode=Product::orderBy('id','desc')->first()->id:$productCode=0;
+        ++$productCode;
+        return view('admin.products.create',compact('categories','sub_categories','productCode'));
     }
 
     /**
@@ -37,7 +46,33 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validations = Validator::make($request->all(),[
+            'category_id'=>'required',
+            'sub_category_id'=>'required',
+            'title'=>'required || unique:categories',
+            'price'=>'required',
+            'quantity'=>'required',
+            'description'=>'required',
+            'image'=>'required',
+        ]);
+
+        if($validations->fails())
+        {
+            return response()->json(['success' => false, 'message' => $validations->errors()]);
+        }
+
+        $products = new Product();
+        $products->title = $request->title;
+        $products->category_id = $request->category_id;
+        $products->sub_category_id = $request->sub_category_id;
+        $products->product_code = $request->product_code;
+        $products->price = $request->price;
+        $products->quantity = $request->quantity;
+        $products->description = $request->description;
+        $products->img = $request->image;
+        if($products->save()){
+            return response()->json(['success' => true, 'message' =>'Sub category has been added successfully']);
+        }
     }
 
     /**
@@ -84,4 +119,11 @@ class ProductController extends Controller
     {
         //
     }
+
+     // upload file using ajax with progress bar
+     public function uploadAllFiles(Request $request){
+        $path = $this->uploadImage('file',$request->upload_path,$request);
+        return response()->json(['status'=>true,'path'=>$path]);
+    }
 }
+

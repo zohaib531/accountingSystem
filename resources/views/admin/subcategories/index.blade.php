@@ -83,8 +83,7 @@
                <div class="form-validation my-5">
                    <form class="form-valide" id="create-form">
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label " for="val-category">Select Category <span class="text-danger">*</span>
-                            </label>
+                            <label class="col-lg-3 col-form-label " for="val-category">Select Category <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <select class="form-control" id="val-category" name="category_id">
                                     <option value="" disabled selected>Please select</option>

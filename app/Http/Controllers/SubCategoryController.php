@@ -61,9 +61,9 @@ class SubCategoryController extends Controller
 
         $subCategories = new SubCategory();
         $subCategories->title = $request->title;
-        $subCategories->category_id = str_pad($request->category_id, 2, '0', STR_PAD_LEFT);
+        $subCategories->category_id = $request->category_id;
         if($subCategories->save()){
-            $subCategories->code =  str_pad($subCategories->id, 2, '0', STR_PAD_LEFT);
+            $subCategories->code =  $subCategories->id;
             $subCategories->save();
             return response()->json(['success' => true, 'message' =>'Sub category has been added successfully']);
         }

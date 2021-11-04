@@ -30,29 +30,33 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Code</th>
+                                    <th>Image</th>
                                     <th>Title</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
                                     <th class="text-right w-25">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($categories as $key=> $category)
+                                @foreach ($products as $key=> $product)
                                 <tr>
                                     <td>{{++$key}}</td>
-                                    <td>{{$category->title}}</td>
+                                    <td>{{$product->product_code}}</td>
+                                    <td>
+                                        <img src="{{asset($product->img)}}" alt="" width="100" height="50" style="object-fit: contain">
+                                    </td>
+                                    <td>{{$product->title}}</td>
+                                    <td>{{$product->price}}</td>
+                                    <td>{{$product->quantity}}</td>
                                     <td class="text-right">
-                                        <a href="{{route('categories.edit',$category->id)}}"><button class="btn btn-info text-white">Update</button></a>
-                                        <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('categories.destroy',$category->id) }}','{{route('categories.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
+                                        <a href="{{route('categories.edit',$product->id)}}"><button class="btn btn-info text-white">Update</button></a>
+                                        <button class="btn btn-danger" >Delete</button>
+                                        {{-- <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('categories.destroy',$category->id) }}','{{route('categories.index')}}','delete','Are you sure you want to delete?','');">Delete</button> --}}
                                     </td>
                                 </tr>
-                                @endforeach --}}
-                                <tr>
-                                    <td>1</td>
-                                    <td>Some title</td>
-                                    <td class="text-right">
-                                        <a href="#"><button class="btn btn-info text-white">Update</button></a>
-                                        <button class="btn btn-danger">Delete</button>
-                                    </td>
-                                </tr>
+                                @endforeach
+
                             </tbody>
                         </table>
                     </div>
