@@ -71,7 +71,7 @@ class ProductController extends Controller
         $products->description = $request->description;
         $products->img = $request->image;
         if($products->save()){
-            return response()->json(['success' => true, 'message' =>'Sub category has been added successfully']);
+            return response()->json(['success' => true, 'message' =>'Product has been added successfully']);
         }
     }
 
@@ -92,9 +92,12 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        $categories = Category::all();
+        $sub_categories = SubCategory::all();
+        $product = product::where('id',$id)->first();
+        return view('admin.products.edit',compact('categories','sub_categories','product'))->render();
     }
 
     /**
@@ -106,7 +109,32 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $validations = Validator::make($request->all(),[
+            'category_id'=>'required',
+            'sub_category_id'=>'required',
+            'title'=>'required || unique:categories',
+            'price'=>'required',
+            'quantity'=>'required',
+            'description'=>'required',
+        ]);
+
+        if($validations->fails())
+        {
+            return response()->json(['success' => false, 'message' => $validations->errors()]);
+        }
+
+
+        $product->title = $request->title;
+        $product->category_id = $request->category_id;
+        $product->sub_category_id = $request->sub_category_id;
+        $product->product_code = $request->product_code;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+        $product->description = $request->description;
+        $product->img = $request->image;
+        if($product->save()){
+            return response()->json(['success' => true, 'message' =>'Product has been updated successfully']);
+        }
     }
 
     /**
@@ -115,9 +143,11 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($product)
     {
-        //
+        if(Product::where('id',$product)->delete()){
+            return response()->json(['success' => true, 'message' =>'Product has been deleted successfully']);
+        }
     }
 
      // upload file using ajax with progress bar

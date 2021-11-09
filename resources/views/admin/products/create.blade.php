@@ -46,6 +46,49 @@
                             </div> --}}
 
 
+                            <!--Add category and subcategory modal start-->
+                            <div class="modal fade addcategrory_subcategory" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Add Category & Sub Category</h5>
+                                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body px-5">
+                                            <div class="form-validation my-5">
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-lg-3" for="val-category">Select Category <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-9">
+                                                        <select class="form-control" id="val-category" name="category_id" onchange="categoryChange(this)">
+                                                            <option value="" disabled selected>Please select</option>
+
+                                                            @foreach ($categories as $category)
+                                                                <option value="{{$category->id}}" data-code="{{str_pad($category->code, 2, '0', STR_PAD_LEFT)}}">{{$category->title}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-lg-3" for="val-sub_category">Select sub category <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-9">
+                                                        <select class="form-control" id="val-sub_category" name="sub_category_id" onchange="subCategoryChange(this)">
+                                                            <option value="" disabled selected>Please select</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
+                                            {{-- <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('sub-categories.store') }}','{{route('sub-categories.index')}}','post','','create-form');">Save</button> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Add category and subcategory modal end-->
+
+
 
                             <div class="form-group">
                                 <label class="col-form-label" for="product-code">Product code<span class="text-danger">*</span></label>
@@ -110,50 +153,6 @@
 
 
 
-<!--Add category and subcategory modal start-->
-
-<div class="modal fade addcategrory_subcategory" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Add Category & Sub Category</h5>
-                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body px-5">
-            <div class="form-validation my-5">
-                <form class="form-valide" id="create-form">
-                        <div class="form-group row">
-                            <label class="col-form-label col-lg-3" for="val-category">Select Category <span class="text-danger">*</span></label>
-                            <div class="col-lg-9">
-                                <select class="form-control" id="val-category" name="category_id" onchange="categoryChange(this)">
-                                    <option value="" disabled selected>Please select</option>
-
-                                    @foreach ($categories as $category)
-                                        <option value="{{$category->id}}" data-code="{{str_pad($category->code, 2, '0', STR_PAD_LEFT)}}">{{$category->title}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-form-label col-lg-3" for="val-sub_category">Select sub category <span class="text-danger">*</span></label>
-                            <div class="col-lg-9">
-                                <select class="form-control" id="val-sub_category" name="sub_category_id" onchange="subCategoryChange(this)">
-                                    <option value="" disabled selected>Please select</option>
-                                </select>
-                            </div>
-                        </div>
-                </form>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
-            {{-- <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('sub-categories.store') }}','{{route('sub-categories.index')}}','post','','create-form');">Save</button> --}}
-            </div>
-        </div>
-    </div>
-</div>
-<!--Add category and subcategory modal end-->
 
 @endsection
 

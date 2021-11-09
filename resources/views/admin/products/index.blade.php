@@ -44,14 +44,14 @@
                                     <td>{{++$key}}</td>
                                     <td>{{$product->product_code}}</td>
                                     <td>
-                                        <img src="{{asset($product->img)}}" alt="" width="100" height="50" style="object-fit: contain">
+                                        <img src="{{asset($product->img)}}" alt="" width="100" height="70" style="object-fit: cover">
                                     </td>
                                     <td>{{$product->title}}</td>
                                     <td>{{$product->price}}</td>
                                     <td>{{$product->quantity}}</td>
                                     <td class="text-right">
-                                        <a href="{{route('categories.edit',$product->id)}}"><button class="btn btn-info text-white">Update</button></a>
-                                        <button class="btn btn-danger" >Delete</button>
+                                        <a href="{{route('products.edit',$product->id)}}"><button class="btn btn-info text-white">Update</button></a>
+                                        <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('products.destroy',$product->id) }}','{{route('products.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
                                         {{-- <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('categories.destroy',$category->id) }}','{{route('categories.index')}}','delete','Are you sure you want to delete?','');">Delete</button> --}}
                                     </td>
                                 </tr>
