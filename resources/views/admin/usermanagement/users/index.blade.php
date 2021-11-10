@@ -39,6 +39,7 @@
                                     <th>#</th>
                                     <th>Username</th>
                                     <th>Email</th>
+                                    <th>Role</th>
                                     <th class="text-right">Action</th>
                                 </tr>
                             </thead>
@@ -48,6 +49,7 @@
                                     <td>{{++$key}}</td>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
+                                    <td>user</td>
                                     <td class="text-right">
                                         {{-- <a href="{{route('users.edit',$user->id)}}"><button class="btn btn-info text-white">Update</button></a> --}}
                                         <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('users.destroy',$user->id) }}','{{route('users.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
@@ -99,7 +101,7 @@
                             </div>
                         </div>
 
-                        {{-- <div class="form-group row">
+                        <div class="form-group row">
                             <label class="col-lg-2 col-form-label " for="val-role">Role <span class="text-danger">*</span></label>
                             <div class="col-lg-10">
                                 <select  class="form-control" name="role" id="role">
@@ -108,7 +110,7 @@
                                     <option value="admin">Admin</option>
                                 </select>
                             </div>
-                        </div> --}}
+                        </div>
 
 
 

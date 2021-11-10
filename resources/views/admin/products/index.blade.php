@@ -13,7 +13,7 @@
     <div class="col p-md-0">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="{{route('categories.index')}}">All categories</a></li>
+            <li class="breadcrumb-item active"><a href="{{route('products.index')}}">All Products</a></li>
         </ol>
     </div>
 </div>
@@ -24,7 +24,14 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title text-center">All Categories</h4>
+                    <div class="row m-0">
+                        <div class="col-6 text-right">
+                            <h4 class="card-title">All Products</h4>
+                        </div>
+                        <div class="col-6 text-right">
+                            <a href="{{route('products.create')}}" class="btn btn-primary">Add new +</a>
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered zero-configuration">
                             <thead>

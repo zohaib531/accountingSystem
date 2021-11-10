@@ -53,7 +53,7 @@ class UserController extends Controller
             'username'=>'required',
             'email'=>'required',
             'password'=>'required | min:8',
-            // 'role'=>'required'
+            'role'=>'required'
 
         ]);
 
