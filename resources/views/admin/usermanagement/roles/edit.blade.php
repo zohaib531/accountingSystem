@@ -11,7 +11,7 @@
         </div>
     </div>
     <!-- row -->
-    
+
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-lg-12">
@@ -29,7 +29,7 @@
                                                 <label for="aboutTextarea" class="d-block text-black-2 font-size-4 font-weight-semibold mb-4">
                                                     Name
                                                 </label>
-                                                <input type="text" name="name" value="{{ $role->name  }}"  placeholder="Enter Name" class="form-control h-px-48" />
+                                                <input type="text" name="name" value="{{ $role->name  }}"  placeholder="Enter Name" class="form-control h-px-48" readonly/>
                                             </div>
                                         </div>
                                     </div>

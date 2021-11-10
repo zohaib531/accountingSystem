@@ -6,6 +6,9 @@ use App\User;
 use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Support\Facades\Hash;
+// use Spatie\Permission\Contracts\Role;
+// use Spatie\Permission\Models\Role as userRole;
+
 
 class UserController extends Controller
 {
@@ -49,19 +52,22 @@ class UserController extends Controller
         $validations = Validator::make($request->all(),[
             'username'=>'required',
             'email'=>'required',
-            'password'=>'required | min:8'
+            'password'=>'required | min:8',
+            // 'role'=>'required'
+
         ]);
 
         if($validations->fails())
         {
             return response()->json(['success' => false, 'message' => $validations->errors()]);
         }
-
+        // $role = userRole::find($request->role);
         $user = new User();
         $user->name = $request->username;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         if($user->save()){
+            // $user->assignRole($role);
             return response()->json(['success' => true, 'message' =>'User has been added successfully']);
         }
     }

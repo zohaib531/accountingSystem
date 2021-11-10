@@ -98,6 +98,21 @@
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Enter password..">
                             </div>
                         </div>
+
+                        {{-- <div class="form-group row">
+                            <label class="col-lg-2 col-form-label " for="val-role">Role <span class="text-danger">*</span></label>
+                            <div class="col-lg-10">
+                                <select  class="form-control" name="role" id="role">
+                                    <option value="" disabled selected>Please select Role</option>
+                                    <option value="user">User</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                        </div> --}}
+
+
+
+
                     </form>
                </div>
            </div>
