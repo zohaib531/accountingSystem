@@ -49,11 +49,8 @@
                                     <td>{{++$key}}</td>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
-                                    <td>user</td>
-                                    <td class="text-right">
-                                        {{-- <a href="{{route('users.edit',$user->id)}}"><button class="btn btn-info text-white">Update</button></a> --}}
-                                        <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('users.destroy',$user->id) }}','{{route('users.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
-                                    </td>
+                                    <td>{{  implode(",", $user->roles->pluck('name')->toArray()) }}</td>
+                                    <td class="text-right"><button class="btn btn-danger" onclick="commonFunction(true,'{{ route('users.destroy',$user->id) }}','{{route('users.index')}}','delete','Are you sure you want to delete?','');">Delete</button></td>
                                 </tr>
                                 @endforeach
 
@@ -106,8 +103,11 @@
                             <div class="col-lg-10">
                                 <select  class="form-control" name="role" id="role">
                                     <option value="" disabled selected>Please select Role</option>
-                                    <option value="user">User</option>
-                                    <option value="admin">Admin</option>
+                                    @if($roles->count()>0)
+                                        @foreach ($roles as $role)
+                                            <option value="{{$role->id}}">{{ucfirst($role->name)}}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                         </div>

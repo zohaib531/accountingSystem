@@ -6,8 +6,8 @@ use App\User;
 use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Support\Facades\Hash;
-// use Spatie\Permission\Contracts\Role;
-// use Spatie\Permission\Models\Role as userRole;
+use Spatie\Permission\Contracts\Role;
+use Spatie\Permission\Models\Role as userRole;
 
 
 class UserController extends Controller
@@ -28,7 +28,8 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('admin.usermanagement.users.index',compact('users'));
+        $roles = userRole::select('id','name')->get();
+        return view('admin.usermanagement.users.index',compact('roles','users'));
     }
 
     /**
@@ -61,13 +62,13 @@ class UserController extends Controller
         {
             return response()->json(['success' => false, 'message' => $validations->errors()]);
         }
-        // $role = userRole::find($request->role);
+        $role = userRole::find($request->role);
         $user = new User();
         $user->name = $request->username;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         if($user->save()){
-            // $user->assignRole($role);
+            $user->assignRole($role);
             return response()->json(['success' => true, 'message' =>'User has been added successfully']);
         }
     }
