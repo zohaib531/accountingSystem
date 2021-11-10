@@ -159,7 +159,7 @@
                     @if(auth()->user()->can('view-products') || auth()->user()->can('create-product'))
                         <li>
                             <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                                <i class="icon-vector menu-icon"></i><span class="nav-text">Products</span>
+                                <i class="mdi mdi-dropbox menu-icon"></i><span class="nav-text">Products</span>
                             </a>
                             <ul aria-expanded="false">
                                 @can('view-products') <li><a href="{{route('products.index')}}">Product list</a></li> @endcan
