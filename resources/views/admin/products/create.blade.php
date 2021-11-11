@@ -26,7 +26,7 @@
 
                             {{-- <div class="col-form-label" >Select Category & Sub category <span class="text-danger">*</span></div> --}}
                             <div class="text-right">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addcategrory_subcategory">Add Category & Sub category</button>
+                                <button type="button" class="btn btn-primary d-none" id="addModal" data-toggle="modal" data-target=".addcategrory_subcategory">Add Category & Sub category</button>
                             </div>
                             {{-- <div>
                                 <label class="col-form-label " for="val-category">Select Category <span class="text-danger">*</span></label>
@@ -47,20 +47,18 @@
 
 
                             <!--Add category and subcategory modal start-->
-                            <div class="modal fade addcategrory_subcategory" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal fade addcategrory_subcategory" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title">Add Category & Sub Category</h5>
-                                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                                            </button>
                                         </div>
                                         <div class="modal-body px-5">
                                             <div class="form-validation my-5">
                                                 <div class="form-group row">
                                                     <label class="col-form-label col-lg-3" for="val-category">Select Category <span class="text-danger">*</span></label>
                                                     <div class="col-lg-9">
-                                                        <select class="form-control" id="val-category" name="category_id" onchange="categoryChange(this)">
+                                                        <select class="form-control" id="val-category" name="category_id" onchange="categoryChange(this); selectedValue('val-category','val-sub_category')">
                                                             <option value="" disabled selected>Please select</option>
 
                                                             @foreach ($categories as $category)
@@ -72,7 +70,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-form-label col-lg-3" for="val-sub_category">Select sub category <span class="text-danger">*</span></label>
                                                     <div class="col-lg-9">
-                                                        <select class="form-control" id="val-sub_category" name="sub_category_id" onchange="subCategoryChange(this)">
+                                                        <select class="form-control" id="val-sub_category" name="sub_category_id" onchange="subCategoryChange(this); selectedValue('val-category','val-sub_category')">
                                                             <option value="" disabled selected>Please select</option>
                                                         </select>
                                                     </div>
@@ -80,7 +78,7 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary text-white" id="saveBtn" disabled data-dismiss="modal">Save</button>
                                             {{-- <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('sub-categories.store') }}','{{route('sub-categories.index')}}','post','','create-form');">Save</button> --}}
                                         </div>
                                     </div>
@@ -231,8 +229,16 @@
         }
 
 
+        const selectedValue = (tagId , secondTagId)=>{
+            if ($('#'+tagId).val() != null && $('#'+secondTagId).val() != null) {
+                $('#saveBtn').removeAttr('disabled')
+            }
+        }
 
 
+        window.onload = (event) => {
+            $('#addModal').click()
+        }
     </script>
 
 @endsection

@@ -26,26 +26,27 @@
                             @csrf
                             @method('put')
                             <div class="text-right">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addcategrory_subcategory">Add Category & Sub category</button>
+                                <button type="button" class="btn btn-primary d-none" data-toggle="modal" id="editModal" data-target="#addcategrory_subcategory">Add Category & Sub category</button>
                             </div>
 
 
 
                             <!--Add category and subcategory modal start-->
-                            <div class="modal fade addcategrory_subcategory" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal " tabindex="-1" id="addcategrory_subcategory" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title">Update Category & Sub Category</h5>
-                                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                                            </button>
+                                            {{-- <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                                            </button> --}}
                                         </div>
                                         <div class="modal-body px-5">
                                             <div class="form-validation my-5">
                                                 <div class="form-group row">
                                                     <label class="col-form-label col-lg-3" for="val-category">Select Category <span class="text-danger">*</span></label>
                                                     <div class="col-lg-9">
-                                                        <select class="form-control" id="val-category" name="category_id" onchange="categoryChange(this)">
+                                                        <select class="form-control" id="val-category" name="category_id" onchange="categoryChange(this); selectedValue('val-category','val-sub_category')">
                                                             <option value="" disabled selected>Please select</option>
 
                                                             @foreach ($categories as $category)
@@ -57,7 +58,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-form-label col-lg-3" for="val-sub_category">Select sub category <span class="text-danger">*</span></label>
                                                     <div class="col-lg-9">
-                                                        <select class="form-control" id="val-sub_category" name="sub_category_id" onchange="subCategoryChange(this)">
+                                                        <select class="form-control" id="val-sub_category" name="sub_category_id" onchange="subCategoryChange(this); selectedValue('val-category','val-sub_category')">
                                                             @foreach ($sub_categories as $sub_category)
                                                                 <option  {{$product->category_id==$sub_category->id?'selected':''}} value="{{$sub_category->id}}" data-code="{{str_pad($category->code, 2, '0', STR_PAD_LEFT)}}">{{$sub_category->title}}</option>
                                                             @endforeach
@@ -67,7 +68,7 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary text-white" data-dismiss="modal">Save</button>
+                                            <button type="button" class="btn btn-primary text-white" id="saveBtn" disabled data-dismiss="modal">Save</button>
                                         </div>
                                     </div>
                                 </div>
@@ -223,10 +224,16 @@
             $('#product-code').val(getCategory_code+subCategory_code+String(pCodeBackend).padStart(4, '0'))
         }
 
+        const selectedValue = (tagId , secondTagId)=>{
+            if ($('#'+tagId).val() != null && $('#'+secondTagId).val() != null) {
+                $('#saveBtn').removeAttr('disabled')
+            }
+        }
 
 
-
-
+        window.onload = (event) => {
+            $('#editModal').click()
+        }
     </script>
 
 @endsection
