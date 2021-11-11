@@ -35,6 +35,7 @@ class ProductController extends Controller
         $sub_categories = SubCategory::all();
         Product::orderBy('id','desc')->first()!=null?$productCode=Product::orderBy('id','desc')->first()->id:$productCode=0;
         ++$productCode;
+        
         return view('admin.products.create',compact('categories','sub_categories','productCode'));
     }
 
@@ -46,6 +47,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+     
         $validations = Validator::make($request->all(),[
             'category_id'=>'required',
             'sub_category_id'=>'required',
@@ -69,6 +71,7 @@ class ProductController extends Controller
         $products->price = $request->price;
         $products->quantity = $request->quantity;
         $products->description = $request->description;
+        $products->variation = isset($request->variation)?$request->variation:0;
         $products->img = $request->image;
         if($products->save()){
             return response()->json(['success' => true, 'message' =>'Product has been added successfully']);
@@ -145,13 +148,15 @@ class ProductController extends Controller
      */
     public function destroy($product)
     {
-        if(Product::where('id',$product)->delete()){
+        if(Product::where('id',$product)->delete())
+        {
             return response()->json(['success' => true, 'message' =>'Product has been deleted successfully']);
         }
     }
 
      // upload file using ajax with progress bar
      public function uploadAllFiles(Request $request){
+    
         $path = $this->uploadImage('file',$request->upload_path,$request);
         return response()->json(['status'=>true,'path'=>$path]);
     }
