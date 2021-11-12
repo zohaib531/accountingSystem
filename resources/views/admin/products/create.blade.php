@@ -320,6 +320,8 @@
         window.onload = (event) => {
             $('#addModal').click()
         }
+
+
         $('#product-variation').on('click', function() {
             var Value = $('#product-variation').val();
 
