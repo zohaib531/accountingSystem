@@ -85,7 +85,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary text-white" id="saveBtn"
-                                                    disabled data-dismiss="modal">Save</button>
+                                                     data-dismiss="modal">Save</button>
                                             </div>
                                         </div>
                                     </div>
