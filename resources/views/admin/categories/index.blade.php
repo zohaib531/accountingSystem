@@ -29,7 +29,9 @@
                             <h4 class="card-title">All Categories</h4>
                         </div>
                         <div class="col-6 text-right">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addCategory">Add new +</button>
+                            @can('create-category')
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addCategory">Add new +</button>
+                            @endcan
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -38,7 +40,9 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Title</th>
-                                    <th class="text-right w-25">Action</th>
+                                    @canany(['update-category' , 'delete-category'])
+                                        <th class="text-right w-25">Action</th>
+                                    @endcanany
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,13 +51,17 @@
 
                                     <td>{{++$key}}</td>
                                     <td>{{$category->title}}</td>
-                                    <td class="text-right">
-                                        {{-- <button class="btn btn-info" >Update</button> --}}
 
-                                            <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateCategory" onclick="editResource('{{ route('categories.edit', $category->id) }}','.updateModalCategory')">Update</button>
-
-                                        <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('categories.destroy',$category->id) }}','{{route('categories.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
-                                    </td>
+                                    @canany(['update-category' , 'delete-category'])
+                                        <td class="text-right">
+                                            @can('update-category')
+                                                <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateCategory" onclick="editResource('{{ route('categories.edit', $category->id) }}','.updateModalCategory')">Update</button>
+                                            @endcan
+                                            @can('delete-category')
+                                                <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('categories.destroy',$category->id) }}','{{route('categories.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
+                                            @endcan
+                                        </td>
+                                    @endcanany
                                 </tr>
                                 @endforeach
                             </tbody>

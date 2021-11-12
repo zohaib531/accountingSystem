@@ -85,7 +85,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary text-white" id="saveBtn"
-                                                     data-dismiss="modal">Save</button>
+                                                 data-dismiss="modal">Update</button>
                                             </div>
                                         </div>
                                     </div>
@@ -152,6 +152,55 @@
                                     <div>
                                         <img src="{{ $product->img }}" id="updateImage" alt="" width="100" height="100"
                                             style="object-fit: contain">
+                                    </div>
+                                </div>
+                                @if($product->variation==1)
+                                <div class="form-group">
+                                    <label class="col-form-label" for="product-variation">Product Variation<span
+                                            class="text-danger">*</span></label>
+                                    <div>
+                                        <input type="checkbox" name="variation" id="product-variation" value="1" />
+                                    </div>
+                                </div>
+                                @endif
+                                <div class="form-group variation_show w-100" id="variation_show" style="display: none">
+                                    <div class="multiselect-dropdown">
+                                        <label for="">Color</label>
+                                        <select name='colors[]' id='colors' class=" select_2 w-100 js-states " multiple
+                                            onchange="ProductsVariation()">
+
+
+                                            <option value="blue">blue</option>
+                                            <option value="red">red</option>
+                                            <option value="Black">Black</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="multiselect-dropdown">
+                                        <label for="">Size</label>
+
+                                        <select name='size[]' id='size' class=" select_2  w-100 js-states " multiple
+                                            onchange="ProductsVariation()">
+
+
+                                            <option value="md">medium</option>
+                                            <option value="lg">large</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <table class="table table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <td>Color</td>
+                                                    <td>size</td>
+                                                    <td>image</td>
+                                                    <td>price</td>
+                                                    <td>qty</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="variationjoints">
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -260,8 +309,52 @@
             $('#product-code').val(getCategory_code + subCategory_code + String(pCodeBackend).padStart(4, '0'))
         }
 
+
+
         window.onload = (event) => {
             $('#editModal').click()
+        }
+
+
+
+        $('#product-variation').on('click', function() {
+
+            // Check
+
+            var value = $("#product-variation").val();
+            if (value) {
+
+                $(".variation_show").toggle("checkVariationDisplay");
+            }
+
+
+
+        })
+        function ProductsVariation() {
+            var size = $('#size').val();
+            var colors = $('#colors').val();
+            var p_price = $('#product-price').val();
+            console.log(colors, size, p_price)
+            variationjoints.innerHTML = ``;
+            for (var i = 0; i < colors.length; i++) {
+                for (var j = 0; j < size.length; j++) {
+
+                    variationjoints.innerHTML += `
+                    <tr>
+                    <td><input type='text' name='variation_color[]' value='${colors[i]}' class='variation_style checked_val'/></td>
+                    <td><input type='text' name='variation_size[]' value='${size[j]}' class='variation_style checked_val'/></td>
+                    <td><input type='file' name='variation_img[]' required  class='variation_style_only_img checked_val' /></td>
+                    <td><input type='number' name='variation_price[]' required class='form-control checked_val'/></td>
+                    <td><input type='number' name='variation_qty[]' required class='form-control checked_val'/></td>
+                    <td ><button class='btn btn-danger' onclick="removeRow(this)">&#9986;</button></td>
+                    </tr>
+                    `;
+                }
+            }
+        }
+
+        removeRow = function(el) {
+            $(el).parents("tr").remove()
         }
     </script>
 

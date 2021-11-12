@@ -88,7 +88,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary text-white" id="saveBtn"
-                                                    disabled data-dismiss="modal">Save</button>
+                                                    disabled data-dismiss="modal">Next</button>
                                                 {{-- <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('sub-categories.store') }}','{{route('sub-categories.index')}}','post','','create-form');">Save</button> --}}
                                             </div>
                                         </div>
@@ -325,14 +325,14 @@
         $('#product-variation').on('click', function() {
 
             // Check
-            
+
             var value=$("#product-variation").val();
             if (value) {
 
                 $(".variation_show").toggle("checkVariationDisplay");
             }
-         
-             
+
+
 
         })
 

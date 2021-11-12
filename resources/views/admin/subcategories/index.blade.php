@@ -28,9 +28,11 @@
                         <div class="col-6 text-right">
                             <h4 class="card-title">All Sub Category</h4>
                         </div>
-                        <div class="col-6 text-right">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addsubcategory">Add new +</button>
-                        </div>
+                        @can('create-sub-category')
+                            <div class="col-6 text-right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addsubcategory">Add new +</button>
+                            </div>
+                        @endcan
                     </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered zero-configuration">
@@ -39,7 +41,9 @@
                                     <th>#</th>
                                     {{-- <th>Category</th> --}}
                                     <th>Sub category</th>
-                                    <th class="text-right w-25">Action</th>
+                                    @canany(['update-sub-category' , 'delete-sub-category'])
+                                        <th class="text-right w-25">Action</th>
+                                    @endcanany
                                 </tr>
                             </thead>
                             <tbody>
@@ -51,11 +55,16 @@
                                     <td>{{$category->category_id==$cat->id?'selected':''}} $cat->title</td>
                                     @endforeach --}}
                                     <td>{{$sub_category->title}}</td>
+                                    @canany(['update-sub-category' , 'delete-sub-category'])
                                     <td class="text-right">
+                                        @can('update-sub-category')
                                             <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateSubCategory" onclick="editResource('{{ route('sub-categories.edit', $sub_category->id) }}','.updateModalSubCategory')">Update</button>
-
-                                        <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('sub-categories.destroy',$sub_category->id) }}','{{route('sub-categories.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
+                                        @endcan
+                                        @can('delete-sub-category')
+                                            <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('sub-categories.destroy',$sub_category->id) }}','{{route('sub-categories.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
+                                        @endcan
                                     </td>
+                                    @endcanany
                                 </tr>
                                 @endforeach
                             </tbody>

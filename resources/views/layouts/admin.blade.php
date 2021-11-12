@@ -27,6 +27,7 @@
             display: block !important;
             width: 100% !important
         }
+
         .checkVariationDisplay {
             display: inline;
         }
@@ -40,6 +41,7 @@
             border: none;
             width: 120% !important;
         }
+
     </style>
     @yield('style')
 
@@ -166,18 +168,22 @@
                                 <i class="icon-user menu-icon"></i><span class="nav-text">User Management</span>
                             </a>
                             <ul aria-expanded="false">
-                                @can('view-roles') <li><a href="{{ route('roles.index') }}">Roles</a></li> @endcan
                                 @can('view-users') <li><a href="{{ route('users.index') }}">Users</a></li> @endcan
+                                @can('view-roles') <li><a href="{{ route('roles.index') }}">Roles</a></li> @endcan
                             </ul>
                         </li>
 
                     @endif
 
                     @if (auth()->user()->can('view-categories') ||
-    auth()->user()->can('create-category'))
-                        @can('view-categories')<li><a href="{{ route('categories.index') }}" aria-expanded="false"><i
-                                        class="icon-list menu-icon"></i><span class="nav-text">Categories</span> </a>
-                        </li>@endcan
+                    auth()->user()->can('create-category'))
+                        @can('view-categories')
+                            <li>
+                                <a href="{{ route('categories.index') }}" aria-expanded="false">
+                                    <i class="icon-list menu-icon"></i><span class="nav-text">Categories</span>
+                                </a>
+                            </li>
+                        @endcan
                     @endif
 
                     @if (auth()->user()->can('view-sub-categories') ||
@@ -261,16 +267,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
     @yield('script')
-<script>
-     // $("#single").select2({
+    <script>
+        // $("#single").select2({
         //     placeholder: "Select a programming language",
         //     allowClear: true
         // });
         $(".select_2").select2({
 
-allowClear: true
-});
-</script>
+            allowClear: true
+        });
+    </script>
 
 
 </body>
