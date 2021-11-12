@@ -180,7 +180,7 @@
                                     </select>
                                 </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label class="col-form-label" for="product-descripton">Product descripton<span
                                             class="text-danger">*</span></label>
@@ -212,7 +212,7 @@
 @section('script')
     <script src="{{ asset('assets/template/plugins/validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('assets/template/plugins/validation/jquery.validate-init.js') }}"></script>
-    
+
 
     <script>
         // upload file using ajax with progress bar
