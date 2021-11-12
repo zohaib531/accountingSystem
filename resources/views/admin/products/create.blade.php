@@ -4,7 +4,6 @@
 
 
 
-
     <div class="row page-titles mx-0">
         <div class="col p-md-0">
             <ol class="breadcrumb">
@@ -49,53 +48,53 @@
 
                                 <!--Add category and subcategory modal start-->
                                 <div class="modal fade addcategrory_subcategory" tabindex="-1" role="dialog"
-                                        aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Add Category & Sub Category</h5>
-                                                </div>
-                                                <div class="modal-body px-5">
-                                                    <div class="form-validation my-5">
-                                                        <div class="form-group row">
-                                                            <label class="col-form-label col-lg-3" for="val-category">Select
-                                                                Category <span class="text-danger">*</span></label>
-                                                            <div class="col-lg-9">
-                                                                <select class="form-control" class="select_2"
-                                                                    id="val-category" name="category_id"
-                                                                    onchange="categoryChange(this); selectedValue('val-category','val-sub_category')">
-                                                                    <option value="" disabled selected>Please select</option>
+                                    aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Add Category & Sub Category</h5>
+                                            </div>
+                                            <div class="modal-body px-5">
+                                                <div class="form-validation my-5">
+                                                    <div class="form-group row">
+                                                        <label class="col-form-label col-lg-3" for="val-category">Select
+                                                            Category <span class="text-danger">*</span></label>
+                                                        <div class="col-lg-9">
+                                                            <select class="form-control" class="select_2"
+                                                                id="val-category" name="category_id"
+                                                                onchange="categoryChange(this); selectedValue('val-category','val-sub_category')">
+                                                                <option value="" disabled selected>Please select</option>
 
-                                                                    @foreach ($categories as $category)
-                                                                        <option value="{{ $category->id }}"
-                                                                            data-code="{{ str_pad($category->code, 2, '0', STR_PAD_LEFT) }}">
-                                                                            {{ $category->title }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
+                                                                @foreach ($categories as $category)
+                                                                    <option value="{{ $category->id }}"
+                                                                        data-code="{{ str_pad($category->code, 2, '0', STR_PAD_LEFT) }}">
+                                                                        {{ $category->title }}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-form-label col-lg-3" for="val-sub_category">Select
-                                                                sub category <span class="text-danger">*</span></label>
-                                                            <div class="col-lg-9">
-                                                                <select class="form-control" id="val-sub_category"
-                                                                    name="sub_category_id"
-                                                                    onchange="subCategoryChange(this); selectedValue('val-category','val-sub_category')">
-                                                                    <option value="" disabled selected>Please select</option>
-                                                                </select>
-                                                            </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-form-label col-lg-3" for="val-sub_category">Select
+                                                            sub category <span class="text-danger">*</span></label>
+                                                        <div class="col-lg-9">
+                                                            <select class="form-control" id="val-sub_category"
+                                                                name="sub_category_id"
+                                                                onchange="subCategoryChange(this); selectedValue('val-category','val-sub_category')">
+                                                                <option value="" disabled selected>Please select</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary text-white" id="saveBtn"
-                                                        disabled data-dismiss="modal">Save</button>
-                                                    {{-- <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('sub-categories.store') }}','{{route('sub-categories.index')}}','post','','create-form');">Save</button> --}}
-                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary text-white" id="saveBtn"
+                                                    disabled data-dismiss="modal">Save</button>
+                                                {{-- <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('sub-categories.store') }}','{{route('sub-categories.index')}}','post','','create-form');">Save</button> --}}
                                             </div>
                                         </div>
                                     </div>
-                                    <!--Add category and subcategory modal end-->
+                                </div>
+                                <!--Add category and subcategory modal end-->
 
 
 
@@ -159,7 +158,7 @@
                                         <input type="checkbox" name="variation" id="product-variation" value="1" />
                                     </div>
                                 </div>
-                                <div class="form-group variation_show w-100" style="display: none">
+                                <div class="form-group variation_show w-100" id="variation_show" style="display: none">
                                     <div class="multiselect-dropdown">
                                         <label for="">Color</label>
                                         <select name='colors[]' id='colors' class=" select_2 w-100 js-states " multiple
@@ -187,6 +186,7 @@
                                                 <tr>
                                                     <td>Color</td>
                                                     <td>size</td>
+                                                    <td>image</td>
                                                     <td>price</td>
                                                     <td>qty</td>
                                                 </tr>
@@ -323,11 +323,16 @@
 
 
         $('#product-variation').on('click', function() {
-            var Value = $('#product-variation').val();
 
-            if (Value) {
-                $(".variation_show").css("display", "inline");
+            // Check
+            
+            var value=$("#product-variation").val();
+            if (value) {
+
+                $(".variation_show").toggle("checkVariationDisplay");
             }
+         
+             
 
         })
 
@@ -341,14 +346,15 @@
                 for (var j = 0; j < size.length; j++) {
 
                     variationjoints.innerHTML += `
-    <tr>
-        <td>${colors[i]}</td>
-        <td>${size[j]}</td>
-        <td>${p_price}</td>
-        <td><input type='number' class='form-control'/></td>
-        <td ><button class='btn btn-danger' onclick="removeRow(this)">&#9986;</button></td>
-        </tr>
-        `;
+                    <tr>
+                    <td><input type='text' name='variation_color[]' value='${colors[i]}' class='variation_style checked_val'/></td>
+                    <td><input type='text' name='variation_size[]' value='${size[j]}' class='variation_style checked_val'/></td>
+                    <td><input type='file' name='variation_img[]' required  class='variation_style_only_img checked_val' /></td>
+                    <td><input type='number' name='variation_price[]' required class='form-control checked_val'/></td>
+                    <td><input type='number' name='variation_qty[]' required class='form-control checked_val'/></td>
+                    <td ><button class='btn btn-danger' onclick="removeRow(this)">&#9986;</button></td>
+                    </tr>
+                    `;
                 }
             }
         }
