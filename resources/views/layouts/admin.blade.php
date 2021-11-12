@@ -27,7 +27,19 @@
             display: block !important;
             width: 100% !important
         }
+        .checkVariationDisplay {
+            display: inline;
+        }
 
+        .variation_style {
+            border: none;
+            width: 55% !important;
+        }
+
+        .variation_style_only_img {
+            border: none;
+            width: 120% !important;
+        }
     </style>
     @yield('style')
 
@@ -249,7 +261,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
     @yield('script')
+<script>
+     // $("#single").select2({
+        //     placeholder: "Select a programming language",
+        //     allowClear: true
+        // });
+        $(".select_2").select2({
 
+allowClear: true
+});
+</script>
 
 
 </body>
