@@ -25,7 +25,6 @@ class CreateProductsTable extends Migration
             $table->string('price');
             $table->string('quantity');
             $table->string('img');
-            $table->foreign('id')->references('product_id')->on('product_p_v')->onDelete('cascade');
             $table->timestamps();
         });
 

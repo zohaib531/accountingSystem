@@ -163,10 +163,10 @@
                                         <label for="">Color</label>
                                         <select name='colors[]' id='colors' class=" select_2 w-100 js-states " multiple
                                             onchange="ProductsVariation()">
-                                            <option value="Green">Green</option>
+                                            <option value="green">Green</option>
                                             <option value="blue">blue</option>
                                             <option value="red">red</option>
-                                            <option value="Black">Black</option>
+                                            <option value="black">Black</option>
 
                                         </select>
                                     </div>

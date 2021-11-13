@@ -115,11 +115,8 @@ class ProductController extends Controller
         $categories = Category::all();
         $sub_categories = SubCategory::all();
         $product = product::where('id', $id)->first();
-        $productVariation = DB::table('products')
-                                ->join('product_p_v', 'product_p_v.product_id' , 'products.id')
-                                ->get();
-   
-        return view('admin.products.edit', compact('categories', 'sub_categories', 'product', 'productVariation'))->render();
+
+        return view('admin.products.edit', compact('categories', 'sub_categories', 'product'))->render();
     }
 
     /**
@@ -145,7 +142,6 @@ class ProductController extends Controller
             return response()->json(['success' => false, 'message' => $validations->errors()]);
         }
 
-
         $product->title = $request->title;
         $product->category_id = $request->category_id;
         $product->sub_category_id = $request->sub_category_id;
@@ -154,9 +150,27 @@ class ProductController extends Controller
         $product->quantity = $request->quantity;
         $product->description = $request->description;
         $product->img = $request->image;
-        if ($product->save()) {
-            return response()->json(['success' => true, 'message' => 'Product has been updated successfully']);
+        $product->save();
+
+
+
+        if ($request->variation_color) {
+            PVariation::where('product_id',$product->id)->delete();
+            for ($i = 0; $i < count($request->variation_color); $i++) {
+                $PVariation = new PVariation();
+                $PVariation->product_id = $product->id;
+                $PVariation->name = $request->variation_color[$i] . "-" . $request->variation_size[$i];
+                $imageName = time() . '.' . $request->variation_img[$i]->extension();
+                $request->variation_img[$i]->move(public_path('admin/uploads/variations'), $imageName);
+                $PVariation->img = isset($imageName) ? 'admin/uploads/variations' . $imageName : "";
+                $PVariation->color = isset($request->variation_color[$i]) ? $request->variation_color[$i] : '';
+                $PVariation->size = isset($request->variation_size[$i]) ? $request->variation_size[$i] : '';
+                $PVariation->qty = isset($request->variation_qty[$i]) ? $request->variation_qty[$i] : '';
+                $PVariation->price = isset($request->variation_price[$i]) ? $request->variation_price[$i] : '';
+                $PVariation->save();
+            }
         }
+        return response()->json(['success' => true, 'message' => 'Product has been updated successfully']);
     }
 
     /**

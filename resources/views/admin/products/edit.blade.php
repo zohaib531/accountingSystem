@@ -159,20 +159,20 @@
                                     <label class="col-form-label" for="product-variation">Product Variation<span
                                             class="text-danger">*</span></label>
                                     <div>
-                                        <input type="checkbox" name="variation" id="product-variation" value="1" />
+                                        <input type="checkbox" name="variation" id="product-variation" value="1" checked/>
                                     </div>
                                 </div>
-                                @endif
-                                <div class="form-group variation_show w-100" id="variation_show" style="display: none">
+
+                                <div class="form-group variation_show w-100" id="variation_show">
                                     <div class="multiselect-dropdown">
                                         <label for="">Color</label>
-                                        <select name='colors[]' id='colors' class=" select_2 w-100 js-states " multiple
+                                        <select name='colors[]' id='colors' class="select_2 w-100 js-states" multiple
                                             onchange="ProductsVariation()">
 
-
-                                            <option value="blue">blue</option>
-                                            <option value="red">red</option>
-                                            <option value="Black">Black</option>
+                                            <option value="blue" {{in_array('blue',$product->get_variations->pluck('color')->toArray())?'selected':''}}>blue</option>
+                                            <option value="red" {{in_array('red',$product->get_variations->pluck('color')->toArray())?'selected':''}}>red</option>
+                                            <option value="black" {{in_array('black',$product->get_variations->pluck('color')->toArray())?'selected':''}}>Black</option>
+                                            <option value="green" {{in_array('green',$product->get_variations->pluck('color')->toArray())?'selected':''}}>Green</option>
 
                                         </select>
                                     </div>
@@ -183,8 +183,9 @@
                                             onchange="ProductsVariation()">
 
 
-                                            <option value="md">medium</option>
-                                            <option value="lg">large</option>
+                                            <option value="sm" {{in_array('sm',$product->get_variations->pluck('size')->toArray())?'selected':''}}>small</option>
+                                            <option value="md" {{in_array('md',$product->get_variations->pluck('size')->toArray())?'selected':''}}>medium</option>
+                                            <option value="lg" {{in_array('lg',$product->get_variations->pluck('size')->toArray())?'selected':''}}>large</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -199,10 +200,23 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="variationjoints">
+                                                @foreach ($product->get_variations as $singleItem)
+                                                        <tr>
+                                                            <td><input type='text' name='variation_color[]' value='{{$singleItem->color}}' class='variation_style checked_val'/></td>
+                                                            <td><input type='text' name='variation_size[]' value='{{$singleItem->size}}' class='variation_style checked_val'/></td>
+                                                            <td><input type='file' name='variation_img[]' required  class='variation_style_only_img checked_val' /></td>
+                                                            <td><input type='number' name='variation_price[]' required class='form-control checked_val' value="{{$singleItem->price}}"/></td>
+                                                            <td><input type='number' name='variation_qty[]' required class='form-control checked_val' value="{{$singleItem->qty}}"/></td>
+                                                            <td ><button class='btn btn-danger' onclick="removeRow(this)">&#9986;</button></td>
+                                                        </tr>
+
+                                                @endforeach
+
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
+                                @endif
                                 <div class="form-group">
                                     <label class="col-form-label" for="product-descripton">Product descripton<span
                                             class="text-danger">*</span></label>
