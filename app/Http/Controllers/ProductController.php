@@ -9,7 +9,7 @@ use App\SubCategory;
 use Illuminate\Http\Request;
 use Validator;
 use App\Traits\ImageUploadTrait;
-
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -48,7 +48,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
         $validations = Validator::make($request->all(), [
             'category_id' => 'required',
             'sub_category_id' => 'required',
@@ -73,12 +72,12 @@ class ProductController extends Controller
         $products->img = $request->image;
 
         $products->save();
-        if ($request->variation_color) {
 
+        if ($request->variation_color) {
             for ($i = 0; $i < count($request->variation_color); $i++) {
                 $PVariation = new PVariation();
                 $PVariation->product_id = $products->id;
-                $PVariation->name = $request->variation_color[$i] . "_" . $request->variation_size[$i];
+                $PVariation->name = $request->variation_color[$i] . "-" . $request->variation_size[$i];
                 $imageName = time() . '.' . $request->variation_img[$i]->extension();
                 $request->variation_img[$i]->move(public_path('admin/uploads/variations'), $imageName);
                 $PVariation->img = isset($imageName) ? 'admin/uploads/variations' . $imageName : "";
@@ -111,12 +110,16 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   
-        
+    {
+
         $categories = Category::all();
         $sub_categories = SubCategory::all();
         $product = product::where('id', $id)->first();
-        return view('admin.products.edit', compact('categories', 'sub_categories', 'product'))->render();
+        $productVariation = DB::table('products')
+                                ->join('product_p_v', 'product_p_v.product_id' , 'products.id')
+                                ->get();
+   
+        return view('admin.products.edit', compact('categories', 'sub_categories', 'product', 'productVariation'))->render();
     }
 
     /**
@@ -128,7 +131,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-       
+
         $validations = Validator::make($request->all(), [
             'category_id' => 'required',
             'sub_category_id' => 'required',

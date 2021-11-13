@@ -42,6 +42,7 @@
                                     <th>Title</th>
                                     <th>Price</th>
                                     <th>Quantity</th>
+                                    <th>Variation</th>
                                     <th class="text-right w-25">Action</th>
                                 </tr>
                             </thead>
@@ -56,6 +57,13 @@
                                     <td>{{$product->title}}</td>
                                     <td>{{$product->price}}</td>
                                     <td>{{$product->quantity}}</td>
+                                    @if ($product->variation == '1')
+                                        <td>Has variation</td>
+                                    @else
+                                        <td>No variation</td>
+                                    @endif
+
+
                                     <td class="text-right">
                                         <a href="{{route('products.edit',$product->id)}}"><button class="btn btn-info text-white">Update</button></a>
                                         <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('products.destroy',$product->id) }}','{{route('products.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
