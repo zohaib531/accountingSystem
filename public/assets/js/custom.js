@@ -19,9 +19,9 @@ function commonFunction(confirmation=false,targetUrl,returnUrl,method,msg='',for
                             swal("success", data.message, "success").then((value) => {
                                 window.location = returnUrl;
                             });
-                        }else if(data.success==false){
+                        }else if(data.success==false ){
                             swal("warning", data.message, "warning").then((value) => {
-                                window.location = returnUrl;
+                                // window.location = returnUrl;
                             });
                         }
 
@@ -40,6 +40,7 @@ function commonFunction(confirmation=false,targetUrl,returnUrl,method,msg='',for
             contentType: false,
             data: fd,
             success: function (data) {
+
                 if (data.success == true) {
                     swal("success", data.message, "success").then((value) => {
                         window.location=returnUrl;

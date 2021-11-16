@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Inventory | Category')
+@section('title','Inventory | Account')
 
 @section('style')
     <link href="{{asset('assets/template/plugins/tables/css/datatable/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
@@ -13,7 +13,7 @@
     <div class="col p-md-0">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="{{route('categories.index')}}">All categories</a></li>
+            <li class="breadcrumb-item active"><a href="{{route('accounts.index')}}">All General Account</a></li>
         </ol>
     </div>
 </div>
@@ -26,11 +26,11 @@
                 <div class="card-body">
                     <div class="row m-0">
                         <div class="col-6 text-right">
-                            <h4 class="card-title">All Categories</h4>
+                            <h4 class="card-title">All General Accounts</h4>
                         </div>
                         <div class="col-6 text-right">
-                            @can('create-category')
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addCategory">Add new +</button>
+                            @can('create-account')
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addAccount">Add new +</button>
                             @endcan
                         </div>
                     </div>
@@ -39,26 +39,26 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Title</th>
-                                    @canany(['update-category' , 'delete-category'])
+                                    <th>General Accounts</th>
+                                    @canany(['update-Account' , 'delete-Account'])
                                         <th class="text-right w-25">Action</th>
                                     @endcanany
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($categories as $key=> $category)
+                                @foreach ($accounts as $key=> $Account)
                                 <tr>
 
                                     <td>{{++$key}}</td>
-                                    <td>{{$category->title}}</td>
+                                    <td>{{$Account->title}}</td>
 
-                                    @canany(['update-category' , 'delete-category'])
+                                    @canany(['update-Account' , 'delete-Account'])
                                         <td class="text-right">
-                                            @can('update-category')
-                                                <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateCategory" onclick="editResource('{{ route('categories.edit', $category->id) }}','.updateModalCategory')">Update</button>
+                                            @can('update-Account')
+                                                <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateAccount" onclick="editResource('{{ route('accounts.edit', $Account->id) }}','.updateModalAccount')">Update</button>
                                             @endcan
-                                            @can('delete-category')
-                                                <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('categories.destroy',$category->id) }}','{{route('categories.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
+                                            @can('delete-Account')
+                                                <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('accounts.destroy',$Account->id) }}','{{route('accounts.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
                                             @endcan
                                         </td>
                                     @endcanany
@@ -75,13 +75,13 @@
 <!-- #/ container -->
 
 
- <!--Add category modal start-->
+ <!--Add Account modal start-->
 
- <div class="modal fade addCategory" tabindex="-1" role="dialog" aria-hidden="true">
+ <div class="modal fade addAccount" tabindex="-1" role="dialog" aria-hidden="true">
      <div class="modal-dialog modal-lg">
          <div class="modal-content">
              <div class="modal-header">
-                 <h5 class="modal-title">Add category</h5>
+                 <h5 class="modal-title">Add General Account</h5>
                  <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                  </button>
              </div>
@@ -89,9 +89,9 @@
                 <div class="form-validation my-5">
                     <form class="form-valide" id="create-form">
                         <div class="form-group row">
-                            <label class="col-lg-2 col-form-label" for="val-category">Category title<span class="text-danger">*</span></label>
-                            <div class="col-lg-10">
-                                <input type="text" class="form-control" id="val-category" name="title" placeholder="Enter a category title..">
+                            <label class="col-lg-3 col-form-label" for="val-category">Head Account Name<span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" id="val-category" name="title" placeholder="Enter head account name..">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -103,7 +103,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('categories.store') }}','{{route('categories.index')}}','post','','create-form');">Save</button>
+                <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('accounts.store') }}','{{route('accounts.index')}}','post','','create-form');">Save</button>
              </div>
          </div>
      </div>
@@ -113,9 +113,9 @@
 
  <!--Update category modal start-->
 
- <div class="modal fade updateCategory" tabindex="-1" role="dialog" aria-hidden="true">
+ <div class="modal fade updateAccount" tabindex="-1" role="dialog" aria-hidden="true">
      <div class="modal-dialog modal-lg">
-         <div class="modal-content updateModalCategory">
+         <div class="modal-content updateModalAccount">
 
          </div>
      </div>

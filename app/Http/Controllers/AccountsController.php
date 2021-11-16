@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
+use App\Account;
 use Illuminate\Http\Request;
 use Validator;
 
-class CategoryController extends Controller
+class AccountsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:view-categories', ['only' => ['index']]);
-        $this->middleware('permission:create-category', ['only' => ['create', 'store']]);
-        $this->middleware('permission:update-category', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:delete-category', ['only' => ['destroy']]);
+        $this->middleware('permission:view-accounts', ['only' => ['index']]);
+        $this->middleware('permission:create-account', ['only' => ['create', 'store']]);
+        $this->middleware('permission:update-account', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:delete-account', ['only' => ['destroy']]);
     }
 
     /**
@@ -23,8 +23,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        return view('admin.categories.index',compact('categories'));
+        $accounts = Account::all();
+        return view('admin.accounts.index',compact('accounts'));
     }
 
     /**
@@ -34,7 +34,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        return view('admin.accounts.create');
     }
 
     /**
@@ -46,7 +46,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validations = Validator::make($request->all(),[
-            'title'=>'required || unique:categories'
+            'title'=>'required || unique:accounts'
         ]);
 
         if($validations->fails())
@@ -54,19 +54,19 @@ class CategoryController extends Controller
             return response()->json(['success' => false, 'message' => $validations->errors()]);
         }
 
-        $category = new Category();
-        $category->title = $request->title;
-        if($category->save()){
-            $category->code =  str_pad($category->id, 2, '0', STR_PAD_LEFT);
-            $category->save();
-            return response()->json(['success' => true, 'message' =>'Category has been added successfully']);
+        $account = new Account();
+        $account->title = $request->title;
+        if($account->save()){
+            $account->code =  str_pad($account->id, 2, '0', STR_PAD_LEFT);
+            $account->save();
+            return response()->json(['success' => true, 'message' =>'General Account has been added successfully']);
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param  \App\accounts  $accounts
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -77,20 +77,20 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param  \App\accounts  $accounts
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $category = Category::where('id',$id)->first();
-        return view('admin.categories.edit',compact('category'))->render();
+        $account = Account::where('id',$id)->first();
+        return view('admin.accounts.edit',compact('account'))->render();
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
+     * @param  \App\accounts  $accounts
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -104,23 +104,28 @@ class CategoryController extends Controller
             return response()->json(['success' => false, 'message' => $validations->errors()]);
         }
 
-        $category = Category::find($id);
-        $category->title = $request->title;
-        if($category->save()){
-            return response()->json(['success' => true, 'message' =>'Category has been updated successfully']);
+        $account = Account::find($id);
+        $account->title = $request->title;
+        if($account->save()){
+            return response()->json(['success' => true, 'message' =>'General Account has been updated successfully']);
         }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Category  $category
+     * @param  \App\accounts  $accounts
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        if(Category::where('id',$id)->delete()){
-            return response()->json(['success' => true, 'message' =>'Category has been deleted successfully']);
+        if(!Account::where('id',$id)->whereHas('get_sub_accounts')->exists()){
+            if(Account::where('id',$id)->delete()){
+                return response()->json(['success' => true, 'message' =>'General Account has been deleted successfully']);
+            }
+        }else{
+
+            return response()->json(['success' => false , 'redirect'=>false , 'message' =>'Please delete Sub Accounts first ']);
         }
     }
 }

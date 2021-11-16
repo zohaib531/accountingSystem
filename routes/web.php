@@ -39,7 +39,7 @@ Route::middleware(['auth'])->group(function(){
     Route::view('/dashboard','admin.index')->name('dashboard');
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
-    Route::resource('categories', CategoryController::class);
-    Route::resource('sub-categories', SubCategoryController::class);
+    Route::resource('accounts', AccountsController::class);
+    Route::resource('sub-accounts', SubAccountController::class);
     Route::resource('products', ProductController::class);
 });

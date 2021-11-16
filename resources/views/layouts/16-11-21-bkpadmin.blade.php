@@ -176,48 +176,39 @@
                     @endif
 
 
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="mdi mdi-account-group menu-icon"></i><span class="nav-text">Accounts</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            @can('view-accounts')
-                                <li>
-                                    <a href="{{ route('accounts.index') }}">General Accounts</a>
-                                </li>
-                            @endcan
-                            @can('view-sub-accounts')
-                                <li>
-                                    <a href="{{ route('sub-accounts.index') }}">Sub Accounts</a>
-                                </li>
-                            @endcan
-                        </ul>
-                    </li>
-
-
-                    @if (auth()->user()->can('view-products') ||
-                        auth()->user()->can('create-product'))
-                         @can('view-products')
+                    @if (auth()->user()->can('view-categories') ||
+                    auth()->user()->can('create-category'))
+                        @can('view-categories')
                             <li>
-                                <a href="{{ route('products.index') }}" aria-expanded="false">
-                                    <i class="mdi mdi-dropbox menu-icon"></i><span class="nav-text">Products</span>
+                                <a href="{{ route('categories.index') }}" aria-expanded="false">
+                                    <i class="icon-list menu-icon"></i><span class="nav-text">Categories</span>
                                 </a>
                             </li>
                         @endcan
                     @endif
 
+                    @if (auth()->user()->can('view-sub-categories') ||
+    auth()->user()->can('create-sub-category'))
+                        @can('view-sub-categories')<li><a href="{{ route('sub-categories.index') }}"
+                                    aria-expanded="false"><i class="icon-vector menu-icon"></i><span
+                                    class="nav-text">Sub-Categories</span> </a></li>@endcan
+                    @endif
+
+
+
 
                     @if (auth()->user()->can('view-products') ||
-                        auth()->user()->can('create-product'))
+    auth()->user()->can('create-product'))
                         <li>
                             <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                                <i class="mdi mdi-dropbox menu-icon"></i><span class="nav-text">Vouchers</span>
+                                <i class="mdi mdi-dropbox menu-icon"></i><span class="nav-text">Products</span>
                             </a>
                             <ul aria-expanded="false">
-                                @can('view-products') <li><a href="#">Sale/Purchase Voucher</a>
+                                @can('view-products') <li><a href="{{ route('products.index') }}">Product list</a>
                                     </li>
                                 @endcan
-                                @can('create-product') <li><a href="{{ route('products.create') }}">Journal Voucher</a>
+                                @can('create-product') <li><a href="{{ route('products.create') }}">Create
+                                            product</a>
                                 </li> @endcan
                             </ul>
                         </li>

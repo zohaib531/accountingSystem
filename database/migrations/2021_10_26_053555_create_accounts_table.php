@@ -2,9 +2,10 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubCategoriesTable extends Migration
+class CreateAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +14,15 @@ class CreateSubCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sub_categories', function (Blueprint $table) {
+        Schema::create('accounts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->string('code')->nullable();
             $table->string('title');
             $table->softDeletes();
             $table->timestamps();
         });
 
-        DB::statement('ALTER TABLE sub_categories MODIFY id INT(2) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT');
+        DB::statement('ALTER TABLE accounts MODIFY id INT(2) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT');
     }
 
     /**
@@ -32,6 +32,6 @@ class CreateSubCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_categories');
+        Schema::dropIfExists('accounts');
     }
 }
