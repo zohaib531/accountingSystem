@@ -29,7 +29,7 @@
                             <h4 class="card-title">All Products</h4>
                         </div>
                         <div class="col-6 text-right">
-                            <a href="{{route('products.create')}}" class="btn btn-primary">Add new +</a>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addProduct">Add new +</button>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -37,12 +37,8 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Code</th>
-                                    <th>Image</th>
                                     <th>Title</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Variation</th>
+                                    <th>Narration</th>
                                     <th class="text-right w-25">Action</th>
                                 </tr>
                             </thead>
@@ -50,24 +46,11 @@
                                 @foreach ($products as $key=> $product)
                                 <tr>
                                     <td>{{++$key}}</td>
-                                    <td>{{$product->product_code}}</td>
-                                    <td>
-                                        <img src="{{asset($product->img)}}" alt="" width="100" height="70" style="object-fit: cover">
-                                    </td>
                                     <td>{{$product->title}}</td>
-                                    <td>{{$product->price}}</td>
-                                    <td>{{$product->quantity}}</td>
-                                    @if ($product->variation == '1')
-                                        <td>Has variation</td>
-                                    @else
-                                        <td>No variation</td>
-                                    @endif
-
-
+                                    <td>{{$product->narration}}</td>
                                     <td class="text-right">
-                                        <a href="{{route('products.edit',$product->id)}}"><button class="btn btn-info text-white">Update</button></a>
+                                        <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateProduct" onclick="editResource('{{ route('products.edit', $product->id) }}','.updateModalProduct')">Update</button>
                                         <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('products.destroy',$product->id) }}','{{route('products.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
-                                        {{-- <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('categories.destroy',$category->id) }}','{{route('categories.index')}}','delete','Are you sure you want to delete?','');">Delete</button> --}}
                                     </td>
                                 </tr>
                                 @endforeach
@@ -81,6 +64,58 @@
     </div>
 </div>
 <!-- #/ container -->
+
+
+<!--Add subaccount modal start-->
+
+<div class="modal fade addProduct" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Products</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body px-5">
+               <div class="form-validation my-5">
+                   <form class="form-valide" id="create-form">
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label px-0" for="val-title">Product Name<span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" id="val-title" name="title" placeholder="Enter Product Name..">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label px-0" for="val-balance">Narration<span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" id="val-balance" name="narration" placeholder="Enter Narration..">
+                            </div>
+                        </div>
+                   </form>
+               </div>
+           </div>
+           <div class="modal-footer">
+               <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('products.store') }}','{{route('products.index')}}','post','','create-form');">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Add Product modal start-->
+
+
+ <!--Update Product modal start-->
+
+ <div class="modal fade updateProduct" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content updateModalProduct">
+
+        </div>
+    </div>
+</div>
+<!--Update Product modal start-->
+
 
 
 @endsection

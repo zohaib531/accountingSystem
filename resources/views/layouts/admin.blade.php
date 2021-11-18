@@ -80,7 +80,7 @@
                         <h4 class="text-white">AMS</h4>
                     </b>
                     <span class="brand-title">
-                        <h4 class="text-white">Accounts Management <br> System</h4>
+                        <h5 class="text-white">Accounts Management System</h5>
                     </span>
                 </a>
             </div>
@@ -214,7 +214,7 @@
                                 <i class="mdi mdi-dropbox menu-icon"></i><span class="nav-text">Vouchers</span>
                             </a>
                             <ul aria-expanded="false">
-                                @can('view-products') <li><a href="#">Sale/Purchase Voucher</a>
+                                @can('view-products') <li><a href="{{ route('salePurchase.index')}}">Sale/Purchase Voucher</a>
                                     </li>
                                 @endcan
                                 @can('create-product') <li><a href="{{ route('products.create') }}">Journal Voucher</a>

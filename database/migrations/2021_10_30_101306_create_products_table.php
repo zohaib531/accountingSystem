@@ -15,16 +15,9 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->softDeletes();
-            $table->unsignedInteger('account_id');
-            $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
-            $table->unsignedInteger('sub_account_id');
-            $table->foreign('sub_account_id')->references('id')->on('sub_accounts')->onDelete('cascade');
             $table->string('title');
-            $table->string('description');
-            $table->string('price');
-            $table->string('quantity');
-            $table->string('img');
+            $table->string('narration');
+            $table->softDeletes();
             $table->timestamps();
         });
 

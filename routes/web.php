@@ -1,5 +1,6 @@
 <?php
 
+use App\SalePurchaseVoucher;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,4 +43,5 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('accounts', AccountsController::class);
     Route::resource('sub-accounts', SubAccountController::class);
     Route::resource('products', ProductController::class);
+    Route::resource('salePurchase', SalePurchaseVoucherController::class);
 });

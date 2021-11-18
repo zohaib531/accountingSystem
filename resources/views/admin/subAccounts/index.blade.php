@@ -41,6 +41,7 @@
                                     <th>#</th>
                                     <th>General Accounts </th>
                                     <th>Sub Accounts</th>
+                                    <th>Opening Balance</th>
                                     @canany(['update-sub-account' , 'delete-sub-account'])
                                         <th class="text-right w-25">Action</th>
                                     @endcanany
@@ -53,6 +54,7 @@
                                     <td>{{++$key}}</td>
                                     <td>{{$sub_account->get_account->title}}</td>
                                     <td>{{$sub_account->title}}</td>
+                                    <td>{{$sub_account->opening_balance}}</td>
                                     @canany(['update-sub-account' , 'delete-sub-account'])
                                     <td class="text-right">
                                         @can('update-sub-account')
