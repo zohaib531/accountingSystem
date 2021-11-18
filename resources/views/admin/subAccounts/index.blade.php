@@ -112,15 +112,15 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label px-0" for="val-balance">Opening Balance<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input type="number" class="form-control" id="val-balance" name="opening_balance" placeholder="Enter Opening Balance..">
+                                <input type="number" class="form-control" id="val-balance" value="0" name="opening_balance" placeholder="Enter Opening Balance..">
                             </div>
                         </div>
                    </form>
                </div>
            </div>
            <div class="modal-footer">
-               <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
-               <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('sub-accounts.store') }}','{{route('sub-accounts.index')}}','post','','create-form');">Save</button>
+               <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-success text-white" onclick="commonFunction(false,'{{ route('sub-accounts.store') }}','{{route('sub-accounts.index')}}','post','','create-form');">Save</button>
             </div>
         </div>
     </div>

@@ -207,18 +207,23 @@
                     @endif
 
 
-                    @if (auth()->user()->can('view-products') ||
-                        auth()->user()->can('create-product'))
+                    @if (auth()->user()->can('') || auth()->user()->can(''))
                         <li>
                             <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                                 <i class="mdi mdi-dropbox menu-icon"></i><span class="nav-text">Vouchers</span>
                             </a>
                             <ul aria-expanded="false">
-                                @can('view-products') <li><a href="{{ route('salePurchase.index')}}">Sale/Purchase Voucher</a>
-                                    </li>
+                                @can('')
+                                <li>
+                                    <a href="{{ route('salePurchase.index')}}">Sale/Purchase Voucher</a>
+                                </li>
                                 @endcan
-                                @can('create-product') <li><a href="{{ route('products.create') }}">Journal Voucher</a>
-                                </li> @endcan
+
+                                @can('')
+                                <li>
+                                    <a href="{{ route('journal.index') }}">Journal Voucher</a>
+                                </li>
+                                @endcan
                             </ul>
                         </li>
                     @endif

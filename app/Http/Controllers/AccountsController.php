@@ -124,7 +124,6 @@ class AccountsController extends Controller
                 return response()->json(['success' => true, 'message' =>'General Account has been deleted successfully']);
             }
         }else{
-
             return response()->json(['success' => false , 'redirect'=>false , 'message' =>'Please delete Sub Accounts first ']);
         }
     }

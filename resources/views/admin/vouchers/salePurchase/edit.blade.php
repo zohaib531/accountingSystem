@@ -21,7 +21,7 @@
             <div class="col-5 pr-0">
                 <div class="form-group row m-0 align-items-center">
                     <label class="col-lg-2 col-form-label px-0" for="val-balance">Product<span class="text-danger">*</span></label>
-                    <div class="col-lg-10">
+                    <div class="col-lg-10 pr-2">
                         <select name="product_id" id="val-balance" class="form-control">
                             <option selected disabled>Please select product</option>
                             @foreach ($products as $product)
@@ -41,12 +41,12 @@
         <div class="row m-0 justify-content-between">
             <div class="col-3 px-0">
                 <div class="form-group row m-0 align-items-center">
-                    <label class="col-lg-12 col-form-label px-0" for="val-account">Select Account<span class="text-danger">*</span></label>
+                    <label class="col-lg-12 col-form-label px-0" for="val-account">Select Sub Account<span class="text-danger">*</span></label>
                     <div class="col-lg-12 pl-0 pr-2">
                         <select name="debit_account" id="val-account" class="form-control">
                             <option disabled>Please select account</option>
-                            @foreach ($accounts as $account)
-                                <option value="{{$account->id}}" {{$account->id == $sale_purchase_voucher->debit_account? 'selected':''}}>{{$account->title}}</option>
+                            @foreach ($subAccounts as $subAccount)
+                                <option value="{{$subAccount->id}}" {{$subAccount->id == $sale_purchase_voucher->debit_account? 'selected':''}}>{{$subAccount->title}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -54,25 +54,25 @@
             </div>
             <div class="col-2 pr-0">
                 <div class="form-group row m-0 align-items-center">
-                    <label class="col-lg-12 col-form-label px-0" for="val-quantity">Quantity<span class="text-danger">*</span></label>
+                    <label class="col-lg-12 col-form-label px-0" for="debit-quantity">Quantity<span class="text-danger">*</span></label>
                     <div class="col-lg-12 pl-0 pr-2">
-                        <input type="number" class="form-control" id="val-quantity" value="{{$sale_purchase_voucher->debit_quantity}}" name="debit_quantity" placeholder="Enter Quantity...">
+                        <input type="number" class="form-control" id="debit-quantity" value="{{$sale_purchase_voucher->debit_quantity}}" name="debit_quantity" placeholder="Enter Quantity..." oninput="setAmount(this , '#debit-rate' , '#credit-amount')">
                     </div>
                 </div>
             </div>
             <div class="col-2 pr-0">
                 <div class="form-group row m-0 align-items-center">
-                    <label class="col-lg-12 col-form-label px-0" for="val-rate">Rate<span class="text-danger">*</span></label>
+                    <label class="col-lg-12 col-form-label px-0" for="debit-rate">Rate<span class="text-danger">*</span></label>
                     <div class="col-lg-12 pl-0 pr-2">
-                        <input type="number" class="form-control" id="val-rate" value="{{$sale_purchase_voucher->debit_rate}}" name="debit_rate" placeholder="Enter Rate...">
+                        <input type="number" class="form-control" id="debit-rate" value="{{$sale_purchase_voucher->debit_rate}}" name="debit_rate" placeholder="Enter Rate..." oninput="setAmount(this , '#debit-quantity' , '#debit-amount')">
                     </div>
                 </div>
             </div>
             <div class="col-2 pr-0">
                 <div class="form-group row m-0 align-items-center">
-                    <label class="col-lg-12 col-form-label px-0" for="val-amount">Amount<span class="text-danger">*</span></label>
+                    <label class="col-lg-12 col-form-label px-0" for="debit-amount">Amount<span class="text-danger">*</span></label>
                     <div class="col-lg-12 pl-0 pr-2 ">
-                        <input type="number" class="form-control" id="val-amount" value="{{$sale_purchase_voucher->debit_amount}}" name="debit_amount"  placeholder="Enter Amount...">
+                        <input type="number" class="form-control" id="debit-amount" value="{{$sale_purchase_voucher->debit_amount}}" name="debit_amount"  value="0" readonly>
                     </div>
                 </div>
             </div>
@@ -82,13 +82,17 @@
                     <div class="col-lg-12 pl-0 pr-2">
                         <select name="debit_transaction_type" id="val-transaction-type" class="form-control">
                             <option selected disabled>Please select transaction type</option>
-                            <option value="abc">abc</option>
-                            <option value="abc1" selected>abc1</option>
-                            <option value="abc2">abc2</option>
+                            <option value="cash">Cash</option>
+                            <option value="check">Check</option>
+                            <option value="bank_transfer">Bank transfer</option>
                         </select>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="text-right pl-2 mt-3">
+            <button onclick="addNewDebit()" class="btn btn-secondary text-white" type="button">Add more +</button>
         </div>
         {{-- Debit Code end --}}
 
@@ -103,12 +107,12 @@
         <div class="row m-0 justify-content-between">
             <div class="col-3 px-0">
                 <div class="form-group row m-0 align-items-center">
-                    <label class="col-lg-12 col-form-label px-0" for="val-account">Select Account<span class="text-danger">*</span></label>
+                    <label class="col-lg-12 col-form-label px-0" for="val-account">Select Sub Account<span class="text-danger">*</span></label>
                     <div class="col-lg-12 pl-0 pr-2">
                         <select name="credit_account" id="val-account" class="form-control">
-                            <option selected disabled>Please select account</option>
-                            @foreach ($accounts as $account)
-                                <option value="{{$account->id}}" {{$account->id == $sale_purchase_voucher->credit_account? 'selected':''}}>{{$account->title}}</option>
+                            <option selected disabled>Please select sub account</option>
+                            @foreach ($subAccounts as $subAccount)
+                                <option value="{{$subAccount->id}}" {{$subAccount->id == $sale_purchase_voucher->credit_account? 'selected':''}}>{{$subAccount->title}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -116,25 +120,25 @@
             </div>
             <div class="col-2 pr-0">
                 <div class="form-group row m-0 align-items-center">
-                    <label class="col-lg-12 col-form-label px-0" for="val-quantity">Quantity<span class="text-danger">*</span></label>
+                    <label class="col-lg-12 col-form-label px-0" for="credit-quantity">Quantity<span class="text-danger">*</span></label>
                     <div class="col-lg-12 pl-0 pr-2">
-                        <input type="number" class="form-control" id="val-quantity" value="{{$sale_purchase_voucher->credit_quantity}}" name="credit_quantity" placeholder="Enter Quantity...">
+                        <input type="number" class="form-control" id="credit-quantity" value="{{$sale_purchase_voucher->credit_quantity}}" name="credit_quantity" placeholder="Enter Quantity..." oninput="setAmount(this , '#credit-rate' , '#credit-amount')">
                     </div>
                 </div>
             </div>
             <div class="col-2 pr-0">
                 <div class="form-group row m-0 align-items-center">
-                    <label class="col-lg-12 col-form-label px-0" for="val-rate">Rate<span class="text-danger">*</span></label>
+                    <label class="col-lg-12 col-form-label px-0" for="credit-rate">Rate<span class="text-danger">*</span></label>
                     <div class="col-lg-12 pl-0 pr-2">
-                        <input type="number" class="form-control" id="val-rate" value="{{$sale_purchase_voucher->credit_rate}}"   name="credit_rate" placeholder="Enter Rate...">
+                        <input type="number" class="form-control" id="credit-rate" value="{{$sale_purchase_voucher->credit_rate}}"   name="credit_rate" oninput="setAmount(this , '#credit-quantity' , '#credit-amount')">
                     </div>
                 </div>
             </div>
             <div class="col-2 pr-0">
                 <div class="form-group row m-0 align-items-center">
-                    <label class="col-lg-12 col-form-label px-0" for="val-amount">Amount<span class="text-danger">*</span></label>
+                    <label class="col-lg-12 col-form-label px-0" for="credit-amount">Amount<span class="text-danger">*</span></label>
                     <div class="col-lg-12 pl-0 pr-2 ">
-                        <input type="number" class="form-control" id="val-amount" value="{{$sale_purchase_voucher->credit_amount}}" name="credit_amount" placeholder="Enter Amount...">
+                        <input type="number" class="form-control" id="credit-amount" value="{{$sale_purchase_voucher->credit_amount}}" name="credit_amount" value="0" readonly>
                     </div>
                 </div>
             </div>
@@ -144,13 +148,17 @@
                     <div class="col-lg-12 pl-0 pr-2">
                         <select name="credit_transaction_type" id="val-transaction-type" class="form-control">
                             <option selected disabled>Please select transaction type</option>
-                            <option value="abc">abc</option>
-                            <option value="abc1" selected>abc1</option>
-                            <option value="abc2">abc2</option>
+                            <option value="cash">Cash</option>
+                            <option value="check">Check</option>
+                            <option value="bank_transfer">Bank transfer</option>
                         </select>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="text-right pl-2 mt-3">
+            <button onclick="addNewCredit()" class="btn btn-secondary text-white" type="button">Add more +</button>
         </div>
         {{-- Credit Code end --}}
 
@@ -161,6 +169,6 @@
    </div>
    </div>
 <div class="modal-footer">
-   <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
-   <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('salePurchase.update',$sale_purchase_voucher->id) }}','{{route('salePurchase.index')}}','post','','update-form');">Update</button>
+   <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Close</button>
+   <button type="button" class="btn btn-success" onclick="commonFunction(false,'{{ route('salePurchase.update',$sale_purchase_voucher->id) }}','{{route('salePurchase.index')}}','post','','update-form');">Update</button>
 </div>

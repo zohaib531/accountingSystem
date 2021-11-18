@@ -96,8 +96,8 @@
                </div>
            </div>
            <div class="modal-footer">
-               <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
-               <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('products.store') }}','{{route('products.index')}}','post','','create-form');">Save</button>
+               <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-success text-white" onclick="commonFunction(false,'{{ route('products.store') }}','{{route('products.index')}}','post','','create-form');">Save</button>
             </div>
         </div>
     </div>

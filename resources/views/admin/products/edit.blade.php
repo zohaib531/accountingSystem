@@ -29,6 +29,6 @@
    </div>
    </div>
 <div class="modal-footer">
-   <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
-   <button type="button" class="btn btn-primary" onclick="commonFunction(false,'{{ route('products.update',$product->id) }}','{{route('products.index')}}','post','','update-form');">Update</button>
+   <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Close</button>
+   <button type="button" class="btn btn-success text-white" onclick="commonFunction(false,'{{ route('products.update',$product->id) }}','{{route('products.index')}}','post','','update-form');">Update</button>
 </div>

@@ -133,8 +133,16 @@ class SubAccountController extends Controller
      */
     public function destroy($subAccount)
     {
-        if(SubAccount::where('id',$subAccount)->delete()){
-            return response()->json(['success' => true, 'message' =>'Sub Accounts has been deleted successfully']);
+        if(!SubAccount::where('id', $subAccount)->whereHas('get_debit_subaccount')->exists() && !SubAccount::where('id', $subAccount)->whereHas('get_credit_subaccount')->exists()){
+            if(SubAccount::where('id', $subAccount)->delete()){
+                return response()->json(['success' => true, 'message' =>'Sub Account has been deleted successfully']);
+            }
+        }else{
+            return response()->json(['success' => false , 'redirect'=>false , 'message' =>'Please delete vouchers first ']);
         }
+
+        // if(SubAccount::where('id',$subAccount)->delete()){
+        //     return response()->json(['success' => true, 'message' =>'Sub Accounts has been deleted successfully']);
+        // }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Account;
 use App\Product;
 use App\SalePurchaseVoucher;
+use App\SubAccount;
 use Validator;
 use Illuminate\Http\Request;
 
@@ -19,13 +20,13 @@ class SalePurchaseVoucherController extends Controller
     {
 
         $sale_purchase_vouchers = Product::join('sale_purchase_vouchers', 'products.id', 'sale_purchase_vouchers.product_id')
-            ->join('accounts', 'accounts.id', 'sale_purchase_vouchers.debit_account')
-            ->select('products.title as product_title', 'products.*', 'sale_purchase_vouchers.*', 'accounts.*', 'sale_purchase_vouchers.id as salePurchaseID')
+            ->join('sub_accounts', 'sub_accounts.id', 'sale_purchase_vouchers.debit_account')
+            ->select('products.title as product_title', 'products.*', 'sale_purchase_vouchers.*', 'sub_accounts.*', 'sale_purchase_vouchers.id as salePurchaseID')
             ->get();
-        $accounts = Account::select('id', 'title')->get();
+        $subAccounts = SubAccount::select('id', 'title')->get();
         $products = Product::select('id', 'title')->get();
         $data = [
-            'accounts' => $accounts,
+            'subAccounts' => $subAccounts,
             'products' => $products,
             'sale_purchase_vouchers' => $sale_purchase_vouchers,
         ];
@@ -61,7 +62,7 @@ class SalePurchaseVoucherController extends Controller
             'credit_account' => 'required',
             'credit_quantity' => 'required',
             'credit_rate' => 'required',
-            'credit_amount' => 'required|same:debit_amount',
+            'credit_amount' => 'required',
             'credit_transaction_type' => 'required'
         ]);
 
@@ -109,10 +110,10 @@ class SalePurchaseVoucherController extends Controller
     {
         $sale_purchase_voucher = SalePurchaseVoucher::where('id', $id)->first();
         // return $sale_purchase_voucher;
-        $accounts = Account::select('id', 'title')->get();
+        $subAccounts = SubAccount::select('id', 'title')->get();
         $products = Product::select('id', 'title')->get();
         $data = [
-            'accounts' => $accounts,
+            'subAccounts' => $subAccounts,
             'products' => $products,
             'sale_purchase_voucher' => $sale_purchase_voucher,
         ];
@@ -136,7 +137,7 @@ class SalePurchaseVoucherController extends Controller
             'debit_account' => 'required',
             'debit_quantity' => 'required',
             'debit_rate' => 'required',
-            'debit_amount' => 'required|same:credit_amount',
+            'debit_amount' => 'required',
             'debit_transaction_type' => 'required',
             'credit_account' => 'required',
             'credit_quantity' => 'required',
