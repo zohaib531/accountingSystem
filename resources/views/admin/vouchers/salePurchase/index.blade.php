@@ -46,23 +46,49 @@
                                     <th>#</th>
                                     <th>Sub Account</th>
                                     <th>Product</th>
-                                    <th>Debit Amount</th>
-                                    <th>Credit Amount</th>
+                                    <th colspan="2">Detials</th>
                                     <th class="text-right w-25">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-
-                                @foreach ($sale_purchase_vouchers as $key=> $sale_purchase_voucher)
+                                @foreach ($vouchers as $key=> $sale_purchase_voucher)
                                 <tr>
                                     <td>{{++$key}}</td>
                                     <td>{{$sale_purchase_voucher->title}}</td>
                                     <td>{{$sale_purchase_voucher->product_title}}</td>
-                                    <td>{{$sale_purchase_voucher->debit_amount}}</td>
-                                    <td>{{$sale_purchase_voucher->credit_amount}}</td>
+                                    <td colspan="2">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Product</th>
+                                                    <th>Entry Type</th>
+                                                    <th>Transaction Type</th>
+                                                    <th>Sub Account</th>
+                                                    <th>Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if($sale_purchase_voucher->voucherDetails->count()>0)
+                                                    @foreach($sale_purchase_voucher->voucherDetails as $detail)
+                                                        <tr>
+                                                            @php $str = $detail->entry_type."_amount";  @endphp
+                                                            <td>{{$detail->product_id}}</td>
+                                                            <td>{{ucfirst($detail->entry_type)}}</td>
+                                                            <td>{{ucfirst(str_replace('_',' ',$detail->transaction_type))}}</td>
+                                                            <td>{{$detail->account_id}}</td>
+                                                            <td>{{$detail->$str}}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+
+                                            </tbody>
+                                        </table>
+                                    </td>
                                     <td class="text-right">
-                                        <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateSalePurchase" onclick="editResource('{{ route('salePurchase.edit', $sale_purchase_voucher->salePurchaseID) }}','.updateModalSalePurchase')">Update</button>
-                                        <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('salePurchase.destroy', $sale_purchase_voucher->salePurchaseID) }}','{{route('salePurchase.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
+                                        {{-- <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateSalePurchase" onclick="editResource('{{ route('salePurchase.edit', $sale_purchase_voucher->salePurchaseID) }}','.updateModalSalePurchase')">Update</button> --}}
+                                        {{-- <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('salePurchase.destroy', $sale_purchase_voucher->salePurchaseID) }}','{{route('salePurchase.index')}}','delete','Are you sure you want to delete?','');">Delete</button> --}}
+                                        <button class="btn btn-info text-white btn-sm" data-toggle="modal" data-target=".updateSalePurchase" onclick="editResource('{{ route('salePurchase.edit', $sale_purchase_voucher->id) }}','.updateModalSalePurchase')">Update</button>
+                                        <button class="btn btn-danger btn-sm" onclick="commonFunction(true,'{{ route('salePurchase.destroy', $sale_purchase_voucher->id) }}','{{route('salePurchase.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -91,7 +117,6 @@
             <div class="modal-body px-5">
                <div class="form-validation my-5">
                    <form class="form-valide" id="create-form">
-                       <input type="hidden" value="0" name="voucher_type">
                         <div class="row m-0 justify-content-between">
                             <div class="col-5 pl-0">
                                 <div class="form-group row m-0 align-items-center">

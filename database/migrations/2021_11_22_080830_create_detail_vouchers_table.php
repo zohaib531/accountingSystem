@@ -19,10 +19,11 @@ class CreateDetailVouchersTable extends Migration
             $table->foreign('voucher_id')->references('id')->on('vouchers')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('product_id')->nullable();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->string('account');
+            $table->integer('account_id');
             $table->string('transaction_type');
-            $table->integer('debit');
-            $table->integer('credit');
+            $table->string('entry_type');
+            $table->integer('debit_amount')->default(0);
+            $table->integer('credit_amount')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

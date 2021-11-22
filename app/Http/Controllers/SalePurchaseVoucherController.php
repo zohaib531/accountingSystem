@@ -21,16 +21,17 @@ class SalePurchaseVoucherController extends Controller
     public function index()
     {
 
-        $sale_purchase_vouchers = Product::join('sale_purchase_vouchers', 'products.id', 'sale_purchase_vouchers.product_id')
-            ->join('sub_accounts', 'sub_accounts.id', 'sale_purchase_vouchers.account')
-            ->select('products.title as product_title', 'products.*', 'sale_purchase_vouchers.*', 'sub_accounts.*', 'sale_purchase_vouchers.id as salePurchaseID')
-            ->get();
+        // $vouchers = Product::join('vouchers', 'products.id', 'vouchers.product_id')
+        //     ->join('sub_accounts', 'sub_accounts.id', 'vouchers.account')
+        //     ->select('products.title as product_title', 'products.*', 'vouchers.*', 'sub_accounts.*', 'vouchers.id as salePurchaseID')
+        //     ->get();
+        $vouchers = Voucher::all();
         $subAccounts = SubAccount::select('id', 'title')->get();
         $products = Product::select('id', 'title')->get();
         $data = [
             'subAccounts' => $subAccounts,
             'products' => $products,
-            'sale_purchase_vouchers' => $sale_purchase_vouchers,
+            'vouchers' => $vouchers,
         ];
         return view('admin.vouchers.salePurchase.index', $data);
     }
@@ -53,6 +54,7 @@ class SalePurchaseVoucherController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $validations = Validator::make($request->all(), [
             'date' => 'required',
             'debit_total' => 'required|same:credit_total',
@@ -65,19 +67,20 @@ class SalePurchaseVoucherController extends Controller
 
         $sale_purchase_voucher = new Voucher();
         $sale_purchase_voucher->date = $request->date;
-        $sale_purchase_voucher->naration = $request->naration;
-        $sale_purchase_voucher->debit_total = $request->debit_total;
-        $sale_purchase_voucher->credit_total = $request->credit_total;
-        $sale_purchase_voucher->voucher_type = $request->voucher_type;
+        $sale_purchase_voucher->total_debit = $request->debit_total;
+        $sale_purchase_voucher->total_credit = $request->credit_total;
         $sale_purchase_voucher->save();
         foreach ($request->credits as $key => $credit) {
-            $sale_purchase_voucher_detail = new DetailVoucher();
-            $sale_purchase_voucher_detail->voucher_id = $sale_purchase_voucher->id;
-            $sale_purchase_voucher_detail->product_id = isset($request->product_ids[$key])?$request->product_ids[$key]:'';
-            $sale_purchase_voucher_detail->account = isset($request->accounts[$key])?$request->accounts[$key]:'';
-            $sale_purchase_voucher_detail->transaction_type = isset($request->transaction_types[$key])?$request->transaction_types[$key]:'';
+            $detail_vouchers = new DetailVoucher();
+            $detail_vouchers->voucher_id = $sale_purchase_voucher->id;
+            $detail_vouchers->product_id = isset($request->product_ids[$key])?$request->product_ids[$key]:'';
+            $detail_vouchers->account_id = isset($request->accounts[$key])?$request->accounts[$key]:'';
+            $detail_vouchers->transaction_type = isset($request->transaction_types[$key])?$request->transaction_types[$key]:'';
+            $detail_vouchers->debit_amount = isset($request->debits[$key])?$request->debits[$key]:0;
+            $detail_vouchers->credit_amount = isset($request->credits[$key])?$request->credits[$key]:0;
+            $detail_vouchers->entry_type = isset($request->debits[$key]) && $request->debits[$key]!=0?'debit':'credit';
 
-            $sale_purchase_voucher_detail->save();
+            $detail_vouchers->save();
 
         }
 

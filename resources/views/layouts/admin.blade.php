@@ -41,6 +41,10 @@
             border: none;
             width: 120% !important;
         }
+        .form-control{
+            height: 38px !important;
+            min-height: 38px !important;
+        }
 
     </style>
     @yield('style')

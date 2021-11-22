@@ -16,10 +16,8 @@ class CreateVouchersTable extends Migration
         Schema::create('vouchers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('date');
-            $table->string('naration')->nullable();
-            $table->string('voucher_type');
-            $table->integer('debit_total')->default(0);
-            $table->integer('credit_total')->default(0);
+            $table->integer('total_debit')->default(0);
+            $table->integer('total_credit')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });
