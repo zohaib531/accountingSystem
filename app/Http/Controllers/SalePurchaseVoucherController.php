@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Account;
+use App\DetailVoucher;
 use App\Product;
 use App\SalePurchaseVoucher;
 use App\SubAccount;
+use App\Voucher;
 use Validator;
 use Illuminate\Http\Request;
 
@@ -20,7 +22,7 @@ class SalePurchaseVoucherController extends Controller
     {
 
         $sale_purchase_vouchers = Product::join('sale_purchase_vouchers', 'products.id', 'sale_purchase_vouchers.product_id')
-            ->join('sub_accounts', 'sub_accounts.id', 'sale_purchase_vouchers.debit_account')
+            ->join('sub_accounts', 'sub_accounts.id', 'sale_purchase_vouchers.account')
             ->select('products.title as product_title', 'products.*', 'sale_purchase_vouchers.*', 'sub_accounts.*', 'sale_purchase_vouchers.id as salePurchaseID')
             ->get();
         $subAccounts = SubAccount::select('id', 'title')->get();
@@ -53,38 +55,31 @@ class SalePurchaseVoucherController extends Controller
     {
         $validations = Validator::make($request->all(), [
             'date' => 'required',
-            'product_id' => 'required',
-            'debit_account' => 'required',
-            'debit_quantity' => 'required',
-            'debit_rate' => 'required',
-            'debit_amount' => 'required|same:credit_amount',
-            'debit_transaction_type' => 'required',
-            'credit_account' => 'required',
-            'credit_quantity' => 'required',
-            'credit_rate' => 'required',
-            'credit_amount' => 'required',
-            'credit_transaction_type' => 'required'
+            'debit_total' => 'required|same:credit_total',
+            'credit_total' => 'required',
         ]);
 
         if ($validations->fails()) {
             return response()->json(['success' => false, 'message' => $validations->errors()]);
         }
 
-        $sale_purchase_voucher = new SalePurchaseVoucher();
+        $sale_purchase_voucher = new Voucher();
         $sale_purchase_voucher->date = $request->date;
-        $sale_purchase_voucher->product_id = $request->product_id;
-        $sale_purchase_voucher->debit_account = $request->debit_account;
-        $sale_purchase_voucher->debit_quantity = $request->debit_quantity;
-        $sale_purchase_voucher->debit_rate = $request->debit_rate;
-        $sale_purchase_voucher->debit_amount = $request->debit_amount;
-        $sale_purchase_voucher->debit_transaction_type = $request->debit_transaction_type;
-        $sale_purchase_voucher->credit_account = $request->credit_account;
-        $sale_purchase_voucher->credit_quantity = $request->credit_quantity;
-        $sale_purchase_voucher->credit_rate = $request->credit_rate;
-        $sale_purchase_voucher->credit_amount = $request->credit_amount;
-        $sale_purchase_voucher->credit_transaction_type = $request->credit_transaction_type;
-
+        $sale_purchase_voucher->naration = $request->naration;
+        $sale_purchase_voucher->debit_total = $request->debit_total;
+        $sale_purchase_voucher->credit_total = $request->credit_total;
+        $sale_purchase_voucher->voucher_type = $request->voucher_type;
         $sale_purchase_voucher->save();
+        foreach ($request->credits as $key => $credit) {
+            $sale_purchase_voucher_detail = new DetailVoucher();
+            $sale_purchase_voucher_detail->voucher_id = $sale_purchase_voucher->id;
+            $sale_purchase_voucher_detail->product_id = isset($request->product_ids[$key])?$request->product_ids[$key]:'';
+            $sale_purchase_voucher_detail->account = isset($request->accounts[$key])?$request->accounts[$key]:'';
+            $sale_purchase_voucher_detail->transaction_type = isset($request->transaction_types[$key])?$request->transaction_types[$key]:'';
+
+            $sale_purchase_voucher_detail->save();
+
+        }
 
         return response()->json(['success' => true, 'message' => 'Sale/Purchase voucher has been added successfully']);
     }
@@ -134,16 +129,12 @@ class SalePurchaseVoucherController extends Controller
         $validations = Validator::make($request->all(), [
             'date' => 'required',
             'product_id' => 'required',
-            'debit_account' => 'required',
-            'debit_quantity' => 'required',
-            'debit_rate' => 'required',
-            'debit_amount' => 'required',
-            'debit_transaction_type' => 'required',
-            'credit_account' => 'required',
-            'credit_quantity' => 'required',
-            'credit_rate' => 'required',
-            'credit_amount' => 'required|same:debit_amount',
-            'credit_transaction_type' => 'required'
+            'account' => 'required',
+            'transaction_type' => 'required',
+            'debit.*' => 'required',
+            'credit.*' => 'required',
+            'debit_total' => 'required',
+            'credit_total' => 'required|same:debit_total',
         ]);
 
         if ($validations->fails()) {
@@ -153,16 +144,10 @@ class SalePurchaseVoucherController extends Controller
         SalePurchaseVoucher::where('id', $id)->update([
             'date' => $request->date,
             'product_id' => $request->product_id,
-            'debit_account' => $request->debit_account,
-            'debit_quantity' => $request->debit_quantity,
-            'debit_rate' => $request->debit_rate,
-            'debit_amount' => $request->debit_amount,
-            'debit_transaction_type' => $request->debit_transaction_type,
-            'credit_account' => $request->credit_account,
-            'credit_quantity' => $request->credit_quantity,
-            'credit_rate' => $request->credit_rate,
-            'credit_amount' => $request->credit_amount,
-            'credit_transaction_type' => $request->credit_transaction_type,
+            'account' => $request->account,
+            'debit_total' => $request->debit_total,
+            'transaction_type' => $request->transaction_type,
+            'credit_total' => $request->credit_total,
 
 
         ]);
