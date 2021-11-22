@@ -16,13 +16,8 @@ class CreateJournalVouchersTable extends Migration
         Schema::create('journal_vouchers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('date');
-            $table->string('naration');
-            $table->integer('debit_account_id');
-            $table->integer('debit_amount');
-            $table->string('debit_transaction_type');
-            $table->integer('credit_account_id');
-            $table->integer('credit_amount');
-            $table->string('credit_transaction_type');
+            $table->integer('total_debit');
+            $table->integer('total_credit');
             $table->softDeletes();
             $table->timestamps();
         });

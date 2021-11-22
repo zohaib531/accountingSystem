@@ -19,4 +19,8 @@ class JournalVoucher extends Model
         return $this->belongsTo(SubAccount::class, 'credit_account_id','id');
     }
     
+
+    public function voucherDetails(){
+        return $this->hasMany(JournalVoucherDetail::class,'voucher_id','id');
+    }
 }

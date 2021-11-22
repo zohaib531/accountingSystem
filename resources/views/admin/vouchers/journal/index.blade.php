@@ -45,52 +45,45 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Date</th>
-                                    <th>Naration</th>
-                                    <th>Type</th>
-                                    <th>Sub Account</th>
+                                    <th colspan="2">Details</th>
+                                    {{-- <th>Sub Account</th>
                                     <th>Amount</th>
-                                    <th>Transaction Type</th>
+                                    <th>Transaction Type</th> --}}
                                     <th class="text-right w-25">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {{-- @dd($subAccountsDebit) --}}
-                                @foreach ($journal_vouchers as $key=> $journal_voucher)
+                                @foreach ($journal_vouchers as $key=> $journalVoucher)
                                 <tr>
                                     <td>{{++$key}}</td>
-                                    <td>{{$journal_voucher->date }}</td>
-                                    <td>{{$journal_voucher->naration }}</td>
-                                    <td>
-                                        <h5>Debit</h5>
-                                        <h5 class="mt-4">Credit</h5>
+                                    <td>{{$journalVoucher->date }}</td>
+                                    <td colspan="2">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Naration</th>
+                                                    <th>Entry Type</th>
+                                                    <th>Transaction Type</th>
+                                                    <th>Sub Account</th>
+                                                    <th>Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Naration</td>
+                                                    <td>Entry Type</td>
+                                                    <td>Transaction Type</td>
+                                                    <td>Sub Account</td>
+                                                    <td>Amount</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </td>
-                                    <td>
-                                        <div>
-                                            {{$journal_voucher->get_debit_subaccount->title }}
-                                        </div>
-                                        <div class="mt-4">
-                                            {{$journal_voucher->get_credit_subaccount->title }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            {{$journal_voucher->debit_amount}}
-                                        </div>
-                                        <div class="mt-4">
-                                            {{$journal_voucher->credit_amount}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            {{ucfirst(str_replace('_', ' ',$journal_voucher->debit_transaction_type))}}
-                                        </div>
-                                        <div class="mt-4">
-                                            {{ucfirst(str_replace('_', ' ',$journal_voucher->credit_transaction_type))}}
-                                        </div>
-                                    </td>
+
                                     <td class="text-right">
-                                        <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateJournal" onclick="editResource('{{ route('journal.edit', $journal_voucher->id) }}','.updateModalJournal')">Update</button>
-                                        <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('journal.destroy', $journal_voucher->id) }}','{{route('journal.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
+                                        <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateJournal" onclick="editResource('{{ route('journal.edit', $journalVoucher->id) }}','.updateModalJournal')">Update</button>
+                                        <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('journal.destroy', $journalVoucher->id) }}','{{route('journal.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -153,7 +146,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-12 col-form-label px-0" for="val-naration">Naration<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="text" class="form-control" id="val-naration" name="naration" placeholder="Naration..">
+                                            <input type="text" class="form-control" id="val-naration" name="narations[]" placeholder="Naration..">
                                         </div>
                                     </div>
                                 </div>
@@ -162,7 +155,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-12 col-form-label px-0" for="val-transaction-type">Transaction Type<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <select name="transaction_types" id="val-transaction-type" class="form-control">
+                                            <select name="transaction_types[]" id="val-transaction-type" class="form-control">
                                                 <option selected disabled>Transaction type</option>
                                                 <option value="cash">Cash</option>
                                                 <option value="check">Check</option>
@@ -210,7 +203,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="text" class="form-control" id="val-naration" name="naration" placeholder="Naration..">
+                                            <input type="text" class="form-control" id="val-naration" name="narations[]" placeholder="Naration..">
                                         </div>
                                     </div>
                                 </div>
@@ -219,7 +212,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <select name="transaction_types" id="val-transaction-type" class="form-control">
+                                            <select name="transaction_types[]" id="val-transaction-type" class="form-control">
                                                 <option selected disabled>Transaction type</option>
                                                 <option value="cash">Cash</option>
                                                 <option value="check">Check</option>
@@ -264,7 +257,7 @@
                                         <div class="form-group row m-0 align-items-center">
                                             <label class="col-lg-12 col-form-label px-0" for="debit-amount">Total Debit<span class="text-danger">*</span></label>
                                             <div class="col-lg-12 pl-0 pr-2 ">
-                                                <input type="number" class="form-control" id="debit-amount" name="debit_total" value="0" readonly>
+                                                <input type="number" class="form-control" id="debit-amount" name="total_debit" value="0" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -272,7 +265,7 @@
                                         <div class="form-group row m-0 align-items-center">
                                             <label class="col-lg-12 col-form-label px-0" for="credit-amount">Total Credit<span class="text-danger">*</span></label>
                                             <div class="col-lg-12 pl-0 pr-2 ">
-                                                <input type="number" class="form-control" id="credit-amount" name="credit_total" value="0" readonly>
+                                                <input type="number" class="form-control" id="credit-amount" name="total_credit" value="0" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -340,7 +333,7 @@ const addNewRow=(id)=>{
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="text" class="form-control" id="val-naration" name="naration" placeholder="Naration..">
+                                            <input type="text" class="form-control" id="val-naration" name="narations[]" placeholder="Naration..">
                                         </div>
                                     </div>
                                 </div>
@@ -349,7 +342,7 @@ const addNewRow=(id)=>{
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <select name="transaction_types" id="val-transaction-type" class="form-control">
+                                            <select name="transaction_types[]" id="val-transaction-type" class="form-control">
                                                 <option selected disabled>Transaction type</option>
                                                 <option value="cash">Cash</option>
                                                 <option value="check">Check</option>
