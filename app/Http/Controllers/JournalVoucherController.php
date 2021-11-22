@@ -21,11 +21,7 @@ class JournalVoucherController extends Controller
 
         $subAccounts = SubAccount::select('id', 'title')->get();
         $journal_vouchers = JournalVoucher::all();
-        $data = [
-            'subAccounts' => $subAccounts,
-            'journal_vouchers' => $journal_vouchers,
-        ];
-        return view('admin.vouchers.journal.index', $data);
+        return view('admin.vouchers.journal.index', ['subAccounts' => $subAccounts,'journal_vouchers' => $journal_vouchers]);
     }
 
     /**
@@ -59,9 +55,9 @@ class JournalVoucherController extends Controller
         // }
         $validations = Validator::make($request->all(), [
             'date' => 'required',
-            'narations' => 'required',
-            'accounts' => 'required',
-            'transaction_types' => 'required',
+            'narations.*' => 'required',
+            'accounts.*' => 'required',
+            'transaction_types.*' => 'required',
             'total_debit' => 'required|same:total_credit',
         ]);
 

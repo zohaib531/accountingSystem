@@ -45,11 +45,10 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Date</th>
+                                    <th>Total Debit</th>
+                                    <th>Total Credit</th>
                                     <th colspan="2">Details</th>
-                                    {{-- <th>Sub Account</th>
-                                    <th>Amount</th>
-                                    <th>Transaction Type</th> --}}
-                                    <th class="text-right w-25">Action</th>
+                                    <th class="text-right">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,6 +57,8 @@
                                 <tr>
                                     <td>{{++$key}}</td>
                                     <td>{{$journalVoucher->date }}</td>
+                                    <td>{{$journalVoucher->total_debit }}</td>
+                                    <td>{{$journalVoucher->total_credit }}</td>
                                     <td colspan="2">
                                         <table>
                                             <thead>
@@ -70,20 +71,26 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>Naration</td>
-                                                    <td>Entry Type</td>
-                                                    <td>Transaction Type</td>
-                                                    <td>Sub Account</td>
-                                                    <td>Amount</td>
-                                                </tr>
+                                                @if($journalVoucher->voucherDetails->count()>0)
+                                                    @foreach($journalVoucher->voucherDetails as $detail)
+                                                        <tr>
+                                                            @php $str = $detail->entry_type."_amount";  @endphp
+                                                            <td>{{$detail->narration}}</td>
+                                                            <td>{{ucfirst($detail->entry_type)}}</td>
+                                                            <td>{{ucfirst(str_replace('_',' ',$detail->transaction_type))}}</td>
+                                                            <td>{{$detail->account_id}}</td>
+                                                            <td>{{$detail->$str}}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                                
                                             </tbody>
                                         </table>
                                     </td>
 
                                     <td class="text-right">
-                                        <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateJournal" onclick="editResource('{{ route('journal.edit', $journalVoucher->id) }}','.updateModalJournal')">Update</button>
-                                        <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('journal.destroy', $journalVoucher->id) }}','{{route('journal.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
+                                        <button class="btn btn-info text-white btn-sm" data-toggle="modal" data-target=".updateJournal" onclick="editResource('{{ route('journal.edit', $journalVoucher->id) }}','.updateModalJournal')">Update</button>
+                                        <button class="btn btn-danger btn-sm" onclick="commonFunction(true,'{{ route('journal.destroy', $journalVoucher->id) }}','{{route('journal.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -146,7 +153,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-12 col-form-label px-0" for="val-naration">Naration<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="text" class="form-control" id="val-naration" name="narations[]" placeholder="Naration..">
+                                            <input type="text" class="form-control" id="val-naration" name="narrations[]" placeholder="Naration..">
                                         </div>
                                     </div>
                                 </div>
@@ -156,8 +163,7 @@
                                         <label class="col-lg-12 col-form-label px-0" for="val-transaction-type">Transaction Type<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2">
                                             <select name="transaction_types[]" id="val-transaction-type" class="form-control">
-                                                <option selected disabled>Transaction type</option>
-                                                <option value="cash">Cash</option>
+                                                <option selected value="cash">Cash</option>
                                                 <option value="check">Check</option>
                                                 <option value="bank_transfer">Bank transfer</option>
                                             </select>
@@ -213,8 +219,7 @@
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2">
                                             <select name="transaction_types[]" id="val-transaction-type" class="form-control">
-                                                <option selected disabled>Transaction type</option>
-                                                <option value="cash">Cash</option>
+                                                <option selected value="cash">Cash</option>
                                                 <option value="check">Check</option>
                                                 <option value="bank_transfer">Bank transfer</option>
                                             </select>
@@ -333,7 +338,7 @@ const addNewRow=(id)=>{
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="text" class="form-control" id="val-naration" name="narations[]" placeholder="Naration..">
+                                            <input type="text" class="form-control" id="val-naration" name="narrations[]" placeholder="Naration..">
                                         </div>
                                     </div>
                                 </div>
