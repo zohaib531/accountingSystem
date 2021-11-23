@@ -111,7 +111,7 @@ class SalePurchaseVoucherController extends Controller
         $data = [
             'subAccounts' => $subAccounts,
             'products' => $products,
-            'sale_purchase_voucher' => $sale_purchase_voucher,
+            'voucher' => $sale_purchase_voucher,
         ];
         return view('admin.vouchers.salePurchase.edit', $data)->render();
     }
