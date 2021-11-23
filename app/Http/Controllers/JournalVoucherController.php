@@ -46,6 +46,8 @@ class JournalVoucherController extends Controller
             'date' => 'required',
             'narations.*' => 'required',
             'accounts.*' => 'required',
+            'debits.*' => 'required',
+            'credits.*' => 'required',
             'transaction_types.*' => 'required',
             'total_debit' => 'required|same:total_credit',
         ]);
@@ -114,6 +116,8 @@ class JournalVoucherController extends Controller
             'date' => 'required',
             'narations.*' => 'required',
             'accounts.*' => 'required',
+            'debits.*' => 'required',
+            'credits.*' => 'required',
             'transaction_types.*' => 'required',
             'total_debit' => 'required|same:total_credit',
         ]);
