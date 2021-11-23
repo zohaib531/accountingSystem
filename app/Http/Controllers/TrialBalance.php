@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Validator;
+use App\Voucher;
 class TrialBalance extends Controller
 {
     public function index()
@@ -22,9 +23,9 @@ class TrialBalance extends Controller
             return response()->json(['success' => false, 'message' => $validations->errors()]);
         }
 
-        $data = Voucher::whereBetween('date',[$request->start_date, $request->end_date])
+        $vouchers = Voucher::whereBetween('date',[$request->start_date, $request->end_date])
          ->get();
         
-        return $data;
+         return view('admin.reports.trial_balance.index',compact('vouchers','request'));
     }
 }
