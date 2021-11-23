@@ -61,11 +61,11 @@
                                         <table class="w-100">
                                             <thead>
                                                 <tr>
-                                                    <th>Entry Type</th>
                                                     <th>Sub Account</th>
                                                     <th>Naration</th>
                                                     <th>Transaction Type</th>
-                                                    <th>Amount</th>
+                                                    <th>Debit</th>
+                                                    <th>Credit</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -73,11 +73,11 @@
                                                     @foreach($journalVoucher->voucherDetails as $detail)
                                                         <tr>
                                                             @php $str = $detail->entry_type."_amount";  @endphp
-                                                            <th>{{ucfirst($detail->entry_type)}}</th>
                                                             <td>{{$detail->subAccount->title}}</td>
                                                             <td>{{$detail->narration}}</td>
                                                             <td>{{ucfirst(str_replace('_',' ',$detail->transaction_type))}}</td>
-                                                            <td>{{$detail->$str}}</td>
+                                                            <td>{{ $detail->debit_amount!=0?$detail->debit_amount:"" }}</td>
+                                                            <td>{{ $detail->credit_amount!=0?$detail->credit_amount:"" }}</td>
                                                         </tr>
                                                     @endforeach
                                                 @endif
@@ -381,9 +381,6 @@ const addNewRow=(id)=>{
                     `);
 }
 
-setInterval(function(){
-    console.log("fine");
-},1000);
 </script>
 
 

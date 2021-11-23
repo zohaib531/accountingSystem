@@ -60,11 +60,11 @@
                                         <table class="w-100">
                                             <thead>
                                                 <tr>
-                                                    <th>Entry Type</th>
                                                     <th>Sub Account</th>
                                                     <th>Product</th>
                                                     <th>Transaction Type</th>
-                                                    <th>Amount</th>
+                                                    <th>Debit</th>
+                                                    <th>Credit</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -72,11 +72,12 @@
                                                     @foreach($sale_purchase_voucher->voucherDetails as $detail)
                                                         <tr>
                                                             @php $str = $detail->entry_type."_amount";  @endphp
-                                                            <th>{{ucfirst($detail->entry_type)}}</th>
+                                                            {{-- <th>{{ucfirst($detail->entry_type)}}</th> --}}
                                                             <td>{{$detail->subAccount->title}}</td>
                                                             <td>{{$detail->product->title."-".$detail->product->narration}}</td>
                                                             <td>{{ucfirst(str_replace('_',' ',$detail->transaction_type))}}</td>
-                                                            <td>{{$detail->$str}}</td>
+                                                            <td>{{ $detail->debit_amount!=0?$detail->debit_amount:"" }}</td>
+                                                            <td>{{ $detail->credit_amount!=0?$detail->credit_amount:"" }}</td>
                                                         </tr>
                                                     @endforeach
                                                 @endif
@@ -86,7 +87,7 @@
                                     </td>
                                     <td>{{$sale_purchase_voucher->total_debit }}</td>
                                     <td>{{$sale_purchase_voucher->total_credit }}</td>
-                                    <td>
+                                    <td class="text-right">
                                         {{-- <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateSalePurchase" onclick="editResource('{{ route('salePurchase.edit', $sale_purchase_voucher->salePurchaseID) }}','.updateModalSalePurchase')">Update</button> --}}
                                         {{-- <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('salePurchase.destroy', $sale_purchase_voucher->salePurchaseID) }}','{{route('salePurchase.index')}}','delete','Are you sure you want to delete?','');">Delete</button> --}}
                                         <button class="btn btn-info text-white btn-sm" data-toggle="modal" data-target=".updateSalePurchase" onclick="editResource('{{ route('salePurchase.edit', $sale_purchase_voucher->id) }}','.updateModalSalePurchase')">Update</button>
