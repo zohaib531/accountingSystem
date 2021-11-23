@@ -166,4 +166,5 @@ class JournalVoucherController extends Controller
             return response()->json(['success' => true, 'message' => 'Voucher has been deleted successfully']);
         }
     }
+
 }
