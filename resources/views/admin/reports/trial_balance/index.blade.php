@@ -47,7 +47,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-6 text-right">
+                            <div class="col-6">
                                 <button class="btn btn-primary">Create Report +</button>
                             </div>
                         </div>
