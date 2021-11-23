@@ -15,7 +15,7 @@
                          <div class="form-group row m-0 align-items-center">
                              <label class="col-lg-2 col-form-label px-0" for="val-date">Date<span class="text-danger">*</span></label>
                              <div class="col-lg-10">
-                                 <input type="date" class="form-control" id="val-date" name="date" value="">
+                                 <input type="date" class="form-control" id="val-date" name="date" value="{{$voucher->date}}">
                              </div>
                          </div>
                      </div>
@@ -35,7 +35,7 @@
         
                             <div class="col-3 pr-0">
                                 <div class="form-group row m-0 align-items-center">
-                                    <label class="col-lg-12 col-form-label px-0" for="val-naration">Naration<span class="text-danger">*</span></label>
+                                    <label class="col-lg-12 col-form-label px-0" for="val-naration">Product<span class="text-danger">*</span></label>
                                 </div>
                             </div>
         
@@ -78,7 +78,7 @@
                 
                                 <div class="col-3 pr-0">
                                     <div class="form-group row m-0 align-items-center">
-                                        <label class="col-lg-12 col-form-label px-0" for="val-balance">Product<span class="text-danger">*</span></label>
+                                        <label for="val-balance"></label>
                                         <div class="col-lg-12 px-0">
                                             <select name="products[]" id="val-balance" class="form-control">
                                                 <option disabled>Product</option>
@@ -147,7 +147,7 @@
                                  <div class="form-group row m-0 align-items-center">
                                      <label class="col-lg-12 col-form-label px-0" for="debit-amount">Total Debit<span class="text-danger">*</span></label>
                                      <div class="col-lg-12 pl-0 pr-2 ">
-                                         <input type="number" class="form-control" id="debit-amount" name="debit_total" value="0" readonly>
+                                         <input type="number" class="form-control" id="debit-amount" name="total_debit" value="{{$voucher->total_debit}}" readonly>
                                      </div>
                                  </div>
                              </div>
@@ -155,7 +155,7 @@
                                  <div class="form-group row m-0 align-items-center">
                                      <label class="col-lg-12 col-form-label px-0" for="credit-amount">Total Credit<span class="text-danger">*</span></label>
                                      <div class="col-lg-12 pl-0 pr-2 ">
-                                         <input type="number" class="form-control" id="credit-amount" name="credit_total" value="0" readonly>
+                                         <input type="number" class="form-control" id="credit-amount" name="total_credit" value="{{$voucher->total_credit}}" readonly>
                                      </div>
                                  </div>
                              </div>
@@ -169,7 +169,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success" onclick="commonFunction(false,'{{ route('salePurchase.update',$sale_purchase_voucher->id) }}','{{route('salePurchase.index')}}','post','','update-form');">Update</button>
+        <button type="button" class="btn btn-success" onclick="commonFunction(false,'{{ route('salePurchase.update',$voucher->id) }}','{{route('salePurchase.index')}}','post','','update-form');">Update</button>
      </div>
 
 <script>

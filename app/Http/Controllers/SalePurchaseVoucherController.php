@@ -123,40 +123,41 @@ class SalePurchaseVoucherController extends Controller
      * @param  \App\SalePurchaseVoucher  $salePurchaseVoucher
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SalePurchaseVoucher $salePurchaseVoucher, $id)
-    {$validations = Validator::make($request->all(), [
-        'date' => 'required',
-        'narations.*' => 'required',
-        'accounts.*' => 'required',
-        'transaction_types.*' => 'required',
-        'total_debit' => 'required|same:total_credit',
-    ]);
+    public function update(Request $request, $id)
+    {
+        $validations = Validator::make($request->all(), [
+            'date' => 'required',
+            'narations.*' => 'required',
+            'accounts.*' => 'required',
+            'transaction_types.*' => 'required',
+            'total_debit' => 'required|same:total_credit',
+        ]);
 
-    if ($validations->fails()) {
-        return response()->json(['success' => false, 'message' => $validations->errors()]);
-    }
-
-    $journal_voucher = Voucher::find($id);
-    $journal_voucher->date = $request->date;
-    $journal_voucher->total_debit = $request->total_debit;
-    $journal_voucher->total_credit = $request->total_credit;
-    if($journal_voucher->save()){
-        if(count($request->accounts)>0){
-            VoucherDetail::whereIn('id',array_values(array_diff(Voucher::find($id)->voucherDetails()->pluck('id')->toArray(),$request->voucher_detail_ids)))->delete();
-            foreach ($request->accounts as $key => $account) {
-                $VoucherDetail = isset($request->voucher_detail_ids[$key])? VoucherDetail::find($request->voucher_detail_ids[$key]): new VoucherDetail();
-                $VoucherDetail->voucher_id = $journal_voucher->id;
-                $VoucherDetail->sub_account_id = isset($request->accounts[$key])?$request->accounts[$key]:'';
-                $VoucherDetail->product_id = isset($request->products[$key])?$request->products[$key]:'';
-                $VoucherDetail->transaction_type = isset($request->transaction_types[$key])?$request->transaction_types[$key]:'';
-                $VoucherDetail->debit_amount = isset($request->debits[$key])?$request->debits[$key]:0;
-                $VoucherDetail->credit_amount = isset($request->credits[$key])?$request->credits[$key]:0;
-                $VoucherDetail->entry_type = isset($request->debits[$key]) && $request->debits[$key]!=0?'debit':'credit';
-                $VoucherDetail->save();
-            }
+        if ($validations->fails()) {
+            return response()->json(['success' => false, 'message' => $validations->errors()]);
         }
-        return response()->json(['success' => true, 'message' => 'Sale purchase voucher has been updated successfully']);
-    }
+
+        $journal_voucher = Voucher::find($id);
+        $journal_voucher->date = $request->date;
+        $journal_voucher->total_debit = $request->total_debit;
+        $journal_voucher->total_credit = $request->total_credit;
+        if($journal_voucher->save()){
+            if(count($request->accounts)>0){
+                VoucherDetail::whereIn('id',array_values(array_diff(Voucher::find($id)->voucherDetails()->pluck('id')->toArray(),$request->voucher_detail_ids)))->delete();
+                foreach ($request->accounts as $key => $account) {
+                    $VoucherDetail = isset($request->voucher_detail_ids[$key])? VoucherDetail::find($request->voucher_detail_ids[$key]): new VoucherDetail();
+                    $VoucherDetail->voucher_id = $journal_voucher->id;
+                    $VoucherDetail->sub_account_id = isset($request->accounts[$key])?$request->accounts[$key]:'';
+                    $VoucherDetail->product_id = isset($request->products[$key])?$request->products[$key]:'';
+                    $VoucherDetail->transaction_type = isset($request->transaction_types[$key])?$request->transaction_types[$key]:'';
+                    $VoucherDetail->debit_amount = isset($request->debits[$key])?$request->debits[$key]:0;
+                    $VoucherDetail->credit_amount = isset($request->credits[$key])?$request->credits[$key]:0;
+                    $VoucherDetail->entry_type = isset($request->debits[$key]) && $request->debits[$key]!=0?'debit':'credit';
+                    $VoucherDetail->save();
+                }
+            }
+            return response()->json(['success' => true, 'message' => 'Sale purchase voucher has been updated successfully']);
+        }
     }
 
     /**
