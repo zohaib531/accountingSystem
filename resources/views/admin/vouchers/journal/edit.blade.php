@@ -120,8 +120,7 @@
                         @endif
                     </div>
                 @endforeach
-            @endif
-            
+            @endif 
         </div>
 
         <div class="text-right pr-2 mt-3">

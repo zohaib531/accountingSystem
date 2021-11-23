@@ -44,26 +44,28 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Sub Account</th>
-                                    <th>Product</th>
+                                    <th>Date</th>
+                                    <th>Total Debit</th>
+                                    <th>Total Credit</th>
                                     <th colspan="2">Detials</th>
-                                    <th class="text-right w-25">Action</th>
+                                    <th class="text-right">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($vouchers as $key=> $sale_purchase_voucher)
                                 <tr>
                                     <td>{{++$key}}</td>
-                                    <td>{{$sale_purchase_voucher->title}}</td>
-                                    <td>{{$sale_purchase_voucher->product_title}}</td>
+                                    <td>{{$sale_purchase_voucher->date }}</td>
+                                    <td>{{$sale_purchase_voucher->total_debit }}</td>
+                                    <td>{{$sale_purchase_voucher->total_credit }}</td>
                                     <td colspan="2">
                                         <table>
                                             <thead>
                                                 <tr>
+                                                    <th>Sub Account</th>
                                                     <th>Product</th>
                                                     <th>Entry Type</th>
                                                     <th>Transaction Type</th>
-                                                    <th>Sub Account</th>
                                                     <th>Amount</th>
                                                 </tr>
                                             </thead>
@@ -72,10 +74,10 @@
                                                     @foreach($sale_purchase_voucher->voucherDetails as $detail)
                                                         <tr>
                                                             @php $str = $detail->entry_type."_amount";  @endphp
-                                                            <td>{{$detail->product_id}}</td>
+                                                            <td>{{$detail->subAccount->title}}</td>
+                                                            <td>{{$detail->product->title."-".$detail->product->narration}}</td>
                                                             <td>{{ucfirst($detail->entry_type)}}</td>
                                                             <td>{{ucfirst(str_replace('_',' ',$detail->transaction_type))}}</td>
-                                                            <td>{{$detail->account_id}}</td>
                                                             <td>{{$detail->$str}}</td>
                                                         </tr>
                                                     @endforeach
@@ -84,7 +86,7 @@
                                             </tbody>
                                         </table>
                                     </td>
-                                    <td class="text-right">
+                                    <td>
                                         {{-- <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateSalePurchase" onclick="editResource('{{ route('salePurchase.edit', $sale_purchase_voucher->salePurchaseID) }}','.updateModalSalePurchase')">Update</button> --}}
                                         {{-- <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('salePurchase.destroy', $sale_purchase_voucher->salePurchaseID) }}','{{route('salePurchase.index')}}','delete','Are you sure you want to delete?','');">Delete</button> --}}
                                         <button class="btn btn-info text-white btn-sm" data-toggle="modal" data-target=".updateSalePurchase" onclick="editResource('{{ route('salePurchase.edit', $sale_purchase_voucher->id) }}','.updateModalSalePurchase')">Update</button>
@@ -150,10 +152,10 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-12 col-form-label px-0" for="val-balance">Product<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 px-0">
-                                            <select name="product_ids[]" id="val-balance" class="form-control">
+                                            <select name="products[]" id="val-balance" class="form-control">
                                                 <option selected disabled>Product</option>
                                                 @foreach ($products as $product)
-                                                    <option value="{{$product->id}}">{{$product->title}}</option>
+                                                    <option value="{{$product->id}}">{{$product->title."-".$product->narration}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -213,10 +215,10 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
                                         <div class="col-lg-12 px-0">
-                                            <select name="product_ids[]" id="val-balance" class="form-control">
+                                            <select name="products[]" id="val-balance" class="form-control">
                                                 <option selected disabled>Product</option>
                                                 @foreach ($products as $product)
-                                                    <option value="{{$product->id}}">{{$product->title}}</option>
+                                                    <option value="{{$product->id}}">{{$product->title."-".$product->narration}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -349,10 +351,10 @@
                                 <div class="form-group row m-0 align-items-center">
                                     <label></label>
                                     <div class="col-lg-12 px-0">
-                                        <select name="product_ids[]" id="val-balance" class="form-control">
+                                        <select name="products[]" id="val-balance" class="form-control">
                                             <option selected disabled>Product</option>
                                             @foreach ($products as $product)
-                                                <option value="{{$product->id}}">{{$product->title}}</option>
+                                                <option value="{{$product->id}}">{{$product->title."-".$product->narration}}</option>
                                             @endforeach
                                         </select>
                                     </div>

@@ -24,9 +24,9 @@ class SalePurchaseVoucherController extends Controller
         //     ->join('sub_accounts', 'sub_accounts.id', 'vouchers.account')
         //     ->select('products.title as product_title', 'products.*', 'vouchers.*', 'sub_accounts.*', 'vouchers.id as salePurchaseID')
         //     ->get();
-        $vouchers = Voucher::all();
+        $vouchers = Voucher::where('voucher_type','sale_purchase_voucher')->get();
         $subAccounts = SubAccount::select('id', 'title')->get();
-        $products = Product::select('id', 'title')->get();
+        $products = Product::select('id', 'title','narration')->get();
         $data = [
             'subAccounts' => $subAccounts,
             'products' => $products,
@@ -73,7 +73,7 @@ class SalePurchaseVoucherController extends Controller
         foreach ($request->credits as $key => $credit) {
             $detail_vouchers = new VoucherDetail();
             $detail_vouchers->voucher_id = $sale_purchase_voucher->id;
-            $detail_vouchers->product_id = isset($request->product_ids[$key])?$request->product_ids[$key]:'';
+            $detail_vouchers->product_id = isset($request->products[$key])?$request->products[$key]:'';
             $detail_vouchers->sub_account_id = isset($request->accounts[$key])?$request->accounts[$key]:'';
             $detail_vouchers->transaction_type = isset($request->transaction_types[$key])?$request->transaction_types[$key]:'';
             $detail_vouchers->debit_amount = isset($request->debits[$key])?$request->debits[$key]:0;
@@ -105,10 +105,9 @@ class SalePurchaseVoucherController extends Controller
      */
     public function edit($id)
     {
-        $sale_purchase_voucher = SalePurchaseVoucher::where('id', $id)->first();
-        // return $sale_purchase_voucher;
+        $sale_purchase_voucher = Voucher::where('id', $id)->first();
         $subAccounts = SubAccount::select('id', 'title')->get();
-        $products = Product::select('id', 'title')->get();
+        $products = Product::select('id', 'title','narration')->get();
         $data = [
             'subAccounts' => $subAccounts,
             'products' => $products,
@@ -125,35 +124,39 @@ class SalePurchaseVoucherController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, SalePurchaseVoucher $salePurchaseVoucher, $id)
-    {
-        // return $id;
+    {$validations = Validator::make($request->all(), [
+        'date' => 'required',
+        'narations.*' => 'required',
+        'accounts.*' => 'required',
+        'transaction_types.*' => 'required',
+        'total_debit' => 'required|same:total_credit',
+    ]);
 
-        $validations = Validator::make($request->all(), [
-            'date' => 'required',
-            'product_id' => 'required',
-            'account' => 'required',
-            'transaction_type' => 'required',
-            'debit.*' => 'required',
-            'credit.*' => 'required',
-            'debit_total' => 'required',
-            'credit_total' => 'required|same:debit_total',
-        ]);
+    if ($validations->fails()) {
+        return response()->json(['success' => false, 'message' => $validations->errors()]);
+    }
 
-        if ($validations->fails()) {
-            return response()->json(['success' => false, 'message' => $validations->errors()]);
+    $journal_voucher = Voucher::find($id);
+    $journal_voucher->date = $request->date;
+    $journal_voucher->total_debit = $request->total_debit;
+    $journal_voucher->total_credit = $request->total_credit;
+    if($journal_voucher->save()){
+        if(count($request->accounts)>0){
+            VoucherDetail::whereIn('id',array_values(array_diff(Voucher::find($id)->voucherDetails()->pluck('id')->toArray(),$request->voucher_detail_ids)))->delete();
+            foreach ($request->accounts as $key => $account) {
+                $VoucherDetail = isset($request->voucher_detail_ids[$key])? VoucherDetail::find($request->voucher_detail_ids[$key]): new VoucherDetail();
+                $VoucherDetail->voucher_id = $journal_voucher->id;
+                $VoucherDetail->sub_account_id = isset($request->accounts[$key])?$request->accounts[$key]:'';
+                $VoucherDetail->product_id = isset($request->products[$key])?$request->products[$key]:'';
+                $VoucherDetail->transaction_type = isset($request->transaction_types[$key])?$request->transaction_types[$key]:'';
+                $VoucherDetail->debit_amount = isset($request->debits[$key])?$request->debits[$key]:0;
+                $VoucherDetail->credit_amount = isset($request->credits[$key])?$request->credits[$key]:0;
+                $VoucherDetail->entry_type = isset($request->debits[$key]) && $request->debits[$key]!=0?'debit':'credit';
+                $VoucherDetail->save();
+            }
         }
-
-        SalePurchaseVoucher::where('id', $id)->update([
-            'date' => $request->date,
-            'product_id' => $request->product_id,
-            'account' => $request->account,
-            'debit_total' => $request->debit_total,
-            'transaction_type' => $request->transaction_type,
-            'credit_total' => $request->credit_total,
-
-
-        ]);
-        return response()->json(['success' => true, 'message' => 'Sale/Purchase voucher has been added successfully']);
+        return response()->json(['success' => true, 'message' => 'Sale purchase voucher has been updated successfully']);
+    }
     }
 
     /**

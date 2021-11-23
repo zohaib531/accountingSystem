@@ -57,7 +57,7 @@ function commonFunction(confirmation=false,targetUrl,returnUrl,method,msg='',for
                         console.log(wrapper);
                         swal({
                             icon: "error",
-                            text: "Please fix following error!",
+                            // text: "Please fix following error!",
                             content: wrapper,
                             type: "error",
                         });

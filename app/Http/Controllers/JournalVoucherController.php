@@ -20,7 +20,7 @@ class JournalVoucherController extends Controller
     {
 
         $subAccounts = SubAccount::select('id', 'title')->get();
-        $journal_vouchers = Voucher::all();
+        $journal_vouchers = Voucher::where('voucher_type','journal_voucher')->get();
         return view('admin.vouchers.journal.index', ['subAccounts' => $subAccounts,'journal_vouchers' => $journal_vouchers]);
     }
 
@@ -124,7 +124,6 @@ class JournalVoucherController extends Controller
 
         $journal_voucher = Voucher::find($id);
         $journal_voucher->date = $request->date;
-        $journal_voucher->voucher_type = "journal_voucher";
         $journal_voucher->total_debit = $request->total_debit;
         $journal_voucher->total_credit = $request->total_credit;
         if($journal_voucher->save()){
@@ -155,8 +154,8 @@ class JournalVoucherController extends Controller
     public function destroy($journalVoucher)
     {
 
-        if (JournalVoucher::where('id', $journalVoucher)->delete()) {
-            return response()->json(['success' => true, 'message' => 'Product has been deleted successfully']);
+        if (Voucher::where('id', $journalVoucher)->delete()) {
+            return response()->json(['success' => true, 'message' => 'Voucher has been deleted successfully']);
         }
     }
 }

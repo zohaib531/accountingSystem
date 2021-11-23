@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model
 {
     use SoftDeletes;
-    public function sale_purchase()
+
+    public function voucherProducts()
     {
-        return $this->hasMany(SalePurchaseVoucher::class, 'product_id','id');
+        return $this->hasMany(VoucherDetail::class, 'product_id','id');
     }
 }
