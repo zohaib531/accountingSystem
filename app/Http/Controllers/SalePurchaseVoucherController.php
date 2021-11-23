@@ -60,6 +60,7 @@ class SalePurchaseVoucherController extends Controller
             'accounts.*' => 'required',
             'transaction_types.*' => 'required',
             'total_debit' => 'required|same:total_credit',
+            'total_credit' => 'required',
         ]);
         if ($validations->fails()) {
             return response()->json(['success' => false, 'message' => $validations->errors()]);
@@ -68,8 +69,8 @@ class SalePurchaseVoucherController extends Controller
         $sale_purchase_voucher = new Voucher();
         $sale_purchase_voucher->date = $request->date;
         $sale_purchase_voucher->voucher_type = "sale_purchase_voucher";
-        $sale_purchase_voucher->total_debit = $request->debit_total;
-        $sale_purchase_voucher->total_credit = $request->credit_total;
+        $sale_purchase_voucher->total_debit = $request->total_debit;
+        $sale_purchase_voucher->total_credit = $request->total_credit;
         $sale_purchase_voucher->save();
         foreach ($request->credits as $key => $credit) {
             $detail_vouchers = new VoucherDetail();

@@ -45,9 +45,9 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Date</th>
+                                    <th colspan="2">Details</th>
                                     <th>Total Debit</th>
                                     <th>Total Credit</th>
-                                    <th colspan="2">Details</th>
                                     <th class="text-right">Action</th>
                                 </tr>
                             </thead>
@@ -57,10 +57,8 @@
                                 <tr>
                                     <td>{{++$key}}</td>
                                     <td>{{$journalVoucher->date }}</td>
-                                    <td>{{$journalVoucher->total_debit }}</td>
-                                    <td>{{$journalVoucher->total_credit }}</td>
                                     <td colspan="2">
-                                        <table>
+                                        <table class="w-100">
                                             <thead>
                                                 <tr>
                                                     <th>Sub Account</th>
@@ -83,10 +81,12 @@
                                                         </tr>
                                                     @endforeach
                                                 @endif
-                                                
+
                                             </tbody>
                                         </table>
                                     </td>
+                                    <td>{{$journalVoucher->total_debit }}</td>
+                                    <td>{{$journalVoucher->total_credit }}</td>
 
                                     <td class="text-right">
                                         <button class="btn btn-info text-white btn-sm" data-toggle="modal" data-target=".updateJournal" onclick="editResource('{{ route('journal.edit', $journalVoucher->id) }}','.updateModalJournal')">Update</button>
