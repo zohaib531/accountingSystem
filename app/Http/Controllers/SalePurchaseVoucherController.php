@@ -56,10 +56,11 @@ class SalePurchaseVoucherController extends Controller
         // dd($request->all());
         $validations = Validator::make($request->all(), [
             'date' => 'required',
-            'debit_total' => 'required|same:credit_total',
-            'credit_total' => 'required',
+            'products.*' => 'required',
+            'accounts.*' => 'required',
+            'transaction_types.*' => 'required',
+            'total_debit' => 'required|same:total_credit',
         ]);
-
         if ($validations->fails()) {
             return response()->json(['success' => false, 'message' => $validations->errors()]);
         }
