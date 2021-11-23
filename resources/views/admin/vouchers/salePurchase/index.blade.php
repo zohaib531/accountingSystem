@@ -275,7 +275,7 @@
                                         <div class="form-group row m-0 align-items-center">
                                             <label class="col-lg-12 col-form-label px-0" for="debit-amount">Total Debit<span class="text-danger">*</span></label>
                                             <div class="col-lg-12 pl-0 pr-2 ">
-                                                <input type="number" class="form-control" id="debit-amount" name="debit_total" value="0" readonly>
+                                                <input type="number" class="form-control" id="debit-amount" name="total_debit" value="0" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -283,7 +283,7 @@
                                         <div class="form-group row m-0 align-items-center">
                                             <label class="col-lg-12 col-form-label px-0" for="credit-amount">Total Credit<span class="text-danger">*</span></label>
                                             <div class="col-lg-12 pl-0 pr-2 ">
-                                                <input type="number" class="form-control" id="credit-amount" name="credit_total" value="0" readonly>
+                                                <input type="number" class="form-control" id="credit-amount" name="total_credit" value="0" readonly>
                                             </div>
                                         </div>
                                     </div>
