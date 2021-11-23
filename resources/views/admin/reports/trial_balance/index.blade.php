@@ -28,7 +28,7 @@
                     </div>
 
                     <form action="">
-                        <div class="row mx-0 mb-5 align-items-center">
+                        <div class="row mx-0 mb-5 align-items-end">
                             <div class="col-3">
                                 <div class="form-group row m-0 align-items-center">
                                     <label class="col-lg-12 col-form-label px-0" for="val-start_date">Start date<span class="text-danger">*</span></label>
