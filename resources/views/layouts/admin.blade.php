@@ -214,7 +214,7 @@
                     @if (auth()->user()->can('') || auth()->user()->can(''))
                         <li>
                             <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                                <i class="mdi mdi-dropbox menu-icon"></i><span class="nav-text">Vouchers</span>
+                                <i class="mdi mdi-book-open-page-variant menu-icon"></i><span class="nav-text">Vouchers</span>
                             </a>
                             <ul aria-expanded="false">
                                 @can('')
@@ -226,6 +226,27 @@
                                 @can('')
                                 <li>
                                     <a href="{{ route('journal.index') }}">Journal Voucher</a>
+                                </li>
+                                @endcan
+                            </ul>
+                        </li>
+                    @endif
+
+                    @if (auth()->user()->can('') || auth()->user()->can(''))
+                        <li>
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="mdi mdi-format-page-break menu-icon"></i><span class="nav-text">Reports</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                @can('')
+                                <li>
+                                    <a href="#">Trail Balance</a>
+                                </li>
+                                @endcan
+
+                                @can('')
+                                <li>
+                                    <a href="#">Balance Sheet</a>
                                 </li>
                                 @endcan
                             </ul>

@@ -45,7 +45,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Date</th>
-                                    <th colspan="2">Detials</th>
+                                    <th colspan="2" class="text-center">Detials</th>
                                     <th>Total Debit</th>
                                     <th>Total Credit</th>
                                     <th class="text-right">Action</th>
@@ -60,9 +60,9 @@
                                         <table class="w-100">
                                             <thead>
                                                 <tr>
+                                                    <th>Entry Type</th>
                                                     <th>Sub Account</th>
                                                     <th>Product</th>
-                                                    <th>Entry Type</th>
                                                     <th>Transaction Type</th>
                                                     <th>Amount</th>
                                                 </tr>
@@ -72,9 +72,9 @@
                                                     @foreach($sale_purchase_voucher->voucherDetails as $detail)
                                                         <tr>
                                                             @php $str = $detail->entry_type."_amount";  @endphp
+                                                            <th>{{ucfirst($detail->entry_type)}}</th>
                                                             <td>{{$detail->subAccount->title}}</td>
                                                             <td>{{$detail->product->title."-".$detail->product->narration}}</td>
-                                                            <td>{{ucfirst($detail->entry_type)}}</td>
                                                             <td>{{ucfirst(str_replace('_',' ',$detail->transaction_type))}}</td>
                                                             <td>{{$detail->$str}}</td>
                                                         </tr>

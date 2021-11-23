@@ -71,8 +71,6 @@ class SalePurchaseVoucherController extends Controller
             return response()->json(['success' => false, 'message' => $validations->errors()]);
         }
 
-        return "fds";
-
         $sale_purchase_voucher = new Voucher();
         $sale_purchase_voucher->date = $request->date;
         $sale_purchase_voucher->voucher_type = "sale_purchase_voucher";
