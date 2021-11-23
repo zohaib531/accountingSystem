@@ -56,7 +56,7 @@
                     </form>
 
 
-                    @if(isset($vouchers))
+                    @if(isset($vouchers) && $vouchers->count()>0)
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered zero-configuration">
                                 <thead>
