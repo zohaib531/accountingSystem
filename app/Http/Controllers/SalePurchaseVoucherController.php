@@ -53,17 +53,24 @@ class SalePurchaseVoucherController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $validations = Validator::make($request->all(), [
             'date' => 'required',
+            'products' => 'required|array',
             'products.*' => 'required',
+            'accounts' => 'required|array',
             'accounts.*' => 'required',
+            'debits.*' => 'required',
+            'credits.*' => 'required',
+            'transaction_types' => 'required|array',
             'transaction_types.*' => 'required',
             'total_debit' => 'required|same:total_credit',
         ]);
+
         if ($validations->fails()) {
             return response()->json(['success' => false, 'message' => $validations->errors()]);
         }
+
+        return "fds";
 
         $sale_purchase_voucher = new Voucher();
         $sale_purchase_voucher->date = $request->date;
@@ -128,8 +135,13 @@ class SalePurchaseVoucherController extends Controller
     {
         $validations = Validator::make($request->all(), [
             'date' => 'required',
-            'narations.*' => 'required',
+            'products' => 'required|array',
+            'products.*' => 'required',
+            'accounts' => 'required|array',
             'accounts.*' => 'required',
+            'debits.*' => 'required',
+            'credits.*' => 'required',
+            'transaction_types' => 'required|array',
             'transaction_types.*' => 'required',
             'total_debit' => 'required|same:total_credit',
         ]);
