@@ -95,7 +95,6 @@
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2">
                                             <select name="transaction_types[]" id="val-transaction-type" class="form-control">
-                                                <option disabled>Transaction type</option>
                                                 <option @if($detail->transaction_type=="cash") selected @endif value="cash">Cash</option>
                                                 <option @if($detail->transaction_type=="check") selected @endif value="check">Check</option>
                                                 <option @if($detail->transaction_type=="bank_transfer") selected @endif value="bank_transfer">Bank transfer</option>

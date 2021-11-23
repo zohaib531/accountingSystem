@@ -55,14 +55,14 @@ class SalePurchaseVoucherController extends Controller
     {
         $validations = Validator::make($request->all(), [
             'date' => 'required',
-            'products' => 'required|array',
-            'products.*' => 'required',
             'accounts' => 'required|array',
             'accounts.*' => 'required',
-            'debits.*' => 'required',
-            'credits.*' => 'required',
+            'products' => 'required|array',
+            'products.*' => 'required|string',
             'transaction_types' => 'required|array',
             'transaction_types.*' => 'required',
+            'debits.*' => 'required',
+            'credits.*' => 'required',
             'total_debit' => 'required|same:total_credit',
             'total_credit' => 'required',
         ]);
@@ -178,9 +178,9 @@ class SalePurchaseVoucherController extends Controller
      * @param  \App\SalePurchaseVoucher  $salePurchaseVoucher
      * @return \Illuminate\Http\Response
      */
-    public function destroy($salePurchaseVoucher)
+    public function destroy($id)
     {
-        if (SalePurchaseVoucher::where('id', $salePurchaseVoucher)->delete()) {
+        if (Voucher::where('id', $id)->delete()) {
             return response()->json(['success' => true, 'message' => 'Sale/Purchase voucher has been deleted successfully']);
         }
     }
