@@ -240,7 +240,7 @@
                             <ul aria-expanded="false">
                                 @can('')
                                 <li>
-                                    <a href="#">Trail Balance</a>
+                                    <a href="{{route('trial_balance')}}">Trail Balance</a>
                                 </li>
                                 @endcan
 
