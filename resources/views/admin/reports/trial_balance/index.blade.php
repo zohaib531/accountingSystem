@@ -28,7 +28,7 @@
                     </div>
 
                     <form action="">
-                        <div class="row m-0">
+                        <div class="row mx-0 mb-5 align-items-center">
                             <div class="col-3">
                                 <div class="form-group row m-0 align-items-center">
                                     <label class="col-lg-12 col-form-label px-0" for="val-start_date">Start date<span class="text-danger">*</span></label>
@@ -48,7 +48,7 @@
                             </div>
 
                             <div class="col-6 text-right">
-                                <button class="btn btn-primary">Create Report</button>
+                                <button class="btn btn-primary">Create Report +</button>
                             </div>
                         </div>
 
