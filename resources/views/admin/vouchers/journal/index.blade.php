@@ -209,7 +209,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="text" class="form-control" id="val-naration" name="narations[]" placeholder="Naration..">
+                                            <input type="text" class="form-control" id="val-naration" name="narrations[]" placeholder="Naration..">
                                         </div>
                                     </div>
                                 </div>
