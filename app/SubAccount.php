@@ -14,13 +14,8 @@ class SubAccount extends Model
         return $this->belongsTo(Account::class,'account_id','id');
     }
 
-    public function get_debit_journals()
-    {
-        return $this->hasMany(JournalVoucher::class, 'debit_account_id','id');
-    }
-    public function get_credit_journals()
-    {
-        return $this->hasMany(JournalVoucher::class, 'credit_account_id','id');
+    public function vouchers(){
+        return $this->hasMany(VoucherDetail::class,'sub_account_id','id');
     }
 
 }

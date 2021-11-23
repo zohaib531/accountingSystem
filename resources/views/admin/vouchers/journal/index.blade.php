@@ -63,10 +63,10 @@
                                         <table>
                                             <thead>
                                                 <tr>
+                                                    <th>Sub Account</th>
                                                     <th>Naration</th>
                                                     <th>Entry Type</th>
                                                     <th>Transaction Type</th>
-                                                    <th>Sub Account</th>
                                                     <th>Amount</th>
                                                 </tr>
                                             </thead>
@@ -75,10 +75,10 @@
                                                     @foreach($journalVoucher->voucherDetails as $detail)
                                                         <tr>
                                                             @php $str = $detail->entry_type."_amount";  @endphp
+                                                            <td>{{$detail->subAccount->title}}</td>
                                                             <td>{{$detail->narration}}</td>
                                                             <td>{{ucfirst($detail->entry_type)}}</td>
                                                             <td>{{ucfirst(str_replace('_',' ',$detail->transaction_type))}}</td>
-                                                            <td>{{$detail->account_id}}</td>
                                                             <td>{{$detail->$str}}</td>
                                                         </tr>
                                                     @endforeach
@@ -348,8 +348,7 @@ const addNewRow=(id)=>{
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2">
                                             <select name="transaction_types[]" id="val-transaction-type" class="form-control">
-                                                <option selected disabled>Transaction type</option>
-                                                <option value="cash">Cash</option>
+                                                <option selected value="cash">Cash</option>
                                                 <option value="check">Check</option>
                                                 <option value="bank_transfer">Bank transfer</option>
                                             </select>
@@ -382,7 +381,9 @@ const addNewRow=(id)=>{
                     `);
 }
 
-
+setInterval(function(){
+    console.log("fine");
+},1000);
 </script>
 
 

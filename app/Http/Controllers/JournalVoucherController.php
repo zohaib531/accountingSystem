@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Account;
-use App\JournalVoucher;
-use App\JournalVoucherDetail;
+use App\Voucher;
+use App\VoucherDetail;
 use App\SubAccount;
 use Validator;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ class JournalVoucherController extends Controller
     {
 
         $subAccounts = SubAccount::select('id', 'title')->get();
-        $journal_vouchers = JournalVoucher::all();
+        $journal_vouchers = Voucher::all();
         return view('admin.vouchers.journal.index', ['subAccounts' => $subAccounts,'journal_vouchers' => $journal_vouchers]);
     }
 
@@ -42,17 +42,6 @@ class JournalVoucherController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
-
-        // $validations = Validator::make($request->all(), [
-        //     'date' => 'required',
-        //     'total_debit' => 'required|same:total_credit',
-        //     'total_credit' => 'required',
-        // ]);
-
-        // if ($validations->fails()) {
-        //     return response()->json(['success' => false, 'message' => $validations->errors()]);
-        // }
         $validations = Validator::make($request->all(), [
             'date' => 'required',
             'narations.*' => 'required',
@@ -65,27 +54,23 @@ class JournalVoucherController extends Controller
             return response()->json(['success' => false, 'message' => $validations->errors()]);
         }
 
-        $journal_voucher = new JournalVoucher();
+        $journal_voucher = new Voucher();
         $journal_voucher->date = $request->date;
+        $journal_voucher->voucher_type = "journal_voucher";
         $journal_voucher->total_debit = $request->total_debit;
         $journal_voucher->total_credit = $request->total_credit;
-        // $journal_voucher->debit_amount = $request->debit_amount;
-        // $journal_voucher->debit_transaction_type = $request->debit_transaction_type;
-        // $journal_voucher->credit_account_id = $request->credit_account_id;
-        // $journal_voucher->credit_amount = $request->credit_amount;
-        // $journal_voucher->credit_transaction_type = $request->credit_transaction_type;
         if($journal_voucher->save()){
             if(count($request->accounts)>0){
                 foreach ($request->accounts as $key => $account) {
-                    $journalVoucherDetail = new JournalVoucherDetail();
-                    $journalVoucherDetail->voucher_id = $journal_voucher->id;
-                    $journalVoucherDetail->account_id = isset($request->accounts[$key])?$request->accounts[$key]:'';
-                    $journalVoucherDetail->narration = isset($request->narrations[$key])?$request->narrations[$key]:'';
-                    $journalVoucherDetail->transaction_type = isset($request->transaction_types[$key])?$request->transaction_types[$key]:'';
-                    $journalVoucherDetail->debit_amount = isset($request->debits[$key])?$request->debits[$key]:0;
-                    $journalVoucherDetail->credit_amount = isset($request->credits[$key])?$request->credits[$key]:0;
-                    $journalVoucherDetail->entry_type = isset($request->debits[$key]) && $request->debits[$key]!=0?'debit':'credit';
-                    $journalVoucherDetail->save();
+                    $VoucherDetail = new VoucherDetail();
+                    $VoucherDetail->voucher_id = $journal_voucher->id;
+                    $VoucherDetail->sub_account_id = isset($request->accounts[$key])?$request->accounts[$key]:'';
+                    $VoucherDetail->narration = isset($request->narrations[$key])?$request->narrations[$key]:'';
+                    $VoucherDetail->transaction_type = isset($request->transaction_types[$key])?$request->transaction_types[$key]:'';
+                    $VoucherDetail->debit_amount = isset($request->debits[$key])?$request->debits[$key]:0;
+                    $VoucherDetail->credit_amount = isset($request->credits[$key])?$request->credits[$key]:0;
+                    $VoucherDetail->entry_type = isset($request->debits[$key]) && $request->debits[$key]!=0?'debit':'credit';
+                    $VoucherDetail->save();
                 }
             }
             return response()->json(['success' => true, 'message' => 'Journal voucher has been added successfully']);
@@ -111,14 +96,9 @@ class JournalVoucherController extends Controller
      */
     public function edit($id)
     {
-        $journal_voucher = JournalVoucher::where('id', $id)->first();
-        // return $id;
+        $voucher = Voucher::where('id', $id)->first();
         $subAccounts = SubAccount::select('id', 'title')->get();
-        $data = [
-            'subAccounts' => $subAccounts,
-            'journal_voucher' => $journal_voucher,
-        ];
-        return view('admin.vouchers.journal.edit', $data)->render();
+        return view('admin.vouchers.journal.edit', ['subAccounts' => $subAccounts,'voucher' => $voucher])->render();
     }
 
     /**
@@ -128,35 +108,42 @@ class JournalVoucherController extends Controller
      * @param  \App\JournalVoucher  $journalVoucher
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, JournalVoucher $journalVoucher , $id)
+    public function update(Request $request,  $id)
     {
         $validations = Validator::make($request->all(), [
             'date' => 'required',
-            'naration' => 'required',
-            'debit_account_id' => 'required',
-            'debit_amount' => 'required',
-            'debit_transaction_type' => 'required',
-            'credit_account_id' => 'required',
-            'credit_amount' => 'required|same:debit_amount',
-            'credit_transaction_type' => 'required'
+            'narations.*' => 'required',
+            'accounts.*' => 'required',
+            'transaction_types.*' => 'required',
+            'total_debit' => 'required|same:total_credit',
         ]);
 
         if ($validations->fails()) {
             return response()->json(['success' => false, 'message' => $validations->errors()]);
         }
 
-        $journal_voucher = JournalVoucher::find($id);
+        $journal_voucher = Voucher::find($id);
         $journal_voucher->date = $request->date;
-        $journal_voucher->naration = $request->naration;
-        $journal_voucher->debit_account_id = $request->debit_account_id;
-        $journal_voucher->debit_amount = $request->debit_amount;
-        $journal_voucher->debit_transaction_type = $request->debit_transaction_type;
-        $journal_voucher->credit_account_id = $request->credit_account_id;
-        $journal_voucher->credit_amount = $request->credit_amount;
-        $journal_voucher->credit_transaction_type = $request->credit_transaction_type;
-
-        $journal_voucher->save();
-        return response()->json(['success' => true, 'message' => 'Journal voucher has been updated successfully']);
+        $journal_voucher->voucher_type = "journal_voucher";
+        $journal_voucher->total_debit = $request->total_debit;
+        $journal_voucher->total_credit = $request->total_credit;
+        if($journal_voucher->save()){
+            if(count($request->accounts)>0){
+                VoucherDetail::whereIn('id',array_values(array_diff(Voucher::find($id)->voucherDetails()->pluck('id')->toArray(),$request->voucher_detail_ids)))->delete();
+                foreach ($request->accounts as $key => $account) {
+                    $VoucherDetail = isset($request->voucher_detail_ids[$key])? VoucherDetail::find($request->voucher_detail_ids[$key]): new VoucherDetail();
+                    $VoucherDetail->voucher_id = $journal_voucher->id;
+                    $VoucherDetail->sub_account_id = isset($request->accounts[$key])?$request->accounts[$key]:'';
+                    $VoucherDetail->narration = isset($request->narrations[$key])?$request->narrations[$key]:'';
+                    $VoucherDetail->transaction_type = isset($request->transaction_types[$key])?$request->transaction_types[$key]:'';
+                    $VoucherDetail->debit_amount = isset($request->debits[$key])?$request->debits[$key]:0;
+                    $VoucherDetail->credit_amount = isset($request->credits[$key])?$request->credits[$key]:0;
+                    $VoucherDetail->entry_type = isset($request->debits[$key]) && $request->debits[$key]!=0?'debit':'credit';
+                    $VoucherDetail->save();
+                }
+            }
+            return response()->json(['success' => true, 'message' => 'Journal voucher has been updated successfully']);
+        }
     }
 
     /**

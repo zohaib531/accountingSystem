@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Account;
-use App\DetailVoucher;
+use App\VoucherDetail;
 use App\Product;
-use App\SalePurchaseVoucher;
 use App\SubAccount;
 use App\Voucher;
 use Validator;
@@ -67,19 +66,19 @@ class SalePurchaseVoucherController extends Controller
 
         $sale_purchase_voucher = new Voucher();
         $sale_purchase_voucher->date = $request->date;
+        $sale_purchase_voucher->voucher_type = "sale_purchase_voucher";
         $sale_purchase_voucher->total_debit = $request->debit_total;
         $sale_purchase_voucher->total_credit = $request->credit_total;
         $sale_purchase_voucher->save();
         foreach ($request->credits as $key => $credit) {
-            $detail_vouchers = new DetailVoucher();
+            $detail_vouchers = new VoucherDetail();
             $detail_vouchers->voucher_id = $sale_purchase_voucher->id;
             $detail_vouchers->product_id = isset($request->product_ids[$key])?$request->product_ids[$key]:'';
-            $detail_vouchers->account_id = isset($request->accounts[$key])?$request->accounts[$key]:'';
+            $detail_vouchers->sub_account_id = isset($request->accounts[$key])?$request->accounts[$key]:'';
             $detail_vouchers->transaction_type = isset($request->transaction_types[$key])?$request->transaction_types[$key]:'';
             $detail_vouchers->debit_amount = isset($request->debits[$key])?$request->debits[$key]:0;
             $detail_vouchers->credit_amount = isset($request->credits[$key])?$request->credits[$key]:0;
             $detail_vouchers->entry_type = isset($request->debits[$key]) && $request->debits[$key]!=0?'debit':'credit';
-
             $detail_vouchers->save();
 
         }

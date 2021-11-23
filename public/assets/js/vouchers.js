@@ -29,7 +29,8 @@ $(document).ready(function() {
         for(let singleDebit of allDebitAmmount){
             totalDebit += +singleDebit.value;
         }
-        $('#debit-amount').val(totalDebit);
+        // $('#debit-amount').val(totalDebit);
+        $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]').val(totalDebit);
         // Total Debit Amount
 
 
@@ -62,7 +63,8 @@ $(document).ready(function() {
         for(let singleCredit of allCreditAmmount){
             totalCredit += +singleCredit.value;
         }
-        $('#credit-amount').val(totalCredit);
+
+        $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]').val(totalCredit);
         // Total Credit Amount
 
     }
@@ -78,5 +80,13 @@ $(document).ready(function() {
 
 
     const removeParentElement = (e)=>{
-        e.parentNode.parentNode.remove()
+        if($(e).parent().parent().find('input[name="debits[]"]').val()>= 0){
+            let elem = $(e).parent().parent().parent().parent().find('input[id="debit-amount"]');
+            elem.val(elem.val() - $(e).parent().parent().find('input[name="debits[]"]').val());
+        }
+        if($(e).parent().parent().find('input[name="credits[]"]').val()>= 0){
+            let elem = $(e).parent().parent().parent().parent().find('input[id="credit-amount"]');
+            elem.val(elem.val() - $(e).parent().parent().find('input[name="credits[]"]').val());
+        }
+        e.parentNode.parentNode.remove();
     }

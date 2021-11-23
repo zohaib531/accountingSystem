@@ -13,13 +13,15 @@ class CreateDetailVouchersTable extends Migration
      */
     public function up()
     {
-        Schema::create('detail_vouchers', function (Blueprint $table) {
+        Schema::create('voucher_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('voucher_id')->nullable();
             $table->foreign('voucher_id')->references('id')->on('vouchers')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedInteger('product_id')->nullable();
+            $table->unsignedBigInteger('product_id')->nullable();
+            $table->string('narration')->nullable();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->integer('account_id');
+            $table->unsignedBigInteger('sub_account_id');
+            $table->foreign('sub_account_id')->references('id')->on('sub_accounts')->onDelete('cascade');
             $table->string('transaction_type');
             $table->string('entry_type');
             $table->integer('debit_amount')->default(0);
