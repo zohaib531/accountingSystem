@@ -45,9 +45,11 @@ class JournalVoucherController extends Controller
         $validations = Validator::make($request->all(), [
             'date' => 'required',
             'narations.*' => 'required',
+            'accounts' => 'required|array',
             'accounts.*' => 'required',
             'debits.*' => 'required',
             'credits.*' => 'required',
+            'transaction_types' => 'required|array',
             'transaction_types.*' => 'required',
             'total_debit' => 'required|same:total_credit',
         ]);
@@ -115,9 +117,11 @@ class JournalVoucherController extends Controller
         $validations = Validator::make($request->all(), [
             'date' => 'required',
             'narations.*' => 'required',
+            'accounts' => 'required|array',
             'accounts.*' => 'required',
             'debits.*' => 'required',
             'credits.*' => 'required',
+            'transaction_types' => 'required|array',
             'transaction_types.*' => 'required',
             'total_debit' => 'required|same:total_credit',
         ]);
