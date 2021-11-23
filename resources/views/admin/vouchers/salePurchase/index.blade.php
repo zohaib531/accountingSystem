@@ -167,7 +167,6 @@
                                         <label class="col-lg-12 col-form-label px-0" for="val-transaction-type">Transaction Type<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2">
                                             <select name="transaction_types[]" id="val-transaction-type" class="form-control">
-                                                <option selected disabled>Transaction type</option>
                                                 <option value="cash">Cash</option>
                                                 <option value="check">Check</option>
                                                 <option value="bank_transfer">Bank transfer</option>
@@ -230,7 +229,6 @@
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2">
                                             <select name="transaction_types[]" id="val-transaction-type" class="form-control">
-                                                <option selected disabled>Transaction type</option>
                                                 <option value="cash">Cash</option>
                                                 <option value="check">Check</option>
                                                 <option value="bank_transfer">Bank transfer</option>
@@ -366,7 +364,6 @@
                                     <label></label>
                                     <div class="col-lg-12 pl-0 pr-2">
                                         <select name="transaction_types[]" id="val-transaction-type" class="form-control">
-                                            <option selected disabled>Transaction type</option>
                                             <option value="cash">Cash</option>
                                             <option value="check">Check</option>
                                             <option value="bank_transfer">Bank transfer</option>

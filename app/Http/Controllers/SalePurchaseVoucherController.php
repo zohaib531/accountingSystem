@@ -56,7 +56,7 @@ class SalePurchaseVoucherController extends Controller
         $validations = Validator::make($request->all(), [
             'date' => 'required',
             'products' => 'required|array',
-            'products.*' => 'required',
+            'products.*' => 'required|string|',
             'accounts' => 'required|array',
             'accounts.*' => 'required',
             'debits.*' => 'required',
