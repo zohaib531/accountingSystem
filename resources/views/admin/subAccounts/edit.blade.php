@@ -30,10 +30,27 @@
         </div>
 
         <div class="form-group row">
-            <label class="col-lg-3 col-form-label" for="val-balance">Opening Balance<span class="text-danger">*</span>
-            </label>
+            <label class="col-lg-3 col-form-label px-0" for="opening-balance">Opening Balance<span class="text-danger">*</span></label>
             <div class="col-lg-9">
-                <input type="number" class="form-control" value="{{$subAccount->opening_balance}}" id="val-balance" name="opening_balance" placeholder="Enter Opening Balance..">
+                <div class="row m-0">
+                    <div class="col-6 pl-0">
+                        <input type="number" class="form-control" id="opening-balance" value="{{$subAccount->opening_balance}}" name="opening_balance" placeholder="Enter Opening Balance..">
+                    </div>
+                    <div class="col-6 pr-0">
+                        <select class="form-control" id="transaction-type" name="transaction_type">
+                            <option value="" disabled selected>Select Debit/Credit</option>
+                            <option value="debit">Debit</option>
+                            <option value="credit">Credit</option>
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-lg-3 col-form-label px-0" for="opening-date">Opening Date<span class="text-danger">*</span></label>
+            <div class="col-lg-9">
+                <input type="date" class="form-control" id="opening-date" value="{{$subAccount->opening_date}}" name="opening_date">
             </div>
         </div>
 

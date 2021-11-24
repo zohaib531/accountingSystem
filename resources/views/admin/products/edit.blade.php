@@ -23,6 +23,19 @@
             </div>
         </div>
 
+        <div class="form-group row">
+            <label class="col-lg-3 col-form-label px-0" for="product-unit">Unit<span class="text-danger">*</span></label>
+            <div class="col-lg-9">
+                <select class="form-control" id="product-unit" name="product_unit">
+                    <option value="" disabled selected>Select Product unit</option>
+                    <option value="meter">Meter</option>
+                    <option value="bags">Bags</option>
+                    <option value="kgs">Kgs</option>
+                    <option value="pounds">Pounds</option>
+                </select>
+            </div>
+        </div>
+
 
 
     </form>
