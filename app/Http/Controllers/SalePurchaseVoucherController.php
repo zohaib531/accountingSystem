@@ -191,12 +191,13 @@ class SalePurchaseVoucherController extends Controller
             foreach ($request->debit_dates as $key => $credit) {
                 $detail_vouchers = new VoucherDetail();
                 $detail_vouchers->voucher_id = $voucher->id;
+                $detail_vouchers->date = isset($request->debit_dates[$key])?$request->debit_dates[$key]:'';
                 $detail_vouchers->product_narration = isset($request->debit_products[$key])?$request->debit_products[$key]:'';
                 $detail_vouchers->sub_account_id = isset($request->debit_accounts[$key])?$request->debit_accounts[$key]:'';
                 $detail_vouchers->debit_amount = isset($request->debit_amounts[$key])?$request->debit_amounts[$key]:0;
                 $detail_vouchers->quantity = isset($request->debit_quantities[$key])?$request->debit_quantities[$key]:'';
                 $detail_vouchers->rate = isset($request->debit_rates[$key])?$request->debit_rates[$key]:0;
-                $detail_vouchers->entry_type = 'credit';
+                $detail_vouchers->entry_type = 'debit';
                 $detail_vouchers->save();
             }
         }
@@ -205,6 +206,7 @@ class SalePurchaseVoucherController extends Controller
             foreach ($request->credit_dates as $key => $credit) {
                 $detail_vouchers = new VoucherDetail();
                 $detail_vouchers->voucher_id = $voucher->id;
+                $detail_vouchers->date = isset($request->credit_dates[$key])?$request->credit_dates[$key]:'';
                 $detail_vouchers->product_narration = isset($request->credit_products[$key])?$request->credit_products[$key]:'';
                 $detail_vouchers->sub_account_id = isset($request->credit_accounts[$key])?$request->credit_accounts[$key]:'';
                 $detail_vouchers->credit_amount = isset($request->credit_amounts[$key])?$request->credit_amounts[$key]:0;

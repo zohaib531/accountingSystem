@@ -45,9 +45,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Date</th>
-                                    <th colspan="2" class="text-center">Detials</th>
-                                    <th>Total Debit</th>
-                                    <th>Total Credit</th>
+                                    <th colspan="2" class="text-center">Details</th>
                                     <th class="text-right">Action</th>
                                 </tr>
                             </thead>
@@ -62,7 +60,6 @@
                                                 <tr>
                                                     <th>Sub Account</th>
                                                     <th>Product</th>
-                                                    <th>Transaction Type</th>
                                                     <th>Debit</th>
                                                     <th>Credit</th>
                                                 </tr>
@@ -74,8 +71,7 @@
                                                             @php $str = $detail->entry_type."_amount";  @endphp
                                                             {{-- <th>{{ucfirst($detail->entry_type)}}</th> --}}
                                                             <td>{{$detail->subAccount->title}}</td>
-                                                            <td>{{$detail->product->title."-".$detail->product->narration}}</td>
-                                                            <td>{{ucfirst(str_replace('_',' ',$detail->transaction_type))}}</td>
+                                                            <td>{{$detail->product_narration}}</td>
                                                             <td>{{ $detail->debit_amount!=0?$detail->debit_amount:"" }}</td>
                                                             <td>{{ $detail->credit_amount!=0?$detail->credit_amount:"" }}</td>
                                                         </tr>
@@ -85,8 +81,6 @@
                                             </tbody>
                                         </table>
                                     </td>
-                                    <td>{{$sale_purchase_voucher->total_debit }}</td>
-                                    <td>{{$sale_purchase_voucher->total_credit }}</td>
                                     <td class="text-right">
                                         {{-- <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateSalePurchase" onclick="editResource('{{ route('salePurchase.edit', $sale_purchase_voucher->salePurchaseID) }}','.updateModalSalePurchase')">Update</button> --}}
                                         {{-- <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('salePurchase.destroy', $sale_purchase_voucher->salePurchaseID) }}','{{route('salePurchase.index')}}','delete','Are you sure you want to delete?','');">Delete</button> --}}
@@ -166,7 +160,7 @@
                                             <select name="credit_products[]" class="form-control">
                                                 <option selected disabled value="">Product</option>
                                                 @foreach ($products as $product)
-                                                    <option value="{{$product->id}}">{{$product->title." - ".$product->narration}}</option>
+                                                    <option value="{{$product->title." - ".$product->narration}}">{{$product->title." - ".$product->narration}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -244,7 +238,7 @@
                                             <select name="debit_products[]" class="form-control">
                                                 <option selected disabled value="">Product</option>
                                                 @foreach ($products as $product)
-                                                    <option value="{{$product->id}}">{{$product->title." - ".$product->narration}}</option>
+                                                    <option value="{{$product->title." - ".$product->narration}}">{{$product->title." - ".$product->narration}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -395,7 +389,7 @@
                                             <select name="${side}products[]" class="form-control">
                                                 <option selected disabled value="">Product</option>
                                                 @foreach ($products as $product)
-                                                    <option value="{{$product->id}}">{{$product->title." - ".$product->narration}}</option>
+                                                    <option value="{{$product->title." - ".$product->narration}}">{{$product->title." - ".$product->narration}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
