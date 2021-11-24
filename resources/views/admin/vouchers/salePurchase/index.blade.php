@@ -179,7 +179,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-12 col-form-label px-0">Quantity<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="number" name="credit_quantitys[]"  class="form-control">
+                                            <input type="number" name="credit_quantities[]"  class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -257,7 +257,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-12 col-form-label px-0">Quantity<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="number" name="debit_quantitys[]"  class="form-control">
+                                            <input type="number" name="debit_quantities[]"  class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -289,7 +289,18 @@
 
 
 
-                        <div class="row m-0 justify-content-end  mt-5">
+
+                        <div class="row m-0 justify-content-between align-items-end mt-5">
+                            <div class="col-2 pr-0">
+                                <div class="form-group row m-0 align-items-center">
+                                    <label class="col-lg-9 col-form-label px-0" for="checkedEntery">End Entery<span class="text-danger">*</span></label>
+                                    <div class="col-lg-3 pl-0 pr-2 ">
+                                        <div>
+                                            <input type="checkbox" class="" name="commitChanges" id="checkedEntery">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-4 px-0">
                                 <div class="row m-0">
                                     <div class="col-6 pr-0">
