@@ -55,14 +55,26 @@ class SalePurchaseVoucherController extends Controller
     {
         $validations = Validator::make($request->all(), [
             'date' => 'required',
-            'accounts' => 'required|array',
-            'accounts.*' => 'required',
-            'products' => 'required|array',
-            'products.*' => 'required|string',
-            'transaction_types' => 'required|array',
-            'transaction_types.*' => 'required',
-            'debits.*' => 'required',
-            'credits.*' => 'required',
+            'credit_accounts' => 'required|array',
+            'credit_accounts.*' => 'required',
+            'credit_products' => 'required|array',
+            'credit_products.*' => 'required',
+            'credit_quantities' => 'required|array',
+            'credit_quantities.*' => 'required',
+            'credit_rates' => 'required|array',
+            'credit_rates.*' => 'required',
+            'credit_amounts' => 'required|array',
+            'credit_amounts.*' => 'required',
+            'debit_accounts' => 'required|array',
+            'debit_accounts.*' => 'required',
+            'debit_products' => 'required|array',
+            'debit_products.*' => 'required',
+            'debit_quantities' => 'required|array',
+            'debit_quantities.*' => 'required',
+            'debit_rates' => 'required|array',
+            'debit_rates.*' => 'required',
+            'debit_amounts' => 'required|array',
+            'debit_amounts.*' => 'required',
             'total_debit' => 'required|same:total_credit',
             'total_credit' => 'required',
         ]);
@@ -73,23 +85,10 @@ class SalePurchaseVoucherController extends Controller
 
         $sale_purchase_voucher = new Voucher();
         $sale_purchase_voucher->date = $request->date;
-        $sale_purchase_voucher->voucher_type = "sale_purchase_voucher";
         $sale_purchase_voucher->total_debit = $request->total_debit;
         $sale_purchase_voucher->total_credit = $request->total_credit;
         $sale_purchase_voucher->save();
-        foreach ($request->credits as $key => $credit) {
-            $detail_vouchers = new VoucherDetail();
-            $detail_vouchers->voucher_id = $sale_purchase_voucher->id;
-            $detail_vouchers->product_id = isset($request->products[$key])?$request->products[$key]:'';
-            $detail_vouchers->sub_account_id = isset($request->accounts[$key])?$request->accounts[$key]:'';
-            $detail_vouchers->transaction_type = isset($request->transaction_types[$key])?$request->transaction_types[$key]:'';
-            $detail_vouchers->debit_amount = isset($request->debits[$key])?$request->debits[$key]:0;
-            $detail_vouchers->credit_amount = isset($request->credits[$key])?$request->credits[$key]:0;
-            $detail_vouchers->entry_type = isset($request->debits[$key]) && $request->debits[$key]!=0?'debit':'credit';
-            $detail_vouchers->save();
-
-        }
-
+        $this->commonCode($sale_purchase_voucher,false,$request);
         return response()->json(['success' => true, 'message' => 'Sale/Purchase voucher has been added successfully']);
     }
 
@@ -182,6 +181,38 @@ class SalePurchaseVoucherController extends Controller
     {
         if (Voucher::where('id', $id)->delete()) {
             return response()->json(['success' => true, 'message' => 'Sale/Purchase voucher has been deleted successfully']);
+        }
+    }
+
+    // create/update common code
+    private function commonCode($voucher,$action,$request)
+    {
+        if(isset($request->debit_dates) && count($request->debit_dates) >0){
+            foreach ($request->debit_dates as $key => $credit) {
+                $detail_vouchers = new VoucherDetail();
+                $detail_vouchers->voucher_id = $voucher->id;
+                $detail_vouchers->product_narration = isset($request->debit_products[$key])?$request->debit_products[$key]:'';
+                $detail_vouchers->sub_account_id = isset($request->debit_accounts[$key])?$request->debit_accounts[$key]:'';
+                $detail_vouchers->debit_amount = isset($request->debit_amounts[$key])?$request->debit_amounts[$key]:0;
+                $detail_vouchers->quantity = isset($request->debit_quantities[$key])?$request->debit_quantities[$key]:'';
+                $detail_vouchers->rate = isset($request->debit_rates[$key])?$request->debit_rates[$key]:0;
+                $detail_vouchers->entry_type = 'credit';
+                $detail_vouchers->save();
+            }
+        }
+
+        if(isset($request->credit_dates) && count($request->credit_dates) >0){
+            foreach ($request->credit_dates as $key => $credit) {
+                $detail_vouchers = new VoucherDetail();
+                $detail_vouchers->voucher_id = $voucher->id;
+                $detail_vouchers->product_narration = isset($request->credit_products[$key])?$request->credit_products[$key]:'';
+                $detail_vouchers->sub_account_id = isset($request->credit_accounts[$key])?$request->credit_accounts[$key]:'';
+                $detail_vouchers->credit_amount = isset($request->credit_amounts[$key])?$request->credit_amounts[$key]:0;
+                $detail_vouchers->quantity = isset($request->credit_quantities[$key])?$request->credit_quantities[$key]:'';
+                $detail_vouchers->rate = isset($request->credit_rates[$key])?$request->credit_rates[$key]:0;
+                $detail_vouchers->entry_type = 'credit';
+                $detail_vouchers->save();
+            }
         }
     }
 }
