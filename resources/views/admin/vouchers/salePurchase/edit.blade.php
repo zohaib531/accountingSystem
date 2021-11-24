@@ -83,7 +83,7 @@
                                             <select name="products[]" id="val-balance" class="form-control">
                                                 <option disabled>Product</option>
                                                 @foreach ($products as $product)
-                                                    <option @if($detail->product_id==$product->id) selected @endif value="{{$product->id}}">{{$product->title."-".$product->narration}}</option>
+                                                    <option @if($detail->product_narration==$product->title." - ".$product->narration) selected @endif value="{{$product->title." - ".$product->narration}}">{{$product->title."-".$product->narration}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
