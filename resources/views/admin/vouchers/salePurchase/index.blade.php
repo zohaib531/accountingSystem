@@ -179,7 +179,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-12 col-form-label px-0">Quantity<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="number" name="credit_quantitys[]"  class="form-control">
+                                            <input type="number" name="credit_quantities[]"  class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -197,14 +197,14 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" name="credit_amounts[]" class="form-control">
+                                            <input type="number" name="credit_amounts[]" class="form-control commonCredit" readonly oninput="totalCreditAmount(this)">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="text-right pl-2 mt-3">
-                            <button onclick="addNewRow('#sale_purchase_credit' , 'credit_')" class="btn btn-light" type="button">Add more +</button>
+                            <button onclick="addNewRow('#sale_purchase_credit' , 'credit_' , 'commonCredit')" class="btn btn-light" type="button">Add more +</button>
                         </div>
                         {{-- Credit Section end --}}
 
@@ -257,7 +257,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-12 col-form-label px-0">Quantity<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="number" name="debit_quantitys[]"  class="form-control">
+                                            <input type="number" name="debit_quantities[]"  class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -275,7 +275,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" name="debit_amounts[]" class="form-control">
+                                            <input type="number" name="debit_amounts[]" class="form-control commonDebit" readonly oninput="totalDebitAmount(this)">
                                         </div>
                                     </div>
                                 </div>
@@ -283,13 +283,24 @@
 
                         </div>
                         <div class="text-right pl-2 mt-3">
-                            <button onclick="addNewRow('#sale_purchase_debit', 'debit_')" class="btn btn-light" type="button">Add more +</button>
+                            <button onclick="addNewRow('#sale_purchase_debit', 'debit_' , 'commonDebit')" class="btn btn-light" type="button">Add more +</button>
                         </div>
                         {{-- Debit Section end --}}
 
 
 
-                        <div class="row m-0 justify-content-end  mt-5">
+
+                        <div class="row m-0 justify-content-between align-items-end mt-5">
+                            <div class="col-2 pr-0">
+                                <div class="form-group row m-0 align-items-center">
+                                    <label class="col-lg-9 col-form-label px-0" for="checkedEntery">End Entery<span class="text-danger">*</span></label>
+                                    <div class="col-lg-3 pl-0 pr-2 ">
+                                        <div>
+                                            <input type="checkbox" class="" name="commitChanges" id="checkedEntery">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-4 px-0">
                                 <div class="row m-0">
                                     <div class="col-6 pr-0">
@@ -351,7 +362,7 @@
 
 
 
-    const addNewRow=(id, side)=>{
+    const addNewRow=(id, side , commonClass)=>{
         $(id).append(`
                         <div class="row mt-3 mx-0 justify-content-between position-relative w-100">
                             <div class="col-2 px-0">
@@ -415,7 +426,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" name="${side}amounts[]" class="form-control">
+                                            <input type="number" name="${side}amounts[]" readonly class="form-control ${commonClass}">
                                         </div>
                                     </div>
                                 </div>
@@ -430,6 +441,30 @@
 
 
 
+const totalDebitAmount=(e)=>{
+    // Total Debit Amount
+    let totalDebit = 0;
+        let allDebitAmmount = document.getElementsByClassName('commonDebit')
+        for(let singleDebit of allDebitAmmount){
+            totalDebit += +singleDebit.value;
+        }
+        // $('#debit-amount').val(totalDebit);
+        $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]').val(totalDebit);
+        // Total Debit Amount
+}
+
+
+const totalCreditAmount=(e)=>{
+  // Total Credit Amount
+  let totalCredit = 0;
+        let allCreditAmmount = document.getElementsByClassName('commonCredit')
+        for(let singleCredit of allCreditAmmount){
+            totalCredit += +singleCredit.value;
+        }
+
+        $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]').val(totalCredit);
+        // Total Credit Amount
+}
 
 
 
