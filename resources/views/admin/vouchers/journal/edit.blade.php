@@ -3,7 +3,7 @@
     <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
     </button>
 </div>
-<div class="modal-body px-5">
+<div class="modal-body px-5 scrollModal">
    <div class="form-validation my-5">
     <form class="form-valide" id="update-form">
         @csrf
@@ -56,7 +56,7 @@
                 </div>
 
                 @foreach ($voucher->voucherDetails as $key=>$detail)
-                    
+
                     <div class="row mt-3 mx-0 justify-content-between position-relative w-100">
                         <input type="hidden" name="voucher_detail_ids[]" value="{{$detail->id}}">
                         <div class="col-3 px-0">
@@ -72,7 +72,7 @@
                                 </div>
                             </div>
                         </div>
-        
+
                         <div class="col-3 pr-0">
                             <div class="form-group row m-0 align-items-center">
                                 <label></label>
@@ -81,7 +81,7 @@
                                 </div>
                             </div>
                         </div>
-        
+
                         <div class="col-2 pr-0">
                             <div class="form-group row m-0 align-items-center">
                                 <label></label>
@@ -103,7 +103,7 @@
                                 </div>
                             </div>
                         </div>
-        
+
                         <div class="col-2 pr-0">
                             <div class="form-group row m-0 align-items-center">
                                 <label></label>
@@ -112,7 +112,7 @@
                                 </div>
                             </div>
                         </div>
-    
+
                         @if($loop->iteration!=1 && $loop->iteration!=2)
                             <div class="position-absolute" style="right:-44px;">
                                 <button type="button" onclick="removeParentElement(this)" class="btn btn-danger text-white">x</button>
@@ -120,7 +120,7 @@
                         @endif
                     </div>
                 @endforeach
-            @endif 
+            @endif
         </div>
 
         <div class="text-right pr-2 mt-3">

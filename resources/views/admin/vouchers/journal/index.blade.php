@@ -116,7 +116,7 @@
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
             </div>
-            <div class="modal-body px-5">
+            <div class="modal-body px-5 scrollModal">
                <div class="form-validation my-5">
                    <form class="form-valide" id="create-form">
                        <input type="hidden" value="1" name="voucher_type">

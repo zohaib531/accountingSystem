@@ -45,6 +45,10 @@
             height: 38px !important;
             min-height: 38px !important;
         }
+        .scrollModal{
+            max-height: 780px !important;
+            overflow-y: auto;
+        }
 
     </style>
     @yield('style')
