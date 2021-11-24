@@ -3,13 +3,6 @@
 
 @section('style')
     <link href="{{asset('assets/template/plugins/tables/css/datatable/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
-    <style>
-        @media (min-width: 992px){
-            .saleParchaseWidth {
-                max-width: 1000px !important;
-            }
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -179,7 +172,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-12 col-form-label px-0">Quantity<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="number" name="credit_quantities[]"  class="form-control">
+                                            <input type="number" name="credit_quantities[]"  class="form-control" oninput="createAmount(this , true)">
                                         </div>
                                     </div>
                                 </div>
@@ -188,7 +181,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-12 col-form-label px-0">Rate<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" name="credit_rates[]"  class="form-control">
+                                            <input type="number" name="credit_rates[]"  class="form-control" oninput="createAmount(this , false)">
                                         </div>
                                     </div>
                                 </div>
@@ -257,7 +250,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-12 col-form-label px-0">Quantity<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="number" name="debit_quantities[]"  class="form-control">
+                                            <input type="number" name="debit_quantities[]"  class="form-control" oninput="createAmount(this , true)">
                                         </div>
                                     </div>
                                 </div>
@@ -266,7 +259,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-12 col-form-label px-0">Rate<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" name="debit_rates[]"  class="form-control">
+                                            <input type="number" name="debit_rates[]"  class="form-control" oninput="createAmount(this , false)">
                                         </div>
                                     </div>
                                 </div>
@@ -408,7 +401,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="number" name="${side}quantitys[]"  class="form-control">
+                                            <input type="number" name="${side}quantities[]"  class="form-control" oninput="createAmount(this , true)">
                                         </div>
                                     </div>
                                 </div>
@@ -417,7 +410,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" name="${side}rates[]"  class="form-control">
+                                            <input type="number" name="${side}rates[]"  class="form-control" oninput="createAmount(this , false)">
                                         </div>
                                     </div>
                                 </div>
@@ -464,6 +457,28 @@ const totalCreditAmount=(e)=>{
 
         $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]').val(totalCredit);
         // Total Credit Amount
+}
+
+
+const createAmount = (e, action)=>{
+    if (action) {
+        if($(e).parent().parent().parent().next('div').children('div').children('div').children('input').val() >= 0){
+            let elem = $(e).parent().parent().parent().next('div').children('div').children('div').children('input');
+            let amount = elem.parent().parent().parent().next('div').children('div').children('div').children('input');
+            if ($(e).val() >0 && elem.val()>0) {
+                amount.val($(e).val() * elem.val());
+            }
+        }
+    }else{
+        if($(e).parent().parent().parent().prev('div').children('div').children('div').children('input').val() >= 0){
+            let elem = $(e).parent().parent().parent().prev('div').children('div').children('div').children('input');
+            let amount = $(e).parent().parent().parent().next('div').children('div').children('div').children('input');
+            if ($(e).val() >0 && elem.val()>0) {
+                amount.val($(e).val() * elem.val());
+            }
+        }
+
+    }
 }
 
 

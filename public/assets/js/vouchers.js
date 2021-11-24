@@ -80,13 +80,13 @@ $(document).ready(function() {
 
 
     const removeParentElement = (e)=>{
-        if($(e).parent().parent().find('input[name="debits[]"]').val()>= 0){
+        if($(e).parent().parent().find('input[name="debit_amounts[]"]').val()>= 0){
             let elem = $(e).parent().parent().parent().parent().find('input[id="debit-amount"]');
-            elem.val(elem.val() - $(e).parent().parent().find('input[name="debits[]"]').val());
+            elem.val(elem.val() - $(e).parent().parent().find('input[name="debit_amounts[]"]').val());
         }
-        if($(e).parent().parent().find('input[name="credits[]"]').val()>= 0){
+        if($(e).parent().parent().find('input[name="credit_amounts[]"]').val()>= 0){
             let elem = $(e).parent().parent().parent().parent().find('input[id="credit-amount"]');
-            elem.val(elem.val() - $(e).parent().parent().find('input[name="credits[]"]').val());
+            elem.val(elem.val() - $(e).parent().parent().find('input[name="credit_amounts[]"]').val());
         }
         e.parentNode.parentNode.remove();
     }

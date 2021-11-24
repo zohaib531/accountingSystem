@@ -23,7 +23,6 @@
 
     <style>
         .select2-container {
-
             display: block !important;
             width: 100% !important
         }
@@ -48,6 +47,12 @@
         .scrollModal{
             max-height: 780px !important;
             overflow-y: auto;
+        }
+
+        @media (min-width: 992px){
+            .saleParchaseWidth {
+                max-width:80% !important;
+            }
         }
 
     </style>
