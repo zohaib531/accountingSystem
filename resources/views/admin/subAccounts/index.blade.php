@@ -39,6 +39,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Opening Date</th>
                                     <th>General Accounts </th>
                                     <th>Sub Accounts</th>
                                     <th>Opening Balance</th>
@@ -52,6 +53,7 @@
                                 <tr>
 
                                     <td>{{++$key}}</td>
+                                    <td>{{$sub_account->opening_date}}</td>
                                     <td>{{$sub_account->get_account->title}}</td>
                                     <td>{{$sub_account->title}}</td>
                                     <td>{{$sub_account->opening_balance}}</td>
