@@ -9,9 +9,11 @@ use App\SubAccount;
 use App\Voucher;
 use Validator;
 use Illuminate\Http\Request;
+use App\Http\Requests\SalePurchaseVoucherRequest;
 
 class SalePurchaseVoucherController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -52,37 +54,9 @@ class SalePurchaseVoucherController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $validations = Validator::make($request->all(), [
-            'date' => 'required',
-            'credit_accounts' => 'required|array',
-            'credit_accounts.*' => 'required',
-            'credit_products' => 'required|array',
-            'credit_products.*' => 'required',
-            'credit_quantities' => 'required|array',
-            'credit_quantities.*' => 'required',
-            'credit_rates' => 'required|array',
-            'credit_rates.*' => 'required',
-            'credit_amounts' => 'required|array',
-            'credit_amounts.*' => 'required',
-            'debit_accounts' => 'required|array',
-            'debit_accounts.*' => 'required',
-            'debit_products' => 'required|array',
-            'debit_products.*' => 'required',
-            'debit_quantities' => 'required|array',
-            'debit_quantities.*' => 'required',
-            'debit_rates' => 'required|array',
-            'debit_rates.*' => 'required',
-            'debit_amounts' => 'required|array',
-            'debit_amounts.*' => 'required',
-            'total_debit' => 'required|same:total_credit',
-            'total_credit' => 'required',
-        ]);
-
-        if ($validations->fails()) {
-            return response()->json(['success' => false, 'message' => $validations->errors()]);
-        }
-
+    {  
+        $validations = Validator::make($request->all(),$this->rules(),$this->messages($request));
+        if ($validations->fails()) {return response()->json(['success' => false, 'message' => $validations->errors()]);}
         $sale_purchase_voucher = new Voucher();
         $sale_purchase_voucher->date = $request->date;
         $sale_purchase_voucher->total_debit = $request->total_debit;
@@ -131,23 +105,8 @@ class SalePurchaseVoucherController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validations = Validator::make($request->all(), [
-            'date' => 'required',
-            'products' => 'required|array',
-            'products.*' => 'required',
-            'accounts' => 'required|array',
-            'accounts.*' => 'required',
-            'debits.*' => 'required',
-            'credits.*' => 'required',
-            'transaction_types' => 'required|array',
-            'transaction_types.*' => 'required',
-            'total_debit' => 'required|same:total_credit',
-        ]);
-
-        if ($validations->fails()) {
-            return response()->json(['success' => false, 'message' => $validations->errors()]);
-        }
-
+        $validations = Validator::make($request->all(),$this->rules(),$this->messages($request));
+        if ($validations->fails()) {return response()->json(['success' => false, 'message' => $validations->errors()]);}
         $journal_voucher = Voucher::find($id);
         $journal_voucher->date = $request->date;
         $journal_voucher->total_debit = $request->total_debit;
@@ -216,5 +175,43 @@ class SalePurchaseVoucherController extends Controller
                 $detail_vouchers->save();
             }
         }
+    }
+
+    // get rules for create and update
+    private function rules()
+    {
+        return [
+            "credit_dates.*"  => ['required'],
+            "credit_accounts.*"  => ['required'],
+            "credit_products.*"  => ['required'],
+            "credit_quantities.*"  => ['required'],
+            "credit_rates.*"  => ['required'],
+            "credit_amounts.*"  => ['required'],
+            "debit_dates.*"  => ['required'],
+            "debit_accounts.*"  => ['required'],
+            "debit_products.*"  => ['required'],
+            "debit_quantities.*"  => ['required'],
+            "debit_rates.*"  => ['required'],
+            "debit_amounts.*"  => ['required'],
+            "total_debit" => ['required','same:total_credit']
+        ];
+    }
+    
+    // error messages for validation
+    private function messages($request)
+    {
+        $messages = [];
+        foreach($request->all() as $key=>$value){
+            if(is_array($value)){
+                foreach ($value as $k => $v) {
+                    $arr = explode('_',$key);
+                    $first = ucfirst($arr[0]);
+                    $second = $arr[1]=="quantities"? str_replace('ies','y',$arr[1]):str_replace('s','',$arr[1]);
+                    $kkk = $k + 1;
+                    $messages["$key.$k.required"] = " $first entry number $kkk $second field is required";
+                }
+            }
+        }
+        return $messages;
     }
 }

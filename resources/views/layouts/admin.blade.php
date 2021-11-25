@@ -45,7 +45,7 @@
             min-height: 38px !important;
         }
         .scrollModal{
-            max-height: 780px !important;
+            max-height: 80vh !important;
             overflow-y: auto;
         }
 

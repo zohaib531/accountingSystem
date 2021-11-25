@@ -137,7 +137,7 @@
                                         <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2">
                                             <select name="credit_accounts[]" class="form-control">
-                                                <option selected disabled>Sub account</option>
+                                                <option selected value="">Sub account</option>
                                                 @foreach ($subAccounts as $subAccount)
                                                     <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                                 @endforeach
@@ -151,7 +151,7 @@
                                         <label class="col-lg-12 col-form-label px-0">Product<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2">
                                             <select name="credit_products[]" class="form-control">
-                                                <option selected disabled value="">Product</option>
+                                                <option selected value="">Product</option>
                                                 @foreach ($products as $product)
                                                     <option value="{{$product->title." - ".$product->narration}}">{{$product->title." - ".$product->narration}}</option>
                                                 @endforeach
@@ -215,7 +215,7 @@
                                         <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2">
                                             <select name="debit_accounts[]" class="form-control">
-                                                <option selected disabled>Sub account</option>
+                                                <option selected value="">Sub account</option>
                                                 @foreach ($subAccounts as $subAccount)
                                                     <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                                 @endforeach
@@ -229,7 +229,7 @@
                                         <label class="col-lg-12 col-form-label px-0">Product<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2">
                                             <select name="debit_products[]" class="form-control">
-                                                <option selected disabled value="">Product</option>
+                                                <option selected value="">Product</option>
                                                 @foreach ($products as $product)
                                                     <option value="{{$product->title." - ".$product->narration}}">{{$product->title." - ".$product->narration}}</option>
                                                 @endforeach
@@ -276,10 +276,43 @@
 
 
 
+                        <div class="row mx-0 justify-content-between pt-3 differenceRow d-none">
+                            <div class="col-4 px-0">
+                                <div class="form-group row m-0 align-items-center">
+                                    <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
+                                    <div class="col-lg-12 pl-0 pr-2">
+                                        <input type="date" class="form-control" name="debit_dates[]">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-4 px-0">
+                                <div class="form-group row m-0 align-items-center">
+                                    <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
+                                    <div class="col-lg-12 pl-0 pr-2">
+                                        <select name="debit_accounts[]" class="form-control">
+                                            <option selected value="">Sub account</option>
+                                            @foreach ($subAccounts as $subAccount)
+                                                <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-4 px-0">
+                                <div class="form-group row m-0 align-items-center">
+                                    <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
+                                    <div class="col-lg-12 pl-0 pr-2 ">
+                                        <input type="number" name="debit_amounts[]" class="form-control commonDebit" readonly oninput="totalDebitAmount(this)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="row m-0 justify-content-between align-items-end mt-5">
                             <div class="col-2 pr-0">
-                                <div class="form-group row m-0 align-items-center">
+                                <div class="form-group row m-0 align-items-center differenceEntryCheck d-none">
                                     <label class="col-lg-9 col-form-label px-0" for="checkedEntery">End Entery<span class="text-danger">*</span></label>
                                     <div class="col-lg-3 pl-0 pr-2 ">
                                         <div>
@@ -288,6 +321,20 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-4 px-0">
+                                <div class="row m-0">
+                                    <div class="col-12 pr-0">
+                                        <div class="form-group row m-0 align-items-center">
+                                            <div class="col-lg-12 pl-0 pr-2 ">
+                                                <label class="col-form-label px-0 differenceLabel" for="differenceInput">Difference</label>
+                                                <input type="number" class="form-control differenceInput" id="differenceInput" name="total_debit" value="0" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-4 px-0">
                                 <div class="row m-0">
                                     <div class="col-6 pr-0">
@@ -366,7 +413,7 @@
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2">
                                             <select name="${side}accounts[]" class="form-control">
-                                                <option selected disabled>Sub account</option>
+                                                <option selected value="">Sub account</option>
                                                 @foreach ($subAccounts as $subAccount)
                                                     <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                                 @endforeach
@@ -380,7 +427,7 @@
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2">
                                             <select name="${side}products[]" class="form-control">
-                                                <option selected disabled value="">Product</option>
+                                                <option selected value="">Product</option>
                                                 @foreach ($products as $product)
                                                     <option value="{{$product->title." - ".$product->narration}}">{{$product->title." - ".$product->narration}}</option>
                                                 @endforeach
@@ -459,7 +506,7 @@ const createAmount = (e, action)=>{
         if($(e).parent().parent().parent().next('div').children('div').children('div').children('input').val() >= 0){
             let elem = $(e).parent().parent().parent().next('div').children('div').children('div').children('input');
             let amount = elem.parent().parent().parent().next('div').children('div').children('div').children('input');
-            if ($(e).val() >0 && elem.val()>0) {
+            if ($(e).val() >=0 && elem.val()>=0) {
                 amount.val($(e).val() * elem.val());
             }
         }
@@ -467,12 +514,37 @@ const createAmount = (e, action)=>{
         if($(e).parent().parent().parent().prev('div').children('div').children('div').children('input').val() >= 0){
             let elem = $(e).parent().parent().parent().prev('div').children('div').children('div').children('input');
             let amount = $(e).parent().parent().parent().next('div').children('div').children('div').children('input');
-            if ($(e).val() >0 && elem.val()>0) {
-                amount.val($(e).val() * elem.val());
+            if ($(e).val() >=0 && elem.val()>=0) {
+                amount.val($(e).val() * elem.val()); 
             }
         }
 
     }
+    totalDebitAmount(e);
+    totalCreditAmount(e);    
+    let totalDebit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]').val();       
+    let totalCredit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]').val();
+    if((totalDebit-totalCredit)>0){
+        $(e).parent().parent().parent().parent().parent().parent().find('.differenceLabel').text("Total debit is greater than total credit");
+        $(e).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(totalDebit-totalCredit);
+        $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').removeClass('d-none');
+        $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').removeClass('d-none')
+    }
+
+    else if((totalCredit-totalDebit)>0){
+        $(e).parent().parent().parent().parent().parent().parent().find('.differenceLabel').text("Total credit is greater than total debit");
+        $(e).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(totalCredit - totalDebit);
+        $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').removeClass('d-none');
+        $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').removeClass('d-none')
+    }
+    else if((totalCredit-totalDebit)==0){
+        $(e).parent().parent().parent().parent().parent().parent().find('.differenceLabel').text("Difference between total credit and total debit");
+        $(e).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(0);
+        $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').addClass('d-none');
+        $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').addClass('d-none')
+    }
+
+    
 }
 
 
