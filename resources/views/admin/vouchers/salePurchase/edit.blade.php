@@ -10,64 +10,77 @@
             <form class="form-valide" id="update-form">
                 @csrf
                 @method('put')
-                 <div class="row m-0 justify-content-between">
-                     <div class="col-5 pl-0">
-                         <div class="form-group row m-0 align-items-center">
-                             <label class="col-lg-2 col-form-label px-0" for="val-date">Date<span class="text-danger">*</span></label>
-                             <div class="col-lg-10">
-                                 <input type="date" class="form-control" id="val-date" name="date" value="{{$voucher->date}}">
-                             </div>
-                         </div>
-                     </div>
-                 </div>
-
-
-                 <div  id="editRow">
-
-                    @if($voucher->voucherDetails->count()>0)
-
-                        <div class="row mx-0 justify-content-between pt-5">
-                            <div class="col-3 px-0">
-                                <div class="form-group row m-0 align-items-center">
-                                    <label class="col-lg-12 col-form-label px-0" for="val-account">Select Sub Account<span class="text-danger">*</span></label>
-                                </div>
+                <div class="row m-0 justify-content-between">
+                    <div class="col-6 pl-0">
+                        <div class="form-group row m-0 align-items-center">
+                            <label class="col-lg-3 col-form-label px-0" for="val-date">Voucher Date<span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                                <input type="date" class="form-control" id="val-date" name="date">
                             </div>
+                        </div>
+                    </div>
+                </div>
 
-                            <div class="col-3 pr-0">
-                                <div class="form-group row m-0 align-items-center">
-                                    <label class="col-lg-12 col-form-label px-0" for="val-naration">Product<span class="text-danger">*</span></label>
-                                </div>
-                            </div>
 
-                            <div class="col-2 pr-0">
-                                <div class="form-group row m-0 align-items-center">
-                                    <label class="col-lg-12 col-form-label px-0" for="val-transaction-type">Transaction Type<span class="text-danger">*</span></label>
-                                </div>
+                {{-- Credit Section Start --}}
+                <div  id="sale_purchase_credit" class="mt-5">
+                    <h3>Credit</h3>
+                    <div class="row mx-0 justify-content-between pt-3">
+                        <div class="col-2 px-0">
+                            <div class="form-group row m-0 align-items-center">
+                                <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
                             </div>
-                            <div class="col-2 pr-0">
-                                <div class="form-group row m-0 align-items-center">
-                                    <label class="col-lg-12 col-form-label px-0">Debit<span class="text-danger">*</span></label>
-                                </div>
-                            </div>
-
-                            <div class="col-2 pr-0">
-                                <div class="form-group row m-0 align-items-center">
-                                    <label class="col-lg-12 col-form-label px-0">Credit<span class="text-danger">*</span></label>
-                                </div>
-                            </div>
-
                         </div>
 
-                        @foreach ($voucher->voucherDetails as $key=>$detail)
+                        <div class="col-2 px-0">
+                            <div class="form-group row m-0 align-items-center">
+                                <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
+                            </div>
+                        </div>
 
-                            <div class="row mt-3 mx-0 justify-content-between position-relative w-100">
-                                <input type="hidden" name="voucher_detail_ids[]" value="{{$detail->id}}">
-                                <div class="col-3 px-0">
+                        <div class="col-2 px-0">
+                            <div class="form-group row m-0 align-items-center">
+                                <label class="col-lg-12 col-form-label px-0">Product<span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+
+                        <div class="col-2 px-0">
+                            <div class="form-group row m-0 align-items-center">
+                                <label class="col-lg-12 col-form-label px-0">Quantity<span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+
+                        <div class="col-2 px-0">
+                            <div class="form-group row m-0 align-items-center">
+                                <label class="col-lg-12 col-form-label px-0">Rate<span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+
+                        <div class="col-2 px-0">
+                            <div class="form-group row m-0 align-items-center">
+                                <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    @if($voucher->voucherDetails()->where('entry_type','credit')->where('suspense_account','0')->get()->count() > 0)
+                        @foreach($voucher->voucherDetails()->where('entry_type','credit')->where('suspense_account','0')->get() as $detail)
+                        
+                            <div class="row mx-0 justify-content-between pt-3">
+                                <div class="col-2 px-0">
                                     <div class="form-group row m-0 align-items-center">
-                                        <label></label>
+                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <select name="accounts[]" id="val-account" class="form-control">
-                                                <option disabled>Select sub account</option>
+                                            <input type="date" class="form-control" name="credit_dates[]">
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="col-2 px-0">
+                                    <div class="form-group row m-0 align-items-center">
+                                         <label></label>
+                                        <div class="col-lg-12 pl-0 pr-2">
+                                            <select name="credit_accounts[]" class="form-control">
+                                                <option selected value="">Sub account</option>
                                                 @foreach ($subAccounts as $subAccount)
                                                     <option @if($subAccount->id==$detail->sub_account_id) selected @endif value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                                 @endforeach
@@ -75,13 +88,13 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-3 pr-0">
+        
+                                <div class="col-2 px-0">
                                     <div class="form-group row m-0 align-items-center">
-                                        <label for="val-balance"></label>
-                                        <div class="col-lg-12 px-0">
-                                            <select name="products[]" id="val-balance" class="form-control">
-                                                <option disabled>Product</option>
+                                         <label></label>
+                                        <div class="col-lg-12 pl-0 pr-2">
+                                            <select name="credit_products[]" class="form-control">
+                                                <option selected value="">Product</option>
                                                 @foreach ($products as $product)
                                                     <option @if($detail->product_narration==$product->title." - ".$product->narration) selected @endif value="{{$product->title." - ".$product->narration}}">{{$product->title."-".$product->narration}}</option>
                                                 @endforeach
@@ -89,80 +102,212 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-2 pr-0">
+                                <div class="col-2 px-0">
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <select name="transaction_types[]" id="val-transaction-type" class="form-control">
-                                                <option @if($detail->transaction_type=="cash") selected @endif value="cash">Cash</option>
-                                                <option @if($detail->transaction_type=="check") selected @endif value="check">Check</option>
-                                                <option @if($detail->transaction_type=="bank_transfer") selected @endif value="bank_transfer">Bank transfer</option>
-                                            </select>
+                                            <input type="number" name="credit_quantities[]"  class="form-control" oninput="createAmount(this , true)">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-2 pr-0">
+        
+                                <div class="col-2 px-0">
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" class="form-control commonDebit" @if($detail->debit_amount==0) readonly @endif value="{{$detail->debit_amount}}" oninput="disableCreditInput(this)" name="debits[]" placeholder="Debit...">
+                                            <input type="number" name="credit_rates[]"  class="form-control" oninput="createAmount(this , false)">
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="col-2 px-0">
+                                    <div class="form-group row m-0 align-items-center">
+                                        <label></label>
+                                        <div class="col-lg-12 pl-0 pr-2 ">
+                                            <input type="number" name="credit_amounts[]" class="form-control commonCredit" readonly oninput="totalCreditAmount(this)">
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-2 pr-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label></label>
-                                        <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" class="form-control commonCredit" @if($detail->credit_amount==0) readonly @endif value="{{$detail->credit_amount}}" oninput="disableDebitInput(this)" name="credits[]" placeholder="Credit...">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                @if($loop->iteration!=1 && $loop->iteration!=2)
+                                @if($loop->iteration!=1)
                                     <div class="position-absolute" style="right:-44px;">
                                         <button type="button" onclick="removeParentElement(this)" class="btn btn-danger text-white">x</button>
                                     </div>
                                 @endif
                             </div>
+
                         @endforeach
-                @endif
-
-                 </div>
-
-
-
-                 <div class="text-right pl-2 mt-3">
-                     <button onclick="addNewRow('#editRow')" class="btn btn-light" type="button">Add more +</button>
-                 </div>
+                    @endif
+                    
+                </div>
+                <div class="text-right pl-2 mt-3">
+                    <button onclick="addNewRow('#sale_purchase_credit' , 'credit_' , 'commonCredit')" class="btn btn-light" type="button">Add more +</button>
+                </div>
+                {{-- Credit Section end --}}
 
 
 
-                 <div class="row m-0 justify-content-end  mt-5">
-                     <div class="col-4 px-0">
-                         <div class="row m-0">
-                             <div class="col-6 pr-0">
-                                 <div class="form-group row m-0 align-items-center">
-                                     <label class="col-lg-12 col-form-label px-0" for="debit-amount">Total Debit<span class="text-danger">*</span></label>
-                                     <div class="col-lg-12 pl-0 pr-2 ">
-                                         <input type="number" class="form-control" id="debit-amount" name="total_debit" value="{{$voucher->total_debit}}" readonly>
-                                     </div>
-                                 </div>
-                             </div>
-                             <div class="col-6 pr-0">
-                                 <div class="form-group row m-0 align-items-center">
-                                     <label class="col-lg-12 col-form-label px-0" for="credit-amount">Total Credit<span class="text-danger">*</span></label>
-                                     <div class="col-lg-12 pl-0 pr-2 ">
-                                         <input type="number" class="form-control" id="credit-amount" name="total_credit" value="{{$voucher->total_credit}}" readonly>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
+                {{-- Debit Section Start --}}
+                {{-- <div  id="sale_purchase_debit" class="mt-4">
+                    <h3>Debit</h3>
+                    <div class="row mx-0 justify-content-between pt-3">
+                        <div class="col-2 px-0">
+                            <div class="form-group row m-0 align-items-center">
+                                <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
+                                <div class="col-lg-12 pl-0 pr-2">
+                                    <input type="date" class="form-control" name="debit_dates[]">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-2 px-0">
+                            <div class="form-group row m-0 align-items-center">
+                                <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
+                                <div class="col-lg-12 pl-0 pr-2">
+                                    <select name="debit_accounts[]" class="form-control">
+                                        <option selected value="">Sub account</option>
+                                        @foreach ($subAccounts as $subAccount)
+                                            <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-2 px-0">
+                            <div class="form-group row m-0 align-items-center">
+                                <label class="col-lg-12 col-form-label px-0">Product<span class="text-danger">*</span></label>
+                                <div class="col-lg-12 pl-0 pr-2">
+                                    <select name="debit_products[]" class="form-control">
+                                        <option selected value="">Product</option>
+                                        @foreach ($products as $product)
+                                            <option value="{{$product->title." - ".$product->narration}}">{{$product->title." - ".$product->narration}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
 
+
+                        <div class="col-2 px-0">
+                            <div class="form-group row m-0 align-items-center">
+                                <label class="col-lg-12 col-form-label px-0">Quantity<span class="text-danger">*</span></label>
+                                <div class="col-lg-12 pl-0 pr-2">
+                                    <input type="number" name="debit_quantities[]"  class="form-control" oninput="createAmount(this , true)">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-2 px-0">
+                            <div class="form-group row m-0 align-items-center">
+                                <label class="col-lg-12 col-form-label px-0">Rate<span class="text-danger">*</span></label>
+                                <div class="col-lg-12 pl-0 pr-2 ">
+                                    <input type="number" name="debit_rates[]"  class="form-control" oninput="createAmount(this , false)">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-2 px-0">
+                            <div class="form-group row m-0 align-items-center">
+                                <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
+                                <div class="col-lg-12 pl-0 pr-2 ">
+                                    <input type="number" name="debit_amounts[]" class="form-control commonDebit" readonly oninput="totalDebitAmount(this)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="text-right pl-2 mt-3">
+                    <button onclick="addNewRow('#sale_purchase_debit', 'debit_' , 'commonDebit')" class="btn btn-light" type="button">Add more +</button>
+                </div> --}}
+                {{-- Debit Section end --}}
+
+                {{-- <div class="row m-0 justify-content-between align-items-end mt-5">
+                    <div class="col-6 pl-0">
+                        <div class="form-group row m-0 align-items-center differenceEntryCheck d-none">
+                            <label class="col-lg-9 col-form-label px-0 differenceLabel" for="checkedEntery">Do you want suspense Entry?<span class="text-danger">*</span></label>
+                            <div class="col-lg-3 pl-0 pr-2 ">
+                                <div>
+                                    <input type="checkbox" class="" name="suspense_entry_check" id="checkedEntery" onchange="suspenseAccountEntryVerification(this);">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4 px-0">
+                        <div class="row m-0">
+                            <div class="col-12 pr-0">
+                                <div class="form-group row m-0 align-items-center">
+                                    <div class="col-lg-12 pl-0 pr-2 ">
+                                        <input type="hidden" class="form-control differenceInput" id="differenceInput" name="total_debit" value="0" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="row mx-0 justify-content-between pt-3 differenceRow d-none">
+                    <input type="hidden" id="suspense_entry" name="suspense_entry">
+                    <div class="col-4 px-0">
+                        <div class="form-group row m-0 align-items-center">
+                            <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
+                            <div class="col-lg-12 pl-0 pr-2">
+                                <input type="date" class="form-control" name="suspense_date">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4 px-0">
+                        <div class="form-group row m-0 align-items-center">
+                            <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
+                            <div class="col-lg-12 pl-0 pr-2">
+                                <select name="suspense_account" class="form-control">
+                                    <option selected value="">Sub account</option>
+                                    @foreach ($subAccounts as $subAccount)
+                                        <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4 px-0">
+                        <div class="form-group row m-0 align-items-center">
+                            <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
+                            <div class="col-lg-12 pl-0 pr-2 ">
+                                <input type="number" id="suspense_amount" name="suspense_amount" class="form-control" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row m-0 justify-content-between align-items-end mt-5">
+                    <div class="col-8 px-0"></div>
+                    <div class="col-4 px-0">
+                        <div class="row m-0">
+                            <div class="col-6 pr-0">
+                                <div class="form-group row m-0 align-items-center">
+                                    <label class="col-lg-12 col-form-label px-0" for="debit-amount">Total Debit<span class="text-danger">*</span></label>
+                                    <div class="col-lg-12 pl-0 pr-2 ">
+                                        <input type="number" class="form-control" id="debit-amount" name="total_debit" value="0" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 pr-0">
+                                <div class="form-group row m-0 align-items-center">
+                                    <label class="col-lg-12 col-form-label px-0" for="credit-amount">Total Credit<span class="text-danger">*</span></label>
+                                    <div class="col-lg-12 pl-0 pr-2 ">
+                                        <input type="number" class="form-control" id="credit-amount" name="total_credit" value="0" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
             </form>
         </div>
     </div>

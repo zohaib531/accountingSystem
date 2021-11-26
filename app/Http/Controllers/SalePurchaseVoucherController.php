@@ -54,13 +54,13 @@ class SalePurchaseVoucherController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {  
-        $validations = Validator::make($request->all(),$this->rules(),$this->messages($request));
+    {
+        $validations = Validator::make($request->all(),$this->rules($request),$this->messages($request));
         if ($validations->fails()) {return response()->json(['success' => false, 'message' => $validations->errors()]);}
         $sale_purchase_voucher = new Voucher();
         $sale_purchase_voucher->date = $request->date;
-        $sale_purchase_voucher->total_debit = $request->total_debit;
-        $sale_purchase_voucher->total_credit = $request->total_credit;
+        $sale_purchase_voucher->total_debit = ( $request->filled('suspense_entry') && $request->suspense_entry=="debit")? ($request->total_debit + $request->suspense_amount):$request->total_debit;
+        $sale_purchase_voucher->total_credit = ( $request->filled('suspense_entry') && $request->suspense_entry=="credit")? ($request->total_credit + $request->suspense_amount):$request->total_credit;
         $sale_purchase_voucher->save();
         $this->commonCode($sale_purchase_voucher,false,$request);
         return response()->json(['success' => true, 'message' => 'Sale/Purchase voucher has been added successfully']);
@@ -105,12 +105,12 @@ class SalePurchaseVoucherController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validations = Validator::make($request->all(),$this->rules(),$this->messages($request));
+        $validations = Validator::make($request->all(),$this->rules($request),$this->messages($request));
         if ($validations->fails()) {return response()->json(['success' => false, 'message' => $validations->errors()]);}
         $journal_voucher = Voucher::find($id);
         $journal_voucher->date = $request->date;
-        $journal_voucher->total_debit = $request->total_debit;
-        $journal_voucher->total_credit = $request->total_credit;
+        $journal_voucher->total_debit = ( $request->filled('suspense_entry') && $request->suspense_entry=="debit")? ($request->total_debit + $request->suspense_amount):$request->total_debit;
+        $journal_voucher->total_credit = ( $request->filled('suspense_entry') && $request->suspense_entry=="credit")? ($request->total_credit + $request->suspense_amount):$request->total_credit;
         if($journal_voucher->save()){
             if(count($request->accounts)>0){
                 VoucherDetail::whereIn('id',array_values(array_diff(Voucher::find($id)->voucherDetails()->pluck('id')->toArray(),$request->voucher_detail_ids)))->delete();
@@ -148,39 +148,51 @@ class SalePurchaseVoucherController extends Controller
     {
         if(isset($request->debit_dates) && count($request->debit_dates) >0){
             foreach ($request->debit_dates as $key => $credit) {
-                $detail_vouchers = new VoucherDetail();
-                $detail_vouchers->voucher_id = $voucher->id;
-                $detail_vouchers->date = isset($request->debit_dates[$key])?$request->debit_dates[$key]:'';
-                $detail_vouchers->product_narration = isset($request->debit_products[$key])?$request->debit_products[$key]:'';
-                $detail_vouchers->sub_account_id = isset($request->debit_accounts[$key])?$request->debit_accounts[$key]:'';
-                $detail_vouchers->debit_amount = isset($request->debit_amounts[$key])?$request->debit_amounts[$key]:0;
-                $detail_vouchers->quantity = isset($request->debit_quantities[$key])?$request->debit_quantities[$key]:'';
-                $detail_vouchers->rate = isset($request->debit_rates[$key])?$request->debit_rates[$key]:0;
-                $detail_vouchers->entry_type = 'debit';
-                $detail_vouchers->save();
+                $detailVoucher = new VoucherDetail();
+                $detailVoucher->voucher_id = $voucher->id;
+                $detailVoucher->date = isset($request->debit_dates[$key])?$request->debit_dates[$key]:'';
+                $detailVoucher->product_narration = isset($request->debit_products[$key])?$request->debit_products[$key]:'';
+                $detailVoucher->sub_account_id = isset($request->debit_accounts[$key])?$request->debit_accounts[$key]:'';
+                $detailVoucher->debit_amount = isset($request->debit_amounts[$key])?$request->debit_amounts[$key]:0;
+                $detailVoucher->quantity = isset($request->debit_quantities[$key])?$request->debit_quantities[$key]:'';
+                $detailVoucher->rate = isset($request->debit_rates[$key])?$request->debit_rates[$key]:0;
+                $detailVoucher->entry_type = 'debit';
+                $detailVoucher->save();
             }
         }
 
         if(isset($request->credit_dates) && count($request->credit_dates) >0){
             foreach ($request->credit_dates as $key => $credit) {
-                $detail_vouchers = new VoucherDetail();
-                $detail_vouchers->voucher_id = $voucher->id;
-                $detail_vouchers->date = isset($request->credit_dates[$key])?$request->credit_dates[$key]:'';
-                $detail_vouchers->product_narration = isset($request->credit_products[$key])?$request->credit_products[$key]:'';
-                $detail_vouchers->sub_account_id = isset($request->credit_accounts[$key])?$request->credit_accounts[$key]:'';
-                $detail_vouchers->credit_amount = isset($request->credit_amounts[$key])?$request->credit_amounts[$key]:0;
-                $detail_vouchers->quantity = isset($request->credit_quantities[$key])?$request->credit_quantities[$key]:'';
-                $detail_vouchers->rate = isset($request->credit_rates[$key])?$request->credit_rates[$key]:0;
-                $detail_vouchers->entry_type = 'credit';
-                $detail_vouchers->save();
+                $detailVoucher = new VoucherDetail();
+                $detailVoucher->voucher_id = $voucher->id;
+                $detailVoucher->date = isset($request->credit_dates[$key])?$request->credit_dates[$key]:'';
+                $detailVoucher->product_narration = isset($request->credit_products[$key])?$request->credit_products[$key]:'';
+                $detailVoucher->sub_account_id = isset($request->credit_accounts[$key])?$request->credit_accounts[$key]:'';
+                $detailVoucher->credit_amount = isset($request->credit_amounts[$key])?$request->credit_amounts[$key]:0;
+                $detailVoucher->quantity = isset($request->credit_quantities[$key])?$request->credit_quantities[$key]:'';
+                $detailVoucher->rate = isset($request->credit_rates[$key])?$request->credit_rates[$key]:0;
+                $detailVoucher->entry_type = 'credit';
+                $detailVoucher->save();
             }
+        }
+
+        if($request->filled('suspense_entry')){
+            $detailVoucher = new VoucherDetail();
+            $str = $request->suspense_entry."_amount";
+            $detailVoucher->voucher_id = $voucher->id;
+            $detailVoucher->date = $request->suspense_date;
+            $detailVoucher->sub_account_id = $request->suspense_account;
+            $detailVoucher->$str = $request->suspense_amount;
+            $detailVoucher->entry_type = $request->suspense_entry;
+            $detailVoucher->suspense_account = '1';
+            $detailVoucher->save();
         }
     }
 
     // get rules for create and update
-    private function rules()
-    {
-        return [
+    private function rules($request)
+    { 
+        $rules = [
             "credit_dates.*"  => ['required'],
             "credit_accounts.*"  => ['required'],
             "credit_products.*"  => ['required'],
@@ -195,6 +207,14 @@ class SalePurchaseVoucherController extends Controller
             "debit_amounts.*"  => ['required'],
             "total_debit" => ['required','same:total_credit']
         ];
+
+        if($request->suspense_amount > 0){
+            $rules['suspense_date'] = ['required'];
+            $rules['suspense_account'] = ['required'];
+            $rules['suspense_entry_check'] = ['required'];
+        }
+
+        return $rules;
     }
     
     // error messages for validation

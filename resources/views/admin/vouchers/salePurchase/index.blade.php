@@ -274,7 +274,32 @@
                         </div>
                         {{-- Debit Section end --}}
 
+                        <div class="row m-0 justify-content-between align-items-end mt-5">
+                            <div class="col-6 pl-0">
+                                <div class="form-group row m-0 align-items-center differenceEntryCheck d-none">
+                                    <label class="col-lg-9 col-form-label px-0 differenceLabel" for="checkedEntery">Do you want suspense Entry?<span class="text-danger">*</span></label>
+                                    <div class="col-lg-3 pl-0 pr-2 ">
+                                        <div>
+                                            <input type="checkbox" class="" name="suspense_entry_check" id="checkedEntery" onchange="suspenseAccountEntryVerification(this);">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div class="col-4 px-0">
+                                <div class="row m-0">
+                                    <div class="col-12 pr-0">
+                                        <div class="form-group row m-0 align-items-center">
+                                            <div class="col-lg-12 pl-0 pr-2 ">
+                                                {{-- <label class="col-form-label px-0 differenceLabel" for="differenceInput">Difference</label> --}}
+                                                <input type="hidden" class="form-control differenceInput" id="differenceInput" name="total_debit" value="0" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
 
                         <div class="row mx-0 justify-content-between pt-3 differenceRow d-none">
                             <input type="hidden" id="suspense_entry" name="suspense_entry">
@@ -305,26 +330,26 @@
                                 <div class="form-group row m-0 align-items-center">
                                     <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
                                     <div class="col-lg-12 pl-0 pr-2 ">
-                                        <input type="number" id="suspense_amount" name="suspense_amount" class="form-control" readonly>
+                                        <input type="number" id="suspense_amount" name="suspense_amount" class="form-control" value="0" readonly>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row m-0 justify-content-between align-items-end mt-5">
-                            <div class="col-2 pr-0">
-                                <div class="form-group row m-0 align-items-center differenceEntryCheck d-none">
-                                    <label class="col-lg-9 col-form-label px-0" for="checkedEntery">End Entery<span class="text-danger">*</span></label>
+                            <div class="col-4 pr-0">
+                                {{-- <div class="form-group row m-0 align-items-center differenceEntryCheck d-none">
+                                    <label class="col-lg-9 col-form-label px-0" for="checkedEntery">Do you want suspense Entry?<span class="text-danger">*</span></label>
                                     <div class="col-lg-3 pl-0 pr-2 ">
                                         <div>
-                                            <input type="checkbox" class="" name="commitChanges" id="checkedEntery">
+                                            <input type="checkbox" class="" name="suspense_entry_check" id="checkedEntery" onchange="suspenseAccountEntryVerification(this);">
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
 
                             <div class="col-4 px-0">
-                                <div class="row m-0">
+                                {{-- <div class="row m-0">
                                     <div class="col-12 pr-0">
                                         <div class="form-group row m-0 align-items-center">
                                             <div class="col-lg-12 pl-0 pr-2 ">
@@ -333,7 +358,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
 
                             <div class="col-4 px-0">
@@ -357,8 +382,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                    </form>
                </div>
            </div>
@@ -479,26 +502,46 @@
 const totalDebitAmount=(e)=>{
     // Total Debit Amount
     let totalDebit = 0;
-        let allDebitAmmount = document.getElementsByClassName('commonDebit')
-        for(let singleDebit of allDebitAmmount){
-            totalDebit += +singleDebit.value;
-        }
-        // $('#debit-amount').val(totalDebit);
-        $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]').val(totalDebit);
-        // Total Debit Amount
+    let allDebitAmount = document.getElementsByClassName('commonDebit')
+    for(let singleDebit of allDebitAmount){
+        totalDebit += +singleDebit.value;
+    }
+    $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]').val(totalDebit);
 }
 
 
 const totalCreditAmount=(e)=>{
-  // Total Credit Amount
-  let totalCredit = 0;
-        let allCreditAmmount = document.getElementsByClassName('commonCredit')
-        for(let singleCredit of allCreditAmmount){
-            totalCredit += +singleCredit.value;
-        }
+    // Total Credit Amount
+    let totalCredit = 0;
+    let allCreditAmmount = document.getElementsByClassName('commonCredit')
+    for(let singleCredit of allCreditAmmount){
+        totalCredit += +singleCredit.value;
+    }
+    $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]').val(totalCredit);
+}
 
-        $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]').val(totalCredit);
-        // Total Credit Amount
+const totalShouldSame = (elem)=>{
+    if($(elem).parent().parent().parent().parent().parent().parent().find('input[id="checkedEntery"]').is(":checked")){
+        let totalDebit = getTotalOfTargetSide('commonDebit');
+        let totalCredit = getTotalOfTargetSide('commonCredit');
+        if((totalDebit-totalCredit)>0){
+            let targetElem = $(elem).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]');
+            targetElem.val(parseInt(targetElem.val()) + (totalDebit-totalCredit));
+        }
+        else if((totalCredit-totalDebit)>0){
+            let targetElem = $(elem).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]');
+            targetElem.val(parseInt(targetElem.val()) + (totalCredit-totalDebit));
+        }
+    }
+}
+
+const getTotalOfTargetSide=(targetClass)=>{
+    let total = 0;
+    let allAmount = document.getElementsByClassName(targetClass);
+    for(let single of allAmount){
+        total += +single.value;
+    }
+    return total;
 }
 
 
@@ -526,34 +569,54 @@ const createAmount = (e, action)=>{
     let totalDebit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]').val();       
     let totalCredit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]').val();
     let differenceBetweenDebitCredit = 0;
-    let labelTxt = "Difference between total credit and total debit";
+    let labelTxt = "Difference";
     let entryTxt = "";
     if((totalDebit-totalCredit)>0){
         differenceBetweenDebitCredit = (totalDebit-totalCredit);
-        labelTxt = "Total debit is greater than total credit";
-        entryTxt ="debit";
+        labelTxt = "Credit";
+        entryTxt ="credit";
     }
     else if((totalCredit-totalDebit)>0){
         differenceBetweenDebitCredit = (totalCredit-totalDebit);
-        labelTxt = "Total credit is greater than total debit";
-        entryTxt ="credit";
+        labelTxt = "Debit";
+        entryTxt ="debit";
     }else if((totalCredit-totalDebit)==0){
-        $(e).parent().parent().parent().parent().parent().parent().find('.differenceLabel').text("Difference between total credit and total debit");
+        $(e).parent().parent().parent().parent().parent().parent().find('.differenceLabel').text(labelTxt);
         $(e).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(0);
         $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').addClass('d-none');
         $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').addClass('d-none');
+        totalShouldSame(e);
         return false;
     }
 
-    $(e).parent().parent().parent().parent().parent().parent().find('.differenceLabel').text(labelTxt);
+    $(e).parent().parent().parent().parent().parent().parent().find('.differenceLabel').html("<b>"+labelTxt+"</b> difference of "+"<b>"+differenceBetweenDebitCredit+"</b> do you want to adjust?");
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(differenceBetweenDebitCredit);
     $(e).parent().parent().parent().parent().parent().parent().find('#suspense_amount').val(differenceBetweenDebitCredit);
     $(e).parent().parent().parent().parent().parent().parent().find('#suspense_entry').val(entryTxt);
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').removeClass('d-none');
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').removeClass('d-none');
+    totalShouldSame(e);
     
 }
 
+const commonCodeForSuspenseEntry = (elem,targetAction)=>{
+    let differenceBetweenDebitCredit = parseInt($(elem).parent().parent().parent().parent().parent().parent().find('input[id="differenceInput"]').val());
+    let suspenseEntryType = $(elem).parent().parent().parent().parent().parent().parent().find('input[id="suspense_entry"]').val();
+    let targetSide = suspenseEntryType=="debit"?'debit-amount':'credit-amount';
+    let targetClassForTotal = suspenseEntryType=="debit"?'commonDebit':'commonCredit';
+    let targetElem = $(elem).parent().parent().parent().parent().parent().parent().find(`input[id="${targetSide}"]`);
+    let targetElemVal = parseInt(targetElem.val());
+    targetAction=="add"? (targetElem.val(targetElemVal + differenceBetweenDebitCredit)) : (targetElem.val(targetElemVal - differenceBetweenDebitCredit));
+    differenceInputRevertVal =  targetAction!="add"? parseInt($(elem).parent().parent().parent().parent().parent().parent().find('#suspense_amount').val()):0;
+    if(targetAction!="add")
+    {
+        let targetRevertElem = suspenseEntryType=="debit"?'debit-amount':'credit-amount';
+        $(elem).parent().parent().parent().parent().parent().parent().find(`input[id="${targetRevertElem}"]`).val(getTotalOfTargetSide(targetClassForTotal));
+    }
+    $(elem).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(differenceInputRevertVal);
+}
+
+const suspenseAccountEntryVerification = (e)=>{$(e).is(":checked")? commonCodeForSuspenseEntry(e,'add') : commonCodeForSuspenseEntry(e,'minus');} 
 
 
 </script>
