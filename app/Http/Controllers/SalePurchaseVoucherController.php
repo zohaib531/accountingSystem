@@ -208,7 +208,7 @@ class SalePurchaseVoucherController extends Controller
             "total_debit" => ['required','same:total_credit']
         ];
 
-        if($request->suspense_amount > 0){
+        if($request->suspense_amount > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
             $rules['suspense_date'] = ['required'];
             $rules['suspense_account'] = ['required'];
             $rules['suspense_entry_check'] = ['required'];
