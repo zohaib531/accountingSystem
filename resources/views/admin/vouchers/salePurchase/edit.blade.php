@@ -331,7 +331,7 @@
                     </div>
                 </div>
 
-                <div class="row m-0 justify-content-between align-items-end mt-5">
+                <div cl         ass="row m-0 justify-content-between align-items-end mt-5">
                     <div class="col-8 px-0"></div>
                     <div class="col-4 px-0">
                         <div class="row m-0">
