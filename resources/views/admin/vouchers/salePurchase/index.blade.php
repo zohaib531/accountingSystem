@@ -507,7 +507,9 @@ const totalDebitAmount=(e)=>{
     for(let singleDebit of allDebitAmount){
         totalDebit += +singleDebit.value;
     }
-    $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]').val(totalDebit);
+    let targetElem =  $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]');
+    targetElem.val(totalDebit);
+    return targetElem.val();
 }
 
 
@@ -518,7 +520,9 @@ const totalCreditAmount=(e)=>{
     for(let singleCredit of allCreditAmmount){
         totalCredit += +singleCredit.value;
     }
-    $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]').val(totalCredit);
+    let targetElem = $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]');
+    targetElem.val(totalCredit);
+    return targetElem.val();
 }
 
 const totalShouldSame = (elem)=>{
@@ -565,10 +569,13 @@ const createAmount = (e, action)=>{
         }
 
     }
-    totalDebitAmount(e);
-    totalCreditAmount(e);
-    let totalDebit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]').val();
-    let totalCredit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]').val();
+    // $(e).attr('name').split('_')[0] =="debit"? totalDebitAmount(e) :totalCreditAmount(e);
+    // totalDebitAmount(e);
+    // totalCreditAmount(e);
+    // let totalDebit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]').val();
+    // let totalCredit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]').val();
+    let totalDebit = totalDebitAmount(e);
+    let totalCredit = totalCreditAmount(e);
     let differenceBetweenDebitCredit = 0;
     let labelTxt = "Difference";
     let entryTxt = "";
@@ -597,10 +604,12 @@ const createAmount = (e, action)=>{
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').removeClass('d-none');
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').removeClass('d-none');
     totalShouldSame(e);
+    console.log("createAmount");
 
 }
 
 const commonCodeForSuspenseEntry = (elem,targetAction)=>{
+    console.log("commonCodeForSuspenseEntry");
     let differenceBetweenDebitCredit = parseInt($(elem).parent().parent().parent().parent().parent().parent().find('input[id="differenceInput"]').val());
     let suspenseEntryType = $(elem).parent().parent().parent().parent().parent().parent().find('input[id="suspense_entry"]').val();
     let targetSide = suspenseEntryType=="debit"?'debit-amount':'credit-amount';
@@ -617,7 +626,7 @@ const commonCodeForSuspenseEntry = (elem,targetAction)=>{
     $(elem).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(differenceInputRevertVal);
 }
 
-const suspenseAccountEntryVerification = (e)=>{$(e).is(":checked")? commonCodeForSuspenseEntry(e,'add') : commonCodeForSuspenseEntry(e,'minus');}
+const suspenseAccountEntryVerification = (e)=>{$(e).is(":checked")? commonCodeForSuspenseEntry(e,'add') : commonCodeForSuspenseEntry(e,'minus'); }
 
 
 </script>
