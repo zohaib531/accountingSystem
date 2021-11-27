@@ -135,8 +135,10 @@ class SalePurchaseVoucherController extends Controller
         if($action && $request->suspense_amount > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
             $suspenseEntryDetail = $voucher->voucherDetails()->where('suspense_account','1')->first() !=null ?$voucher->voucherDetails()->where('suspense_account','1')->first():new VoucherDetail();
             $check = true;
-        }else if($action && $request->suspense_amount == 0 && (array_sum($request->debit_amounts)==array_sum($request->credit_amounts))){
-            $voucher->voucherDetails()->where('suspense_account','1')->first() !=null ?$voucher->voucherDetails()->where('suspense_account','1')->first()->delete():'';
+        }else if($action && (array_sum($request->debit_amounts)==array_sum($request->credit_amounts))){
+            if($voucher->voucherDetails()->where('suspense_account','1')->first() !=null){
+                VoucherDetail::where('id',$voucher->voucherDetails()->where('suspense_account','1')->first()->id)->delete();
+            }
         }else if(!$action && $request->suspense_amount > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
             $suspenseEntryDetail = new VoucherDetail();
             $check = true;   
@@ -164,7 +166,7 @@ class SalePurchaseVoucherController extends Controller
                     VoucherDetail::whereIn('id',array_values(array_diff(Voucher::find($voucher->id)->voucherDetails()->where('entry_type','debit')->where('suspense_account','0')->pluck('id')->toArray(),$request->debit_voucher_detail_ids)))->delete();
                     $VoucherDetail = isset($request->debit_voucher_detail_ids[$key])? VoucherDetail::find($request->debit_voucher_detail_ids[$key]): new VoucherDetail();
                 }else{
-                    $VoucherDetail = isset($request->debit_voucher_detail_ids[$key])? VoucherDetail::find($request->debit_voucher_detail_ids[$key]): new VoucherDetail();
+                    $VoucherDetail = new VoucherDetail();
                 }
                 $VoucherDetail->voucher_id = $voucher->id;
                 $VoucherDetail->date = isset($request->debit_dates[$key])?$request->debit_dates[$key]:'';
@@ -184,7 +186,7 @@ class SalePurchaseVoucherController extends Controller
                     VoucherDetail::whereIn('id',array_values(array_diff(Voucher::find($voucher->id)->voucherDetails()->where('entry_type','credit')->where('suspense_account','0')->pluck('id')->toArray(),$request->credit_voucher_detail_ids)))->delete();
                     $VoucherDetail = isset($request->credit_voucher_detail_ids[$key])? VoucherDetail::find($request->credit_voucher_detail_ids[$key]): new VoucherDetail();
                 }else{
-                    $VoucherDetail = isset($request->credit_voucher_detail_ids[$key])? VoucherDetail::find($request->credit_voucher_detail_ids[$key]): new VoucherDetail();
+                    $VoucherDetail = new VoucherDetail();
                 }
                 $VoucherDetail->voucher_id = $voucher->id;
                 $VoucherDetail->date = isset($request->credit_dates[$key])?$request->credit_dates[$key]:'';
