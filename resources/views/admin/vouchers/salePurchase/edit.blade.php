@@ -107,7 +107,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="number" name="credit_quantities[]"  class="form-control" oninput="createAmount(this , true, false)" value="{{$detail->quantity}}">
+                                            <input type="number" name="credit_quantities[]"  class="form-control" oninput="createAmount(this , true, true)" value="{{$detail->quantity}}">
                                         </div>
                                     </div>
                                 </div>
@@ -116,7 +116,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" name="credit_rates[]"  class="form-control" oninput="createAmount(this , false, false)" value="{{$detail->rate}}">
+                                            <input type="number" name="credit_rates[]"  class="form-control" oninput="createAmount(this , false, true)" value="{{$detail->rate}}">
                                         </div>
                                     </div>
                                 </div>
@@ -233,7 +233,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="number" name="debit_quantities[]"  class="form-control" oninput="createAmount(this , true, false)" value="{{$detail->quantity}}">
+                                            <input type="number" name="debit_quantities[]"  class="form-control" oninput="createAmount(this , true, true)" value="{{$detail->quantity}}">
                                         </div>
                                     </div>
                                 </div>
@@ -242,7 +242,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" name="debit_rates[]"  class="form-control" oninput="createAmount(this , false, false)" value="{{$detail->rate}}">
+                                            <input type="number" name="debit_rates[]"  class="form-control" oninput="createAmount(this , false, true)" value="{{$detail->rate}}">
                                         </div>
                                     </div>
                                 </div>
@@ -369,8 +369,4 @@
         <button type="button" class="btn btn-success" onclick="commonFunction(false,'{{ route('salePurchase.update',$voucher->id) }}','{{route('salePurchase.index')}}','post','','update-form');">Update</button>
      </div>
 
-<script>
 
-
-
-</script>

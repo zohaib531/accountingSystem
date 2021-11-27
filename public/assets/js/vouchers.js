@@ -8,6 +8,7 @@
 // setting current date code end
 
 
+
 function removeParentElement(e){
     if($(e).parent().parent().find('input[name="debit_amounts[]"]').val()>= 0){
         let elem = $(e).parent().parent().parent().parent().find('input[id="debit-amount"]');
@@ -19,6 +20,7 @@ function removeParentElement(e){
     }
     e.parentNode.parentNode.remove();
 }
+
 
 
 
@@ -94,10 +96,10 @@ const createAmount = (e, action, voucherType)=>{
         }
     }
     // $(e).attr('name').split('_')[0] =="debit"? totalDebitAmount(e) :totalCreditAmount(e);
-    totalDebitAmount(e);
-    totalCreditAmount(e);
-    let totalDebit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]').val();
-    let totalCredit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]').val();
+    // totalDebitAmount(e);
+    // totalCreditAmount(e);
+    // let totalDebit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]').val();
+    // let totalCredit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]').val();
     let totalDebit = totalDebitAmount(e);
     let totalCredit = totalCreditAmount(e);
     let differenceBetweenDebitCredit = 0;
@@ -185,4 +187,3 @@ const commonCodeForSuspenseEntry = (elem,targetAction)=>{
 }
 
 const suspenseAccountEntryVerification = (e)=>{$(e).is(":checked")? commonCodeForSuspenseEntry(e,'add') : commonCodeForSuspenseEntry(e,'minus'); }
-

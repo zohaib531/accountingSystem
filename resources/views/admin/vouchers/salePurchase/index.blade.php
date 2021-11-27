@@ -498,8 +498,8 @@
         `);
     }
 
+
 </script>
-<script src="{{ asset('assets/js/vouchers.js') }}"></script>
 
 @endsection
 

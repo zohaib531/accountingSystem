@@ -432,7 +432,9 @@ const addNewRow=(elem, id, side , commonClass)=>{
         `);
 }
 
+
+
 </script>
-<script src="{{ asset('assets/js/vouchers.js') }}"></script>
+
 
 @endsection
