@@ -270,67 +270,72 @@
                 </div>
                 {{-- Debit Section end --}}
 
-                <div class="row m-0 justify-content-between align-items-end mt-5">
-                    <div class="col-6 pl-0">
-                        <div class="form-group row m-0 align-items-center differenceEntryCheck d-none">
-                            <label class="col-lg-9 col-form-label px-0 differenceLabel" for="checkedEntery">Do you want suspense Entry?<span class="text-danger">*</span></label>
-                            <div class="col-lg-3 pl-0 pr-2 ">
-                                <div>
-                                    <input type="checkbox" class="" name="suspense_entry_check" id="checkedEntery" onchange="suspenseAccountEntryVerification(this);">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-4 px-0">
-                        <div class="row m-0">
-                            <div class="col-12 pr-0">
-                                <div class="form-group row m-0 align-items-center">
-                                    <div class="col-lg-12 pl-0 pr-2 ">
-                                        <input type="hidden" class="form-control differenceInput" id="differenceInput" name="total_debit" value="0" readonly>
+                @if($voucher->voucherDetails()->where('suspense_account','1')->first() !=null)
+                    @php 
+                        $suspenseEntry = $voucher->voucherDetails()->where('suspense_account','1')->first();
+                        $str = $suspenseEntry->entry_type."_amount"; 
+                    @endphp
+                    <div class="row m-0 justify-content-between align-items-end mt-5">
+                        <div class="col-6 pl-0">
+                            <div class="form-group row m-0 align-items-center differenceEntryCheck">
+                                <label class="col-lg-9 col-form-label px-0 differenceLabel" for="checkedEntery"><b>{{ucfirst($suspenseEntry->entry_type)}}</b> difference of <b>{{ucfirst($suspenseEntry->$str)}}</b> has been adjusted</label>
+                                <div class="col-lg-3 pl-0 pr-2 ">
+                                    <div>
+                                        <input type="checkbox" class="" checked name="suspense_entry_check" id="checkedEntery" onchange="suspenseAccountEntryVerification(this);">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                </div>
 
-                <div class="row mx-0 justify-content-between pt-3 differenceRow d-none">
-                    <input type="hidden" id="suspense_entry" name="suspense_entry">
-                    <div class="col-4 px-0">
-                        <div class="form-group row m-0 align-items-center">
-                            <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
-                            <div class="col-lg-12 pl-0 pr-2">
-                                <input type="date" class="form-control" name="suspense_date">
+                        <div class="col-4 px-0">
+                            <div class="row m-0">
+                                <div class="col-12 pr-0">
+                                    <div class="form-group row m-0 align-items-center">
+                                        <div class="col-lg-12 pl-0 pr-2 ">
+                                            <input type="hidden" class="form-control differenceInput" id="differenceInput" value="{{ucfirst($suspenseEntry->$str)}}" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="row mx-0 justify-content-between pt-3 differenceRow">
+                        <input type="hidden" id="suspense_entry" name="suspense_entry">
+                        <div class="col-4 px-0">
+                            <div class="form-group row m-0 align-items-center">
+                                <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
+                                <div class="col-lg-12 pl-0 pr-2">
+                                    <input type="date" class="form-control" name="suspense_date" value="{{ucfirst($suspenseEntry->date)}}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4 px-0">
+                            <div class="form-group row m-0 align-items-center">
+                                <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
+                                <div class="col-lg-12 pl-0 pr-2">
+                                    <select name="suspense_account" class="form-control">
+                                        <option selected value="">Sub account</option>
+                                        @foreach ($subAccounts as $subAccount)
+                                            <option @if($subAccount->id==$suspenseEntry->sub_account_id) selected @endif value="{{$subAccount->id}}">{{$subAccount->title}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4 px-0">
+                            <div class="form-group row m-0 align-items-center">
+                                <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
+                                <div class="col-lg-12 pl-0 pr-2 ">
+                                    <input type="number" id="suspense_amount" name="suspense_amount" class="form-control" value="{{ucfirst($suspenseEntry->$str)}}" readonly>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-4 px-0">
-                        <div class="form-group row m-0 align-items-center">
-                            <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
-                            <div class="col-lg-12 pl-0 pr-2">
-                                <select name="suspense_account" class="form-control">
-                                    <option selected value="">Sub account</option>
-                                    @foreach ($subAccounts as $subAccount)
-                                        <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-4 px-0">
-                        <div class="form-group row m-0 align-items-center">
-                            <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
-                            <div class="col-lg-12 pl-0 pr-2 ">
-                                <input type="number" id="suspense_amount" name="suspense_amount" class="form-control" value="0" readonly>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                @endif  
                 <div class="row m-0 justify-content-between align-items-end mt-5">
                     <div class="col-8 px-0"></div>
                     <div class="col-4 px-0">

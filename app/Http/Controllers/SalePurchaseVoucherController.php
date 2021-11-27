@@ -59,8 +59,8 @@ class SalePurchaseVoucherController extends Controller
         if ($validations->fails()) {return response()->json(['success' => false, 'message' => $validations->errors()]);}
         $sale_purchase_voucher = new Voucher();
         $sale_purchase_voucher->date = $request->date;
-        $sale_purchase_voucher->total_debit = ( $request->filled('suspense_entry') && $request->suspense_entry=="debit")? ($request->total_debit + $request->suspense_amount):$request->total_debit;
-        $sale_purchase_voucher->total_credit = ( $request->filled('suspense_entry') && $request->suspense_entry=="credit")? ($request->total_credit + $request->suspense_amount):$request->total_credit;
+        $sale_purchase_voucher->total_debit = $request->total_debit;
+        $sale_purchase_voucher->total_credit = $request->total_credit;
         $sale_purchase_voucher->save();
         $this->commonCode($sale_purchase_voucher,false,$request);
         return response()->json(['success' => true, 'message' => 'Sale/Purchase voucher has been added successfully']);
