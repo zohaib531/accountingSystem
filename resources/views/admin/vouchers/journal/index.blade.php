@@ -3,13 +3,6 @@
 
 @section('style')
     <link href="{{asset('assets/template/plugins/tables/css/datatable/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
-    <style>
-        @media (min-width: 992px){
-            .saleParchaseWidth {
-                max-width: 1000px !important;
-            }
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -171,7 +164,7 @@
                                      <div class="form-group row m-0 align-items-center">
                                          <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
                                          <div class="col-lg-12 pl-0 pr-2 ">
-                                             <input type="number" name="credit_amounts[]" class="form-control commonCredit" oninput="totalCreditAmount(this)">
+                                             <input type="number" name="credit_amounts[]" class="form-control commonCredit"  oninput="createAmount(this , false, false)">
                                          </div>
                                      </div>
                                  </div>
@@ -225,7 +218,7 @@
                                      <div class="form-group row m-0 align-items-center">
                                          <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
                                          <div class="col-lg-12 pl-0 pr-2 ">
-                                             <input type="number" name="debit_amounts[]" class="form-control commonDebit" oninput="totalDebitAmount(this)">
+                                             <input type="number" name="debit_amounts[]" class="form-control commonDebit" oninput="createAmount(this, false, false)">
                                          </div>
                                      </div>
                                  </div>
@@ -425,7 +418,7 @@ const addNewRow=(elem, id, side , commonClass)=>{
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2 ">
-                                <input type="number" name="${side}amounts[]" class="form-control ${commonClass}">
+                                <input type="number" name="${side}amounts[]" class="form-control ${commonClass}" oninput="createAmount(this , false, false)">
                             </div>
                         </div>
                     </div>

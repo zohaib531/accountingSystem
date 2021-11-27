@@ -166,7 +166,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-12 col-form-label px-0">Quantity<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="number" name="credit_quantities[]"  class="form-control" oninput="createAmount(this , true)">
+                                            <input type="number" name="credit_quantities[]"  class="form-control" oninput="createAmount(this , true, true)">
                                         </div>
                                     </div>
                                 </div>
@@ -175,7 +175,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-12 col-form-label px-0">Rate<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" name="credit_rates[]"  class="form-control" oninput="createAmount(this , false)">
+                                            <input type="number" name="credit_rates[]"  class="form-control" oninput="createAmount(this , false, true)">
                                         </div>
                                     </div>
                                 </div>
@@ -244,7 +244,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-12 col-form-label px-0">Quantity<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="number" name="debit_quantities[]"  class="form-control" oninput="createAmount(this , true)">
+                                            <input type="number" name="debit_quantities[]"  class="form-control" oninput="createAmount(this , true, true)">
                                         </div>
                                     </div>
                                 </div>
@@ -253,7 +253,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-12 col-form-label px-0">Rate<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" name="debit_rates[]"  class="form-control" oninput="createAmount(this , false)">
+                                            <input type="number" name="debit_rates[]"  class="form-control" oninput="createAmount(this , false, true)">
                                         </div>
                                     </div>
                                 </div>
@@ -466,7 +466,7 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
-                                <input type="number" name="${side}quantities[]"  class="form-control" oninput="createAmount(this , true)">
+                                <input type="number" name="${side}quantities[]"  class="form-control" oninput="createAmount(this , true, true)">
                             </div>
                         </div>
                     </div>
@@ -475,7 +475,7 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2 ">
-                                <input type="number" name="${side}rates[]"  class="form-control" oninput="createAmount(this , false)">
+                                <input type="number" name="${side}rates[]"  class="form-control" oninput="createAmount(this , false, true)">
                             </div>
                         </div>
                     </div>
