@@ -153,7 +153,7 @@
                                             <select name="credit_products[]" class="form-control">
                                                 <option selected value="">Product</option>
                                                 @foreach ($products as $product)
-                                                    <option value="{{$product->title." - ".$product->narration}}">{{$product->title." - ".$product->narration}}</option>
+                                                    <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -231,7 +231,7 @@
                                             <select name="debit_products[]" class="form-control">
                                                 <option selected value="">Product</option>
                                                 @foreach ($products as $product)
-                                                    <option value="{{$product->title." - ".$product->narration}}">{{$product->title." - ".$product->narration}}</option>
+                                                    <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -453,7 +453,7 @@
                                 <select name="${side}products[]" class="form-control">
                                     <option selected value="">Product</option>
                                     @foreach ($products as $product)
-                                        <option value="{{$product->title." - ".$product->narration}}">{{$product->title." - ".$product->narration}}</option>
+                                        <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -499,7 +499,7 @@
     }
 
 </script>
-
+<script src="{{ asset('assets/js/vouchers.js') }}"></script>
 
 @endsection
 
