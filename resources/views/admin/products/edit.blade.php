@@ -27,11 +27,11 @@
             <label class="col-lg-3 col-form-label px-0" for="product-unit">Unit<span class="text-danger">*</span></label>
             <div class="col-lg-9">
                 <select class="form-control" id="product-unit" name="product_unit">
-                    <option value="" disabled selected>Select Product unit</option>
-                    <option value="meter">Meter</option>
-                    <option value="bags">Bags</option>
-                    <option value="kgs">Kgs</option>
-                    <option value="pounds">Pounds</option>
+                    <option value="" disabled>Select Product unit</option>
+                    <option value="meter" @if($product->product_unit=='meter') selected @endif>Meter</option>
+                    <option value="bags" @if($product->product_unit=='bags') selected @endif>Bags</option>
+                    <option value="kgs" @if($product->product_unit=='kgs') selected @endif>Kgs</option>
+                    <option value="pounds" @if($product->product_unit=='pounds') selected @endif>Pounds</option>
                 </select>
             </div>
         </div>

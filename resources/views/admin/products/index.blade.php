@@ -39,6 +39,7 @@
                                     <th>#</th>
                                     <th>Title</th>
                                     <th>Narration</th>
+                                    <th>Unit</th>
                                     <th class="text-right w-25">Action</th>
                                 </tr>
                             </thead>
@@ -48,6 +49,7 @@
                                     <td>{{++$key}}</td>
                                     <td>{{$product->title}}</td>
                                     <td>{{$product->narration}}</td>
+                                    <td>{{ucwords($product->product_unit)}}</td>
                                     <td class="text-right">
                                         <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateProduct" onclick="editResource('{{ route('products.edit', $product->id) }}','.updateModalProduct')">Update</button>
                                         <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('products.destroy',$product->id) }}','{{route('products.index')}}','delete','Are you sure you want to delete?','');">Delete</button>

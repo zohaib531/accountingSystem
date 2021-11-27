@@ -50,9 +50,11 @@ class SubAccountController extends Controller
     public function store(Request $request)
     {
         $validations = Validator::make($request->all(),[
-            'title'=>'required || unique:sub_accounts',
+            'title'=>'required || unique:sub_accounts,title,NULL,id,deleted_at,NULL',
             'account_id'=>'required',
-            'opening_balance'=>'required'
+            'opening_date'=>'required',
+            'transaction_type'=>'required',
+            'opening_balance'=>'required',
         ]);
 
         if($validations->fails())
@@ -63,6 +65,8 @@ class SubAccountController extends Controller
         $subAccounts = new SubAccount();
         $subAccounts->title = $request->title;
         $subAccounts->account_id = $request->account_id;
+        $subAccounts->date = $request->opening_date;
+        $subAccounts->transaction_type = $request->transaction_type;
         $subAccounts->opening_balance = $request->opening_balance;
         if($subAccounts->save()){
             $subAccounts->code =  $subAccounts->id;
@@ -107,6 +111,8 @@ class SubAccountController extends Controller
         $validations = Validator::make($request->all(),[
             'title'=>'required || unique:sub_accounts,title,'.$subAccount->id,
             'account_id'=>'required',
+            'opening_date'=>'required',
+            'transaction_type'=>'required',
             'opening_balance'=>'required',
 
         ]);
@@ -118,6 +124,8 @@ class SubAccountController extends Controller
 
         $subAccount->title = $request->title;
         $subAccount->account_id = $request->account_id;
+        $subAccount->date = $request->opening_date;
+        $subAccount->transaction_type = $request->transaction_type;
         $subAccount->opening_balance = $request->opening_balance;
         if($subAccount->save()){
 
@@ -133,16 +141,16 @@ class SubAccountController extends Controller
      */
     public function destroy($subAccount)
     {
-        if(!SubAccount::where('id', $subAccount)->whereHas('get_debit_subaccount')->exists() && !SubAccount::where('id', $subAccount)->whereHas('get_credit_subaccount')->exists()){
-            if(SubAccount::where('id', $subAccount)->delete()){
-                return response()->json(['success' => true, 'message' =>'Sub Account has been deleted successfully']);
-            }
-        }else{
-            return response()->json(['success' => false , 'redirect'=>false , 'message' =>'Please delete vouchers first ']);
-        }
-
-        // if(SubAccount::where('id',$subAccount)->delete()){
-        //     return response()->json(['success' => true, 'message' =>'Sub Accounts has been deleted successfully']);
+        // if(!SubAccount::where('id', $subAccount)->whereHas('get_debit_subaccount')->exists() && !SubAccount::where('id', $subAccount)->whereHas('get_credit_subaccount')->exists()){
+        //     if(SubAccount::where('id', $subAccount)->delete()){
+        //         return response()->json(['success' => true, 'message' =>'Sub Account has been deleted successfully']);
+        //     }
+        // }else{
+        //     return response()->json(['success' => false , 'redirect'=>false , 'message' =>'Please delete vouchers first ']);
         // }
+
+        if(SubAccount::where('id',$subAccount)->delete()){
+            return response()->json(['success' => true, 'message' =>'Sub Accounts has been deleted successfully']);
+        }
     }
 }

@@ -42,6 +42,7 @@
                                     <th>Opening Date</th>
                                     <th>General Accounts </th>
                                     <th>Sub Accounts</th>
+                                    <th>Transaction Type</th>
                                     <th>Opening Balance</th>
                                     @canany(['update-sub-account' , 'delete-sub-account'])
                                         <th class="text-right w-25">Action</th>
@@ -53,9 +54,10 @@
                                 <tr>
 
                                     <td>{{++$key}}</td>
-                                    <td>{{$sub_account->opening_date}}</td>
+                                    <td>{{date('d-m-Y', strtotime($sub_account->date))}}</td>
                                     <td>{{$sub_account->get_account->title}}</td>
                                     <td>{{$sub_account->title}}</td>
+                                    <td>{{ucwords($sub_account->transaction_type)}}</td>
                                     <td>{{$sub_account->opening_balance}}</td>
                                     @canany(['update-sub-account' , 'delete-sub-account'])
                                     <td class="text-right">
@@ -116,7 +118,7 @@
                             <div class="col-lg-9">
                                 <div class="row m-0">
                                     <div class="col-6 pl-0">
-                                        <input type="number" class="form-control" id="opening-balance" value="0" name="opening_balance" placeholder="Enter Opening Balance..">
+                                        <input type="number" class="form-control" id="opening-balance" value="0" name="opening_balance" placeholder="Enter Opening Balance.." maxlength="10" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                                     </div>
                                     <div class="col-6 pr-0">
                                         <select class="form-control" id="transaction-type" name="transaction_type">

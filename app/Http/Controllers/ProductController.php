@@ -47,8 +47,9 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validations = Validator::make($request->all(), [
-            'title' => 'required || unique:products',
+            'title' => 'required || unique:products,title,NULL,id,deleted_at,NULL',
             'narration' => 'required',
+            'product_unit' => 'required',
         ]);
         if ($validations->fails()) {
             return response()->json(['success' => false, 'message' => $validations->errors()]);
@@ -56,6 +57,7 @@ class ProductController extends Controller
         $products = new Product();
         $products->title = $request->title;
         $products->narration = $request->narration;
+        $products->product_unit = $request->product_unit;
 
         $products->save();
 
@@ -97,8 +99,9 @@ class ProductController extends Controller
     {
 
         $validations = Validator::make($request->all(), [
-            'title' => 'required || unique:products',
+            'title' => 'required || unique:products,title,NULL,id,deleted_at,NULL'.$product->id,
             'narration' => 'required',
+            'product_unit' => 'required',
         ]);
 
         if ($validations->fails()) {
@@ -107,6 +110,7 @@ class ProductController extends Controller
 
         $product->title = $request->title;
         $product->narration = $request->narration;
+        $product->product_unit = $request->product_unit;
         $product->save();
 
         return response()->json(['success' => true, 'message' => 'Product has been updated successfully']);

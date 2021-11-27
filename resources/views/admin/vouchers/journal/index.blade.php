@@ -117,171 +117,238 @@
                 </button>
             </div>
             <div class="modal-body px-5 scrollModal">
-               <div class="form-validation my-5">
-                   <form class="form-valide" id="create-form">
-                       <input type="hidden" value="1" name="voucher_type">
-                        <div class="row m-0 justify-content-between">
-                            <div class="col-5 pl-0">
-                                <div class="form-group row m-0 align-items-center">
-                                    <label class="col-lg-2 col-form-label px-0" for="val-date">Date<span class="text-danger">*</span></label>
-                                    <div class="col-lg-10">
-                                        <input type="date" class="form-control" id="val-date" name="date">
+                <div class="form-validation mt-3 mb-5">
+                    <form class="form-valide" id="create-form">
+                         <div class="row m-0 justify-content-between">
+                             <div class="col-6 pl-0">
+                                 <div class="form-group row m-0 align-items-center">
+                                     <label class="col-lg-3 col-form-label px-0" for="val-date">Voucher Date<span class="text-danger">*</span></label>
+                                     <div class="col-lg-9">
+                                         <input type="date" class="form-control" id="val-date" name="date">
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+
+
+                         {{-- Credit Section Start --}}
+                         <div  id="journal_credit" class="mt-5">
+                             <h3>Credit</h3>
+                             <div class="row mx-0 justify-content-between pt-3">
+                                 <div class="col-3 px-0">
+                                     <div class="form-group row m-0 align-items-center">
+                                         <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
+                                         <div class="col-lg-12 pl-0 pr-2">
+                                             <input type="date" class="form-control" name="credit_dates[]">
+                                         </div>
+                                     </div>
+                                 </div>
+
+                                 <div class="col-3 px-0">
+                                     <div class="form-group row m-0 align-items-center">
+                                         <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
+                                         <div class="col-lg-12 pl-0 pr-2">
+                                             <select name="credit_accounts[]" class="form-control">
+                                                 <option selected value="">Sub account</option>
+                                                 @foreach ($subAccounts as $subAccount)
+                                                     <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
+                                                 @endforeach
+                                             </select>
+                                         </div>
+                                     </div>
+                                 </div>
+
+                                 <div class="col-3 px-0">
+                                    <div class="form-group row m-0 align-items-center">
+                                        <label class="col-lg-12 col-form-label px-0" for="credit-naration">Naration<span class="text-danger">*</span></label>
+                                        <div class="col-lg-12 pl-0 pr-2">
+                                            <input type="text" class="form-control" id="credit-naration" name="credit_narrations[]" placeholder="Naration..">
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
+                                 </div>
+
+                                 <div class="col-3 px-0">
+                                     <div class="form-group row m-0 align-items-center">
+                                         <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
+                                         <div class="col-lg-12 pl-0 pr-2 ">
+                                             <input type="number" name="credit_amounts[]" class="form-control commonCredit" oninput="totalCreditAmount(this)">
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="text-right pl-2 mt-3">
+                             <button onclick="addNewRow(this,'#journal_credit' , 'credit_' , 'commonCredit')" class="btn btn-light" type="button">Add more +</button>
+                         </div>
+                         {{-- Credit Section end --}}
 
 
-                        <div id="journalMain">
 
-                            <div class="row mx-0 justify-content-between pt-5">
+                         {{-- Debit Section Start --}}
+                         <div  id="journal_debit" class="mt-4">
+                             <h3>Debit</h3>
+                             <div class="row mx-0 justify-content-between pt-3">
+                                 <div class="col-3 px-0">
+                                     <div class="form-group row m-0 align-items-center">
+                                         <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
+                                         <div class="col-lg-12 pl-0 pr-2">
+                                             <input type="date" class="form-control" name="debit_dates[]">
+                                         </div>
+                                     </div>
+                                 </div>
+
+                                 <div class="col-3 px-0">
+                                     <div class="form-group row m-0 align-items-center">
+                                         <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
+                                         <div class="col-lg-12 pl-0 pr-2">
+                                             <select name="debit_accounts[]" class="form-control">
+                                                 <option selected value="">Sub account</option>
+                                                 @foreach ($subAccounts as $subAccount)
+                                                     <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
+                                                 @endforeach
+                                             </select>
+                                         </div>
+                                     </div>
+                                 </div>
+
                                 <div class="col-3 px-0">
                                     <div class="form-group row m-0 align-items-center">
-                                        <label class="col-lg-12 col-form-label px-0" for="val-account">Select Sub Account<span class="text-danger">*</span></label>
+                                        <label class="col-lg-12 col-form-label px-0" for="debit-naration">Naration<span class="text-danger">*</span></label>
                                         <div class="col-lg-12 pl-0 pr-2">
-                                            <select name="accounts[]" id="val-account" class="form-control">
-                                                <option selected disabled>Select sub account</option>
-                                                @foreach ($subAccounts as $subAccount)
-                                                    <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
-                                                @endforeach
-                                            </select>
+                                            <input type="text" class="form-control" id="debit-naration" name="debit_narrations[]" placeholder="Naration..">
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-3 pr-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label class="col-lg-12 col-form-label px-0" for="val-naration">Naration<span class="text-danger">*</span></label>
-                                        <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="text" class="form-control" id="val-naration" name="narrations[]" placeholder="Naration..">
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="col-2 pr-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label class="col-lg-12 col-form-label px-0" for="val-transaction-type">Transaction Type<span class="text-danger">*</span></label>
-                                        <div class="col-lg-12 pl-0 pr-2">
-                                            <select name="transaction_types[]" id="val-transaction-type" class="form-control">
-                                                <option selected value="cash">Cash</option>
-                                                <option value="check">Check</option>
-                                                <option value="bank_transfer">Bank transfer</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2 pr-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label class="col-lg-12 col-form-label px-0">Debit<span class="text-danger">*</span></label>
-                                        <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" class="form-control commonDebit" oninput="disableCreditInput(this)" name="debits[]" placeholder="Debit...">
-                                        </div>
-                                    </div>
-                                </div>
+                                 <div class="col-3 px-0">
+                                     <div class="form-group row m-0 align-items-center">
+                                         <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
+                                         <div class="col-lg-12 pl-0 pr-2 ">
+                                             <input type="number" name="debit_amounts[]" class="form-control commonDebit" oninput="totalDebitAmount(this)">
+                                         </div>
+                                     </div>
+                                 </div>
 
-                                <div class="col-2 pr-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label class="col-lg-12 col-form-label px-0">Credit<span class="text-danger">*</span></label>
-                                        <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" class="form-control commonCredit" oninput="disableDebitInput(this)" name="credits[]" placeholder="Credit...">
-                                        </div>
-                                    </div>
-                                </div>
+                             </div>
 
-                            </div>
+                         </div>
+                         <div class="text-right pl-2 mt-3">
+                             <button onclick="addNewRow(this,'#journal_debit', 'debit_' , 'commonDebit')" class="btn btn-light" type="button">Add more +</button>
+                         </div>
+                         {{-- Debit Section end --}}
 
-                            <div class="row mx-0 justify-content-between pt-3">
-                                <div class="col-3 px-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label></label>
-                                        <div class="col-lg-12 pl-0 pr-2">
-                                            <select name="accounts[]" id="val-account" class="form-control">
-                                                <option selected disabled>Select sub account</option>
-                                                @foreach ($subAccounts as $subAccount)
-                                                    <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                         <div class="row m-0 justify-content-between align-items-end mt-5">
+                             <div class="col-4 pl-0">
+                                 <div class="form-group row m-0 align-items-center differenceEntryCheck d-none">
+                                     <label class="col-lg-9 col-form-label px-0 differenceLabel" for="checkedEntery">Do you want suspense Entry?<span class="text-danger">*</span></label>
+                                     <div class="col-lg-3 pl-0 pr-2 ">
+                                         <div>
+                                             <input type="checkbox" class="" name="suspense_entry_check" id="checkedEntery" onchange="suspenseAccountEntryVerification(this);">
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
 
-                                <div class="col-3 pr-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label></label>
-                                        <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="text" class="form-control" id="val-naration" name="narrations[]" placeholder="Naration..">
-                                        </div>
-                                    </div>
-                                </div>
+                             <div class="col-4 px-0">
+                                 <div class="row m-0">
+                                     <div class="col-12 pr-0">
+                                         <div class="form-group row m-0 align-items-center">
+                                             <div class="col-lg-12 pl-0 pr-2 ">
+                                                 {{-- <label class="col-form-label px-0 differenceLabel" for="differenceInput">Difference</label> --}}
+                                                 <input type="hidden" class="form-control differenceInput" id="differenceInput" name="total_debit" value="0" readonly>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
 
-                                <div class="col-2 pr-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label></label>
-                                        <div class="col-lg-12 pl-0 pr-2">
-                                            <select name="transaction_types[]" id="val-transaction-type" class="form-control">
-                                                <option selected value="cash">Cash</option>
-                                                <option value="check">Check</option>
-                                                <option value="bank_transfer">Bank transfer</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2 pr-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label></label>
-                                        <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" class="form-control commonDebit" oninput="disableCreditInput(this)" name="debits[]" placeholder="Debit...">
-                                        </div>
-                                    </div>
-                                </div>
+                         </div>
 
-                                <div class="col-2 pr-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label></label>
-                                        <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" class="form-control commonCredit" oninput="disableDebitInput(this)" name="credits[]" placeholder="Credit...">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                         <div class="row mx-0 justify-content-between pt-3 differenceRow d-none">
+                             <input type="hidden" id="suspense_entry" name="suspense_entry">
+                             <div class="col-4 px-0">
+                                 <div class="form-group row m-0 align-items-center">
+                                     <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
+                                     <div class="col-lg-12 pl-0 pr-2">
+                                         <input type="date" class="form-control" name="suspense_date">
+                                     </div>
+                                 </div>
+                             </div>
 
+                             <div class="col-4 px-0">
+                                 <div class="form-group row m-0 align-items-center">
+                                     <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
+                                     <div class="col-lg-12 pl-0 pr-2">
+                                         <select name="suspense_account" class="form-control">
+                                             <option selected value="">Sub account</option>
+                                             @foreach ($subAccounts as $subAccount)
+                                                 <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
+                                             @endforeach
+                                         </select>
+                                     </div>
+                                 </div>
+                             </div>
 
-                        </div>
+                             <div class="col-4 px-0">
+                                 <div class="form-group row m-0 align-items-center">
+                                     <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
+                                     <div class="col-lg-12 pl-0 pr-2 ">
+                                         <input type="number" id="suspense_amount" name="suspense_amount" class="form-control" value="0" readonly>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
 
+                         <div class="row m-0 justify-content-between align-items-end mt-5">
+                             <div class="col-4 pr-0">
+                                 {{-- <div class="form-group row m-0 align-items-center differenceEntryCheck d-none">
+                                     <label class="col-lg-9 col-form-label px-0" for="checkedEntery">Do you want suspense Entry?<span class="text-danger">*</span></label>
+                                     <div class="col-lg-3 pl-0 pr-2 ">
+                                         <div>
+                                             <input type="checkbox" class="" name="suspense_entry_check" id="checkedEntery" onchange="suspenseAccountEntryVerification(this);">
+                                         </div>
+                                     </div>
+                                 </div> --}}
+                             </div>
 
+                             <div class="col-4 px-0">
+                                 {{-- <div class="row m-0">
+                                     <div class="col-12 pr-0">
+                                         <div class="form-group row m-0 align-items-center">
+                                             <div class="col-lg-12 pl-0 pr-2 ">
+                                                 <label class="col-form-label px-0 differenceLabel" for="differenceInput">Difference</label>
+                                                 <input type="number" class="form-control differenceInput" id="differenceInput" name="total_debit" value="0" readonly>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div> --}}
+                             </div>
 
-                        <div class="text-right pr-2 mt-3">
-                            <button onclick="addNewRow('#journalMain')" class="btn btn-light" type="button">Add more +</button>
-                        </div>
-
-
-                        <div class="row m-0 justify-content-end  mt-5">
-                            <div class="col-4 px-0">
-                                <div class="row m-0">
-                                    <div class="col-6 pr-0">
-                                        <div class="form-group row m-0 align-items-center">
-                                            <label class="col-lg-12 col-form-label px-0" for="debit-amount">Total Debit<span class="text-danger">*</span></label>
-                                            <div class="col-lg-12 pl-0 pr-2 ">
-                                                <input type="number" class="form-control" id="debit-amount" name="total_debit" value="0" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 pr-0">
-                                        <div class="form-group row m-0 align-items-center">
-                                            <label class="col-lg-12 col-form-label px-0" for="credit-amount">Total Credit<span class="text-danger">*</span></label>
-                                            <div class="col-lg-12 pl-0 pr-2 ">
-                                                <input type="number" class="form-control" id="credit-amount" name="total_credit" value="0" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                   </form>
-               </div>
-           </div>
+                             <div class="col-4 px-0">
+                                 <div class="row m-0">
+                                     <div class="col-6 pr-0">
+                                         <div class="form-group row m-0 align-items-center">
+                                             <label class="col-lg-12 col-form-label px-0" for="debit-amount">Total Debit<span class="text-danger">*</span></label>
+                                             <div class="col-lg-12 pl-0 pr-2 ">
+                                                 <input type="number" class="form-control" id="debit-amount" name="total_debit" value="0" readonly>
+                                             </div>
+                                         </div>
+                                     </div>
+                                     <div class="col-6 pr-0">
+                                         <div class="form-group row m-0 align-items-center">
+                                             <label class="col-lg-12 col-form-label px-0" for="credit-amount">Total Credit<span class="text-danger">*</span></label>
+                                             <div class="col-lg-12 pl-0 pr-2 ">
+                                                 <input type="number" class="form-control" id="credit-amount" name="total_credit" value="0" readonly>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                    </form>
+                </div>
+            </div>
            <div class="modal-footer">
                <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Close</button>
                <button type="button" class="btn btn-success text-white" onclick="commonFunction(false,'{{ route('journal.store') }}','{{route('journal.index')}}','post','','create-form');">Save</button>
@@ -317,68 +384,59 @@
 
 
 
-const addNewRow=(id)=>{
-        $(id).append(`
-                        <div class="row mt-3 mx-0 justify-content-between position-relative w-100">
-                            <div class="col-3 px-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label></label>
-                                        <div class="col-lg-12 pl-0 pr-2">
-                                            <select name="accounts[]" id="val-account" class="form-control">
-                                                <option selected disabled>Select sub account</option>
-                                                @foreach ($subAccounts as $subAccount)
-                                                    <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+const addNewRow=(elem, id, side , commonClass)=>{
+    $(elem).parent().parent().find(id).append(`
+            <div class="row mt-3 mx-0 justify-content-between position-relative w-100">
 
-                                <div class="col-3 pr-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label></label>
-                                        <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="text" class="form-control" id="val-naration" name="narrations[]" placeholder="Naration..">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-2 pr-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label></label>
-                                        <div class="col-lg-12 pl-0 pr-2">
-                                            <select name="transaction_types[]" id="val-transaction-type" class="form-control">
-                                                <option selected value="cash">Cash</option>
-                                                <option value="check">Check</option>
-                                                <option value="bank_transfer">Bank transfer</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2 pr-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label></label>
-                                        <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" class="form-control commonDebit" oninput="disableCreditInput(this)" name="debits[]" placeholder="Debit...">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-2 pr-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label></label>
-                                        <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" class="form-control commonCredit" oninput="disableDebitInput(this)" name="credits[]" placeholder="Credit...">
-                                        </div>
-                                    </div>
-                                </div>
-
-                            <div class="position-absolute" style="right:-44px; top:3px;">
-                                <button type="button" onclick="removeParentElement(this)" class="btn btn-danger text-white">x</button>
+                    <div class="col-3 px-0">
+                        <div class="form-group row m-0 align-items-center">
+                            <label></label>
+                            <div class="col-lg-12 pl-0 pr-2">
+                                <input type="date" class="form-control" name="${side}dates[]">
                             </div>
-
                         </div>
-                    `);
+                    </div>
+
+                    <div class="col-3 px-0">
+                        <div class="form-group row m-0 align-items-center">
+                            <label></label>
+                            <div class="col-lg-12 pl-0 pr-2">
+                                <select name="${side}accounts[]" class="form-control">
+                                    <option selected value="">Sub account</option>
+                                    @foreach ($subAccounts as $subAccount)
+                                        <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-3 px-0">
+                        <div class="form-group row m-0 align-items-center">
+                            <label></label>
+                            <div class="col-lg-12 pl-0 pr-2">
+                                <input type="text" class="form-control" name="${side}narrations[]" placeholder="Naration..">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-3 px-0">
+                        <div class="form-group row m-0 align-items-center">
+                            <label></label>
+                            <div class="col-lg-12 pl-0 pr-2 ">
+                                <input type="number" name="${side}amounts[]" class="form-control ${commonClass}">
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="position-absolute" style="right:-44px; top:3px;">
+                    <button type="button" onclick="removeParentElement(this)" class="btn btn-danger text-white">x</button>
+                </div>
+
+            </div>
+
+        `);
 }
 
 </script>

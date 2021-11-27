@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('narration');
+            $table->string('product_unit');
             $table->softDeletes();
             $table->timestamps();
         });

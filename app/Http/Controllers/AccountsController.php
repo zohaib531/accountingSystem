@@ -46,7 +46,7 @@ class AccountsController extends Controller
     public function store(Request $request)
     {
         $validations = Validator::make($request->all(),[
-            'title'=>'required || unique:accounts'
+            'title'=>'required || unique:accounts,title,NULL,id,deleted_at,NULL'
         ]);
 
         if($validations->fails())
@@ -96,7 +96,7 @@ class AccountsController extends Controller
     public function update(Request $request, $id)
     {
         $validations = Validator::make($request->all(),[
-            'title'=>'required'
+            'title'=>'required || unique:accounts,title,NULL,id,deleted_at,NULL'.$id,
         ]);
 
         if($validations->fails())

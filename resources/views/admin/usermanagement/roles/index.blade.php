@@ -11,7 +11,7 @@
         </div>
     </div>
     <!-- row -->
-    
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -24,7 +24,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
-                                        @can('update-role') <th>Action</th> @endcan
+                                        @can('update-role') <th class="text-right">Action</th> @endcan
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -32,10 +32,10 @@
                                         <tr>
                                             <td>{{ ++$key }}</td>
                                             <td>{{ $role->name }}</td>
-                                            @can('update-role') <td><a href="{{route('roles.edit',$role->id)}}"><button class="btn btn-info">Update</button></a> </td>@endcan
+                                            @can('update-role') <td class="text-right"><a href="{{route('roles.edit',$role->id)}}"><button class="btn btn-info">Update</button></a> </td>@endcan
                                         </tr>
                                     @endforeach
-                            
+
                                 </tbody>
                             </table>
                         </div>

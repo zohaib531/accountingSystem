@@ -420,7 +420,7 @@
 
 
 
-    const addNewRow=(elem,id, side , commonClass)=>{
+    const addNewRow=(elem, id, side , commonClass)=>{
         $(elem).parent().parent().find(id).append(`
             <div class="row mt-3 mx-0 justify-content-between position-relative w-100">
                 <div class="col-2 px-0">
@@ -500,26 +500,7 @@
 
 
 
-const totalDebitAmount=(e)=>{
-    // Total Debit Amount
-    let totalDebit = 0;
-    let allDebitAmount = document.getElementsByClassName('commonDebit')
-    for(let singleDebit of allDebitAmount){
-        totalDebit += +singleDebit.value;
-    }
-    $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]').val(totalDebit);
-}
 
-
-const totalCreditAmount=(e)=>{
-    // Total Credit Amount
-    let totalCredit = 0;
-    let allCreditAmmount = document.getElementsByClassName('commonCredit')
-    for(let singleCredit of allCreditAmmount){
-        totalCredit += +singleCredit.value;
-    }
-    $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]').val(totalCredit);
-}
 
 const totalShouldSame = (elem)=>{
     if($(elem).parent().parent().parent().parent().parent().parent().find('input[id="checkedEntery"]').is(":checked")){
