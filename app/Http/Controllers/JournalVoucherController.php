@@ -154,7 +154,7 @@ class JournalVoucherController extends Controller
                 }
                 $VoucherDetail->voucher_id = $voucher->id;
                 $VoucherDetail->date = isset($request->debit_dates[$key])?$request->debit_dates[$key]:'';
-                $VoucherDetail->product_narration = isset($request->debit_narations[$key])?$request->debit_narations[$key]:'';
+                $VoucherDetail->product_narration = isset($request->debit_narrations[$key])?$request->debit_narrations[$key]:'';
                 $VoucherDetail->sub_account_id = isset($request->debit_accounts[$key])?$request->debit_accounts[$key]:'';
                 $VoucherDetail->debit_amount = isset($request->debit_amounts[$key])?$request->debit_amounts[$key]:0;
                 $VoucherDetail->entry_type = 'debit';
@@ -172,7 +172,7 @@ class JournalVoucherController extends Controller
                 }
                 $VoucherDetail->voucher_id = $voucher->id;
                 $VoucherDetail->date = isset($request->credit_dates[$key])?$request->credit_dates[$key]:'';
-                $VoucherDetail->product_narration = isset($request->credit_narations[$key])?$request->credit_narations[$key]:'';
+                $VoucherDetail->product_narration = isset($request->credit_narrations[$key])?$request->credit_narrations[$key]:'';
                 $VoucherDetail->sub_account_id = isset($request->credit_accounts[$key])?$request->credit_accounts[$key]:'';
                 $VoucherDetail->credit_amount = isset($request->credit_amounts[$key])?$request->credit_amounts[$key]:0;
                 $VoucherDetail->entry_type = 'credit';
