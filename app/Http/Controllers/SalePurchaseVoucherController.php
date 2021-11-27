@@ -59,8 +59,8 @@ class SalePurchaseVoucherController extends Controller
         if ($validations->fails()) {return response()->json(['success' => false, 'message' => $validations->errors()]);}
         $sale_purchase_voucher = new Voucher();
         $sale_purchase_voucher->date = $request->date;
-        $sale_purchase_voucher->total_debit = ( $request->filled('suspense_entry') && $request->suspense_entry=="debit")? ($request->total_debit + $request->suspense_amount):$request->total_debit;
-        $sale_purchase_voucher->total_credit = ( $request->filled('suspense_entry') && $request->suspense_entry=="credit")? ($request->total_credit + $request->suspense_amount):$request->total_credit;
+        $sale_purchase_voucher->total_debit = $request->total_debit;
+        $sale_purchase_voucher->total_credit = $request->total_credit;
         $sale_purchase_voucher->save();
         $this->commonCode($sale_purchase_voucher,false,$request);
         return response()->json(['success' => true, 'message' => 'Sale/Purchase voucher has been added successfully']);
@@ -107,27 +107,13 @@ class SalePurchaseVoucherController extends Controller
     {
         $validations = Validator::make($request->all(),$this->rules($request),$this->messages($request));
         if ($validations->fails()) {return response()->json(['success' => false, 'message' => $validations->errors()]);}
-        $journal_voucher = Voucher::find($id);
-        $journal_voucher->date = $request->date;
-        $journal_voucher->total_debit = ( $request->filled('suspense_entry') && $request->suspense_entry=="debit")? ($request->total_debit + $request->suspense_amount):$request->total_debit;
-        $journal_voucher->total_credit = ( $request->filled('suspense_entry') && $request->suspense_entry=="credit")? ($request->total_credit + $request->suspense_amount):$request->total_credit;
-        if($journal_voucher->save()){
-            if(count($request->accounts)>0){
-                VoucherDetail::whereIn('id',array_values(array_diff(Voucher::find($id)->voucherDetails()->pluck('id')->toArray(),$request->voucher_detail_ids)))->delete();
-                foreach ($request->accounts as $key => $account) {
-                    $VoucherDetail = isset($request->voucher_detail_ids[$key])? VoucherDetail::find($request->voucher_detail_ids[$key]): new VoucherDetail();
-                    $VoucherDetail->voucher_id = $journal_voucher->id;
-                    $VoucherDetail->sub_account_id = isset($request->accounts[$key])?$request->accounts[$key]:'';
-                    $VoucherDetail->product_id = isset($request->products[$key])?$request->products[$key]:'';
-                    $VoucherDetail->transaction_type = isset($request->transaction_types[$key])?$request->transaction_types[$key]:'';
-                    $VoucherDetail->debit_amount = isset($request->debits[$key])?$request->debits[$key]:0;
-                    $VoucherDetail->credit_amount = isset($request->credits[$key])?$request->credits[$key]:0;
-                    $VoucherDetail->entry_type = isset($request->debits[$key]) && $request->debits[$key]!=0?'debit':'credit';
-                    $VoucherDetail->save();
-                }
-            }
-            return response()->json(['success' => true, 'message' => 'Sale purchase voucher has been updated successfully']);
-        }
+        $sale_purchase_voucher = Voucher::find($id);
+        $sale_purchase_voucher->date = $request->date;
+        $sale_purchase_voucher->total_debit = $request->total_debit;
+        $sale_purchase_voucher->total_credit = $request->total_credit;
+        $sale_purchase_voucher->save();
+        $this->commonCode($sale_purchase_voucher,true,$request);
+        return response()->json(['success' => true, 'message' => 'Sale purchase voucher has been updated successfully']);
     }
 
     /**
@@ -143,50 +129,71 @@ class SalePurchaseVoucherController extends Controller
         }
     }
 
+    // suspense entry common code
+    private function suspenseEntryCommonCode($voucher,$action,$request){
+
+        if($action && $request->suspense_amount > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
+            $suspenseVoucherDetail = new VoucherDetail();
+        }else{
+
+        }
+        if($request->suspense_amount > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
+            $VoucherDetail = new VoucherDetail();
+            $str = $request->suspense_entry."_amount";
+            $VoucherDetail->voucher_id = $voucher->id;
+            $VoucherDetail->date = $request->suspense_date;
+            $VoucherDetail->sub_account_id = $request->suspense_account;
+            $VoucherDetail->$str = $request->suspense_amount;
+            $VoucherDetail->entry_type = $request->suspense_entry;
+            $VoucherDetail->suspense_account = '1';
+            $VoucherDetail->save();
+        }
+
+    }
+
     // create/update common code
     private function commonCode($voucher,$action,$request)
     {
         if(isset($request->debit_dates) && count($request->debit_dates) >0){
             foreach ($request->debit_dates as $key => $credit) {
-                $detailVoucher = new VoucherDetail();
-                $detailVoucher->voucher_id = $voucher->id;
-                $detailVoucher->date = isset($request->debit_dates[$key])?$request->debit_dates[$key]:'';
-                $detailVoucher->product_narration = isset($request->debit_products[$key])?$request->debit_products[$key]:'';
-                $detailVoucher->sub_account_id = isset($request->debit_accounts[$key])?$request->debit_accounts[$key]:'';
-                $detailVoucher->debit_amount = isset($request->debit_amounts[$key])?$request->debit_amounts[$key]:0;
-                $detailVoucher->quantity = isset($request->debit_quantities[$key])?$request->debit_quantities[$key]:'';
-                $detailVoucher->rate = isset($request->debit_rates[$key])?$request->debit_rates[$key]:0;
-                $detailVoucher->entry_type = 'debit';
-                $detailVoucher->save();
+                if($action){
+                    VoucherDetail::whereIn('id',array_values(array_diff(Voucher::find($voucher->id)->voucherDetails()->where('entry_type','debit')->where('suspense_account','0')->pluck('id')->toArray(),$request->debit_voucher_detail_ids)))->delete();
+                    $VoucherDetail = isset($request->debit_voucher_detail_ids[$key])? VoucherDetail::find($request->debit_voucher_detail_ids[$key]): new VoucherDetail();
+                }else{
+                    $VoucherDetail = isset($request->debit_voucher_detail_ids[$key])? VoucherDetail::find($request->debit_voucher_detail_ids[$key]): new VoucherDetail();
+                }
+                $VoucherDetail->voucher_id = $voucher->id;
+                $VoucherDetail->date = isset($request->debit_dates[$key])?$request->debit_dates[$key]:'';
+                $VoucherDetail->product_narration = isset($request->debit_products[$key])?$request->debit_products[$key]:'';
+                $VoucherDetail->sub_account_id = isset($request->debit_accounts[$key])?$request->debit_accounts[$key]:'';
+                $VoucherDetail->debit_amount = isset($request->debit_amounts[$key])?$request->debit_amounts[$key]:0;
+                $VoucherDetail->quantity = isset($request->debit_quantities[$key])?$request->debit_quantities[$key]:'';
+                $VoucherDetail->rate = isset($request->debit_rates[$key])?$request->debit_rates[$key]:0;
+                $VoucherDetail->entry_type = 'debit';
+                $VoucherDetail->save();
             }
         }
 
         if(isset($request->credit_dates) && count($request->credit_dates) >0){
             foreach ($request->credit_dates as $key => $credit) {
-                $detailVoucher = new VoucherDetail();
-                $detailVoucher->voucher_id = $voucher->id;
-                $detailVoucher->date = isset($request->credit_dates[$key])?$request->credit_dates[$key]:'';
-                $detailVoucher->product_narration = isset($request->credit_products[$key])?$request->credit_products[$key]:'';
-                $detailVoucher->sub_account_id = isset($request->credit_accounts[$key])?$request->credit_accounts[$key]:'';
-                $detailVoucher->credit_amount = isset($request->credit_amounts[$key])?$request->credit_amounts[$key]:0;
-                $detailVoucher->quantity = isset($request->credit_quantities[$key])?$request->credit_quantities[$key]:'';
-                $detailVoucher->rate = isset($request->credit_rates[$key])?$request->credit_rates[$key]:0;
-                $detailVoucher->entry_type = 'credit';
-                $detailVoucher->save();
+                if($action){
+                    VoucherDetail::whereIn('id',array_values(array_diff(Voucher::find($voucher->id)->voucherDetails()->where('entry_type','credit')->where('suspense_account','0')->pluck('id')->toArray(),$request->credit_voucher_detail_ids)))->delete();
+                    $VoucherDetail = isset($request->credit_voucher_detail_ids[$key])? VoucherDetail::find($request->credit_voucher_detail_ids[$key]): new VoucherDetail();
+                }else{
+                    $VoucherDetail = isset($request->credit_voucher_detail_ids[$key])? VoucherDetail::find($request->credit_voucher_detail_ids[$key]): new VoucherDetail();
+                }
+                $VoucherDetail->voucher_id = $voucher->id;
+                $VoucherDetail->date = isset($request->credit_dates[$key])?$request->credit_dates[$key]:'';
+                $VoucherDetail->product_narration = isset($request->credit_products[$key])?$request->credit_products[$key]:'';
+                $VoucherDetail->sub_account_id = isset($request->credit_accounts[$key])?$request->credit_accounts[$key]:'';
+                $VoucherDetail->credit_amount = isset($request->credit_amounts[$key])?$request->credit_amounts[$key]:0;
+                $VoucherDetail->quantity = isset($request->credit_quantities[$key])?$request->credit_quantities[$key]:'';
+                $VoucherDetail->rate = isset($request->credit_rates[$key])?$request->credit_rates[$key]:0;
+                $VoucherDetail->entry_type = 'credit';
+                $VoucherDetail->save();
             }
         }
-
-        if($request->suspense_amount > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
-            $detailVoucher = new VoucherDetail();
-            $str = $request->suspense_entry."_amount";
-            $detailVoucher->voucher_id = $voucher->id;
-            $detailVoucher->date = $request->suspense_date;
-            $detailVoucher->sub_account_id = $request->suspense_account;
-            $detailVoucher->$str = $request->suspense_amount;
-            $detailVoucher->entry_type = $request->suspense_entry;
-            $detailVoucher->suspense_account = '1';
-            $detailVoucher->save();
-        }
+        $this->suspenseEntryCommonCode($voucher,$action,$request);
     }
 
     // get rules for create and update

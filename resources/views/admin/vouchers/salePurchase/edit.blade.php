@@ -66,6 +66,7 @@
                         @foreach($voucher->voucherDetails()->where('entry_type','credit')->where('suspense_account','0')->get() as $detail)
                         
                             <div class="row mx-0 justify-content-between pt-3">
+                                <input type="hidden" name="credit_voucher_detail_ids[]" value="{{$detail->id}}">
                                 <div class="col-2 px-0">
                                     <div class="form-group row m-0 align-items-center">
                                          <label></label>
@@ -130,7 +131,7 @@
                                 </div>
 
                                 @if($loop->iteration!=1)
-                                    <div class="position-absolute" style="right:-44px;">
+                                    <div class="position-absolute" style="right:0px;">
                                         <button type="button" onclick="removeParentElement(this)" class="btn btn-danger text-white">x</button>
                                     </div>
                                 @endif
@@ -191,6 +192,7 @@
                         @foreach($voucher->voucherDetails()->where('entry_type','debit')->where('suspense_account','0')->get() as $detail)
                         
                             <div class="row mx-0 justify-content-between pt-3">
+                                <input type="hidden" name="debit_voucher_detail_ids[]" value="{{$detail->id}}">
                                 <div class="col-2 px-0">
                                     <div class="form-group row m-0 align-items-center">
                                          <label></label>
@@ -249,13 +251,13 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
                                         <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" name="debit_amounts[]" class="form-control commonCredit" readonly oninput="totalCreditAmount(this)" value="{{$detail->debit_amount}}">
+                                            <input type="number" name="debit_amounts[]" class="form-control commonDebit" readonly oninput="totalCreditAmount(this)" value="{{$detail->debit_amount}}">
                                         </div>
                                     </div>
                                 </div>
 
                                 @if($loop->iteration!=1)
-                                    <div class="position-absolute" style="right:-44px;">
+                                    <div class="position-absolute" style="right:0px;">
                                         <button type="button" onclick="removeParentElement(this)" class="btn btn-danger text-white">x</button>
                                     </div>
                                 @endif
@@ -270,13 +272,18 @@
                 </div>
                 {{-- Debit Section end --}}
 
+                @php 
+                    $suspenseEntry = $voucher->voucherDetails()->where('suspense_account','1')->first();
+                    $str = $suspenseEntry!=null ? $suspenseEntry->entry_type."_amount":''; 
+                @endphp
+
                 <div class="row m-0 justify-content-between align-items-end mt-5">
                     <div class="col-6 pl-0">
-                        <div class="form-group row m-0 align-items-center differenceEntryCheck d-none">
-                            <label class="col-lg-9 col-form-label px-0 differenceLabel" for="checkedEntery">Do you want suspense Entry?<span class="text-danger">*</span></label>
+                        <div class="form-group row m-0 align-items-center differenceEntryCheck {{ $suspenseEntry ==null ? 'd-none' : ' '}}">
+                            <label class="col-lg-9 col-form-label px-0 differenceLabel" for="checkedEntery">@if($suspenseEntry !=null)<b>{{ucfirst($suspenseEntry->entry_type)}}</b> difference of <b>{{ucfirst($suspenseEntry->$str)}}</b> has been adjusted @else Do you want to adujst? @endif</label>
                             <div class="col-lg-3 pl-0 pr-2 ">
                                 <div>
-                                    <input type="checkbox" class="" name="suspense_entry_check" id="checkedEntery" onchange="suspenseAccountEntryVerification(this);">
+                                    <input type="checkbox" class="" {{ $suspenseEntry !=null ? 'checked' : ''}}  name="suspense_entry_check" id="checkedEntery" onchange="suspenseAccountEntryVerification(this);">
                                 </div>
                             </div>
                         </div>
@@ -287,7 +294,7 @@
                             <div class="col-12 pr-0">
                                 <div class="form-group row m-0 align-items-center">
                                     <div class="col-lg-12 pl-0 pr-2 ">
-                                        <input type="hidden" class="form-control differenceInput" id="differenceInput" name="total_debit" value="0" readonly>
+                                        <input type="hidden" class="form-control differenceInput" id="differenceInput" value="{{$suspenseEntry !=null?ucfirst($suspenseEntry->$str):0}}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -296,13 +303,13 @@
                     
                 </div>
 
-                <div class="row mx-0 justify-content-between pt-3 differenceRow d-none">
+                <div class="row mx-0 justify-content-between pt-3 differenceRow {{ $suspenseEntry ==null ? 'd-none' : ' '}}">
                     <input type="hidden" id="suspense_entry" name="suspense_entry">
                     <div class="col-4 px-0">
                         <div class="form-group row m-0 align-items-center">
                             <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
                             <div class="col-lg-12 pl-0 pr-2">
-                                <input type="date" class="form-control" name="suspense_date">
+                                <input type="date" class="form-control" name="suspense_date" value="{{ $suspenseEntry !=null ? ucfirst($suspenseEntry->date) :''}}">
                             </div>
                         </div>
                     </div>
@@ -314,7 +321,7 @@
                                 <select name="suspense_account" class="form-control">
                                     <option selected value="">Sub account</option>
                                     @foreach ($subAccounts as $subAccount)
-                                        <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
+                                        <option @if($suspenseEntry !=null && $subAccount->id==$suspenseEntry->sub_account_id) selected @endif value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -325,11 +332,11 @@
                         <div class="form-group row m-0 align-items-center">
                             <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
                             <div class="col-lg-12 pl-0 pr-2 ">
-                                <input type="number" id="suspense_amount" name="suspense_amount" class="form-control" value="0" readonly>
+                                <input type="number" id="suspense_amount" name="suspense_amount" class="form-control" value="{{$suspenseEntry !=null? $suspenseEntry->$str:0}}" readonly>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>  
 
                 <div class="row m-0 justify-content-between align-items-end mt-5">
                     <div class="col-8 px-0"></div>
