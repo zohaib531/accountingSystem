@@ -275,7 +275,7 @@
                         {{-- Debit Section end --}}
 
                         <div class="row m-0 justify-content-between align-items-end mt-5">
-                            <div class="col-6 pl-0">
+                            <div class="col-4 pl-0">
                                 <div class="form-group row m-0 align-items-center differenceEntryCheck d-none">
                                     <label class="col-lg-9 col-form-label px-0 differenceLabel" for="checkedEntery">Do you want suspense Entry?<span class="text-danger">*</span></label>
                                     <div class="col-lg-3 pl-0 pr-2 ">
@@ -298,7 +298,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
 
                         <div class="row mx-0 justify-content-between pt-3 differenceRow d-none">
@@ -560,14 +560,14 @@ const createAmount = (e, action)=>{
             let elem = $(e).parent().parent().parent().prev('div').children('div').children('div').children('input');
             let amount = $(e).parent().parent().parent().next('div').children('div').children('div').children('input');
             if ($(e).val() >=0 && elem.val()>=0) {
-                amount.val($(e).val() * elem.val()); 
+                amount.val($(e).val() * elem.val());
             }
         }
 
     }
     totalDebitAmount(e);
-    totalCreditAmount(e);    
-    let totalDebit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]').val();       
+    totalCreditAmount(e);
+    let totalDebit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]').val();
     let totalCredit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]').val();
     let differenceBetweenDebitCredit = 0;
     let labelTxt = "Difference";
@@ -597,7 +597,7 @@ const createAmount = (e, action)=>{
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').removeClass('d-none');
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').removeClass('d-none');
     totalShouldSame(e);
-    
+
 }
 
 const commonCodeForSuspenseEntry = (elem,targetAction)=>{
@@ -617,7 +617,7 @@ const commonCodeForSuspenseEntry = (elem,targetAction)=>{
     $(elem).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(differenceInputRevertVal);
 }
 
-const suspenseAccountEntryVerification = (e)=>{$(e).is(":checked")? commonCodeForSuspenseEntry(e,'add') : commonCodeForSuspenseEntry(e,'minus');} 
+const suspenseAccountEntryVerification = (e)=>{$(e).is(":checked")? commonCodeForSuspenseEntry(e,'add') : commonCodeForSuspenseEntry(e,'minus');}
 
 
 </script>

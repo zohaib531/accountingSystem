@@ -13,7 +13,7 @@ use App\Http\Requests\SalePurchaseVoucherRequest;
 
 class SalePurchaseVoucherController extends Controller
 {
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -176,7 +176,7 @@ class SalePurchaseVoucherController extends Controller
             }
         }
 
-        if($request->filled('suspense_entry')){
+        if($request->suspense_amount > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
             $detailVoucher = new VoucherDetail();
             $str = $request->suspense_entry."_amount";
             $detailVoucher->voucher_id = $voucher->id;
@@ -191,7 +191,7 @@ class SalePurchaseVoucherController extends Controller
 
     // get rules for create and update
     private function rules($request)
-    { 
+    {
         $rules = [
             "credit_dates.*"  => ['required'],
             "credit_accounts.*"  => ['required'],
@@ -216,7 +216,7 @@ class SalePurchaseVoucherController extends Controller
 
         return $rules;
     }
-    
+
     // error messages for validation
     private function messages($request)
     {
