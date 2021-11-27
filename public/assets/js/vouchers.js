@@ -72,24 +72,26 @@ const getTotalOfTargetSide=(targetClass)=>{
 }
 
 
-const createAmount = (e, action)=>{
-    if (action) {
-        if($(e).parent().parent().parent().next('div').children('div').children('div').children('input').val() >= 0){
-            let elem = $(e).parent().parent().parent().next('div').children('div').children('div').children('input');
-            let amount = elem.parent().parent().parent().next('div').children('div').children('div').children('input');
-            if ($(e).val() >=0 && elem.val()>=0) {
-                amount.val($(e).val() * elem.val());
+const createAmount = (e, action, voucherType)=>{
+    if (voucherType) {
+        if (action) {
+            if($(e).parent().parent().parent().next('div').children('div').children('div').children('input').val() >= 0){
+                let elem = $(e).parent().parent().parent().next('div').children('div').children('div').children('input');
+                let amount = elem.parent().parent().parent().next('div').children('div').children('div').children('input');
+                if ($(e).val() >=0 && elem.val()>=0) {
+                    amount.val($(e).val() * elem.val());
+                }
             }
-        }
-    }else{
-        if($(e).parent().parent().parent().prev('div').children('div').children('div').children('input').val() >= 0){
-            let elem = $(e).parent().parent().parent().prev('div').children('div').children('div').children('input');
-            let amount = $(e).parent().parent().parent().next('div').children('div').children('div').children('input');
-            if ($(e).val() >=0 && elem.val()>=0) {
-                amount.val($(e).val() * elem.val());
+        }else{
+            if($(e).parent().parent().parent().prev('div').children('div').children('div').children('input').val() >= 0){
+                let elem = $(e).parent().parent().parent().prev('div').children('div').children('div').children('input');
+                let amount = $(e).parent().parent().parent().next('div').children('div').children('div').children('input');
+                if ($(e).val() >=0 && elem.val()>=0) {
+                    amount.val($(e).val() * elem.val());
+                }
             }
-        }
 
+        }
     }
     // $(e).attr('name').split('_')[0] =="debit"? totalDebitAmount(e) :totalCreditAmount(e);
     // totalDebitAmount(e);
