@@ -56,7 +56,6 @@
                                                 <tr>
                                                     <th>Sub Account</th>
                                                     <th>Naration</th>
-                                                    <th>Transaction Type</th>
                                                     <th>Debit</th>
                                                     <th>Credit</th>
                                                 </tr>
@@ -67,8 +66,7 @@
                                                         <tr>
                                                             @php $str = $detail->entry_type."_amount";  @endphp
                                                             <td>{{$detail->subAccount->title}}</td>
-                                                            <td>{{$detail->narration}}</td>
-                                                            <td>{{ucfirst(str_replace('_',' ',$detail->transaction_type))}}</td>
+                                                            <td>{{$detail->product_narration}}</td>
                                                             <td>{{ $detail->debit_amount!=0?$detail->debit_amount:"" }}</td>
                                                             <td>{{ $detail->credit_amount!=0?$detail->credit_amount:"" }}</td>
                                                         </tr>
