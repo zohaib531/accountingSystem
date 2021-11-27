@@ -191,7 +191,7 @@
                             </div>
                         </div>
                         <div class="text-right pl-2 mt-3">
-                            <button onclick="addNewRow('#sale_purchase_credit' , 'credit_' , 'commonCredit')" class="btn btn-light" type="button">Add more +</button>
+                            <button onclick="addNewRow(this,'#sale_purchase_credit' , 'credit_' , 'commonCredit')" class="btn btn-light" type="button">Add more +</button>
                         </div>
                         {{-- Credit Section end --}}
 
@@ -270,7 +270,7 @@
 
                         </div>
                         <div class="text-right pl-2 mt-3">
-                            <button onclick="addNewRow('#sale_purchase_debit', 'debit_' , 'commonDebit')" class="btn btn-light" type="button">Add more +</button>
+                            <button onclick="addNewRow(this,'#sale_purchase_debit', 'debit_' , 'commonDebit')" class="btn btn-light" type="button">Add more +</button>
                         </div>
                         {{-- Debit Section end --}}
 
@@ -420,82 +420,83 @@
 
 
 
-    const addNewRow=(id, side , commonClass)=>{
-        $(id).append(`
-                        <div class="row mt-3 mx-0 justify-content-between position-relative w-100">
-                            <div class="col-2 px-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label></label>
-                                        <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="date" class="form-control" name="${side}dates[]">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-2 px-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label></label>
-                                        <div class="col-lg-12 pl-0 pr-2">
-                                            <select name="${side}accounts[]" class="form-control">
-                                                <option selected value="">Sub account</option>
-                                                @foreach ($subAccounts as $subAccount)
-                                                    <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-2 px-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label></label>
-                                        <div class="col-lg-12 pl-0 pr-2">
-                                            <select name="${side}products[]" class="form-control">
-                                                <option selected value="">Product</option>
-                                                @foreach ($products as $product)
-                                                    <option value="{{$product->title." - ".$product->narration}}">{{$product->title." - ".$product->narration}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="col-2 px-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label></label>
-                                        <div class="col-lg-12 pl-0 pr-2">
-                                            <input type="number" name="${side}quantities[]"  class="form-control" oninput="createAmount(this , true)">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-2 px-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label></label>
-                                        <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" name="${side}rates[]"  class="form-control" oninput="createAmount(this , false)">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-2 px-0">
-                                    <div class="form-group row m-0 align-items-center">
-                                        <label></label>
-                                        <div class="col-lg-12 pl-0 pr-2 ">
-                                            <input type="number" name="${side}amounts[]" readonly class="form-control ${commonClass}">
-                                        </div>
-                                    </div>
-                                </div>
-
-                            <div class="position-absolute" style="right:-44px; top:3px;">
-                                <button type="button" onclick="removeParentElement(this)" class="btn btn-danger text-white">x</button>
+    const addNewRow=(elem,id, side , commonClass)=>{
+        $(elem).parent().parent().find(id).append(`
+            <div class="row mt-3 mx-0 justify-content-between position-relative w-100">
+                <div class="col-2 px-0">
+                        <div class="form-group row m-0 align-items-center">
+                            <label></label>
+                            <div class="col-lg-12 pl-0 pr-2">
+                                <input type="date" class="form-control" name="${side}dates[]">
                             </div>
-
                         </div>
-                    `);
-}
+                    </div>
+
+                    <div class="col-2 px-0">
+                        <div class="form-group row m-0 align-items-center">
+                            <label></label>
+                            <div class="col-lg-12 pl-0 pr-2">
+                                <select name="${side}accounts[]" class="form-control">
+                                    <option selected value="">Sub account</option>
+                                    @foreach ($subAccounts as $subAccount)
+                                        <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-2 px-0">
+                        <div class="form-group row m-0 align-items-center">
+                            <label></label>
+                            <div class="col-lg-12 pl-0 pr-2">
+                                <select name="${side}products[]" class="form-control">
+                                    <option selected value="">Product</option>
+                                    @foreach ($products as $product)
+                                        <option value="{{$product->title." - ".$product->narration}}">{{$product->title." - ".$product->narration}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-2 px-0">
+                        <div class="form-group row m-0 align-items-center">
+                            <label></label>
+                            <div class="col-lg-12 pl-0 pr-2">
+                                <input type="number" name="${side}quantities[]"  class="form-control" oninput="createAmount(this , true)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-2 px-0">
+                        <div class="form-group row m-0 align-items-center">
+                            <label></label>
+                            <div class="col-lg-12 pl-0 pr-2 ">
+                                <input type="number" name="${side}rates[]"  class="form-control" oninput="createAmount(this , false)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-2 px-0">
+                        <div class="form-group row m-0 align-items-center">
+                            <label></label>
+                            <div class="col-lg-12 pl-0 pr-2 ">
+                                <input type="number" name="${side}amounts[]" readonly class="form-control ${commonClass}">
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="position-absolute" style="right:-44px; top:3px;">
+                    <button type="button" onclick="removeParentElement(this)" class="btn btn-danger text-white">x</button>
+                </div>
+
+            </div>
+
+        `);
+    }
 
 
 

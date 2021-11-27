@@ -141,7 +141,7 @@
                     
                 </div>
                 <div class="text-right pl-2 mt-3">
-                    <button onclick="addNewRow('#sale_purchase_credit' , 'credit_' , 'commonCredit')" class="btn btn-light" type="button">Add more +</button>
+                    <button onclick="addNewRow(this,'#sale_purchase_credit' , 'credit_' , 'commonCredit')" class="btn btn-light" type="button">Add more +</button>
                 </div>
                 {{-- Credit Section end --}}
 
@@ -266,7 +266,7 @@
 
                 </div>
                 <div class="text-right pl-2 mt-3">
-                    <button onclick="addNewRow('#sale_purchase_debit', 'debit_' , 'commonDebit')" class="btn btn-light" type="button">Add more +</button>
+                    <button onclick="addNewRow(this,'#sale_purchase_debit', 'debit_' , 'commonDebit')" class="btn btn-light" type="button">Add more +</button>
                 </div>
                 {{-- Debit Section end --}}
 
@@ -331,7 +331,7 @@
                     </div>
                 </div>
 
-                <div cl         ass="row m-0 justify-content-between align-items-end mt-5">
+                <div class="row m-0 justify-content-between align-items-end mt-5">
                     <div class="col-8 px-0"></div>
                     <div class="col-4 px-0">
                         <div class="row m-0">
