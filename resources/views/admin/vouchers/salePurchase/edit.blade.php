@@ -64,7 +64,7 @@
                     </div>
                     @if($voucher->voucherDetails()->where('entry_type','credit')->where('suspense_account','0')->get()->count() > 0)
                         @foreach($voucher->voucherDetails()->where('entry_type','credit')->where('suspense_account','0')->get() as $detail)
-                        
+
                             <div class="row mx-0 justify-content-between pt-3">
                                 <input type="hidden" name="credit_voucher_detail_ids[]" value="{{$detail->id}}">
                                 <div class="col-2 px-0">
@@ -75,7 +75,7 @@
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="col-2 px-0">
                                     <div class="form-group row m-0 align-items-center">
                                          <label></label>
@@ -89,7 +89,7 @@
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="col-2 px-0">
                                     <div class="form-group row m-0 align-items-center">
                                          <label></label>
@@ -97,7 +97,7 @@
                                             <select name="credit_products[]" class="form-control">
                                                 <option selected value="">Product</option>
                                                 @foreach ($products as $product)
-                                                    <option @if($detail->product_narration==$product->title." - ".$product->narration) selected @endif value="{{$product->title." - ".$product->narration}}">{{$product->title."-".$product->narration}}</option>
+                                                    <option @if($detail->product_narration==$product->title." - ".$product->narration) selected @endif value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -111,7 +111,7 @@
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="col-2 px-0">
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
@@ -120,7 +120,7 @@
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="col-2 px-0">
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
@@ -139,7 +139,7 @@
 
                         @endforeach
                     @endif
-                    
+
                 </div>
                 <div class="text-right pl-2 mt-3">
                     <button onclick="addNewRow(this,'#sale_purchase_credit' , 'credit_' , 'commonCredit')" class="btn btn-light" type="button">Add more +</button>
@@ -190,7 +190,7 @@
                     </div>
                     @if($voucher->voucherDetails()->where('entry_type','debit')->where('suspense_account','0')->get()->count() > 0)
                         @foreach($voucher->voucherDetails()->where('entry_type','debit')->where('suspense_account','0')->get() as $detail)
-                        
+
                             <div class="row mx-0 justify-content-between pt-3">
                                 <input type="hidden" name="debit_voucher_detail_ids[]" value="{{$detail->id}}">
                                 <div class="col-2 px-0">
@@ -201,7 +201,7 @@
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="col-2 px-0">
                                     <div class="form-group row m-0 align-items-center">
                                          <label></label>
@@ -215,7 +215,7 @@
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="col-2 px-0">
                                     <div class="form-group row m-0 align-items-center">
                                          <label></label>
@@ -223,7 +223,7 @@
                                             <select name="debit_products[]" class="form-control">
                                                 <option selected value="">Product</option>
                                                 @foreach ($products as $product)
-                                                    <option @if($detail->product_narration==$product->title." - ".$product->narration) selected @endif value="{{$product->title." - ".$product->narration}}">{{$product->title."-".$product->narration}}</option>
+                                                    <option @if($detail->product_narration==$product->title." - ".$product->narration) selected @endif value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -237,7 +237,7 @@
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="col-2 px-0">
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
@@ -246,7 +246,7 @@
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="col-2 px-0">
                                     <div class="form-group row m-0 align-items-center">
                                         <label></label>
@@ -272,9 +272,9 @@
                 </div>
                 {{-- Debit Section end --}}
 
-                @php 
+                @php
                     $suspenseEntry = $voucher->voucherDetails()->where('suspense_account','1')->first();
-                    $str = $suspenseEntry!=null ? $suspenseEntry->entry_type."_amount":''; 
+                    $str = $suspenseEntry!=null ? $suspenseEntry->entry_type."_amount":'';
                 @endphp
 
                 <div class="row m-0 justify-content-between align-items-end mt-5">
@@ -300,7 +300,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
 
                 <div class="row mx-0 justify-content-between pt-3 differenceRow {{ $suspenseEntry ==null ? 'd-none' : ' '}}">
@@ -336,7 +336,7 @@
                             </div>
                         </div>
                     </div>
-                </div>  
+                </div>
 
                 <div class="row m-0 justify-content-between align-items-end mt-5">
                     <div class="col-8 px-0"></div>
