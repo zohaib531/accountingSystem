@@ -8,7 +8,7 @@
 // setting current date code end
 
 
-const removeParentElement = (e)=>{
+function removeParentElement(e){
     if($(e).parent().parent().find('input[name="debit_amounts[]"]').val()>= 0){
         let elem = $(e).parent().parent().parent().parent().find('input[id="debit-amount"]');
         elem.val(elem.val() - $(e).parent().parent().find('input[name="debit_amounts[]"]').val());
@@ -18,7 +18,6 @@ const removeParentElement = (e)=>{
         elem.val(elem.val() - $(e).parent().parent().find('input[name="credit_amounts[]"]').val());
     }
     e.parentNode.parentNode.remove();
-    commonCodeForSuspenseEntryDifference(e);
 }
 
 
@@ -93,42 +92,42 @@ const createAmount = (e, action)=>{
 
     }
     // $(e).attr('name').split('_')[0] =="debit"? totalDebitAmount(e) :totalCreditAmount(e);
-    // totalDebitAmount(e);
-    // totalCreditAmount(e);
-    // let totalDebit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]').val();
-    // let totalCredit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]').val();
-    // let totalDebit = totalDebitAmount(e);
-    // let totalCredit = totalCreditAmount(e);
-    // let differenceBetweenDebitCredit = 0;
-    // let labelTxt = "Difference";
-    // let entryTxt = "";
-    // if((totalDebit-totalCredit)>0){
-    //     differenceBetweenDebitCredit = (totalDebit-totalCredit);
-    //     labelTxt = "Credit";
-    //     entryTxt ="credit";
-    // }
-    // else if((totalCredit-totalDebit)>0){
-    //     differenceBetweenDebitCredit = (totalCredit-totalDebit);
-    //     labelTxt = "Debit";
-    //     entryTxt ="debit";
-    // }else if((totalCredit-totalDebit)==0){
-    //     $(e).parent().parent().parent().parent().parent().parent().find('.differenceLabel').text(labelTxt);
-    //     $(e).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(0);
-    //     $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').addClass('d-none');
-    //     $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').addClass('d-none');
-    //     totalShouldSame(e);
-    //     return false;
-    // }
+    totalDebitAmount(e);
+    totalCreditAmount(e);
+    let totalDebit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]').val();
+    let totalCredit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]').val();
+    let totalDebit = totalDebitAmount(e);
+    let totalCredit = totalCreditAmount(e);
+    let differenceBetweenDebitCredit = 0;
+    let labelTxt = "Difference";
+    let entryTxt = "";
+    if((totalDebit-totalCredit)>0){
+        differenceBetweenDebitCredit = (totalDebit-totalCredit);
+        labelTxt = "Credit";
+        entryTxt ="credit";
+    }
+    else if((totalCredit-totalDebit)>0){
+        differenceBetweenDebitCredit = (totalCredit-totalDebit);
+        labelTxt = "Debit";
+        entryTxt ="debit";
+    }else if((totalCredit-totalDebit)==0){
+        $(e).parent().parent().parent().parent().parent().parent().find('.differenceLabel').text(labelTxt);
+        $(e).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(0);
+        $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').addClass('d-none');
+        $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').addClass('d-none');
+        totalShouldSame(e);
+        return false;
+    }
 
-    // $(e).parent().parent().parent().parent().parent().parent().find('.differenceLabel').html("<b>"+labelTxt+"</b> difference of "+"<b>"+differenceBetweenDebitCredit+"</b> do you want to adjust?");
-    // $(e).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(differenceBetweenDebitCredit);
-    // $(e).parent().parent().parent().parent().parent().parent().find('#suspense_amount').val(differenceBetweenDebitCredit);
-    // $(e).parent().parent().parent().parent().parent().parent().find('#suspense_entry').val(entryTxt);
-    // $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').removeClass('d-none');
-    // $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').removeClass('d-none');
-    // totalShouldSame(e);
+    $(e).parent().parent().parent().parent().parent().parent().find('.differenceLabel').html("<b>"+labelTxt+"</b> difference of "+"<b>"+differenceBetweenDebitCredit+"</b> do you want to adjust?");
+    $(e).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(differenceBetweenDebitCredit);
+    $(e).parent().parent().parent().parent().parent().parent().find('#suspense_amount').val(differenceBetweenDebitCredit);
+    $(e).parent().parent().parent().parent().parent().parent().find('#suspense_entry').val(entryTxt);
+    $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').removeClass('d-none');
+    $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').removeClass('d-none');
+    totalShouldSame(e);
     // console.log("createAmount");
-    commonCodeForSuspenseEntryDifference(e);
+    // commonCodeForSuspenseEntryDifference(e);
 
 }
 
