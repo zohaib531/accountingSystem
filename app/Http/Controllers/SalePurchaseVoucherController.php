@@ -28,7 +28,7 @@ class SalePurchaseVoucherController extends Controller
         //     ->get();
         $vouchers = Voucher::where('voucher_type','sale_purchase_voucher')->get();
         $subAccounts = SubAccount::select('id', 'title')->get();
-        $products = Product::select('id', 'title','narration')->get();
+        $products = Product::select('id', 'title','narration','product_unit')->get();
         $data = [
             'subAccounts' => $subAccounts,
             'products' => $products,
@@ -87,7 +87,7 @@ class SalePurchaseVoucherController extends Controller
     {
         $sale_purchase_voucher = Voucher::where('id', $id)->first();
         $subAccounts = SubAccount::select('id', 'title')->get();
-        $products = Product::select('id', 'title','narration')->get();
+        $products = Product::select('id', 'title','narration','product_unit')->get();
         $data = [
             'subAccounts' => $subAccounts,
             'products' => $products,
@@ -131,22 +131,26 @@ class SalePurchaseVoucherController extends Controller
 
     // suspense entry common code
     private function suspenseEntryCommonCode($voucher,$action,$request){
-
+        $check = false;
         if($action && $request->suspense_amount > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
-            $suspenseVoucherDetail = new VoucherDetail();
-        }else{
-
+            $suspenseEntryDetail = $voucher->voucherDetails()->where('suspense_account','1')->first() !=null ?$voucher->voucherDetails()->where('suspense_account','1')->first():new VoucherDetail();
+            $check = true;
+        }else if($action && $request->suspense_amount == 0 && (array_sum($request->debit_amounts)==array_sum($request->credit_amounts))){
+            $voucher->voucherDetails()->where('suspense_account','1')->first() !=null ?$voucher->voucherDetails()->where('suspense_account','1')->first()->delete():'';
+        }else if(!$action && $request->suspense_amount > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
+            $suspenseEntryDetail = new VoucherDetail();
+            $check = true;   
         }
-        if($request->suspense_amount > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
-            $VoucherDetail = new VoucherDetail();
+
+        if($check){
             $str = $request->suspense_entry."_amount";
-            $VoucherDetail->voucher_id = $voucher->id;
-            $VoucherDetail->date = $request->suspense_date;
-            $VoucherDetail->sub_account_id = $request->suspense_account;
-            $VoucherDetail->$str = $request->suspense_amount;
-            $VoucherDetail->entry_type = $request->suspense_entry;
-            $VoucherDetail->suspense_account = '1';
-            $VoucherDetail->save();
+            $suspenseEntryDetail->voucher_id = $voucher->id;
+            $suspenseEntryDetail->date = $request->suspense_date;
+            $suspenseEntryDetail->sub_account_id = $request->suspense_account;
+            $suspenseEntryDetail->$str = $request->suspense_amount;
+            $suspenseEntryDetail->entry_type = $request->suspense_entry;
+            $suspenseEntryDetail->suspense_account = '1';
+            $suspenseEntryDetail->save();
         }
 
     }
