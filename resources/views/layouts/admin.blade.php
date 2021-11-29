@@ -249,13 +249,13 @@
                             <ul aria-expanded="false">
                                 @can('')
                                 <li>
-                                    <a href="{{route('trial_balance')}}">Trail Balance</a>
+                                    <a href="{{route('trial_balance')}}">Party Account/Party Ledger</a>
                                 </li>
                                 @endcan
 
                                 @can('')
                                 <li>
-                                    <a href="#">Balance Sheet</a>
+                                    <a href="#">AGING REPORT</a>
                                 </li>
                                 @endcan
                             </ul>

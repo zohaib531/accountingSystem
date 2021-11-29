@@ -32,6 +32,17 @@
                         <div class="row mx-0 mb-5 align-items-end">
                             <div class="col-3">
                                 <div class="form-group row m-0 align-items-center">
+                                    <label class="col-lg-12 col-form-label px-0" for="val-start_date">Account<span class="text-danger">*</span></label>
+                                    <div class="col-lg-12 px-0">
+                                        <select name="" class="form-control" id="">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group row m-0 align-items-center">
                                     <label class="col-lg-12 col-form-label px-0" for="val-start_date">Start date<span class="text-danger">*</span></label>
                                     <div class="col-lg-12 px-0">
                                         <input type="date" name="start_date" id="val-start_date" class="form-control">
@@ -48,7 +59,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-6">
+                            <div class="col-3">
                                 <button type="button" class="btn btn-primary" onclick="commonFunctionForAllRequest(true,false,'.trialBalancePortion','{{route('getTrialBalanceData')}}','','post','','create-form');">Create Trial Balance</button>
                             </div>
                         </div>
@@ -57,7 +68,7 @@
 
                     <div class="table-responsive trialBalancePortion">
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -75,8 +86,5 @@
     <script src="{{asset('assets/template/plugins/tables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('assets/template/plugins/tables/js/datatable/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{asset('assets/template/plugins/tables/js/datatable-init/datatable-basic.min.js')}}"></script>
-
-
-
 @endsection
 
