@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Party Account/Ledger')
+@section('title','Aging Reports')
 
 
 @section('content')
@@ -10,7 +10,7 @@
     <div class="col p-md-0">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="{{route('salePurchase.index')}}">All Party Account/Party Ledger</a></li>
+            <li class="breadcrumb-item active"><a href="{{route('salePurchase.index')}}">All Aging Reports</a></li>
         </ol>
     </div>
 </div>
@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <div class="row m-0">
                         <div class="col-6 text-right">
-                            <h4 class="card-title">All Party Account/Party Ledger</h4>
+                            <h4 class="card-title">All Aging Reports</h4>
                         </div>
                     </div>
 
@@ -43,24 +43,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-3">
-                                <div class="form-group row m-0 align-items-center">
-                                    <label class="col-lg-12 col-form-label px-0" for="val-start_date">Start date<span class="text-danger">*</span></label>
-                                    <div class="col-lg-12 px-0">
-                                        <input type="date" name="start_date" id="val-start_date" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-3">
-                                <div class="form-group row m-0 align-items-center">
-                                    <label class="col-lg-12 col-form-label px-0" for="val-end_date">End date<span class="text-danger">*</span></label>
-                                    <div class="col-lg-12 px-0">
-                                        <input type="date" name="end_date" id="val-end_date"  class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="col-3">
                                 <button type="button" class="btn btn-primary" onclick="commonFunctionForAllRequest(true,false,'.trialBalancePortion','{{route('getTrialBalanceData')}}','','post','','create-form');">Create Trial Balance</button>
                             </div>
