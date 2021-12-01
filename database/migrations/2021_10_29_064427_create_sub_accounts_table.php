@@ -19,8 +19,6 @@ class CreateSubAccountsTable extends Migration
             $table->unsignedInteger('account_id');
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
             $table->string('title');
-            $table->date('date');
-            $table->string('transaction_type');
             $table->integer('opening_balance');
             $table->softDeletes();
             $table->timestamps();
