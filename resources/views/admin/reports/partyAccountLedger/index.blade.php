@@ -2,7 +2,7 @@
 @section('title','Party Account/Ledger')
 
 @section('style')
-
+<link rel="stylesheet" href="{{asset('admin/plugin/datatable/css/dataTables.min.css')}}">
 @endsection
 
 @section('content')
@@ -89,6 +89,7 @@
 @endsection
 
 
+
 @section('script')
     <script src="{{asset('admin/plugin/datatable/js/dataTables.min.js')}}"></script>
     <script src="{{asset('admin/plugin/datatable/js/dataTables.buttons.min.js')}}"></script>
@@ -109,4 +110,5 @@
         } );
    </script>
 @endsection
+
 
