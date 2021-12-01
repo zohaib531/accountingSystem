@@ -44,7 +44,7 @@
                     <td>{{$detail->product_narration}} @if($detail->quantity!=0 && $detail->rate!=0)  (<span style="font-weight:bold;">{{$detail->quantity}} x {{$detail->rate}}</span>) @endif</td>
                     <td>{{ $detail->debit_amount!=0?$detail->debit_amount:"" }}</td>
                     <td>{{ $detail->credit_amount!=0?$detail->credit_amount:"" }}</td>
-                    <td>{{ $openingBalance }}</td>
+                    <td>{{ $openingBalance<0? str_replace('-','',$openingBalance):$openingBalance }}</td>
                     <td>{{$entryType}}</td>
                 </tr>
             @endforeach

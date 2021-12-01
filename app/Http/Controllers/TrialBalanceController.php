@@ -13,7 +13,7 @@ class TrialBalanceController extends Controller
     public function index()
     { 
         $subAccounts = SubAccount::select('id', 'title')->get();
-        return view('admin.reports.trial_balance.index',compact('subAccounts'));
+        return view('admin.reports.partyAccountLedger.index',compact('subAccounts'));
     }
 
     // get data for trial balance
@@ -24,6 +24,6 @@ class TrialBalanceController extends Controller
         $totalDebit = VoucherDetail::where('sub_account_id',$request->sub_account)->whereBetween('date',[$request->start_date, $request->end_date])->sum('debit_amount');
         $totalCredit = VoucherDetail::where('sub_account_id',$request->sub_account)->whereBetween('date',[$request->start_date, $request->end_date])->sum('credit_amount');
         $subAccount = SubAccount::where('id', $request->sub_account)->first();
-        return response()->json(['success' => true, 'html' => view('admin.reports.trial_balance.get_data',compact('vouchers','totalDebit','totalCredit','subAccount'))->render()]);
+        return response()->json(['success' => true, 'html' => view('admin.reports.partyAccountLedger.get_data',compact('vouchers','totalDebit','totalCredit','subAccount'))->render()]);
     }
 }
