@@ -1,4 +1,4 @@
-<table class="table table-striped table-bordered zero-configuration">
+<table class="table table-striped table-bordered zero-configuration" id="partyLedger">
     <thead>
         <tr>
             <th>Date</th>
@@ -12,7 +12,7 @@
         </tr>
     </thead>
     <tbody>
-        @php 
+        @php
             $openingBalance = $subAccount->opening_balance;
             $entryType = $subAccount->transaction_type
         @endphp
@@ -25,7 +25,7 @@
                 <td>{{$subAccount->opening_balance!=0 ? $subAccount->opening_balance : 0}}</td>
                 <td>{{$subAccount->opening_balance!=0 ? $subAccount->transaction_type : ""}}</td>
             </tr>
-            
+
             @foreach($vouchers as $key=>$detail)
                 @php
                     $str = $detail->entry_type."_amount";
