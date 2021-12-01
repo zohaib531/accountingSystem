@@ -16,7 +16,7 @@
                 <tr>
                     @php $str = $detail->entry_type."_amount";  @endphp
                     <td>{{$detail->date}}</td>
-                    <td>{{$detail->subAccount->title}}</td>
+                    <td>{{$detail->product_narration}}</td>
                     <td>{{ $detail->debit_amount!=0?$detail->debit_amount:"" }}</td>
                     <td>{{ $detail->credit_amount!=0?$detail->credit_amount:"" }}</td>
                     <td>12000</td>
