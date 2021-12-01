@@ -1,4 +1,4 @@
-<table class="table table-striped table-bordered zero-configuration" id="partyLedger">
+<table class="table table-striped table-bordered zero-configuration">
     <thead>
         <tr>
             <th>Date</th>
