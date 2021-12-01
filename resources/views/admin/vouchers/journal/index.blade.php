@@ -111,7 +111,7 @@
                 <div class="form-validation mt-3 mb-5">
                     <form class="form-valide" id="create-form">
                          <div class="row m-0 justify-content-between">
-                             <div class="col-6 pl-0">
+                             <div class="col-4 pl-0">
                                  <div class="form-group row m-0 align-items-center">
                                      <label class="col-lg-3 col-form-label px-0" for="val-date">Voucher Date<span class="text-danger">*</span></label>
                                      <div class="col-lg-9">
