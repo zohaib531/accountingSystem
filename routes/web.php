@@ -44,6 +44,6 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('products', ProductController::class);
     Route::resource('salePurchase', SalePurchaseVoucherController::class);
     Route::resource('journal', JournalVoucherController::class);
-    Route::get('trialBalance', 'TrialBalance@index')->name('trial_balance');
-    Route::post('getTrialBalanceData', 'TrialBalance@entriesBetweenDates')->name('getTrialBalanceData');
+    Route::get('trialBalance', 'TrialBalanceController@index')->name('trial_balance');
+    Route::post('getTrialBalanceData', 'TrialBalanceController@entriesBetweenDates')->name('getTrialBalanceData');
 });

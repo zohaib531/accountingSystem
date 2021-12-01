@@ -12,21 +12,18 @@
     </thead>
     <tbody>
         @if(isset($vouchers) && $vouchers->count()>0)
-            @foreach ($vouchers as $key=> $journalVoucher)
-                @if($journalVoucher->voucherDetails->count()>0)
-                    @foreach($journalVoucher->voucherDetails as $key=>$detail)
-                        <tr>
-                            @php $str = $detail->entry_type."_amount";  @endphp
-                            <td>{{$detail->date}}</td>
-                            <td>{{$detail->subAccount->title}}</td>
-                            <td>{{ $detail->debit_amount!=0?$detail->debit_amount:"" }}</td>
-                            <td>{{ $detail->credit_amount!=0?$detail->credit_amount:"" }}</td>
-                            <td>12000</td>
-                            <td>12000</td>
-                        </tr>
-                    @endforeach
-                @endif
+            @foreach($vouchers as $key=>$detail)
+                <tr>
+                    @php $str = $detail->entry_type."_amount";  @endphp
+                    <td>{{$detail->date}}</td>
+                    <td>{{$detail->subAccount->title}}</td>
+                    <td>{{ $detail->debit_amount!=0?$detail->debit_amount:"" }}</td>
+                    <td>{{ $detail->credit_amount!=0?$detail->credit_amount:"" }}</td>
+                    <td>12000</td>
+                    <td>12000</td>
+                </tr>
             @endforeach
+
         @else
             <tr>
                 <td colspan="6" class="text-center">No records found between these range</td>
