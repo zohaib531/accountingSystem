@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Trial Balance List')
+@section('title','Party Account/Ledger')
 
 
 @section('content')

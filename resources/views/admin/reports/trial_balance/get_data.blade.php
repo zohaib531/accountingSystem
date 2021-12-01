@@ -15,7 +15,7 @@
             @foreach($vouchers as $key=>$detail)
                 <tr>
                     @php $str = $detail->entry_type."_amount";  @endphp
-                    <td>{{$detail->date}}</td>
+                    <td>{{date('d-m-Y',strtotime($detail->date))}}</td>
                     <td>{{$detail->product_narration}} (<span style="font-weight:bold;">{{$detail->quantity}} x {{$detail->rate}}</span>)</td>
                     <td>{{ $detail->debit_amount!=0?$detail->debit_amount:"" }}</td>
                     <td>{{ $detail->credit_amount!=0?$detail->credit_amount:"" }}</td>
@@ -34,8 +34,8 @@
         <tr>
           <td></td>
           <td></td>
-          <td>Total</td>
-          <td>Total</td>
+          <td>{{$totalDebit}}</td>
+          <td>{{$totalCredit}}</td>
           <td>Balance</td>
           <td>10000000</td>
         </tr>
