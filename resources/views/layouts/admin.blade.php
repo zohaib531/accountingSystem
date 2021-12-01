@@ -255,7 +255,7 @@
 
                                 @can('')
                                 <li>
-                                    <a href="{{route('aging_report')}}">AGING REPORT</a>
+                                    <a href="{{route('aging_report')}}">Aging Report</a>
                                 </li>
                                 @endcan
                             </ul>
