@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                             <div class="col-3">
-                                <button type="button" class="btn btn-primary" onclick="commonFunctionForAllRequest(true,false,'.agingReportPortion','{{route('getAgentReportData')}}','','post','','create-form');">Create Trial Balance</button>
+                                <button type="button" class="btn btn-primary" onclick="commonFunctionForAllRequest(true,false,'.agingReportPortion','{{route('getAgentReportData')}}','','post','','create-form');">Create Report</button>
                             </div>
                         </div>
 

@@ -13,7 +13,7 @@
     <div class="col p-md-0">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="{{route('salePurchase.index')}}">All Party Account/Party Ledger</a></li>
+            <li class="breadcrumb-item active"><a href="{{route('salePurchase.index')}}">Party Account / Ledger</a></li>
         </ol>
     </div>
 </div>
@@ -26,7 +26,7 @@
                 <div class="card-body">
                     <div class="row m-0">
                         <div class="col-6 text-right">
-                            <h4 class="card-title">All Party Account / Ledger</h4>
+                            <h4 class="card-title">Party Account / Ledger</h4>
                         </div>
                     </div>
 
@@ -65,7 +65,7 @@
                             </div>
 
                             <div class="col-3">
-                                <button type="button" class="btn btn-primary" onclick="commonFunctionForAllRequest(true,false,'.trialBalancePortion','{{route('getPartyAccountData')}}','','post','','create-form');">Create Trial Balance</button>
+                                <button type="button" class="btn btn-primary" onclick="commonFunctionForAllRequest(true,false,'.trialBalancePortion','{{route('getPartyAccountData')}}','','post','','create-form');">Create Report</button>
                             </div>
                         </div>
 
