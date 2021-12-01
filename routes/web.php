@@ -44,8 +44,8 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('products', ProductController::class);
     Route::resource('salePurchase', SalePurchaseVoucherController::class);
     Route::resource('journal', JournalVoucherController::class);
-    Route::get('partyAccount', 'TrialBalanceController@index')->name('partyAccount');
-    Route::post('getPartyAccountData', 'TrialBalanceController@entriesBetweenDates')->name('getPartyAccountData');
+    Route::get('partyAccount', 'PartyAccountLedgerController@index')->name('partyAccount');
+    Route::post('getPartyAccountData', 'PartyAccountLedgerController@entriesBetweenDates')->name('getPartyAccountData');
     Route::get('agingReport', 'AgingReportController@index')->name('aging_report');
     Route::post('getAgentReportData', 'AgingReportController@entriesBetweenDates')->name('getAgentReportData');
 });

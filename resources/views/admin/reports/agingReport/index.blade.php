@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Aging Reports')
+@section('title','Aging Report')
 
 
 @section('content')
@@ -10,7 +10,7 @@
     <div class="col p-md-0">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="{{route('salePurchase.index')}}">All Aging Reports</a></li>
+            <li class="breadcrumb-item active"><a href="{{route('salePurchase.index')}}">Aging Report</a></li>
         </ol>
     </div>
 </div>
@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <div class="row m-0">
                         <div class="col-6 text-right">
-                            <h4 class="card-title">All Aging Reports</h4>
+                            <h4 class="card-title">Aging Report</h4>
                         </div>
                     </div>
 

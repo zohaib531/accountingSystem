@@ -8,7 +8,7 @@ use App\Voucher;
 use App\VoucherDetail;
 use App\SubAccount;
 
-class TrialBalanceController extends Controller
+class PartyAccountLedgerController extends Controller
 {
     public function index()
     { 
