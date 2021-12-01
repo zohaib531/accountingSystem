@@ -9,9 +9,9 @@
         @csrf
         @method('put')
         <div class="row m-0 justify-content-between">
-            <div class="col-5 pl-0">
+            <div class="col-4 pl-0">
                 <div class="form-group row m-0 align-items-center">
-                    <label class="col-lg-2 col-form-label px-0" for="val-date">Date<span class="text-danger">*</span></label>
+                    <label class="col-lg-2 col-form-label px-0" for="val-date">Voucher Date<span class="text-danger">*</span></label>
                     <div class="col-lg-10">
                         <input type="date" class="form-control" id="val-date" name="date" value="{{$voucher->date}}">
                     </div>
