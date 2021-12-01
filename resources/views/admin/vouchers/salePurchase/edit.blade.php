@@ -223,7 +223,7 @@
                                             <select name="debit_products[]" class="form-control">
                                                 <option selected value="">Product</option>
                                                 @foreach ($products as $product)
-                                                    <option @if($detail->product_narration==$product->title." - ".$product->narration) selected @endif value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
+                                                    <option @if($detail->product_narration==$product->title." - ".$product->narration." - ".$product->product_unit) selected @endif value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
