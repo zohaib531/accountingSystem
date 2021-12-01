@@ -23,6 +23,7 @@ class TrialBalanceController extends Controller
         $vouchers = VoucherDetail::where('sub_account_id',$request->sub_account)->whereBetween('date',[$request->start_date, $request->end_date])->orderBy('date')->get();
         $totalDebit = VoucherDetail::where('sub_account_id',$request->sub_account)->whereBetween('date',[$request->start_date, $request->end_date])->sum('debit_amount');
         $totalCredit = VoucherDetail::where('sub_account_id',$request->sub_account)->whereBetween('date',[$request->start_date, $request->end_date])->sum('credit_amount');
-        return response()->json(['success' => true, 'html' => view('admin.reports.trial_balance.get_data',compact('vouchers','totalDebit','totalCredit'))->render()]);
+        $subAccount = SubAccount::where('id', $request->sub_account)->first();
+        return response()->json(['success' => true, 'html' => view('admin.reports.trial_balance.get_data',compact('vouchers','totalDebit','totalCredit','subAccount'))->render()]);
     }
 }
