@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Voucher;
+use App\SubAccount;
+
 class TrialBalance extends Controller
 {
     public function index()
-    {
-        return view('admin.reports.trial_balance.index');
+    { 
+        $subAccounts = SubAccount::select('id', 'title')->get();
+        return view('admin.reports.trial_balance.index',compact('subAccounts'));
     }
 
     // get data for trial balance

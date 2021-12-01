@@ -32,11 +32,13 @@
                         <div class="row mx-0 mb-5 align-items-end">
                             <div class="col-3">
                                 <div class="form-group row m-0 align-items-center">
-                                    <label class="col-lg-12 col-form-label px-0" for="val-start_date">Account<span class="text-danger">*</span></label>
+                                    <label class="col-lg-12 col-form-label px-0" for="val-start_date">Sub Account<span class="text-danger">*</span></label>
                                     <div class="col-lg-12 px-0">
-                                        <select name="" class="form-control" id="">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
+                                        <select name="sub_account" class="form-control" id="">
+                                            <option selected value="">Sub Account</option>
+                                            @foreach ($subAccounts as $subAccount)
+                                                <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
