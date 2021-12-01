@@ -44,13 +44,13 @@
                                 </div>
                             </div>
                             <div class="col-3">
-                                <button type="button" class="btn btn-primary" onclick="commonFunctionForAllRequest(true,false,'.trialBalancePortion','{{route('getTrialBalanceData')}}','','post','','create-form');">Create Trial Balance</button>
+                                <button type="button" class="btn btn-primary" onclick="commonFunctionForAllRequest(true,false,'.agingReportPortion','{{route('getAgentReportData')}}','','post','','create-form');">Create Trial Balance</button>
                             </div>
                         </div>
 
                     </form>
 
-                    <div class="table-responsive trialBalancePortion">
+                    <div class="table-responsive agingReportPortion">
                     </div>
 
                 </div>

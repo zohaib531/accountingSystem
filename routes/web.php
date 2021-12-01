@@ -47,4 +47,5 @@ Route::middleware(['auth'])->group(function(){
     Route::get('partyAccount', 'TrialBalanceController@index')->name('partyAccount');
     Route::post('getPartyAccountData', 'TrialBalanceController@entriesBetweenDates')->name('getPartyAccountData');
     Route::get('agingReport', 'AgingReportController@index')->name('aging_report');
+    Route::post('getAgentReportData', 'TrialBalanceController@entriesBetweenDates')->name('getAgentReportData');
 });
