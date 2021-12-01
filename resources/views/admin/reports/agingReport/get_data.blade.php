@@ -14,9 +14,16 @@
     <tbody>
         @if(isset($vouchers) && $vouchers->count()>0)
             @foreach($vouchers as $key=>$detail)
+
+            @php
+                $to = \Carbon\Carbon::createFromFormat('Y-m-d', $detail->date);
+                $from = \Carbon\Carbon::createFromFormat('Y-m-d', date('Y-m-d'));
+                $diff_in_days = $to->diffInDays($from);
+            @endphp
                 <tr>
                     @php $str = $detail->entry_type."_amount";  @endphp
                     <td>{{date('d-m-Y',strtotime($detail->date))}}</td>
+                    <td>{{$diff_in_days}}</td>
                     <td>{{$detail->product_narration}} (<span style="font-weight:bold;">{{$detail->quantity}} x {{$detail->rate}}</span>)</td>
                     <td>{{ $detail->debit_amount!=0?$detail->debit_amount:"" }}</td>
                     <td>{{ $detail->credit_amount!=0?$detail->credit_amount:"" }}</td>
