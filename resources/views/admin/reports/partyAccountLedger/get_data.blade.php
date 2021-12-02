@@ -13,8 +13,8 @@
     </thead>
     <tbody>
         @php
-            $openingBalance = $subAccount->opening_balance;
-            $entryType = $subAccount->transaction_type
+            $openingBalance = 0;
+            $entryType = '';
         @endphp
         @if(isset($vouchers) && $vouchers->count()>0)
             {{-- <tr>
@@ -99,6 +99,12 @@
                     <td>{{ number_format($detail->remaining_balance) }}</td>
                     <td>{{$detail->remaining_balance_type}}</td>
                 </tr>
+                @if($loop->last)
+                    @php 
+                        $openingBalance = $detail->remaining_balance; 
+                        $entryType = $detail->remaining_balance_type; 
+                    @endphp
+                @endif
             @endforeach
 
         @else
