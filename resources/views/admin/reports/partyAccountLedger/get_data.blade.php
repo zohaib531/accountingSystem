@@ -33,18 +33,70 @@
                     {
                         $openingBalance = $detail->$str;
                         $entryType = $detail->entry_type;
-                    }else{
-                        $openingBalance = $entryType=="debit" ? $openingBalance-$detail->$str : $openingBalance + $detail->$str ;
+                    } else{
+                        // if($entryType=="debit" && $detail->entry_type=="debit"){
+                        //     if($openingBalance >= $detail->$str){
+                        //         $openingBalance = $openingBalance - $detail->$str;
+                        //         $entryType = "debit";
+                        //     } else if($openingBalance < $detail->$str){
+                        //         $openingBalance = $openingBalance - $detail->$str;
+                        //         $entryType = "credit";
+                        //     }
+                        // } else if($entryType=="credit" && $detail->entry_type=="credit"){
+                        //     if($openingBalance >= $detail->$str){
+                        //         $openingBalance = $openingBalance + $detail->$str;
+                        //         $entryType = "credit";
+                        //     } else if($openingBalance < $detail->$str){
+                        //         $openingBalance = $openingBalance + $detail->$str;
+                        //         $entryType = "debit";
+                        //     }
+                        // } else if(($entryType=="credit" && $detail->entry_type=="debit")){
+                        //     if($openingBalance >= $detail->$str){
+                        //         $openingBalance = $openingBalance - $detail->$str;
+                        //         $entryType = "credit";
+                        //     } else if($openingBalance < $detail->$str){
+                        //         $openingBalance = $openingBalance - $detail->$str;
+                        //         $entryType = "debit";
+                        //     }
+                        // }else if(($entryType=="debit" && $detail->entry_type=="credit") ){
+                        //     if($openingBalance >= $detail->$str){
+                        //         $openingBalance = $openingBalance + $detail->$str;
+                        //         $entryType = "debit";
+                        //     } else if($openingBalance < $detail->$str){
+                        //         $openingBalance = $openingBalance + $detail->$str;
+                        //         $entryType = "credit";
+                        //     }
+                        // }
+                        $openingBalance = $entryType=="debit" ? $openingBalance-$detail->$str : $openingBalance + $detail->$str;
                         $entryType = $openingBalance<0? "credit":"debit";
                     }
+
+                    // if($entryType=="debit" && $detail->entry_type=="debit"){
+                    //     if($openingBalance >= $detail->$str){
+                    //        $openingBalance = $openingBalance - $detail->$str;
+                    //        $entryType = "debit"
+                    //     } else if($openingBalance < $detail->$str){
+                    //        $openingBalance = $openingBalance - $detail->$str;
+                    //        $entryType = "credit"
+                    //     }
+                    // }else{
+                    //     if($openingBalance >= $detail->$str){
+                    //        $openingBalance = $openingBalance + $detail->$str;
+                    //        $entryType = "debit"
+                    //     } else if($openingBalance < $detail->$str){
+                    //        $openingBalance = $openingBalance - $detail->$str;
+                    //        $entryType = "credit"
+                    //     } 
+                    // }
+
                 @endphp
                 <tr>
                     <td>{{date('d-m-Y',strtotime($detail->date))}}</td>
                     <td>{{$detail->subAccount->title}}</td>
                     <td>{{$detail->product_narration}} @if($detail->quantity!=0 && $detail->rate!=0)  (<span style="font-weight:bold;">{{$detail->quantity}} x {{$detail->rate}}</span>) @endif</td>
-                    <td>{{ $detail->debit_amount!=0?$detail->debit_amount:"" }}</td>
-                    <td>{{ $detail->credit_amount!=0?$detail->credit_amount:"" }}</td>
-                    <td>{{ $openingBalance<0? str_replace('-','',$openingBalance):$openingBalance }}</td>
+                    <td>{{ $detail->debit_amount!=0?number_format($detail->debit_amount):"" }}</td>
+                    <td>{{ $detail->credit_amount!=0?number_format($detail->credit_amount):"" }}</td>
+                    <td>{{ number_format($openingBalance) }}</td>
                     <td>{{$entryType}}</td>
                 </tr>
             @endforeach
@@ -59,9 +111,9 @@
         <tfoot>
             <tr>
                 <td colspan="3"><h5 class="text-center">Total</h5></td>
-                <td>{{$totalDebit}}</td>
-                <td>{{$totalCredit}}</td>
-                <td>{{$openingBalance}}</td>
+                <td>{{number_format($totalDebit)}}</td>
+                <td>{{number_format($totalCredit)}}</td>
+                <td>{{number_format($openingBalance)}}</td>
                 <td>{{$entryType}}</td>
             </tr>
         </tfoot>
