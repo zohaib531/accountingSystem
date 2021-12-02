@@ -14,8 +14,8 @@ class AddRemainingBalanceAndType extends Migration
     public function up()
     {
         Schema::table('voucher_details', function (Blueprint $table) {
-            $table->integer('remaining_balance')->after('suspense_account');
-            $table->string('remaining_balance_type')->after('remaining_balance');
+            $table->integer('remaining_balance')->after('suspense_account')->default(0);
+            $table->string('remaining_balance_type')->after('remaining_balance')->nullable();
         });
     }
 
