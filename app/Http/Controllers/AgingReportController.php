@@ -20,7 +20,7 @@ class AgingReportController extends Controller
      public function entriesBetweenDates(Request $request){
         $validations = Validator::make($request->all(), ['sub_account'=>'required']);
         if ($validations->fails()) { return response()->json(['success' => false, 'message' => $validations->errors()]);}
-        $subAccount = VoucherDetail::where('sub_account_id',$request->sub_account)->orderBy('id','desc')->first();
+        $subAccount = VoucherDetail::where('sub_account_id',$request->sub_account)->whereDate('date', '<=',date("Y-m-d"))->orderBy('id','desc')->first();
         $vouchers = VoucherDetail::where('sub_account_id',$request->sub_account)->where('entry_type', $subAccount->remaining_balance_type)->whereDate('date', '<=',date("Y-m-d"))->orderBy('date','desc')->get();
         $totalDebit = VoucherDetail::where('sub_account_id',$request->sub_account)->where('entry_type', $subAccount->remaining_balance_type)->whereDate('date', '<=',date("Y-m-d"))->sum('debit_amount');
         $totalCredit = VoucherDetail::where('sub_account_id',$request->sub_account)->where('entry_type', $subAccount->remaining_balance_type)->whereDate('date', '<=',date("Y-m-d"))->sum('credit_amount');
