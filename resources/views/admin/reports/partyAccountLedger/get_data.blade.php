@@ -8,7 +8,6 @@
             <th>Credit</th>
             <th>Balance</th>
             <th>Nature (Debit/Credit)</th>
-            {{-- <th class="text-right">Action</th> --}}
         </tr>
     </thead>
     <tbody>
@@ -17,78 +16,9 @@
             $entryType = '';
         @endphp
         @if(isset($vouchers) && $vouchers->count()>0)
-            {{-- <tr>
-                <td>{{date('d-m-Y',strtotime($subAccount->date))}}</td>
-                <td>{{$subAccount->title}}</td>
-                <td>Opening Balance</td>
-                <td colspan="2"></td>
-                <td>{{$subAccount->opening_balance!=0 ? $subAccount->opening_balance : 0}}</td>
-                <td>{{$subAccount->opening_balance!=0 ? $subAccount->transaction_type : ""}}</td>
-            </tr> --}}
-
             @foreach($vouchers as $key=>$detail)
                 @php
                     $str = $detail->entry_type."_amount";
-                    // if($key==0 && $subAccount->opening_balance==0)
-                    // {
-                    //     $openingBalance = $detail->$str;
-                    //     $entryType = $detail->entry_type;
-                    // } else{
-                        // if($entryType=="debit" && $detail->entry_type=="debit"){
-                        //     if($openingBalance >= $detail->$str){
-                        //         $openingBalance = $openingBalance - $detail->$str;
-                        //         $entryType = "debit";
-                        //     } else if($openingBalance < $detail->$str){
-                        //         $openingBalance = $openingBalance - $detail->$str;
-                        //         $entryType = "credit";
-                        //     }
-                        // } else if($entryType=="credit" && $detail->entry_type=="credit"){
-                        //     if($openingBalance >= $detail->$str){
-                        //         $openingBalance = $openingBalance + $detail->$str;
-                        //         $entryType = "credit";
-                        //     } else if($openingBalance < $detail->$str){
-                        //         $openingBalance = $openingBalance + $detail->$str;
-                        //         $entryType = "debit";
-                        //     }
-                        // } else if(($entryType=="credit" && $detail->entry_type=="debit")){
-                        //     if($openingBalance >= $detail->$str){
-                        //         $openingBalance = $openingBalance - $detail->$str;
-                        //         $entryType = "credit";
-                        //     } else if($openingBalance < $detail->$str){
-                        //         $openingBalance = $openingBalance - $detail->$str;
-                        //         $entryType = "debit";
-                        //     }
-                        // }else if(($entryType=="debit" && $detail->entry_type=="credit") ){
-                        //     if($openingBalance >= $detail->$str){
-                        //         $openingBalance = $openingBalance + $detail->$str;
-                        //         $entryType = "debit";
-                        //     } else if($openingBalance < $detail->$str){
-                        //         $openingBalance = $openingBalance + $detail->$str;
-                        //         $entryType = "credit";
-                        //     }
-                        // }
-                        // $openingBalance = $entryType=="debit" ? $openingBalance-$detail->$str : $openingBalance + $detail->$str;
-                        // $entryType = $openingBalance<0? "credit":"debit";
-                    // }
-
-                    // if($entryType=="debit" && $detail->entry_type=="debit"){
-                    //     if($openingBalance >= $detail->$str){
-                    //        $openingBalance = $openingBalance - $detail->$str;
-                    //        $entryType = "debit"
-                    //     } else if($openingBalance < $detail->$str){
-                    //        $openingBalance = $openingBalance - $detail->$str;
-                    //        $entryType = "credit"
-                    //     }
-                    // }else{
-                    //     if($openingBalance >= $detail->$str){
-                    //        $openingBalance = $openingBalance + $detail->$str;
-                    //        $entryType = "debit"
-                    //     } else if($openingBalance < $detail->$str){
-                    //        $openingBalance = $openingBalance - $detail->$str;
-                    //        $entryType = "credit"
-                    //     } 
-                    // }
-
                 @endphp
                 <tr>
                     <td>{{date('d-m-Y',strtotime($detail->date))}}</td>

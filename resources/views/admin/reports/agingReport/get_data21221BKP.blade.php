@@ -14,14 +14,21 @@
     </thead>
     <tbody>
         @php
-            $openingBalance = 0;
-            $entryType = '';
+            $openingBalance = $subAccount->opening_balance;
+            $entryType = $subAccount->transaction_type
         @endphp
         @if(isset($vouchers) && $vouchers->count()>0)
+            <tr>
+                <td>{{date('d-m-Y',strtotime($subAccount->date))}}</td>
+                <td></td>
+                <td>{{$subAccount->title}}</td>
+                <td>Opening Balance</td>
+                <td colspan="2"></td>
+                <td>{{$subAccount->opening_balance!=0 ? number_format($subAccount->opening_balance) : 0}}</td>
+                <td>{{$subAccount->opening_balance!=0 ? $subAccount->transaction_type : ""}}</td>
+            </tr>
+
             @foreach($vouchers as $key=>$detail)
-                @if($loop->first)
-                    @php $openingBalance = $detail->remaining_balance; @endphp;
-                @endif
                 @php
                     $str = $detail->entry_type."_amount";
 

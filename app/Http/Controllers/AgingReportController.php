@@ -20,10 +20,10 @@ class AgingReportController extends Controller
      public function entriesBetweenDates(Request $request){
         $validations = Validator::make($request->all(), ['sub_account'=>'required']);
         if ($validations->fails()) { return response()->json(['success' => false, 'message' => $validations->errors()]);}
-        $subAccount = SubAccount::where('id', $request->sub_account)->first();
-        $vouchers = VoucherDetail::where('sub_account_id',$request->sub_account)->where('entry_type', $subAccount->transaction_type)->whereDate('date', '<=',date("Y-m-d"))->orderBy('date','desc')->get();
-        $totalDebit = VoucherDetail::where('sub_account_id',$request->sub_account)->where('entry_type', $subAccount->transaction_type)->whereDate('date', '<=',date("Y-m-d"))->sum('debit_amount');
-        $totalCredit = VoucherDetail::where('sub_account_id',$request->sub_account)->where('entry_type', $subAccount->transaction_type)->whereDate('date', '<=',date("Y-m-d"))->sum('credit_amount');
+        $subAccount = VoucherDetail::where('sub_account_id',$request->sub_account)->orderBy('id','desc')->first();
+        $vouchers = VoucherDetail::where('sub_account_id',$request->sub_account)->where('entry_type', $subAccount->remaining_balance_type)->whereDate('date', '<=',date("Y-m-d"))->orderBy('date','desc')->get();
+        $totalDebit = VoucherDetail::where('sub_account_id',$request->sub_account)->where('entry_type', $subAccount->remaining_balance_type)->whereDate('date', '<=',date("Y-m-d"))->sum('debit_amount');
+        $totalCredit = VoucherDetail::where('sub_account_id',$request->sub_account)->where('entry_type', $subAccount->remaining_balance_type)->whereDate('date', '<=',date("Y-m-d"))->sum('credit_amount');
         return response()->json(['success' => true, 'html' => view('admin.reports.agingReport.get_data',compact('vouchers','totalDebit','totalCredit','subAccount'))->render()]);
     }
 }
