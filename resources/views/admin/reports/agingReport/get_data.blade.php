@@ -24,34 +24,32 @@
                 <td>{{$subAccount->title}}</td>
                 <td>Opening Balance</td>
                 <td colspan="2"></td>
-                <td>{{$subAccount->opening_balance!=0 ? $subAccount->opening_balance : 0}}</td>
+                <td>{{$subAccount->opening_balance!=0 ? number_format($subAccount->opening_balance) : 0}}</td>
                 <td>{{$subAccount->opening_balance!=0 ? $subAccount->transaction_type : ""}}</td>
             </tr>
 
             @foreach($vouchers as $key=>$detail)
                 @php
                     $str = $detail->entry_type."_amount";
-                    if($key==0 && $subAccount->opening_balance==0)
-                    {
-                        $openingBalance = $detail->$str;
-                        $entryType = $detail->entry_type;
-                    }else{
-                        $openingBalance = $entryType=="debit" ? $openingBalance-$detail->$str : $openingBalance + $detail->$str ;
-                        $entryType = $openingBalance<0? "credit":"debit";
+
+                    if($openingBalance > 0 ){
+                        $openingBalance = $openingBalance - $detail->$str;
                     }
+
 
                     $to = \Carbon\Carbon::createFromFormat('Y-m-d', $detail->date);
                     $from = \Carbon\Carbon::createFromFormat('Y-m-d', date('Y-m-d'));
                     $diff_in_days = $to->diffInDays($from);
-                @endphp
+                    @endphp
+
                 <tr>
                     <td>{{date('d-m-Y',strtotime($detail->date))}}</td>
                     <td>{{$diff_in_days}}</td>
                     <td>{{$detail->subAccount->title}}</td>
                     <td>{{$detail->product_narration}} @if($detail->quantity!=0 && $detail->rate!=0)  (<span style="font-weight:bold;">{{$detail->quantity}} x {{$detail->rate}}</span>) @endif</td>
-                    <td>{{ $detail->debit_amount!=0?$detail->debit_amount:"" }}</td>
-                    <td>{{ $detail->credit_amount!=0?$detail->credit_amount:"" }}</td>
-                    <td>{{ $openingBalance<0? str_replace('-','',$openingBalance):$openingBalance }}</td>
+                    <td>{{ $detail->debit_amount!=0? number_format($detail->debit_amount) :"" }}</td>
+                    <td>{{ $detail->credit_amount!=0? number_format($detail->credit_amount):"" }}</td>
+                    <td>{{ number_format($openingBalance)}}</td>
                     <td>{{$entryType}}</td>
                 </tr>
             @endforeach
@@ -66,9 +64,9 @@
         <tfoot>
             <tr>
                 <td colspan="4"><h5 class="text-center">Total</h5></td>
-                <td>{{$totalDebit}}</td>
-                <td>{{$totalCredit}}</td>
-                <td>{{$openingBalance}}</td>
+                <td>{{number_format($totalDebit)}}</td>
+                <td>{{number_format($totalCredit)}}</td>
+                <td>{{number_format($openingBalance)}}</td>
                 <td>{{$entryType}}</td>
             </tr>
         </tfoot>
