@@ -148,24 +148,31 @@ class SalePurchaseVoucherController extends Controller
 
         $openingBalance = VoucherDetail::where('sub_account_id',$request->suspense_account)->orderBy('id','desc')->first()!=null?VoucherDetail::where('sub_account_id',$request->suspense_account)->orderBy('id','desc')->first()->remaining_balance : SubAccount::where('id',$request->suspense_account)->first()->opening_balance;
         $transactionType = VoucherDetail::where('sub_account_id',$request->suspense_account)->orderBy('id','desc')->first()!=null?VoucherDetail::where('sub_account_id',$request->suspense_account)->orderBy('id','desc')->first()->remaining_balance_type : SubAccount::where('id',$request->suspense_account)->first()->transaction_type;
+        
         if($transactionType=="debit" && $request->suspense_entry=="debit"){
-            if($openingBalance >= $request->debit_amounts[$key]){
-                $remainingBalance = $openingBalance - $request->debit_amounts[$key];
-                $remainingBalanceType = "debit";
-            }else if($openingBalance < $request->debit_amounts[$key]){
-                $remainingBalance = $request->debit_amounts[$key] - $openingBalance;
+            $remainingBalance = $openingBalance + $request->suspense_amount;
+            $remainingBalanceType = "debit";
+        } else if($transactionType=="credit" && $request->suspense_entry=="debit"){
+            if($openingBalance >= $request->suspense_amount){
+                $remainingBalance = $openingBalance - $request->suspense_amount;
                 $remainingBalanceType = "credit";
+            }else if($openingBalance < $request->suspense_amount){
+                $remainingBalance = $request->suspense_amount - $openingBalance;
+                $remainingBalanceType = "debit";
             }
-        } else if($transactionType=="credit"  && $request->suspense_entry=="credit"){
-            if($openingBalance >= $request->credit_amounts[$key]){
-                $remainingBalance = $openingBalance + $request->credit_amounts[$key];
-                $remainingBalanceType = "credit";
-            }else if($openingBalance < $request->credit_amounts[$key]){
-                $remainingBalance = $request->credit_amounts[$key] + $openingBalance;
+        } else if($transactionType=="credit" && $request->suspense_entry=="credit"){
+            $remainingBalance = $openingBalance + $request->suspense_amount;
+            $remainingBalanceType = "credit";
+        } else if($transactionType=="debit" && $request->suspense_entry=="credit"){
+            if($openingBalance >= $request->suspense_amount){
+                $remainingBalance = $openingBalance - $request->suspense_amount;
                 $remainingBalanceType = "debit";
+            }else if($openingBalance < $request->suspense_amount){
+                $remainingBalance = $request->suspense_amount - $openingBalance;
+                $remainingBalanceType = "credit";
             }
         }
-
+        
         if($check){
             $str = $request->suspense_entry."_amount";
             $suspenseEntryDetail->voucher_id = $voucher->id;
@@ -263,8 +270,12 @@ class SalePurchaseVoucherController extends Controller
             }
         }
 
-        if($request->suspense_amount > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
+        if($action && $request->suspense_amount > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
             $this->suspenseEntryCommonCode($voucher,$action,$request);
+        }else if($action && (array_sum($request->debit_amounts)==array_sum($request->credit_amounts))){
+            $this->suspenseEntryCommonCode($voucher,$action,$request);
+        }else if(!$action && $request->suspense_amount > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
+            $this->suspenseEntryCommonCode($voucher,$action,$request);  
         }
     }
 
