@@ -17,23 +17,23 @@
             $entryType = $subAccount->transaction_type
         @endphp
         @if(isset($vouchers) && $vouchers->count()>0)
-            <tr>
+            {{-- <tr>
                 <td>{{date('d-m-Y',strtotime($subAccount->date))}}</td>
                 <td>{{$subAccount->title}}</td>
                 <td>Opening Balance</td>
                 <td colspan="2"></td>
                 <td>{{$subAccount->opening_balance!=0 ? $subAccount->opening_balance : 0}}</td>
                 <td>{{$subAccount->opening_balance!=0 ? $subAccount->transaction_type : ""}}</td>
-            </tr>
+            </tr> --}}
 
             @foreach($vouchers as $key=>$detail)
                 @php
                     $str = $detail->entry_type."_amount";
-                    if($key==0 && $subAccount->opening_balance==0)
-                    {
-                        $openingBalance = $detail->$str;
-                        $entryType = $detail->entry_type;
-                    } else{
+                    // if($key==0 && $subAccount->opening_balance==0)
+                    // {
+                    //     $openingBalance = $detail->$str;
+                    //     $entryType = $detail->entry_type;
+                    // } else{
                         // if($entryType=="debit" && $detail->entry_type=="debit"){
                         //     if($openingBalance >= $detail->$str){
                         //         $openingBalance = $openingBalance - $detail->$str;
@@ -67,9 +67,9 @@
                         //         $entryType = "credit";
                         //     }
                         // }
-                        $openingBalance = $entryType=="debit" ? $openingBalance-$detail->$str : $openingBalance + $detail->$str;
-                        $entryType = $openingBalance<0? "credit":"debit";
-                    }
+                        // $openingBalance = $entryType=="debit" ? $openingBalance-$detail->$str : $openingBalance + $detail->$str;
+                        // $entryType = $openingBalance<0? "credit":"debit";
+                    // }
 
                     // if($entryType=="debit" && $detail->entry_type=="debit"){
                     //     if($openingBalance >= $detail->$str){
@@ -96,8 +96,8 @@
                     <td>{{$detail->product_narration}} @if($detail->quantity!=0 && $detail->rate!=0)  (<span style="font-weight:bold;">{{$detail->quantity}} x {{$detail->rate}}</span>) @endif</td>
                     <td>{{ $detail->debit_amount!=0?number_format($detail->debit_amount):"" }}</td>
                     <td>{{ $detail->credit_amount!=0?number_format($detail->credit_amount):"" }}</td>
-                    <td>{{ number_format($openingBalance) }}</td>
-                    <td>{{$entryType}}</td>
+                    <td>{{ number_format($detail->remaining_balance) }}</td>
+                    <td>{{$detail->remaining_balance_type}}</td>
                 </tr>
             @endforeach
 
