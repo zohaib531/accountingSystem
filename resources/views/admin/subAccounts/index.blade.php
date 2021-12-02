@@ -58,7 +58,7 @@
                                     <td>{{$sub_account->get_account->title}}</td>
                                     <td>{{$sub_account->title}}</td>
                                     <td>{{ucwords($sub_account->transaction_type)}}</td>
-                                    <td>{{$sub_account->opening_balance}}</td>
+                                    <td>{{number_format($sub_account->opening_balance)}}</td>
                                     @canany(['update-sub-account' , 'delete-sub-account'])
                                     <td class="text-right">
                                         @can('update-sub-account')
