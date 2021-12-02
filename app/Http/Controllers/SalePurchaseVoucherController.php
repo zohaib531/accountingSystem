@@ -132,6 +132,8 @@ class SalePurchaseVoucherController extends Controller
     // suspense entry common code
     private function suspenseEntryCommonCode($voucher,$action,$request){
         $check = false;
+        $remainingBalance = 0;
+        $remainingBalanceType = '';
         if($action && $request->suspense_amount > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
             $suspenseEntryDetail = $voucher->voucherDetails()->where('suspense_account','1')->first() !=null ?$voucher->voucherDetails()->where('suspense_account','1')->first():new VoucherDetail();
             $check = true;
@@ -144,6 +146,26 @@ class SalePurchaseVoucherController extends Controller
             $check = true;   
         }
 
+        $openingBalance = VoucherDetail::where('sub_account_id',$request->suspense_account)->orderBy('id','desc')->first()!=null?VoucherDetail::where('sub_account_id',$request->suspense_account)->orderBy('id','desc')->first()->remaining_balance : SubAccount::where('id',$request->suspense_account)->first()->opening_balance;
+        $transactionType = VoucherDetail::where('sub_account_id',$request->suspense_account)->orderBy('id','desc')->first()!=null?VoucherDetail::where('sub_account_id',$request->suspense_account)->orderBy('id','desc')->first()->remaining_balance_type : SubAccount::where('id',$request->suspense_account)->first()->transaction_type;
+        if($transactionType=="debit" && $request->suspense_entry=="debit"){
+            if($openingBalance >= $request->debit_amounts[$key]){
+                $remainingBalance = $openingBalance - $request->debit_amounts[$key];
+                $remainingBalanceType = "debit";
+            }else if($openingBalance < $request->debit_amounts[$key]){
+                $remainingBalance = $request->debit_amounts[$key] - $openingBalance;
+                $remainingBalanceType = "credit";
+            }
+        } else if($transactionType=="credit"  && $request->suspense_entry=="credit"){
+            if($openingBalance >= $request->credit_amounts[$key]){
+                $remainingBalance = $openingBalance + $request->credit_amounts[$key];
+                $remainingBalanceType = "credit";
+            }else if($openingBalance < $request->credit_amounts[$key]){
+                $remainingBalance = $request->credit_amounts[$key] + $openingBalance;
+                $remainingBalanceType = "debit";
+            }
+        }
+
         if($check){
             $str = $request->suspense_entry."_amount";
             $suspenseEntryDetail->voucher_id = $voucher->id;
@@ -151,6 +173,8 @@ class SalePurchaseVoucherController extends Controller
             $suspenseEntryDetail->sub_account_id = $request->suspense_account;
             $suspenseEntryDetail->$str = $request->suspense_amount;
             $suspenseEntryDetail->entry_type = $request->suspense_entry;
+            $suspenseEntryDetail->remaining_balance = $remainingBalance;
+            $suspenseEntryDetail->remaining_balance_type = $remainingBalanceType;
             $suspenseEntryDetail->suspense_account = '1';
             $suspenseEntryDetail->save();
         }
@@ -162,17 +186,36 @@ class SalePurchaseVoucherController extends Controller
     {
         if(isset($request->debit_dates) && count($request->debit_dates) >0){
             foreach ($request->debit_dates as $key => $credit) {
+                $remainingBalance = 0;
+                $remainingBalanceType = '';
                 if($action){
                     VoucherDetail::whereIn('id',array_values(array_diff(Voucher::find($voucher->id)->voucherDetails()->where('entry_type','debit')->where('suspense_account','0')->pluck('id')->toArray(),$request->debit_voucher_detail_ids)))->delete();
                     $VoucherDetail = isset($request->debit_voucher_detail_ids[$key])? VoucherDetail::find($request->debit_voucher_detail_ids[$key]): new VoucherDetail();
                 }else{
                     $VoucherDetail = new VoucherDetail();
                 }
+                $openingBalance = VoucherDetail::where('sub_account_id',$request->debit_accounts[$key])->orderBy('id','desc')->first()!=null?VoucherDetail::where('sub_account_id',$request->debit_accounts[$key])->orderBy('id','desc')->first()->remaining_balance : SubAccount::where('id',$request->debit_accounts[$key])->first()->opening_balance;
+                $transactionType = VoucherDetail::where('sub_account_id',$request->debit_accounts[$key])->orderBy('id','desc')->first()!=null?VoucherDetail::where('sub_account_id',$request->debit_accounts[$key])->orderBy('id','desc')->first()->remaining_balance_type : SubAccount::where('id',$request->debit_accounts[$key])->first()->transaction_type;
+                if($transactionType=="debit"){
+                    $remainingBalance = $openingBalance + $request->debit_amounts[$key];
+                    $remainingBalanceType = "debit";
+                } else if($transactionType=="credit"){
+                    if($openingBalance >= $request->debit_amounts[$key]){
+                        $remainingBalance = $openingBalance - $request->debit_amounts[$key];
+                        $remainingBalanceType = "credit";
+                    }else if($openingBalance < $request->debit_amounts[$key]){
+                        $remainingBalance = $request->debit_amounts[$key] - $openingBalance;
+                        $remainingBalanceType = "debit";
+                    }
+                }
+
                 $VoucherDetail->voucher_id = $voucher->id;
                 $VoucherDetail->date = isset($request->debit_dates[$key])?$request->debit_dates[$key]:'';
                 $VoucherDetail->product_narration = isset($request->debit_products[$key])?$request->debit_products[$key]:'';
                 $VoucherDetail->sub_account_id = isset($request->debit_accounts[$key])?$request->debit_accounts[$key]:'';
                 $VoucherDetail->debit_amount = isset($request->debit_amounts[$key])?$request->debit_amounts[$key]:0;
+                $VoucherDetail->remaining_balance = $remainingBalance;
+                $VoucherDetail->remaining_balance_type = $remainingBalanceType;
                 $VoucherDetail->quantity = isset($request->debit_quantities[$key])?$request->debit_quantities[$key]:'';
                 $VoucherDetail->rate = isset($request->debit_rates[$key])?$request->debit_rates[$key]:0;
                 $VoucherDetail->entry_type = 'debit';
@@ -182,24 +225,47 @@ class SalePurchaseVoucherController extends Controller
 
         if(isset($request->credit_dates) && count($request->credit_dates) >0){
             foreach ($request->credit_dates as $key => $credit) {
+                $remainingBalance = 0;
+                $remainingBalanceType = '';
                 if($action){
                     VoucherDetail::whereIn('id',array_values(array_diff(Voucher::find($voucher->id)->voucherDetails()->where('entry_type','credit')->where('suspense_account','0')->pluck('id')->toArray(),$request->credit_voucher_detail_ids)))->delete();
                     $VoucherDetail = isset($request->credit_voucher_detail_ids[$key])? VoucherDetail::find($request->credit_voucher_detail_ids[$key]): new VoucherDetail();
                 }else{
                     $VoucherDetail = new VoucherDetail();
                 }
+
+                $openingBalance = VoucherDetail::where('sub_account_id',$request->credit_accounts[$key])->orderBy('id','desc')->first()!=null?VoucherDetail::where('sub_account_id',$request->credit_accounts[$key])->orderBy('id','desc')->first()->remaining_balance : SubAccount::where('id',$request->credit_accounts[$key])->first()->opening_balance;
+                $transactionType = VoucherDetail::where('sub_account_id',$request->credit_accounts[$key])->orderBy('id','desc')->first()!=null?VoucherDetail::where('sub_account_id',$request->credit_accounts[$key])->orderBy('id','desc')->first()->remaining_balance_type : SubAccount::where('id',$request->credit_accounts[$key])->first()->transaction_type;
+                if($transactionType=="credit"){
+                    $remainingBalance = $openingBalance + $request->credit_amounts[$key];
+                    $remainingBalanceType = "credit";
+                } else if($transactionType=="debit"){
+                    if($openingBalance >= $request->credit_amounts[$key]){
+                        $remainingBalance = $openingBalance - $request->credit_amounts[$key];
+                        $remainingBalanceType = "debit";
+                    }else if($openingBalance < $request->credit_amounts[$key]){
+                        $remainingBalance = $request->credit_amounts[$key] - $openingBalance;
+                        $remainingBalanceType = "credit";
+                    }
+                }
+
                 $VoucherDetail->voucher_id = $voucher->id;
                 $VoucherDetail->date = isset($request->credit_dates[$key])?$request->credit_dates[$key]:'';
                 $VoucherDetail->product_narration = isset($request->credit_products[$key])?$request->credit_products[$key]:'';
                 $VoucherDetail->sub_account_id = isset($request->credit_accounts[$key])?$request->credit_accounts[$key]:'';
                 $VoucherDetail->credit_amount = isset($request->credit_amounts[$key])?$request->credit_amounts[$key]:0;
+                $VoucherDetail->remaining_balance = $remainingBalance;
+                $VoucherDetail->remaining_balance_type = $remainingBalanceType;
                 $VoucherDetail->quantity = isset($request->credit_quantities[$key])?$request->credit_quantities[$key]:'';
                 $VoucherDetail->rate = isset($request->credit_rates[$key])?$request->credit_rates[$key]:0;
                 $VoucherDetail->entry_type = 'credit';
                 $VoucherDetail->save();
             }
         }
-        $this->suspenseEntryCommonCode($voucher,$action,$request);
+
+        if($request->suspense_amount > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
+            $this->suspenseEntryCommonCode($voucher,$action,$request);
+        }
     }
 
     // get rules for create and update
