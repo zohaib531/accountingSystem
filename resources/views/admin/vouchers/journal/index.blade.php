@@ -39,8 +39,6 @@
                                     <th>#</th>
                                     <th>Date</th>
                                     <th colspan="2" class="text-center">Details</th>
-                                    <th>Total Debit</th>
-                                    <th>Total Credit</th>
                                     <th class="text-right">Action</th>
                                 </tr>
                             </thead>
@@ -72,12 +70,14 @@
                                                         </tr>
                                                     @endforeach
                                                 @endif
-
                                             </tbody>
+                                            <tfoot>
+                                                <td colspan="2"><h5 class="text-center">Total</h5></td>
+                                                <td>{{$journalVoucher->total_debit}}</td>
+                                                <td>{{$journalVoucher->total_credit}}</td>
+                                            </tfoot>
                                         </table>
                                     </td>
-                                    <td>{{$journalVoucher->total_debit }}</td>
-                                    <td>{{$journalVoucher->total_credit }}</td>
 
                                     <td class="text-right">
                                         <button class="btn btn-info text-white btn-sm" data-toggle="modal" data-target=".updateJournal" onclick="editResource('{{ route('journal.edit', $journalVoucher->id) }}','.updateModalJournal')">Update</button>
