@@ -130,11 +130,11 @@
                                     </div>
                                 </div>
 
-                                @if($loop->iteration!=1)
+                                {{-- @if($loop->iteration!=1)
                                     <div class="position-absolute" style="right:0px;">
                                         <button type="button" onclick="removeParentElement(this)" class="btn btn-danger text-white">x</button>
                                     </div>
-                                @endif
+                                @endif --}}
                             </div>
 
                         @endforeach
@@ -256,11 +256,12 @@
                                     </div>
                                 </div>
 
-                                @if($loop->iteration!=1)
+                                {{-- @if($loop->iteration!=1)
                                     <div class="position-absolute" style="right:0px;">
                                         <button type="button" onclick="removeParentElement(this)" class="btn btn-danger text-white">x</button>
                                     </div>
-                                @endif
+                                @endif --}}
+
                             </div>
 
                         @endforeach
