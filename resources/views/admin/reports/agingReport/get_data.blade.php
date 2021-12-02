@@ -23,11 +23,11 @@
                     @php $openingBalance = $detail->remaining_balance; @endphp;
                 @endif
                 @php
-                    $str = $detail->entry_type."_amount";
+                    // $str = $detail->entry_type."_amount";
 
-                    if($openingBalance > 0 ){
-                        $openingBalance = $openingBalance - $detail->$str;
-                    }
+                    // if($openingBalance > 0 ){
+                    //     $openingBalance = $openingBalance - $detail->$str;
+                    // }
 
 
                     $to = \Carbon\Carbon::createFromFormat('Y-m-d', $detail->date);
@@ -46,6 +46,12 @@
                     <td>{{ number_format($detail->remaining_balance)}}</td>
                     <td>{{$detail->remaining_balance_type}}</td>
                 </tr>
+                @if($loop->last)
+                    @php 
+                        $openingBalance = $detail->remaining_balance; 
+                        $entryType = $detail->remaining_balance_type; 
+                    @endphp
+                @endif
             @endforeach
 
         @else
