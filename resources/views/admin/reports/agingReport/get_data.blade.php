@@ -14,6 +14,8 @@
     <tbody>
         @php
             $openingBalance = 0;
+            $debitBalance = 0;
+            $creditBalance = 0;
             $entryType = '';
         @endphp
         @if(isset($vouchers) && $vouchers->count()>0)
@@ -39,26 +41,26 @@
                 @php
                     $str = $detail->entry_type."_amount";
                     if($openingBalance > 0 ){
+                        $detail->entry_type=="debit"?$debitBalance += $detail->$str:$creditBalance += $detail->$str;
                         $openingBalance = $openingBalance - $detail->$str;
+                    }else{
+                        break;
                     }
-
-
                     $to = \Carbon\Carbon::createFromFormat('Y-m-d', $detail->date);
                     $from = \Carbon\Carbon::createFromFormat('Y-m-d', date('Y-m-d'));
                     $diff_in_days = $to->diffInDays($from);
                 @endphp
-                @if($openingBalance > 0 )
-                    <tr>
-                        <td>{{date('d-m-Y',strtotime($detail->date))}}</td>
-                        <td>{{$diff_in_days}}</td>
-                        <td>{{$detail->product_narration}} @if($detail->quantity!=0 && $detail->rate!=0)  (<span style="font-weight:bold;">{{$detail->quantity}} x {{$detail->rate}}</span>) @endif</td>
-                        <td>{{ $detail->debit_amount!=0? number_format($detail->debit_amount) :"" }}</td>
-                        <td>{{ $detail->credit_amount!=0? number_format($detail->credit_amount):"" }}</td>
-                        {{-- <td>{{ number_format($openingBalance)}}</td> --}}
-                        <td>{{ number_format($openingBalance)}}</td>
-                        <td>{{$entryType}}</td>
-                    </tr>
-                @endif
+
+                <tr>
+                    <td>{{date('d-m-Y',strtotime($detail->date))}}</td>
+                    <td>{{$diff_in_days}}</td>
+                    <td>{{$detail->product_narration}} @if($detail->quantity!=0 && $detail->rate!=0)  (<span style="font-weight:bold;">{{$detail->quantity}} x {{$detail->rate}}</span>) @endif</td>
+                    <td>{{ $detail->debit_amount!=0? number_format($detail->debit_amount) :"" }}</td>
+                    <td>{{ $detail->credit_amount!=0? number_format($detail->credit_amount):"" }}</td>
+                    {{-- <td>{{ number_format($openingBalance)}}</td> --}}
+                    <td>{{ number_format($openingBalance)}}</td>
+                    <td>{{$entryType}}</td>
+                </tr>
                 {{-- @if($loop->last)
                     @php 
                         $openingBalance = $detail->remaining_balance; 
@@ -77,8 +79,8 @@
         <tfoot>
             <tr>
                 <td colspan="3"><h5 class="text-center">Total</h5></td>
-                <td>{{number_format($totalDebit)}}</td>
-                <td>{{number_format($totalCredit)}}</td>
+                <td>{{number_format($debitBalance)}}</td>
+                <td>{{number_format($creditBalance)}}</td>
                 <td>{{number_format($openingBalance)}}</td>
                 <td>{{$entryType}}</td>
             </tr>
