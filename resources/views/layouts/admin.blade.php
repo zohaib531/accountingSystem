@@ -15,6 +15,7 @@
     <link rel="stylesheet"
         href="{{ asset('assets/template/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/template/plugins/sweetalert/sweetalert.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/utility.css') }}">
     <!-- Custom Stylesheet -->
     <link href="{{ asset('assets/template/css/style.css') }}" rel="stylesheet">
 
@@ -311,6 +312,7 @@
     <script src="{{ asset('assets/template/plugins/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ asset('assets/js/protectCode.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
     <!-- Select2 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="{{ asset('assets/js/vouchers.js') }}"></script>

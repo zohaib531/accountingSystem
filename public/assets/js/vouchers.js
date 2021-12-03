@@ -1,8 +1,9 @@
 
  // setting current date code Start
  $(document).ready(function() {
-    var today = new Date().toISOString().split('T')[0];
-    $('#val-date').val(today);
+    var today = moment();
+    $('input[type="date"]').val(today.format('DD/MM/YYYY'));
+    $('input[type="date"]').attr('data-date',today.format('DD/MM/YYYY'));
 })
 
 // setting current date code end

@@ -30,7 +30,7 @@
                             <div class="form-group row m-0 align-items-center">
                                 <label class="col-lg-3 col-form-label px-0" for="val-date">Voucher Date<span class="text-danger">*</span></label>
                                 <div class="col-lg-9">
-                                    <input type="date" class="form-control" id="val-date" name="date">
+                                    <input type="date" class="form-control" id="val-date" name="date" data-date="" data-date-format="DD/MM/YYYY">
                                 </div>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2">
-                                                 <input type="date" class="form-control" name="credit_dates[]">
+                                                 <input type="date" class="form-control" name="credit_dates[]" data-date-format="DD/MM/YYYY">
                                              </div>
                                          </div>
                                      </div>
@@ -128,7 +128,7 @@
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2">
-                                                 <input type="date" class="form-control" name="debit_dates[]">
+                                                 <input type="date" class="form-control" name="debit_dates[]" data-date="" data-date-format="DD/MM/YYYY">
                                              </div>
                                          </div>
                                      </div>
@@ -230,7 +230,7 @@
                                      <div class="form-group row m-0 align-items-center">
                                          <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
                                          <div class="col-lg-12 pl-0 pr-2">
-                                             <input type="date" class="form-control" name="suspense_date">
+                                             <input type="date" class="form-control" name="suspense_date" data-date="" data-date-format="DD/MM/YYYY">
                                          </div>
                                      </div>
                                  </div>
@@ -352,7 +352,7 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
-                                <input type="date" class="form-control" name="${side}dates[]">
+                                <input type="date" class="form-control apendDate" name="${side}dates[]" data-date-format="DD/MM/YYYY">
                             </div>
                         </div>
                     </div>
@@ -421,6 +421,10 @@
             </div>
 
         `);
+
+        var today = moment();
+        $('.apendDate').val(today.format('DD/MM/YYYY'));
+        $('.apendDate').attr('data-date',today.format('DD/MM/YYYY'));
     }
 
 

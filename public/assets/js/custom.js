@@ -194,23 +194,11 @@ function editResource(targetUrl,targetTag) {
 }
 
 
-
-
-// const commaSeperated = (val) =>{
-//     var num = getNumber(val.toLocaleString());
-//     if(num!=0){
-//         return num.toLocaleString();
-//     }
-
-// }
-
-function commaSeparateNumber(val){
-    while (/(\d+)(\d{3})/.test(val.toString())){
-      val = val.toString().replace(/(\d+)(\d{3})/, '$1'+','+'$2');
-    }
-    return val;
-  }
-
-
-
+$("input").on("change", function() {
+    this.setAttribute(
+        "data-date",
+        moment(this.value, "YYYY-MM-DD")
+        .format( this.getAttribute("data-date-format"))
+    );
+}).trigger("change");
 
