@@ -17,6 +17,16 @@
         @endphp
         @if(isset($vouchers) && $vouchers->count()>0)
             @foreach($vouchers as $key=>$detail)
+                @if($loop->first)
+                    <tr>
+                        <td>{{date('d-m-Y',strtotime($detail->date))}}</td>
+                        <td></td>
+                        <td>Opening Balance</td>
+                        <td colspan="2"></td>
+                        <td>{{ getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance"] }}</td>
+                        <td>{{ getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance_type"] }}</td>
+                    </tr>
+                @endif
                 @php
                     $str = $detail->entry_type."_amount";
                 @endphp

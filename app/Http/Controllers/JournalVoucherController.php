@@ -136,8 +136,8 @@ class JournalVoucherController extends Controller
             $check = true;
         }
 
-        $openingBalance = isset($request->suspense_account) ? VoucherDetail::where('sub_account_id', $request->suspense_account)->orderBy('id', 'desc')->first() != null ? VoucherDetail::where('sub_account_id', $request->suspense_account)->orderBy('id', 'desc')->first()->remaining_balance : SubAccount::where('id', $request->suspense_account)->first()->opening_balance : 0;
-        $transactionType = isset($request->suspense_account) ? VoucherDetail::where('sub_account_id', $request->suspense_account)->orderBy('id', 'desc')->first() != null ? VoucherDetail::where('sub_account_id', $request->suspense_account)->orderBy('id', 'desc')->first()->remaining_balance_type : SubAccount::where('id', $request->suspense_account)->first()->transaction_type : "";
+        $openingBalance = isset($request->suspense_account)? getOpeningBalance($request->suspense_account,$request->suspense_date,false,0)["opening_balance"]:0;
+        $transactionType = isset($request->suspense_account)? getOpeningBalance($request->suspense_account,$request->suspense_date,false,0)["opening_balance_type"]:'';
 
         if ($transactionType == "debit" && $request->suspense_entry == "debit") {
             $remainingBalance = $openingBalance + $request->suspense_amount;
@@ -170,6 +170,8 @@ class JournalVoucherController extends Controller
             $suspenseEntryDetail->sub_account_id = $request->suspense_account;
             $suspenseEntryDetail->$str = $request->suspense_amount;
             $suspenseEntryDetail->entry_type = $request->suspense_entry;
+            // $suspenseEntryDetail->opening_balance = $openingBalance;
+            // $suspenseEntryDetail->opening_balance_type = $transactionType;
             $suspenseEntryDetail->remaining_balance = $remainingBalance;
             $suspenseEntryDetail->remaining_balance_type = $remainingBalanceType;
             $suspenseEntryDetail->suspense_account = '1';
@@ -190,8 +192,10 @@ class JournalVoucherController extends Controller
                 } else {
                     $VoucherDetail = new VoucherDetail();
                 }
-                $openingBalance = VoucherDetail::where('sub_account_id', $request->debit_accounts[$key])->orderBy('id', 'desc')->first() != null ? VoucherDetail::where('sub_account_id', $request->debit_accounts[$key])->orderBy('id', 'desc')->first()->remaining_balance : SubAccount::where('id', $request->debit_accounts[$key])->first()->opening_balance;
-                $transactionType = VoucherDetail::where('sub_account_id', $request->debit_accounts[$key])->orderBy('id', 'desc')->first() != null ? VoucherDetail::where('sub_account_id', $request->debit_accounts[$key])->orderBy('id', 'desc')->first()->remaining_balance_type : SubAccount::where('id', $request->debit_accounts[$key])->first()->transaction_type;
+
+                $openingBalance =  getOpeningBalance($request->debit_accounts[$key],$request->debit_dates[$key],false,0)["opening_balance"];
+                $transactionType = getOpeningBalance($request->debit_accounts[$key],$request->debit_dates[$key],false,0)["opening_balance_type"];
+                
                 if ($transactionType == "debit") {
                     $remainingBalance = $openingBalance + $request->debit_amounts[$key];
                     $remainingBalanceType = "debit";
@@ -210,6 +214,8 @@ class JournalVoucherController extends Controller
                 $VoucherDetail->product_narration = isset($request->debit_narrations[$key]) ? $request->debit_narrations[$key] : '';
                 $VoucherDetail->sub_account_id = isset($request->debit_accounts[$key]) ? $request->debit_accounts[$key] : '';
                 $VoucherDetail->debit_amount = isset($request->debit_amounts[$key]) ? $request->debit_amounts[$key] : 0;
+                // $VoucherDetail->opening_balance = $openingBalance;
+                // $VoucherDetail->opening_balance_type = $transactionType;
                 $VoucherDetail->remaining_balance = $remainingBalance;
                 $VoucherDetail->remaining_balance_type = $remainingBalanceType;
                 $VoucherDetail->entry_type = 'debit';
@@ -228,8 +234,8 @@ class JournalVoucherController extends Controller
                     $VoucherDetail = new VoucherDetail();
                 }
 
-                $openingBalance = VoucherDetail::where('sub_account_id', $request->credit_accounts[$key])->orderBy('id', 'desc')->first() != null ? VoucherDetail::where('sub_account_id', $request->credit_accounts[$key])->orderBy('id', 'desc')->first()->remaining_balance : SubAccount::where('id', $request->credit_accounts[$key])->first()->opening_balance;
-                $transactionType = VoucherDetail::where('sub_account_id', $request->credit_accounts[$key])->orderBy('id', 'desc')->first() != null ? VoucherDetail::where('sub_account_id', $request->credit_accounts[$key])->orderBy('id', 'desc')->first()->remaining_balance_type : SubAccount::where('id', $request->credit_accounts[$key])->first()->transaction_type;
+                $openingBalance =  getOpeningBalance($request->credit_accounts[$key],$request->credit_dates[$key],false,0)["opening_balance"];
+                $transactionType = getOpeningBalance($request->credit_accounts[$key],$request->credit_dates[$key],false,0)["opening_balance_type"];
                 if ($transactionType == "credit") {
                     $remainingBalance = $openingBalance + $request->credit_amounts[$key];
                     $remainingBalanceType = "credit";
@@ -248,6 +254,8 @@ class JournalVoucherController extends Controller
                 $VoucherDetail->product_narration = isset($request->credit_narrations[$key]) ? $request->credit_narrations[$key] : '';
                 $VoucherDetail->sub_account_id = isset($request->credit_accounts[$key]) ? $request->credit_accounts[$key] : '';
                 $VoucherDetail->credit_amount = isset($request->credit_amounts[$key]) ? $request->credit_amounts[$key] : 0;
+                // $VoucherDetail->opening_balance = $openingBalance;
+                // $VoucherDetail->opening_balance_type = $transactionType;
                 $VoucherDetail->remaining_balance = $remainingBalance;
                 $VoucherDetail->remaining_balance_type = $remainingBalanceType;
                 $VoucherDetail->entry_type = 'credit';
