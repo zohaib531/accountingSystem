@@ -31,7 +31,7 @@
                         <td></td>
                         <td>Opening Balance</td>
                         <td colspan="2"></td>
-                        <td>{{ getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance"] }}</td>
+                        <td>{{ number_format(getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance"]) }}</td>
                         <td>{{ getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance_type"] }}</td>
                     </tr>
                 @endif
