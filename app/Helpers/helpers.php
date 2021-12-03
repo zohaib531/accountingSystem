@@ -40,3 +40,34 @@
             return ["opening_balance"=>$openingBalance,"opening_balance_type"=>$transactionType];
         }    
     }
+
+    if(!function_exists('getBalanceAndType')){
+        function getBalanceAndType($openingBalance,$transactionType,$entryType,$amount){
+            if($transactionType=="debit" && $entryType=="debit"){
+                $openingBalance = $openingBalance + $amount;
+                $transactionType = "debit";
+            } else if($transactionType=="credit" && $entryType=="debit"){
+                if($openingBalance >= $amount){
+                    $openingBalance = $openingBalance - $amount;
+                    $transactionType = "credit";
+                }else if($openingBalance < $amount){
+                    $openingBalance = $amount - $openingBalance;
+                    $transactionType = "debit";
+                }
+            } else if($transactionType=="credit" && $entryType=="credit"){
+                $openingBalance = $openingBalance + $amount;
+                $transactionType = "credit";
+            } else if($transactionType=="debit" && $entryType=="credit"){
+                if($openingBalance >= $amount){
+                    $openingBalance = $openingBalance - $amount;
+                    $transactionType = "debit";
+                }else if($openingBalance < $amount){
+                    $openingBalance = $amount - $openingBalance;
+                    $transactionType = "credit";
+                }
+            }
+
+            return ["balance"=>$openingBalance,"type"=>$transactionType]; 
+        }
+   
+    }
