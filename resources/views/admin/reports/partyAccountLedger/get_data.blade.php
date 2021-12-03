@@ -2,7 +2,6 @@
     <thead>
         <tr>
             <th>Date</th>
-            <th>Sub Account</th>
             <th>Narration/Details</th>
             <th>Debit</th>
             <th>Credit</th>
@@ -20,7 +19,6 @@
                 @if($loop->first)
                     <tr>
                         <td>{{date('d-m-Y',strtotime($detail->date))}}</td>
-                        <td></td>
                         <td>Opening Balance</td>
                         <td colspan="2"></td>
                         <td>{{ getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance"] }}</td>
@@ -32,7 +30,6 @@
                 @endphp
                 <tr>
                     <td>{{date('d-m-Y',strtotime($detail->date))}}</td>
-                    <td>{{$detail->subAccount->title}}</td>
                     <td>{{$detail->product_narration}} @if($detail->quantity!=0 && $detail->rate!=0)  (<span style="font-weight:bold;">{{$detail->quantity}} x {{$detail->rate}}</span>) @endif</td>
                     <td>{{ $detail->debit_amount!=0?number_format($detail->debit_amount):"" }}</td>
                     <td>{{ $detail->credit_amount!=0?number_format($detail->credit_amount):"" }}</td>
@@ -49,14 +46,14 @@
 
         @else
             <tr>
-                <td colspan="7" class="text-center">No records found</td>
+                <td colspan="6" class="text-center">No records found</td>
             </tr>
         @endif
     </tbody>
     @if(isset($vouchers) && $vouchers->count()>0)
         <tfoot>
             <tr>
-                <td colspan="3"><h5 class="text-center">Total</h5></td>
+                <td colspan="2"><h5 class="text-center">Total</h5></td>
                 <td>{{number_format($totalDebit)}}</td>
                 <td>{{number_format($totalCredit)}}</td>
                 <td>{{number_format($openingBalance)}}</td>
