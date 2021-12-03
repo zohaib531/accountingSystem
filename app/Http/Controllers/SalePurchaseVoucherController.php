@@ -179,8 +179,8 @@ class SalePurchaseVoucherController extends Controller
             $suspenseEntryDetail->sub_account_id = $request->suspense_account;
             $suspenseEntryDetail->$str = $request->suspense_amount;
             $suspenseEntryDetail->entry_type = $request->suspense_entry;
-            $suspenseEntryDetail->opening_balance = $openingBalance;
-            $suspenseEntryDetail->opening_balance_type = $transactionType;
+            // $suspenseEntryDetail->opening_balance = $openingBalance;
+            // $suspenseEntryDetail->opening_balance_type = $transactionType;
             $suspenseEntryDetail->remaining_balance = $remainingBalance;
             $suspenseEntryDetail->remaining_balance_type = $remainingBalanceType;
             $suspenseEntryDetail->suspense_account = '1';
@@ -223,8 +223,8 @@ class SalePurchaseVoucherController extends Controller
                 $VoucherDetail->product_narration = isset($request->debit_products[$key])?$request->debit_products[$key]:'';
                 $VoucherDetail->sub_account_id = isset($request->debit_accounts[$key])?$request->debit_accounts[$key]:'';
                 $VoucherDetail->debit_amount = isset($request->debit_amounts[$key])?$request->debit_amounts[$key]:0;
-                $VoucherDetail->opening_balance = $openingBalance;
-                $VoucherDetail->opening_balance_type = $transactionType;
+                // $VoucherDetail->opening_balance = $openingBalance;
+                // $VoucherDetail->opening_balance_type = $transactionType;
                 $VoucherDetail->remaining_balance = $remainingBalance;
                 $VoucherDetail->remaining_balance_type = $remainingBalanceType;
                 $VoucherDetail->quantity = isset($request->debit_quantities[$key])?$request->debit_quantities[$key]:'';
@@ -265,8 +265,8 @@ class SalePurchaseVoucherController extends Controller
                 $VoucherDetail->product_narration = isset($request->credit_products[$key])?$request->credit_products[$key]:'';
                 $VoucherDetail->sub_account_id = isset($request->credit_accounts[$key])?$request->credit_accounts[$key]:'';
                 $VoucherDetail->credit_amount = isset($request->credit_amounts[$key])?$request->credit_amounts[$key]:0;
-                $VoucherDetail->opening_balance = $openingBalance;
-                $VoucherDetail->opening_balance_type = $transactionType;
+                // $VoucherDetail->opening_balance = $openingBalance;
+                // $VoucherDetail->opening_balance_type = $transactionType;
                 $VoucherDetail->remaining_balance = $remainingBalance;
                 $VoucherDetail->remaining_balance_type = $remainingBalanceType;
                 $VoucherDetail->quantity = isset($request->credit_quantities[$key])?$request->credit_quantities[$key]:'';
@@ -276,13 +276,6 @@ class SalePurchaseVoucherController extends Controller
             }
         }
         $this->suspenseEntryCommonCode($voucher,$action,$request);
-        // if($action && $request->suspense_amount > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
-        //     $this->suspenseEntryCommonCode($voucher,$action,$request);
-        // }else if($action && (array_sum($request->debit_amounts)==array_sum($request->credit_amounts))){
-        //     $this->suspenseEntryCommonCode($voucher,$action,$request);
-        // }else if(!$action && $request->suspense_amount > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
-        //     $this->suspenseEntryCommonCode($voucher,$action,$request);  
-        // }
     }
 
     // get rules for create and update
@@ -331,41 +324,4 @@ class SalePurchaseVoucherController extends Controller
         return $messages;
     }
 
-    // get opening balance of specific sub account with date
-    public function getOpeningBalance($subAccountID,$date,$specific=false,$id=0){
-        $subAccount = SubAccount::where('id',$subAccountID)->first();
-        $openingBalance = $subAccount->opening_balance;
-        $transactionType = $subAccount->transaction_type;
-        $vouchers = $specific?VoucherDetail::where('id','!=',$id)->where('sub_account_id',$subAccount->id)->whereDate('date', '<=',$date)->get():VoucherDetail::where('sub_account_id',$subAccount->id)->whereDate('date', '<=',$date)->get();
-        if($vouchers->count() > 0){
-            foreach($vouchers as $key=>$detail){
-                $str = $detail->entry_type."_amount";
-                if($transactionType=="debit" && $detail->entry_type=="debit"){
-                    $openingBalance = $openingBalance + $detail->$str;
-                    $transactionType = "debit";
-                } else if($transactionType=="credit" && $detail->entry_type=="debit"){
-                    if($openingBalance >= $detail->$str){
-                        $openingBalance = $openingBalance - $detail->$str;
-                        $transactionType = "credit";
-                    }else if($openingBalance < $detail->$str){
-                        $openingBalance = $detail->$str - $openingBalance;
-                        $transactionType = "debit";
-                    }
-                } else if($transactionType=="credit" && $detail->entry_type=="credit"){
-                    $openingBalance = $openingBalance + $detail->$str;
-                    $transactionType = "credit";
-                } else if($transactionType=="debit" && $detail->entry_type=="credit"){
-                    if($openingBalance >= $detail->$str){
-                        $openingBalance = $openingBalance - $detail->$str;
-                        $transactionType = "debit";
-                    }else if($openingBalance < $detail->$str){
-                        $openingBalance = $detail->$str - $openingBalance;
-                        $transactionType = "credit";
-                    }
-                }
-            }
-        }
-
-        return ["opening_balance"=>$openingBalance,"opening_balance_type"=>$transactionType];
-    }
 }

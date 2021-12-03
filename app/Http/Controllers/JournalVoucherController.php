@@ -170,8 +170,8 @@ class JournalVoucherController extends Controller
             $suspenseEntryDetail->sub_account_id = $request->suspense_account;
             $suspenseEntryDetail->$str = $request->suspense_amount;
             $suspenseEntryDetail->entry_type = $request->suspense_entry;
-            $suspenseEntryDetail->opening_balance = $openingBalance;
-            $suspenseEntryDetail->opening_balance_type = $transactionType;
+            // $suspenseEntryDetail->opening_balance = $openingBalance;
+            // $suspenseEntryDetail->opening_balance_type = $transactionType;
             $suspenseEntryDetail->remaining_balance = $remainingBalance;
             $suspenseEntryDetail->remaining_balance_type = $remainingBalanceType;
             $suspenseEntryDetail->suspense_account = '1';
@@ -212,8 +212,8 @@ class JournalVoucherController extends Controller
                 $VoucherDetail->product_narration = isset($request->debit_narrations[$key]) ? $request->debit_narrations[$key] : '';
                 $VoucherDetail->sub_account_id = isset($request->debit_accounts[$key]) ? $request->debit_accounts[$key] : '';
                 $VoucherDetail->debit_amount = isset($request->debit_amounts[$key]) ? $request->debit_amounts[$key] : 0;
-                $VoucherDetail->opening_balance = $openingBalance;
-                $VoucherDetail->opening_balance_type = $transactionType;
+                // $VoucherDetail->opening_balance = $openingBalance;
+                // $VoucherDetail->opening_balance_type = $transactionType;
                 $VoucherDetail->remaining_balance = $remainingBalance;
                 $VoucherDetail->remaining_balance_type = $remainingBalanceType;
                 $VoucherDetail->entry_type = 'debit';
@@ -252,8 +252,8 @@ class JournalVoucherController extends Controller
                 $VoucherDetail->product_narration = isset($request->credit_narrations[$key]) ? $request->credit_narrations[$key] : '';
                 $VoucherDetail->sub_account_id = isset($request->credit_accounts[$key]) ? $request->credit_accounts[$key] : '';
                 $VoucherDetail->credit_amount = isset($request->credit_amounts[$key]) ? $request->credit_amounts[$key] : 0;
-                $VoucherDetail->opening_balance = $openingBalance;
-                $VoucherDetail->opening_balance_type = $transactionType;
+                // $VoucherDetail->opening_balance = $openingBalance;
+                // $VoucherDetail->opening_balance_type = $transactionType;
                 $VoucherDetail->remaining_balance = $remainingBalance;
                 $VoucherDetail->remaining_balance_type = $remainingBalanceType;
                 $VoucherDetail->entry_type = 'credit';
