@@ -47,7 +47,8 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validations = Validator::make($request->all(), [
-            'title' => 'required || unique:products,title,NULL,id,deleted_at,NULL',
+            // 'title' => 'required || unique:products,title,NULL,id,deleted_at,NULL',
+            'title' => 'required',
             'narration' => 'required',
             'product_unit' => 'required',
         ]);
@@ -99,7 +100,8 @@ class ProductController extends Controller
     {
 
         $validations = Validator::make($request->all(), [
-            'title' => 'required || unique:products,title,NULL,id,deleted_at,NULL'.$product->id,
+            // 'title' => 'required || unique:products,title,NULL,id,deleted_at,NULL'.$product->id,
+            'title' => 'required',
             'narration' => 'required',
             'product_unit' => 'required',
         ]);
