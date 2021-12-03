@@ -51,6 +51,7 @@ class ProductController extends Controller
             'title' => 'required',
             'narration' => 'required',
             'product_unit' => 'required',
+            'unique_product' => 'required || unique:products',
         ]);
         if ($validations->fails()) {
             return response()->json(['success' => false, 'message' => $validations->errors()]);
@@ -59,6 +60,8 @@ class ProductController extends Controller
         $products->title = $request->title;
         $products->narration = $request->narration;
         $products->product_unit = $request->product_unit;
+        $products->unique_product = $request->unique_product;
+
 
         $products->save();
 
@@ -104,6 +107,7 @@ class ProductController extends Controller
             'title' => 'required',
             'narration' => 'required',
             'product_unit' => 'required',
+            'unique_product' => 'required || unique:products',
         ]);
 
         if ($validations->fails()) {
@@ -113,6 +117,7 @@ class ProductController extends Controller
         $product->title = $request->title;
         $product->narration = $request->narration;
         $product->product_unit = $request->product_unit;
+        $product->unique_product = $request->unique_product;
         $product->save();
 
         return response()->json(['success' => true, 'message' => 'Product has been updated successfully']);

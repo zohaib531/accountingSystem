@@ -30,7 +30,7 @@
                             <div class="form-group row m-0 align-items-center">
                                 <label class="col-lg-3 col-form-label px-0" for="val-date">Voucher Date<span class="text-danger">*</span></label>
                                 <div class="col-lg-9">
-                                    <input type="date" class="form-control" id="val-date" name="date">
+                                    <input type="date" class="form-control" id="val-date" name="date" data-date="" data-date-format="DD/MM/YYYY">
                                 </div>
                             </div>
                         </div>

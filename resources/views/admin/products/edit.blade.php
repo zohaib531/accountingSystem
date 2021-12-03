@@ -8,25 +8,25 @@
     <form class="form-valide" id="update-form">
         @csrf
         @method('put')
-
+        <input type="hidden" name="unique_product" id="productUniqueEdit" value="{{$product->unique_product}}">
         <div class="form-group row">
-            <label class="col-lg-3 col-form-label px-0" for="val-title">Product Name<span class="text-danger">*</span></label>
+            <label class="col-lg-3 col-form-label px-0" for="product-title-edit">Product Name<span class="text-danger">*</span></label>
             <div class="col-lg-9">
-                <input type="text" class="form-control" id="val-title" value="{{$product->title}}" name="title" placeholder="Enter Product Name..">
+                <input type="text" class="form-control" id="product-title-edit" value="{{$product->title}}" name="title" placeholder="Enter Product Name.." oninput="getUniqueProduct('#product-title-edit', '#product-naration-edit', '#product-unit-edit' , '#productUniqueEdit')">
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-lg-3 col-form-label px-0" for="val-balance">Narration<span class="text-danger">*</span></label>
+            <label class="col-lg-3 col-form-label px-0" for="product-naration-edit">Narration<span class="text-danger">*</span></label>
             <div class="col-lg-9">
-                <input type="text" class="form-control" id="val-balance" value="{{$product->narration}}" name="narration" placeholder="Enter Narration..">
+                <input type="text" class="form-control" id="product-naration-edit" value="{{$product->narration}}" name="narration" placeholder="Enter Narration.." oninput="getUniqueProduct('#product-title-edit', '#product-naration-edit', '#product-unit-edit' , '#productUniqueEdit')">
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-lg-3 col-form-label px-0" for="product-unit">Unit<span class="text-danger">*</span></label>
+            <label class="col-lg-3 col-form-label px-0" for="product-unit-edit">Unit<span class="text-danger">*</span></label>
             <div class="col-lg-9">
-                <select class="form-control" id="product-unit" name="product_unit">
+                <select class="form-control" id="product-unit-edit" name="product_unit" oninput="getUniqueProduct('#product-title-edit', '#product-naration-edit', '#product-unit-edit' , '#productUniqueEdit')">
                     <option value="" disabled>Select Product unit</option>
                     <option value="meter" @if($product->product_unit=='meter') selected @endif>Meter</option>
                     <option value="bags" @if($product->product_unit=='bags') selected @endif>Bags</option>

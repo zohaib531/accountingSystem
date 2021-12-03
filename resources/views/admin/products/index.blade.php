@@ -81,24 +81,25 @@
             <div class="modal-body px-5">
                <div class="form-validation my-5">
                    <form class="form-valide" id="create-form">
+                       <input type="hidden" name="unique_product" id="productUniqueAdd">
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label px-0" for="val-title">Product Name<span class="text-danger">*</span></label>
+                            <label class="col-lg-3 col-form-label px-0" for="product-title">Product Name<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input type="text" class="form-control" id="val-title" name="title" placeholder="Enter Product Name..">
+                                <input type="text" class="form-control" id="product-title" name="title" placeholder="Enter Product Name.." oninput="getUniqueProduct('#product-title', '#product-naration', '#product-unit' , '#productUniqueAdd')">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label px-0" for="product-naration">Narration<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input type="text" class="form-control" id="product-naration" name="narration" placeholder="Enter Narration..">
+                                <input type="text" class="form-control" id="product-naration" name="narration" placeholder="Enter Narration.." oninput="getUniqueProduct('#product-title', '#product-naration', '#product-unit', '#productUniqueAdd')">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label px-0" for="product-unit">Unit<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <select class="form-control" id="product-unit" name="product_unit">
+                                <select class="form-control" id="product-unit" name="product_unit" onchange="getUniqueProduct('#product-title', '#product-naration', '#product-unit', '#productUniqueAdd')">
                                     <option value="" disabled selected>Select Product unit</option>
                                     <option value="meter">Meter</option>
                                     <option value="bags">Bags</option>
@@ -141,4 +142,13 @@
     <script src="{{asset('assets/template/plugins/tables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('assets/template/plugins/tables/js/datatable/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{asset('assets/template/plugins/tables/js/datatable-init/datatable-basic.min.js')}}"></script>
+
+
+    <script>
+        const getUniqueProduct = (title , naration , unit, setTo)=>{
+            if($(title).val() != '' && $(naration).val() != '' && $(unit).val() != ''){
+                $(setTo).val($(title).val()+'-'+$(naration).val()+'-'+$(unit).val());
+            }
+        }
+    </script>
 @endsection
