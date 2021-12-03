@@ -10,7 +10,7 @@
                             {{-- <img src="{{asset('assets/img/ahf-logo.png')}}" width="140" alt=""> --}}
                             <h1 class="text-white">Logo is here</h1>
                         </div>
-                        <h2 class="text-white">Inventory System</h2>
+                        <h2 class="text-white">Accounts Management System</h2>
                     </div>
                 </div>
 			</div>
