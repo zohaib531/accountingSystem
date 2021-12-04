@@ -17,9 +17,10 @@
         @if(isset($vouchers) && $vouchers->count()>0)
             @foreach($vouchers as $key=>$detail)
                 @if($loop->first)
-                    @php  
-                        $openingBalance = getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance"];
-                        $entryType = getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance_type"];
+                    @php 
+                        $getOpeningBalanceResponse = getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id);
+                        $openingBalance = $getOpeningBalanceResponse["opening_balance"];
+                        $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                     @endphp
                     <tr>
                         <td>{{date('d-m-Y',strtotime($detail->date))}}</td>
@@ -31,8 +32,9 @@
                 @endif
                 @php
                     $str = $detail->entry_type."_amount";
-                    $openingBalance = getBalanceAndType($openingBalance,$entryType,$detail->entry_type,$detail->$str)["balance"];
-                    $entryType = getBalanceAndType($openingBalance,$entryType,$detail->entry_type,$detail->$str)["type"];
+                    $getBalanceAndTypeResponse = getBalanceAndType($openingBalance,$entryType,$detail->entry_type,$detail->$str);
+                    $openingBalance = $getBalanceAndTypeResponse["balance"];
+                    $entryType = $getBalanceAndTypeResponse["type"];
                 @endphp
                 <tr>
                     <td>{{date('d-m-Y',strtotime($detail->date))}}</td>

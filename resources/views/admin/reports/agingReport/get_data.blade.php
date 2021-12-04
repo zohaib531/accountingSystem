@@ -23,8 +23,9 @@
 
                 @if($loop->first)
                     @php  
-                        $openingBalance = getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance"];
-                        $entryType = getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance_type"];
+                        $getOpeningBalanceResponse = getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id);
+                        $openingBalance = $getOpeningBalanceResponse["opening_balance"];
+                        $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                     @endphp
                     <tr>
                         <td>{{date('d-m-Y',strtotime($detail->date))}}</td>
