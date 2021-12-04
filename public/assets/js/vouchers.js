@@ -33,8 +33,7 @@ const totalDebitAmount=(e)=>{
         totalDebit += +singleDebit.value;
     }
     let targetElem =  $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]');
-    console.log(typeof(commaSeparateNumber(totalDebit)));
-    targetElem.val(commaSeparateNumber(totalDebit));
+    targetElem.val(totalDebit);
     return targetElem.val();
 }
 

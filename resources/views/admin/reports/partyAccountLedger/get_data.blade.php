@@ -7,6 +7,7 @@
             <th>Credit</th>
             <th>Balance</th>
             <th>Nature (Debit/Credit)</th>
+            <th class="text-center">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -17,7 +18,7 @@
         @if(isset($vouchers) && $vouchers->count()>0)
             @foreach($vouchers as $key=>$detail)
                 @if($loop->first)
-                    @php 
+                    @php
                         $getOpeningBalanceResponse = getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id);
                         $openingBalance = $getOpeningBalanceResponse["opening_balance"];
                         $entryType = $getOpeningBalanceResponse["opening_balance_type"];
@@ -28,6 +29,7 @@
                         <td colspan="2"></td>
                         <td>{{ number_format(getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance"]) }}</td>
                         <td>{{ getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance_type"] }}</td>
+                        <td></td>
                     </tr>
                 @endif
                 @php
@@ -43,11 +45,12 @@
                     <td>{{ $detail->credit_amount!=0?number_format($detail->credit_amount):"" }}</td>
                     <td>{{ number_format($openingBalance) }}</td>
                     <td>{{$entryType}}</td>
+                    <td class="text-center"><button class="btn btn-info btn-sm">Update</button></td>
                 </tr>
                 {{-- @if($loop->last)
-                    @php 
-                        $openingBalance = $detail->remaining_balance; 
-                        $entryType = $detail->remaining_balance_type; 
+                    @php
+                        $openingBalance = $detail->remaining_balance;
+                        $entryType = $detail->remaining_balance_type;
                     @endphp
                 @endif --}}
             @endforeach
@@ -66,6 +69,7 @@
                 <td>{{number_format($totalCredit)}}</td>
                 <td>{{number_format($openingBalance)}}</td>
                 <td>{{$entryType}}</td>
+                <td></td>
             </tr>
         </tfoot>
     @endif

@@ -1,9 +1,6 @@
 @extends('layouts.admin')
 @section('title','Sale/Purchase Voucher List')
 
-@section('style')
-    <link href="{{asset('assets/template/plugins/tables/css/datatable/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
-@endsection
 
 @section('content')
 
@@ -30,7 +27,7 @@
                             <div class="form-group row m-0 align-items-center">
                                 <label class="col-lg-3 col-form-label px-0" for="val-date">Voucher Date<span class="text-danger">*</span></label>
                                 <div class="col-lg-9">
-                                    <input type="date" class="form-control" id="val-date" name="date" data-date="" data-date-format="DD/MM/YYYY">
+                                    <input type="date" class="form-control" id="val-date" name="date">
                                 </div>
                             </div>
                         </div>
@@ -40,10 +37,10 @@
                     </div>
 
 
-                    <div class="form-validation mt-3 mb-3">
+                    <div class="form-validation mb-3">
 
                              {{-- Credit Section Start --}}
-                             <div  id="sale_purchase_credit" class="mt-5">
+                             <div  id="sale_purchase_credit" class="mt-3">
                                  <h3>Credit</h3>
                                  <div class="row mx-0 justify-content-between">
                                      <div class="col-2 px-0">
@@ -55,7 +52,7 @@
                                          </div>
                                      </div>
 
-                                     <div class="col-2 px-0">
+                                     <div class="col-3 px-0">
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2">
@@ -69,7 +66,7 @@
                                          </div>
                                      </div>
 
-                                     <div class="col-2 px-0">
+                                     <div class="col-4 px-0">
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Product<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2">
@@ -85,7 +82,7 @@
 
 
 
-                                     <div class="col-2 px-0">
+                                     <div class="col-1 px-0">
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Quantity<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2">
@@ -94,7 +91,7 @@
                                          </div>
                                      </div>
 
-                                     <div class="col-2 px-0">
+                                     <div class="col-1 px-0">
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Rate<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2 ">
@@ -103,17 +100,17 @@
                                          </div>
                                      </div>
 
-                                     <div class="col-2 px-0">
+                                     <div class="col-1 px-0">
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
-                                             <div class="col-lg-12 pl-0 pr-2 ">
+                                             <div class="col-lg-12 px-0">
                                                  <input type="number" name="credit_amounts[]" class="form-control commonCredit" readonly oninput="totalCreditAmount(this)">
                                              </div>
                                          </div>
                                      </div>
                                  </div>
                              </div>
-                             <div class="text-right pl-2 mt-3">
+                             <div class="text-right pl-2 mt-2">
                                  <button onclick="addNewRow(this,'#sale_purchase_credit' , 'credit_' , 'commonCredit')" class="btn btn-light" type="button">Add more +</button>
                              </div>
                              {{-- Credit Section end --}}
@@ -133,7 +130,7 @@
                                          </div>
                                      </div>
 
-                                     <div class="col-2 px-0">
+                                     <div class="col-3 px-0">
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2">
@@ -147,7 +144,7 @@
                                          </div>
                                      </div>
 
-                                     <div class="col-2 px-0">
+                                     <div class="col-4 px-0">
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Product<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2">
@@ -163,7 +160,7 @@
 
 
 
-                                     <div class="col-2 px-0">
+                                     <div class="col-1 px-0">
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Quantity<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2">
@@ -172,7 +169,7 @@
                                          </div>
                                      </div>
 
-                                     <div class="col-2 px-0">
+                                     <div class="col-1 px-0">
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Rate<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2 ">
@@ -181,18 +178,18 @@
                                          </div>
                                      </div>
 
-                                     <div class="col-2 px-0">
+                                     <div class="col-1 px-0">
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
-                                             <div class="col-lg-12 pl-0 pr-2 ">
-                                                 <input type="text" name="debit_amounts[]" class="form-control commonDebit" readonly oninput="totalDebitAmount(this)">
+                                             <div class="col-lg-12 px-0">
+                                                 <input type="number" name="debit_amounts[]" class="form-control commonDebit" readonly oninput="totalDebitAmount(this)">
                                              </div>
                                          </div>
                                      </div>
                                  </div>
 
                              </div>
-                             <div class="text-right pl-2 mt-3">
+                             <div class="text-right pl-2 mt-2">
                                  <button onclick="addNewRow(this,'#sale_purchase_debit', 'debit_' , 'commonDebit')" class="btn btn-light" type="button">Add more +</button>
                              </div>
                              {{-- Debit Section end --}}
@@ -200,8 +197,8 @@
                              <div class="row m-0 justify-content-between align-items-end mt-3">
                                  <div class="col-4 pl-0">
                                      <div class="form-group row m-0 align-items-center differenceEntryCheck d-none">
-                                         <label class="col-lg-9 col-form-label px-0 differenceLabel" for="checkedEntery">Do you want suspense Entry?<span class="text-danger">*</span></label>
-                                         <div class="col-lg-3 pl-0 pr-2 ">
+                                         <label class="col-lg-10 col-form-label px-0 differenceLabel" for="checkedEntery">Do you want suspense Entry?<span class="text-danger">*</span></label>
+                                         <div class="col-lg-2 pl-0 pr-2 ">
                                              <div>
                                                  <input type="checkbox" class="" name="suspense_entry_check" id="checkedEntery" onchange="suspenseAccountEntryVerification(this);">
                                              </div>
@@ -252,7 +249,7 @@
                                  <div class="col-4 px-0">
                                      <div class="form-group row m-0 align-items-center">
                                          <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
-                                         <div class="col-lg-12 pl-0 pr-2 ">
+                                         <div class="col-lg-12 px-0">
                                              <input type="number" id="suspense_amount" name="suspense_amount" class="form-control" value="0" readonly>
                                          </div>
                                      </div>
@@ -337,9 +334,6 @@
 
 
 @section('script')
-    <script src="{{asset('assets/template/plugins/tables/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('assets/template/plugins/tables/js/datatable/dataTables.bootstrap4.min.js')}}"></script>
-    <script src="{{asset('assets/template/plugins/tables/js/datatable-init/datatable-basic.min.js')}}"></script>
 
 <script>
 
@@ -347,7 +341,7 @@
 
     const addNewRow=(elem, id, side , commonClass)=>{
         $(elem).parent().parent().find(id).append(`
-            <div class="row mt-3 mx-0 justify-content-between position-relative w-100">
+            <div class="row mt-2 mx-0 justify-content-between position-relative w-100">
                 <div class="col-2 px-0">
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
@@ -357,7 +351,7 @@
                         </div>
                     </div>
 
-                    <div class="col-2 px-0">
+                    <div class="col-3 px-0">
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
@@ -371,7 +365,7 @@
                         </div>
                     </div>
 
-                    <div class="col-2 px-0">
+                    <div class="col-4 px-0">
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
@@ -387,7 +381,7 @@
 
 
 
-                    <div class="col-2 px-0">
+                    <div class="col-1 px-0">
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
@@ -396,7 +390,7 @@
                         </div>
                     </div>
 
-                    <div class="col-2 px-0">
+                    <div class="col-1 px-0">
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2 ">
@@ -405,17 +399,17 @@
                         </div>
                     </div>
 
-                    <div class="col-2 px-0">
+                    <div class="col-1 px-0">
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
-                            <div class="col-lg-12 pl-0 pr-2 ">
+                            <div class="col-lg-12 px-0">
                                 <input type="number" name="${side}amounts[]" readonly class="form-control ${commonClass}">
                             </div>
                         </div>
                     </div>
 
-                <div class="position-absolute" style="right:-44px;">
-                    <button type="button" onclick="removeParentElement(this)" class="btn btn-danger text-white">x</button>
+                <div class="position-absolute" style="right:-38px;">
+                    <button type="button" onclick="removeParentElement(this)" class="btn btn-danger text-white px-2">x</button>
                 </div>
 
             </div>

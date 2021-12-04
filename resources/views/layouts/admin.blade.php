@@ -7,20 +7,13 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>@yield('title')</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/template/images/favicon') }}') }}">
-    <!-- Pignose Calender -->
-    <link href="{{ asset('assets/template/plugins/pg-calendar/css/pignose.calendar.min.css') }}" rel="stylesheet">
-    <!-- Chartist -->
-    <link rel="stylesheet" href="{{ asset('assets/template/plugins/chartist/css/chartist.min.css ') }}">
-    <link rel="stylesheet"
-        href="{{ asset('assets/template/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css') }}">
+    {{-- <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/template/images/favicon') }}') }}"> --}}
+
     <link rel="stylesheet" href="{{ asset('assets/template/plugins/sweetalert/sweetalert.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/utility.css') }}">
+    <link href="{{asset('assets/template/plugins/tables/css/datatable/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
     <!-- Custom Stylesheet -->
     <link href="{{ asset('assets/template/css/style.css') }}" rel="stylesheet">
-
-    <!-- Select2 CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
     <style>
         .select2-container {
@@ -49,6 +42,24 @@
             max-height: 80vh !important;
             overflow-y: auto;
         }
+        .dataTable > thead > tr > th[class*="sort"]:before,
+        .dataTable > thead > tr > th[class*="sort"]:after {
+            content: "" !important;
+        }
+
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+        -moz-appearance: textfield;
+        padding:3px !important ;
+        }
+
 
         @media (min-width: 992px){
             .saleParchaseWidth {
@@ -111,7 +122,7 @@
 
                 <div class="nav-control">
                     <div class="hamburger">
-                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                        <span class="toggle-icon"><i class="mdi mdi-menu"></i></span>
                     </div>
                 </div>
                 <div class="header-left">
@@ -138,7 +149,7 @@
                                 <div class="dropdown-content-body">
                                     <ul>
                                         <li>
-                                            <a href="#"><i class="icon-user"></i> <span>Profile</span></a>
+                                            <a href="#"><i class="mdi mdi-account"></i> <span>Profile</span></a>
                                         </li>
                                         {{-- <hr class="my-2">
                                         <li>
@@ -147,7 +158,7 @@
                                         <li>
                                             <a href="{{ route('logout') }}"
                                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                                <i class="icon-key"></i>
+                                                <i class="mdi mdi-key"></i>
                                                 <span>Logout</span>
                                             </a>
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST"
@@ -179,7 +190,7 @@
 
                         <li>
                             <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                                <i class="icon-user menu-icon"></i><span class="nav-text">User Management</span>
+                                <i class="mdi mdi-account menu-icon"></i><span class="nav-text">User Management</span>
                             </a>
                             <ul aria-expanded="false">
                                 @can('view-users') <li><a href="{{ route('users.index') }}">Users</a></li> @endcan
@@ -288,7 +299,7 @@
         ***********************************-->
         <div class="footer">
             <div class="copyright">
-                <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a>
+                <p>Copyright &copy; Designed & Developed by <a href="https://www.ewdtech.com">EWD TECH</a>
                     2018</p>
             </div>
         </div>
@@ -305,10 +316,10 @@
     ***********************************-->
     <script src="{{ asset('assets/template/plugins/common/common.min.js') }}"></script>
     <script src="{{ asset('assets/template/js/custom.min.js') }}"></script>
+    <script src="{{ asset('assets/template/js/styleSwitcher.js') }}"></script>
+
     <script src="{{ asset('assets/template/js/settings.js') }}"></script>
     <script src="{{ asset('assets/template/js/gleek.js') }}"></script>
-    <script src="{{ asset('assets/template/js/styleSwitcher.js') }}"></script>
-    <script src="{{ asset('assets/template/js/dashboard/dashboard-1.js') }}"></script>
     <script src="{{ asset('assets/template/plugins/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ asset('assets/js/protectCode.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -320,6 +331,12 @@
     @yield('script')
     <script>$(".select_2").select2({allowClear: true});</script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
+
+
+    {{-- datatable links --}}
+    <script src="{{asset('assets/template/plugins/tables/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('assets/template/plugins/tables/js/datatable/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('assets/template/plugins/tables/js/datatable-init/datatable-basic.min.js')}}"></script>
 </body>
 
 </html>

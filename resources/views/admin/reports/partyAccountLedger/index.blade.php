@@ -89,24 +89,4 @@
 @endsection
 
 
-@section('script')
-    <script src="{{asset('admin/plugin/datatable/js/dataTables.min.js')}}"></script>
-    <script src="{{asset('admin/plugin/datatable/js/dataTables.buttons.min.js')}}"></script>
-    <script src="{{asset('admin/plugin/datatable/js/buttons.print.min.js')}}"></script>
-    {{-- <script src="{{asset('assets/template/plugins/tables/js/datatable/dataTables.bootstrap4.min.js')}}"></script>
-    <script src="{{asset('assets/template/plugins/tables/js/datatable-init/datatable-basic.min.js')}}"></script> --}}
-
-
-
-   <script>
-       $(document).ready(function() {
-            $('#partyLedger').DataTable( {
-                dom: 'Bfrtip',
-                buttons: [
-                    'print'
-                ]
-            } );
-        } );
-   </script>
-@endsection
 

@@ -1,10 +1,6 @@
 @extends('layouts.admin')
 @section('title','Inventory | Account')
 
-@section('style')
-    <link href="{{asset('assets/template/plugins/tables/css/datatable/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
-@endsection
-
 @section('content')
 
 
@@ -126,12 +122,3 @@
 @endsection
 
 
-@section('script')
-    <script src="{{asset('assets/template/plugins/tables/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('assets/template/plugins/tables/js/datatable/dataTables.bootstrap4.min.js')}}"></script>
-    <script src="{{asset('assets/template/plugins/tables/js/datatable-init/datatable-basic.min.js')}}"></script>
-
-    <script src="{{asset('assets/template/plugins/validation/jquery.validate.min.js')}}"></script>
-    <script src="{{asset('assets/template/plugins/validation/jquery.validate-init.js')}}"></script>
-
-@endsection
