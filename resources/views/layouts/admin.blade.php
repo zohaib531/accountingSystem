@@ -233,24 +233,50 @@
 
 
                     @if (auth()->user()->can('') || auth()->user()->can(''))
-                        <li>
-                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                                <i class="mdi mdi-book-open-page-variant menu-icon"></i><span class="nav-text">Vouchers</span>
-                            </a>
-                            <ul aria-expanded="false">
-                                @can('')
-                                <li>
-                                    <a href="{{ route('salePurchase.index')}}">Sale/Purchase Voucher</a>
-                                </li>
-                                @endcan
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="mdi mdi-book-open-page-variant menu-icon"></i><span class="nav-text">Vouchers</span>
+                        </a>
 
-                                @can('')
-                                <li>
-                                    <a href="{{ route('journal.index') }}">Journal Voucher</a>
-                                </li>
-                                @endcan
-                            </ul>
-                        </li>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a class="has-arrow" href="javascript:void()" aria-expanded="false">List</a>
+                                <ul aria-expanded="false">
+                                    @can('')
+                                    <li>
+                                        <a href="{{ route('salePurchase.index')}}">Sale/Purchase Voucher</a>
+                                    </li>
+                                    @endcan
+
+                                    @can('')
+                                    <li>
+                                        <a href="{{ route('journal.index') }}">Journal Voucher</a>
+                                    </li>
+                                    @endcan
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="has-arrow" href="javascript:void()" aria-expanded="false">Create</a>
+                                <ul aria-expanded="false">
+                                    @can('')
+                                    <li>
+                                        <a href="{{ route('salePurchase.create')}}">Sale/Purchase Voucher</a>
+                                    </li>
+                                    @endcan
+
+                                    @can('')
+                                    <li>
+                                        <a href="{{ route('journal.create') }}">Journal Voucher</a>
+                                    </li>
+                                    @endcan
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+
+
+
                     @endif
 
                     @if (auth()->user()->can('') || auth()->user()->can(''))

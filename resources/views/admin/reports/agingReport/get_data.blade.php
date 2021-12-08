@@ -22,7 +22,7 @@
             @foreach($vouchers as $key=>$detail)
 
                 @if($loop->first)
-                    @php  
+                    @php
                         $getOpeningBalanceResponse = getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id);
                         $openingBalance = $getOpeningBalanceResponse["opening_balance"];
                         $entryType = $getOpeningBalanceResponse["opening_balance_type"];
@@ -34,6 +34,8 @@
                         <td colspan="2"></td>
                         <td>{{ number_format(getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance"]) }}</td>
                         <td>{{ getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance_type"] }}</td>
+                        {{-- <td>{{$detail->remaining_balance}}</td>
+                        <td>{{$detail->remaining_balance_type}}</td> --}}
                     </tr>
                 @endif
                 {{-- @if($loop->first)
@@ -41,9 +43,9 @@
                 @endif --}}
                 @php
                     $str = $detail->entry_type."_amount";
-                    if($openingBalance > 0 ){
+                    if($openingBalance > 0){
                         $detail->entry_type=="debit"?$debitBalance += $detail->$str:$creditBalance += $detail->$str;
-                        $openingBalance = $openingBalance - $detail->$str; 
+                        $openingBalance = $openingBalance - $detail->$str;
                     }else{
                         $entryType = $entryType=="debit"? "credit":"debit";
                     }
@@ -66,9 +68,9 @@
                     @php break; @endphp
                 @endif
                 {{-- @if($loop->last)
-                    @php 
-                        $openingBalance = $detail->remaining_balance; 
-                        $entryType = $detail->remaining_balance_type; 
+                    @php
+                        $openingBalance = $detail->remaining_balance;
+                        $entryType = $detail->remaining_balance_type;
                     @endphp
                 @endif --}}
             @endforeach

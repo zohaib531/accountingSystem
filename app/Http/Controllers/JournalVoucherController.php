@@ -18,10 +18,8 @@ class JournalVoucherController extends Controller
      */
     public function index()
     {
-
-        $subAccounts = SubAccount::select('id', 'title')->get();
         $journal_vouchers = Voucher::where('voucher_type', 'journal_voucher')->get();
-        return view('admin.vouchers.journal.index', ['subAccounts' => $subAccounts, 'journal_vouchers' => $journal_vouchers]);
+        return view('admin.vouchers.list.journal', ['journal_vouchers' => $journal_vouchers]);
     }
 
     /**
@@ -31,7 +29,8 @@ class JournalVoucherController extends Controller
      */
     public function create()
     {
-        return view('admin.vouchers.journal.create');
+        $subAccounts = SubAccount::select('id', 'title')->get();
+        return view('admin.vouchers.journal.create' , ['subAccounts' => $subAccounts]);
     }
 
     /**
@@ -195,7 +194,7 @@ class JournalVoucherController extends Controller
 
                 $openingBalance =  getOpeningBalance($request->debit_accounts[$key],$request->debit_dates[$key],false,0)["opening_balance"];
                 $transactionType = getOpeningBalance($request->debit_accounts[$key],$request->debit_dates[$key],false,0)["opening_balance_type"];
-                
+
                 if ($transactionType == "debit") {
                     $remainingBalance = $openingBalance + $request->debit_amounts[$key];
                     $remainingBalanceType = "debit";
@@ -264,7 +263,7 @@ class JournalVoucherController extends Controller
             }
         }
         $this->suspenseEntryCommonCode($voucher, $action, $request);
-        
+
     }
 
 

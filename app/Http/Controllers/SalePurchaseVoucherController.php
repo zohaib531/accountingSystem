@@ -21,20 +21,8 @@ class SalePurchaseVoucherController extends Controller
      */
     public function index()
     {
-
-        // $vouchers = Product::join('vouchers', 'products.id', 'vouchers.product_id')
-        //     ->join('sub_accounts', 'sub_accounts.id', 'vouchers.account')
-        //     ->select('products.title as product_title', 'products.*', 'vouchers.*', 'sub_accounts.*', 'vouchers.id as salePurchaseID')
-        //     ->get();
         $vouchers = Voucher::where('voucher_type','sale_purchase_voucher')->get();
-        $subAccounts = SubAccount::select('id', 'title')->get();
-        $products = Product::select('id', 'title','narration','product_unit')->get();
-        $data = [
-            'subAccounts' => $subAccounts,
-            'products' => $products,
-            'vouchers' => $vouchers,
-        ];
-        return view('admin.vouchers.salePurchase.index', $data);
+        return view('admin.vouchers.list.salePurchase', compact('vouchers'));
     }
 
     /**
@@ -44,7 +32,13 @@ class SalePurchaseVoucherController extends Controller
      */
     public function create()
     {
-        return view('admin.vouchers.salePurchase.create');
+        $subAccounts = SubAccount::select('id', 'title')->get();
+        $products = Product::select('id', 'title','narration','product_unit')->get();
+        $data = [
+            'subAccounts' => $subAccounts,
+            'products' => $products,
+        ];
+        return view('admin.vouchers.salePurchase.create' , $data);
     }
 
     /**
@@ -143,7 +137,7 @@ class SalePurchaseVoucherController extends Controller
             }
         }else if(!$action && $request->suspense_amount > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
             $suspenseEntryDetail = new VoucherDetail();
-            $check = true;   
+            $check = true;
         }
 
         $openingBalance = isset($request->suspense_account)? getOpeningBalance($request->suspense_account,$request->suspense_date,false,0)["opening_balance"]:0;
@@ -171,7 +165,7 @@ class SalePurchaseVoucherController extends Controller
                 $remainingBalanceType = "credit";
             }
         }
-        
+
         if($check){
             $str = $request->suspense_entry."_amount";
             $suspenseEntryDetail->voucher_id = $voucher->id;
