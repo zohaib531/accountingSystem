@@ -50,7 +50,7 @@
         <div class="form-group row">
             <label class="col-lg-3 col-form-label" for="opening-date">Opening Date<span class="text-danger">*</span></label>
             <div class="col-lg-9">
-                <input type="date" class="form-control" id="opening-date" value="{{$subAccount->date}}" name="opening_date">
+                <input class="form-control" id="opening-date" value="{{$subAccount->date}}" name="opening_date" placeholder="dd/mm/yyyy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
             </div>
         </div>
 

@@ -28,14 +28,12 @@
                         $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                     @endphp
                     <tr>
-                        <td>{{date('d-m-Y',strtotime($detail->date))}}</td>
+                        <td>{{date('d/m/Y',strtotime($detail->date))}}</td>
                         <td></td>
                         <td>Opening Balance</td>
                         <td colspan="2"></td>
                         <td>{{ number_format(getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance"]) }}</td>
                         <td>{{ getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance_type"] }}</td>
-                        {{-- <td>{{$detail->remaining_balance}}</td>
-                        <td>{{$detail->remaining_balance_type}}</td> --}}
                     </tr>
                 @endif
                 {{-- @if($loop->first)
@@ -43,7 +41,7 @@
                 @endif --}}
                 @php
                     $str = $detail->entry_type."_amount";
-                    if($openingBalance > 0){
+                    if($openingBalance > 0 ){
                         $detail->entry_type=="debit"?$debitBalance += $detail->$str:$creditBalance += $detail->$str;
                         $openingBalance = $openingBalance - $detail->$str;
                     }else{
@@ -55,7 +53,7 @@
                 @endphp
 
                 <tr>
-                    <td>{{date('d-m-Y',strtotime($detail->date))}}</td>
+                    <td>{{date('d/m/Y',strtotime($detail->date))}}</td>
                     <td>{{$diff_in_days}}</td>
                     <td>{{$detail->product_narration}} @if($detail->quantity!=0 && $detail->rate!=0)  (<span style="font-weight:bold;">{{$detail->quantity}} x {{$detail->rate}}</span>) @endif</td>
                     <td>{{ $detail->debit_amount!=0? number_format($detail->debit_amount) :"" }}</td>

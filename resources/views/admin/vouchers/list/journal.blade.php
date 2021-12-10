@@ -27,49 +27,26 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Date</th>
-                                        <th colspan="2" class="text-center">Details</th>
+                                        <th>Naration</th>
+                                        <th>Debit</th>
+                                        <th>Credit</th>
                                         <th class="text-right">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @dd($subAccountsDebit) --}}
                                     @foreach ($journal_vouchers as $key=> $journalVoucher)
                                     <tr>
                                         <td>{{++$key}}</td>
-                                        <td>{{$journalVoucher->date }}</td>
-                                        <td colspan="2">
-                                            <table class="w-100">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Sub Account</th>
-                                                        <th>Naration</th>
-                                                        <th>Debit</th>
-                                                        <th>Credit</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @if($journalVoucher->voucherDetails->count()>0)
-                                                        @foreach($journalVoucher->voucherDetails as $detail)
-                                                            <tr>
-                                                                @php $str = $detail->entry_type."_amount";  @endphp
-                                                                <td>{{$detail->subAccount->title}}</td>
-                                                                <td>{{$detail->product_narration}}</td>
-                                                                <td>{{ $detail->debit_amount!=0?$detail->debit_amount:"" }}</td>
-                                                                <td>{{ $detail->credit_amount!=0?$detail->credit_amount:"" }}</td>
-                                                            </tr>
-                                                        @endforeach
-                                                    @endif
-                                                </tbody>
-                                                <tfoot>
-                                                    <td colspan="2"><h5 class="text-center">Total</h5></td>
-                                                    <td>{{$journalVoucher->total_debit}}</td>
-                                                    <td>{{$journalVoucher->total_credit}}</td>
-                                                </tfoot>
-                                            </table>
-                                        </td>
-
+                                        <td>{{date('d/m/Y',strtotime($journalVoucher->date))}}</td>
+                                        <td></td>
+                                        <td>{{number_format($journalVoucher->total_debit)}}</td>
+                                        <td>{{number_format($journalVoucher->total_credit)}}</td>
                                         <td class="text-right">
-                                            <button class="btn btn-info text-white btn-sm" data-toggle="modal" data-target=".updateJournal" onclick="editResource('{{ route('journal.edit', $journalVoucher->id) }}','.updateModalJournal')">Update</button>
+                                            <a href="{{route('journal.edit',$journalVoucher->id)}}">
+                                                <button class="btn btn-info text-white btn-sm">
+                                                    Update
+                                                </button>
+                                            </a>
                                             <button class="btn btn-danger btn-sm" onclick="commonFunction(true,'{{ route('journal.destroy', $journalVoucher->id) }}','{{route('journal.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
                                         </td>
                                     </tr>

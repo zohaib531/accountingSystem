@@ -1,15 +1,3 @@
-
-
- // setting current date code Start
- $(document).ready(function() {
-    var today = new Date().toISOString().split('T')[0];
-    $('#val-date').val(today);
-})
-
-// setting current date code end
-
-
-
 function removeParentElement(e){
     if($(e).parent().parent().find('input[name="debit_amounts[]"]').val()>= 0){
         let elem = $(e).parent().parent().parent().parent().find('input[id="debit-amount"]');

@@ -19,7 +19,7 @@
         @endphp
         @if(isset($vouchers) && $vouchers->count()>0)
             <tr>
-                <td>{{date('d-m-Y',strtotime($subAccount->date))}}</td>
+                <td>{{date('d/m/Y',strtotime($subAccount->date))}}</td>
                 <td></td>
                 <td>{{$subAccount->title}}</td>
                 <td>Opening Balance</td>
@@ -43,7 +43,7 @@
                     @endphp
 
                 <tr>
-                    <td>{{date('d-m-Y',strtotime($detail->date))}}</td>
+                    <td>{{date('d/m/Y',strtotime($detail->date))}}</td>
                     <td>{{$diff_in_days}}</td>
                     <td>{{$detail->subAccount->title}}</td>
                     <td>{{$detail->product_narration}} @if($detail->quantity!=0 && $detail->rate!=0)  (<span style="font-weight:bold;">{{$detail->quantity}} x {{$detail->rate}}</span>) @endif</td>

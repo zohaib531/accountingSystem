@@ -18,7 +18,7 @@
         @endphp
         @if(isset($vouchers) && $vouchers->count()>0)
             {{-- <tr>
-                <td>{{date('d-m-Y',strtotime($subAccount->date))}}</td>
+                <td>{{date('d/m/Y',strtotime($subAccount->date))}}</td>
                 <td>{{$subAccount->title}}</td>
                 <td>Opening Balance</td>
                 <td colspan="2"></td>
@@ -86,12 +86,12 @@
                     //     } else if($openingBalance < $detail->$str){
                     //        $openingBalance = $openingBalance - $detail->$str;
                     //        $entryType = "credit"
-                    //     } 
+                    //     }
                     // }
 
                 @endphp
                 <tr>
-                    <td>{{date('d-m-Y',strtotime($detail->date))}}</td>
+                    <td>{{date('d/m/Y',strtotime($detail->date))}}</td>
                     <td>{{$detail->subAccount->title}}</td>
                     <td>{{$detail->product_narration}} @if($detail->quantity!=0 && $detail->rate!=0)  (<span style="font-weight:bold;">{{$detail->quantity}} x {{$detail->rate}}</span>) @endif</td>
                     <td>{{ $detail->debit_amount!=0?number_format($detail->debit_amount):"" }}</td>
@@ -100,9 +100,9 @@
                     <td>{{$detail->remaining_balance_type}}</td>
                 </tr>
                 @if($loop->last)
-                    @php 
-                        $openingBalance = $detail->remaining_balance; 
-                        $entryType = $detail->remaining_balance_type; 
+                    @php
+                        $openingBalance = $detail->remaining_balance;
+                        $entryType = $detail->remaining_balance_type;
                     @endphp
                 @endif
             @endforeach

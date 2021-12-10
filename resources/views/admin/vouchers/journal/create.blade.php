@@ -25,7 +25,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-3 col-form-label px-0" for="val-date">Voucher Date<span class="text-danger">*</span></label>
                                         <div class="col-lg-9">
-                                            <input type="date" class="form-control" id="val-date" name="date">
+                                            <input class="form-control" id="val-date" name="date" placeholder="dd/mm/yyyy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -43,7 +43,7 @@
                                             <div class="form-group row m-0 align-items-center">
                                                 <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
                                                 <div class="col-lg-12 pl-0 pr-2">
-                                                    <input type="date" class="form-control" name="credit_dates[]">
+                                                    <input class="form-control" name="credit_dates[]" placeholder="dd/mm/yyyy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -96,7 +96,7 @@
                                             <div class="form-group row m-0 align-items-center">
                                                 <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
                                                 <div class="col-lg-12 pl-0 pr-2">
-                                                    <input type="date" class="form-control" name="debit_dates[]">
+                                                    <input class="form-control" name="debit_dates[]" placeholder="dd/mm/yyyy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -175,7 +175,7 @@
                                         <div class="form-group row m-0 align-items-center">
                                             <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
                                             <div class="col-lg-12 pl-0 pr-2">
-                                                <input type="date" class="form-control" name="suspense_date">
+                                                <input class="form-control" name="suspense_date" placeholder="dd/mm/yyyy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -263,26 +263,11 @@
     </div>
     <!-- #/ container -->
 
-
-    <!--Update Product modal start-->
-
-    <div class="modal fade updateJournal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg saleParchaseWidth">
-            <div class="modal-content updateModalJournal">
-
-            </div>
-        </div>
-    </div>
-    <!--Update Product modal start-->
-
 @endsection
-
 
 @section('script')
 
 <script>
-
-
 
 const addNewRow=(elem, id, side , commonClass)=>{
     $(elem).parent().parent().find(id).append(`
@@ -292,7 +277,7 @@ const addNewRow=(elem, id, side , commonClass)=>{
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
-                                <input type="date" class="form-control" name="${side}dates[]">
+                                <input class="form-control" name="${side}dates[]" placeholder="dd/mm/yyyy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
                             </div>
                         </div>
                     </div>
@@ -339,9 +324,6 @@ const addNewRow=(elem, id, side , commonClass)=>{
         `);
 }
 
-
-
 </script>
-
 
 @endsection

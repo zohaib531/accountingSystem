@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Inventory | Sub account')
+@section('title','Sub Account')
 
 @section('style')
     <link href="{{asset('assets/template/plugins/tables/css/datatable/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
@@ -54,7 +54,7 @@
                                 <tr>
 
                                     <td>{{++$key}}</td>
-                                    <td>{{date('d-m-Y', strtotime($sub_account->date))}}</td>
+                                    <td>{{date('d/m/Y', strtotime($sub_account->date))}}</td>
                                     <td>{{$sub_account->get_account->title}}</td>
                                     <td>{{$sub_account->title}}</td>
                                     <td>{{ucwords($sub_account->transaction_type)}}</td>
@@ -134,7 +134,7 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label px-0" for="opening-date">Opening Date<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input type="date" class="form-control" id="opening-date" value="0" name="opening_date">
+                                <input class="form-control" id="opening-date" name="opening_date" placeholder="dd/mm/yyyy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
                             </div>
                         </div>
 
