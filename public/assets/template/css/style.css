@@ -7581,7 +7581,7 @@ sub {
   left: auto; }
 
 .nav-header {
-  height: 5rem;
+  height: 4rem;
   width: 15.1875rem;
   display: inline-block;
   text-align: left;
@@ -7674,7 +7674,7 @@ sub {
   display: block; }
 
 .header {
-  height: 5rem;
+  height: 4rem;
   z-index: 1;
   position: relative;
   padding: 0 0.9375rem;

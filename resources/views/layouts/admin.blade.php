@@ -237,9 +237,21 @@
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="mdi mdi-book-open-page-variant menu-icon"></i><span class="nav-text">Vouchers</span>
                         </a>
-                        
-
                         <ul aria-expanded="false">
+                            @can('')
+                            <li>
+                                <a href="{{ route('salePurchase.create')}}">Sale/Purchase Voucher</a>
+                            </li>
+                            @endcan
+
+                            @can('')
+                            <li>
+                                <a href="{{ route('journal.create') }}">Journal Voucher</a>
+                            </li>
+                            @endcan
+                        </ul>
+
+                        {{-- <ul aria-expanded="false">
                             <li>
                                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">List</a>
                                 <ul aria-expanded="false">
@@ -258,21 +270,9 @@
                             </li>
                             <li>
                                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">Create</a>
-                                <ul aria-expanded="false">
-                                    @can('')
-                                    <li>
-                                        <a href="{{ route('salePurchase.create')}}">Sale/Purchase Voucher</a>
-                                    </li>
-                                    @endcan
 
-                                    @can('')
-                                    <li>
-                                        <a href="{{ route('journal.create') }}">Journal Voucher</a>
-                                    </li>
-                                    @endcan
-                                </ul>
                             </li>
-                        </ul>
+                        </ul> --}}
                     </li>
 
 
@@ -288,7 +288,7 @@
                             <ul aria-expanded="false">
                                 @can('')
                                 <li>
-                                    <a href="{{route('partyAccount')}}">Party Account/Party Ledger</a>
+                                    <a href="{{route('partyAccount')}}">Party Account/Ledger</a>
                                 </li>
                                 @endcan
 
@@ -297,6 +297,19 @@
                                     <a href="{{route('aging_report')}}">Aging Report</a>
                                 </li>
                                 @endcan
+
+                                @can('')
+                                <li>
+                                    <a href="{{ route('salePurchase.index')}}">Sale/Purchase Voucher list</a>
+                                </li>
+                                @endcan
+
+                                @can('')
+                                <li>
+                                    <a href="{{ route('journal.index') }}">Journal Voucher list</a>
+                                </li>
+                                @endcan
+
                             </ul>
                         </li>
                     @endif
