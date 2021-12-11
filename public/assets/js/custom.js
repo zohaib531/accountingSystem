@@ -214,22 +214,16 @@ Date Code Start
 // setting current date code end
 
 
-// Update date code start
-$(document).ready(function() {
-    var today = $('#update-date').val();
-    let formatDate = today.split('-');
-    $('#update-date').val(formatDate[2]+' / '+formatDate[1]+' / '+formatDate[0]);
-})
-// Update date code end
+// // Update date code start
+// $(document).ready(function() {
+//     var today = $('#update-date').val();
+//     let formatDate = today.split('-');
+//     $('#update-date').val(formatDate[2]+' / '+formatDate[1]+' / '+formatDate[0]);
+// })
+// // Update date code end
 
 
-// Edit date code Start
-$(document).ready(function() {
-   var getInput = $('.editDate');
-   console.log(getInput);
-   date_reformat_dd(getInput.html())
-})
-// Edit date code end
+
 
 
 

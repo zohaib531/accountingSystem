@@ -37,6 +37,8 @@
                     $getBalanceAndTypeResponse = getBalanceAndType($openingBalance,$entryType,$detail->entry_type,$detail->$str);
                     $openingBalance = $getBalanceAndTypeResponse["balance"];
                     $entryType = $getBalanceAndTypeResponse["type"];
+                    $voucher = $detail->voucher->voucher_type;
+                    $voucherType = $voucher=="sale_purchase_voucher"? 'salePurchase.edit': 'journal.edit';
                 @endphp
                 <tr>
                     <td>{{date('d/m/Y',strtotime($detail->date))}}</td>
@@ -45,7 +47,11 @@
                     <td>{{ $detail->credit_amount!=0?number_format($detail->credit_amount):"" }}</td>
                     <td>{{ number_format($openingBalance) }}</td>
                     <td>{{$entryType}}</td>
-                    <td class="text-center"><button class="btn btn-info btn-sm">Update</button></td>
+                    <td class="text-center">
+                        <a href="{{route($voucherType,$detail->voucher_id)}}">
+                            <button class="btn btn-info btn-sm">Update</button>
+                        </a>
+                    </td>
                 </tr>
                 {{-- @if($loop->last)
                     @php

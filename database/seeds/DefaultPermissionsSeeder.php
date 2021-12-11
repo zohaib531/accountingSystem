@@ -44,18 +44,18 @@ class DefaultPermissionsSeeder extends Seeder
             $user = new User();
             $user->name = 'admin';
             $user->email = 'superadmin@gmail.com';
-            $user->password = Hash::make('asdfghjkl;') ;
+            $user->password = Hash::make('12345678') ;
             $user->save();
             $user->assignRole($admin);
 
             $user1 = new User();
             $user1->name = 'Test';
             $user1->email = 'user@gmail.com';
-            $user1->password = Hash::make('asdfghjkl;') ;
+            $user1->password = Hash::make('12345678') ;
             $user1->save();
             $user1->assignRole($u);
         }
-        
+
     }
 }
 

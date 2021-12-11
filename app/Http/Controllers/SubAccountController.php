@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Account;
 use App\SubAccount;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -65,7 +66,7 @@ class SubAccountController extends Controller
         $subAccounts = new SubAccount();
         $subAccounts->title = $request->title;
         $subAccounts->account_id = $request->account_id;
-        $subAccounts->date = $request->opening_date;
+        $subAccounts->date = Carbon::createFromFormat('d / m / Y', $request->opening_date)->format('Y-m-d');
         $subAccounts->transaction_type = $request->transaction_type;
         $subAccounts->opening_balance = $request->opening_balance;
         if($subAccounts->save()){
@@ -108,6 +109,7 @@ class SubAccountController extends Controller
      */
     public function update(Request $request, SubAccount $subAccount)
     {
+
         $validations = Validator::make($request->all(),[
             'title'=>'required || unique:sub_accounts,title,'.$subAccount->id,
             'account_id'=>'required',
@@ -116,7 +118,6 @@ class SubAccountController extends Controller
             'opening_balance'=>'required',
 
         ]);
-
         if($validations->fails())
         {
             return response()->json(['success' => false, 'message' => $validations->errors()]);
@@ -124,7 +125,7 @@ class SubAccountController extends Controller
 
         $subAccount->title = $request->title;
         $subAccount->account_id = $request->account_id;
-        $subAccount->date = $request->opening_date;
+        $subAccount->date = Carbon::createFromFormat('d/m/Y', $request->opening_date)->format('Y-m-d');
         $subAccount->transaction_type = $request->transaction_type;
         $subAccount->opening_balance = $request->opening_balance;
         if($subAccount->save()){
