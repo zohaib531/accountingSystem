@@ -32,10 +32,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 Route::post('uploadFile','ProductController@uploadAllFiles')->name('uploadFile');
 
 Route::middleware(['auth'])->group(function(){
+    Route::view('/home','admin.index')->name('dashboard');
     Route::view('/dashboard','admin.index')->name('dashboard');
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
