@@ -37,7 +37,7 @@
                         <input type="text" class="form-control" id="opening-balance" value="{{number_format($subAccount->opening_balance)}}" name="opening_balance" placeholder="Enter Opening Balance.." onchange="updateTextView(this)" onkeyup="updateTextView(this)"  maxlength="12" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                     </div>
                     <div class="col-6 pr-0">
-                        <select class="form-control searchableSelect" id="transaction-type" name="transaction_type">
+                        <select class="form-control" id="transaction-type" name="transaction_type">
                             <option value="" disabled>Select Debit/Credit</option>
                             <option value="debit" @if($subAccount->transaction_type=='debit') selected @endif >Debit</option>
                             <option value="credit" @if($subAccount->transaction_type=='credit') selected @endif>Credit</option>
@@ -63,3 +63,5 @@
    <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Close</button>
    <button type="button" class="btn btn-success text-white" onclick="commonFunction(false,'{{ route('sub-accounts.update',$subAccount->id) }}','{{route('sub-accounts.index')}}','post','','update-form');">Update</button>
 </div>
+
+
