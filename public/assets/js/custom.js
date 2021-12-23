@@ -280,14 +280,14 @@ searchable Select Code end
 Input coma seperated Code start
 ================*/
 
-function updateTextView(_obj){
-    var num = getNumber(_obj.val());
+function updateTextView(e){
+    var num = getNumber($(e).val());
     if(num==0){
-      _obj.val('');
+      $(e).val('');
     }else{
-      _obj.val(num.toLocaleString());
+      $(e).val(num.toLocaleString());
     }
-  }
+}
   function getNumber(_str){
     var arr = _str.split('');
     var out = new Array();
@@ -298,12 +298,6 @@ function updateTextView(_obj){
     }
     return Number(out.join(''));
   }
-  $(document).ready(function(){
-    $('.comaSeperated').on('keyup',function(){
-      updateTextView($(this));
-    });
-  });
-
 
 
 /*================

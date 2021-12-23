@@ -107,7 +107,7 @@
                                                         <div class="form-group row m-0 align-items-center">
                                                             <label></label>
                                                             <div class="col-lg-12 pl-0 pr-2 ">
-                                                                <input type="number" name="credit_amounts[]" class="form-control commonCredit" oninput="createAmount(this , false, false)"value="{{$detail->credit_amount}}">
+                                                                <input type="text" name="credit_amounts[]" class="form-control commonCredit" onchange="updateTextView(this)" onkeyup="updateTextView(this)" oninput="createAmount(this , false, false)"value="{{$detail->credit_amount}}">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -199,7 +199,7 @@
                                                         <div class="form-group row m-0 align-items-center">
                                                             <label></label>
                                                             <div class="col-lg-12 pl-0 pr-2 ">
-                                                                <input type="number" name="debit_amounts[]" class="form-control commonDebit" oninput="createAmount(this, false, false)" value="{{$detail->debit_amount}}">
+                                                                <input type="text" name="debit_amounts[]" class="form-control commonDebit" onchange="updateTextView(this)" onkeyup="updateTextView(this)" oninput="createAmount(this, false, false)" value="{{$detail->debit_amount}}">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -370,7 +370,7 @@
                             <div class="form-group row m-0 align-items-center">
                                 <label></label>
                                 <div class="col-lg-12 pl-0 pr-2 ">
-                                    <input type="number" name="${side}amounts[]" class="form-control ${commonClass}" oninput="createAmount(this , false, false)">
+                                    <input type="text" name="${side}amounts[]" class="form-control ${commonClass}" onchange="updateTextView(this)" onkeyup="updateTextView(this)" oninput="createAmount(this , false, false)">
                                 </div>
                             </div>
                         </div>
