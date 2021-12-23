@@ -260,6 +260,10 @@ $(document).ready(function() {
     $('.searchableSelect').select2({
         dropdownParent: $('.searchableSelect').parent()
     });
+
+    $('.updateSearchableSelect').select2({
+        dropdownParent: $('.updateSearchableSelect').parent()
+    });
 });
 
 
