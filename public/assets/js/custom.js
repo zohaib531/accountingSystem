@@ -190,11 +190,7 @@ function editResource(targetUrl,targetTag) {
         url: targetUrl,
         success: function(data) {
             $(targetTag).html(data);
-
-            $('.searchableSelect').select2({
-                dropdownParent: $('.searchableSelect').parent()
-            });
-
+            $('.updateSearchableSelect').select2({dropdownParent: $('.updateSearchableSelect').parent()});
         }
     });
 

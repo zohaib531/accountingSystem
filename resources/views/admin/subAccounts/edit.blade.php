@@ -12,7 +12,7 @@
             <label class="col-lg-3 col-form-label" for="val-account">Select Account <span class="text-danger">*</span>
             </label>
             <div class="col-lg-9">
-                <select class="form-control" id="val-account" name="account_id">
+                <select class="form-control updateSearchableSelect" id="val-account" name="account_id">
                     <option value="" disabled>Please select</option>
                     @foreach ($accounts as $account)
                         <option value="{{$account->id}}" {{$subAccount->account_id==$account->id?'selected':''}}>{{$account->title}}</option>

@@ -83,7 +83,7 @@
                                                         <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                             <div class="col-lg-12 pl-0 pr-2">
-                                                                <select name="credit_accounts[]" class="form-control">
+                                                                <select name="credit_accounts[]" class="form-control updateSearchableSelect">
                                                                     <option selected value="">Sub account</option>
                                                                     @foreach ($subAccounts as $subAccount)
                                                                         <option @if($subAccount->id==$detail->sub_account_id) selected @endif value="{{$subAccount->id}}">{{$subAccount->title}}</option>
@@ -176,7 +176,7 @@
                                                         <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                             <div class="col-lg-12 pl-0 pr-2">
-                                                                <select name="debit_accounts[]" class="form-control">
+                                                                <select name="debit_accounts[]" class="form-control updateSearchableSelect">
                                                                     <option selected value="">Sub account</option>
                                                                     @foreach ($subAccounts as $subAccount)
                                                                         <option @if($subAccount->id==$detail->sub_account_id) selected @endif value="{{$subAccount->id}}">{{$subAccount->title}}</option>
@@ -267,7 +267,7 @@
                                             <div class="form-group row m-0 align-items-center">
                                                 <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                                 <div class="col-lg-12 pl-0 pr-2">
-                                                    <select name="suspense_account" class="form-control">
+                                                    <select name="suspense_account" class="form-control updateSearchableSelect">
                                                         <option selected value="">Sub account</option>
                                                         @foreach ($subAccounts as $subAccount)
                                                             <option @if($suspenseEntry !=null && $subAccount->id==$suspenseEntry->sub_account_id) selected @endif value="{{$subAccount->id}}">{{$subAccount->title}}</option>
@@ -346,7 +346,7 @@
                             <div class="form-group row m-0 align-items-center">
                                 <label></label>
                                 <div class="col-lg-12 pl-0 pr-2">
-                                    <select name="${side}accounts[]" class="form-control">
+                                    <select name="${side}accounts[]" class="form-control updateSearchableSelect">
                                         <option selected value="">Sub account</option>
                                         @foreach ($subAccounts as $subAccount)
                                             <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>

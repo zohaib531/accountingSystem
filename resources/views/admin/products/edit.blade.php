@@ -23,7 +23,7 @@
                  <div class="form-group row">
                      <label class="col-lg-3 col-form-label px-0 text-right" for="product-unit-edit">Unit<span class="text-danger">*</span></label>
                      <div class="col-lg-9 pr-0 editSelect2Div">
-                        <select class="form-control searchableSelect" id="product-unit-edit" name="product_unit" onchange="getUniqueProduct('#product-title-edit', '#product-naration-edit', '#product-unit-edit' , '#productUniqueEdit')">
+                        <select class="form-control updateSearchableSelect" id="product-unit-edit" name="product_unit" onchange="getUniqueProduct('#product-title-edit', '#product-naration-edit', '#product-unit-edit' , '#productUniqueEdit')">
                             <option value="" disabled>Select Product unit</option>
                             <option value="meter" @if($product->product_unit=='meter') selected @endif>Meter</option>
                             <option value="bags" @if($product->product_unit=='bags') selected @endif>Bags</option>
