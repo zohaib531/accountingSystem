@@ -34,7 +34,7 @@
             <div class="col-lg-9">
                 <div class="row m-0">
                     <div class="col-6 pl-0">
-                        <input type="text" class="form-control comaSeperated" id="opening-balance" value="{{number_format($subAccount->opening_balance)}}" name="opening_balance" placeholder="Enter Opening Balance.."  maxlength="12" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                        <input type="text" class="form-control" id="opening-balance" value="{{number_format($subAccount->opening_balance)}}" name="opening_balance" placeholder="Enter Opening Balance.." onchange="updateTextView(this)" onkeyup="updateTextView(this)"  maxlength="12" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                     </div>
                     <div class="col-6 pr-0">
                         <select class="form-control searchableSelect" id="transaction-type" name="transaction_type">
@@ -50,7 +50,7 @@
         <div class="form-group row">
             <label class="col-lg-3 col-form-label" for="opening-date">Opening Date<span class="text-danger">*</span></label>
             <div class="col-lg-9">
-                <input class="form-control" id="opening-date" value="{{\Carbon\Carbon::createFromFormat('Y-m-d', $subAccount->date)->format('d / m / Y')}}" name="opening_date" placeholder="dd/mm/yyyy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                <input class="form-control" id="opening-date" value="{{\Carbon\Carbon::createFromFormat('Y-m-d', $subAccount->date)->format('d / m / Y')}}" name="opening_date" placeholder="dd/mm/yyyy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);"  autocomplete="off" type="text">
             </div>
         </div>
 

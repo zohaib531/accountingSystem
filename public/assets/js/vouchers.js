@@ -57,6 +57,7 @@ const getTotalOfTargetSide=(targetClass)=>{
     let total = 0;
     let allAmount = document.getElementsByClassName(targetClass);
     for(let single of allAmount){
+        console.log(single);
         total += +single.value;
     }
     return total;
@@ -64,6 +65,7 @@ const getTotalOfTargetSide=(targetClass)=>{
 
 
 const createAmount = (e, action, voucherType)=>{
+
     if (voucherType) {
         if (action) {
             if($(e).parent().parent().parent().next('div').children('div').children('div').children('input').val() >= 0){

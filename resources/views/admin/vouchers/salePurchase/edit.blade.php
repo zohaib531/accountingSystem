@@ -126,7 +126,7 @@
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2">
-                                                                    <input type="number" name="credit_quantities[]"  class="form-control" oninput="createAmount(this , true, true)" value="{{$detail->quantity}}">
+                                                                    <input type="text" name="credit_quantities[]"  class="form-control" onchange="updateTextView(this)" onkeyup="updateTextView(this)" oninput="createAmount(this , true, true)" value="{{$detail->quantity}}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -135,7 +135,7 @@
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2 ">
-                                                                    <input type="number" name="credit_rates[]"  class="form-control" oninput="createAmount(this , false, true)" value="{{$detail->rate}}">
+                                                                    <input type="text" name="credit_rates[]"  class="form-control" onchange="updateTextView(this)" onkeyup="updateTextView(this)" oninput="createAmount(this , false, true)" value="{{$detail->rate}}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -252,7 +252,7 @@
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2">
-                                                                    <input type="number" name="debit_quantities[]"  class="form-control" oninput="createAmount(this , true, true)" value="{{$detail->quantity}}">
+                                                                    <input type="text" name="debit_quantities[]"  class="form-control" onchange="updateTextView(this)" onkeyup="updateTextView(this)" oninput="createAmount(this , true, true)" value="{{$detail->quantity}}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -261,7 +261,7 @@
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2 ">
-                                                                    <input type="number" name="debit_rates[]"  class="form-control" oninput="createAmount(this , false, true)" value="{{$detail->rate}}">
+                                                                    <input type="text" name="debit_rates[]"  class="form-control" onchange="updateTextView(this)" onkeyup="updateTextView(this)" oninput="createAmount(this , false, true)" value="{{$detail->rate}}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -450,7 +450,7 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
-                                <input type="number" name="${side}quantities[]"  class="form-control" oninput="createAmount(this , true, true)">
+                                <input type="text" name="${side}quantities[]" onchange="updateTextView(this)" onkeyup="updateTextView(this)" class="form-control" oninput="createAmount(this , true, true)">
                             </div>
                         </div>
                     </div>
@@ -459,7 +459,7 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2 ">
-                                <input type="number" name="${side}rates[]"  class="form-control" oninput="createAmount(this , false, true)">
+                                <input type="text" name="${side}rates[]" onchange="updateTextView(this)" onkeyup="updateTextView(this)" class="form-control" oninput="createAmount(this , false, true)">
                             </div>
                         </div>
                     </div>

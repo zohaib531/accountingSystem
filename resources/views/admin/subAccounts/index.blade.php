@@ -118,7 +118,7 @@
                             <div class="col-lg-9">
                                 <div class="row m-0">
                                     <div class="col-6 pl-0">
-                                        <input type="text" class="form-control comaSeperated" id="opening-balance" value="0" name="opening_balance" placeholder="Enter Opening Balance.." maxlength="12" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                        <input type="text" class="form-control" id="opening-balance" value="0" name="opening_balance" placeholder="Enter Opening Balance.." onchange="updateTextView(this)" onkeyup="updateTextView(this)" maxlength="12" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                                     </div>
                                     <div class="col-6 pr-0">
                                         <select class="form-control" id="transaction-type" name="transaction_type">
