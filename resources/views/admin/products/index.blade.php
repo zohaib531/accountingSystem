@@ -82,30 +82,38 @@
                <div class="form-validation my-5">
                    <form class="form-valide" id="create-form">
                        <input type="hidden" name="unique_product" id="productUniqueAdd">
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label px-0" for="product-title">Product Name<span class="text-danger">*</span></label>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control" id="product-title" name="title" placeholder="Enter Product Name.." oninput="getUniqueProduct('#product-title', '#product-naration', '#product-unit' , '#productUniqueAdd')">
-                            </div>
-                        </div>
+
+                       <div class="row m-0">
+                           <div class="col-7 px-0">
+                               <div class="form-group row">
+                                   <label class="col-lg-5 col-form-label px-0" for="product-title">Product Name<span class="text-danger">*</span></label>
+                                   <div class="col-lg-7 pr-0" style="padding-left: 1.3rem !important;">
+                                       <input type="text" class="form-control" id="product-title" name="title" placeholder="Enter Product Name.." oninput="getUniqueProduct('#product-title', '#product-naration', '#product-unit' , '#productUniqueAdd')">
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-5 pl-0">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label px-0 text-right" for="product-unit">Unit<span class="text-danger">*</span></label>
+                                    <div class="col-lg-9 pr-0">
+                                        <select class="form-control searchableSelect" id="product-unit" name="product_unit" onchange="getUniqueProduct('#product-title', '#product-naration', '#product-unit', '#productUniqueAdd')">
+                                            <option value="" disabled selected>Select Product unit</option>
+                                            <option value="meter">Meter</option>
+                                            <option value="bags">Bags</option>
+                                            <option value="kgs">Kgs</option>
+                                            <option value="pounds">Pounds</option>
+                                        </select>
+                                    </div>
+                                </div>
+                           </div>
+                       </div>
+
+
 
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label px-0" for="product-naration">Narration<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <input type="text" class="form-control" id="product-naration" name="narration" placeholder="Enter Narration.." oninput="getUniqueProduct('#product-title', '#product-naration', '#product-unit', '#productUniqueAdd')">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label px-0" for="product-unit">Unit<span class="text-danger">*</span></label>
-                            <div class="col-lg-9">
-                                <select class="form-control" id="product-unit" name="product_unit" onchange="getUniqueProduct('#product-title', '#product-naration', '#product-unit', '#productUniqueAdd')">
-                                    <option value="" disabled selected>Select Product unit</option>
-                                    <option value="meter">Meter</option>
-                                    <option value="bags">Bags</option>
-                                    <option value="kgs">Kgs</option>
-                                    <option value="pounds">Pounds</option>
-                                </select>
                             </div>
                         </div>
 

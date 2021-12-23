@@ -49,8 +49,15 @@
     margin: 0px !important;
 }
 
+input[type="search"],select[name="DataTables_Table_0_length"]{
+    border: 1px solid #e3dfdf !important;
+    height: 32px !important;
+    min-height: 32px !important;
+}
 
-/* 
+
+
+/*
 input[type="date"]{position: relative; width: 100%;color: white;}
 input[type="date"]:before{ content: attr(data-date); display: inline-block; color: black;}
 input[type="date"]::-webkit-datetime-edit,

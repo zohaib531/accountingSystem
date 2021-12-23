@@ -125,7 +125,7 @@ class SubAccountController extends Controller
 
         $subAccount->title = $request->title;
         $subAccount->account_id = $request->account_id;
-        $subAccount->date = Carbon::createFromFormat('d/m/Y', $request->opening_date)->format('Y-m-d');
+        $subAccount->date = Carbon::createFromFormat('d / m / Y', $request->opening_date)->format('Y-m-d');
         $subAccount->transaction_type = $request->transaction_type;
         $subAccount->opening_balance = $request->opening_balance;
         if($subAccount->save()){

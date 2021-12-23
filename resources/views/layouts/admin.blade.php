@@ -14,6 +14,7 @@
     <link href="{{asset('assets/template/plugins/tables/css/datatable/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
     <!-- Custom Stylesheet -->
     <link href="{{ asset('assets/template/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/template/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
 
     <style>
         .select2-container {
@@ -367,6 +368,7 @@
     <!-- Select2 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="{{ asset('assets/js/vouchers.js') }}"></script>
+    <script src="{{ asset('assets/template/plugins/select2/js/select2.full.min.js') }}"></script>
 
     @yield('script')
     <script>$(".select_2").select2({allowClear: true});</script>
@@ -377,6 +379,9 @@
     <script src="{{asset('assets/template/plugins/tables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('assets/template/plugins/tables/js/datatable/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{asset('assets/template/plugins/tables/js/datatable-init/datatable-basic.min.js')}}"></script>
+
+
+    
 </body>
 
 </html>

@@ -62,8 +62,28 @@
             @endforeach
 
         @else
+
+            @php
+                // $endDate =  $_POST['end_date'];
+                // $accound_id = $_POST['sub_account'];
+                $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, $endDate  , false , 0);
+                $openingBalance = $getOpeningBalanceResponse["opening_balance"];
+                $entryType = $getOpeningBalanceResponse["opening_balance_type"];
+            @endphp
+
+
             <tr>
-                <td colspan="6" class="text-center">No records found</td>
+                <td>{{ Carbon\Carbon::createFromFormat('Y-m-d', $endDate)->format('d / m / Y') }}</td>
+                {{-- <td>{{date('d/m/Y',strtotime($endDate))}}</td> --}}
+                <td>Opening Balance</td>
+                <td colspan="2"></td>
+                <td>{{ number_format($openingBalance) }}</td>
+                <td>{{ $entryType }}</td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td colspan="7" class="text-center">No records found</td>
             </tr>
         @endif
     </tbody>

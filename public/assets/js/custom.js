@@ -66,6 +66,7 @@ function commonFunction(confirmation=false,targetUrl,returnUrl,method,msg='',for
             },
         });
     }
+
 }
 
 function commonFunctionForAllRequest(html=false,confirmation=false,targetElement='',targetUrl,returnUrl='',method,msg='',formID=''){
@@ -189,8 +190,14 @@ function editResource(targetUrl,targetTag) {
         url: targetUrl,
         success: function(data) {
             $(targetTag).html(data);
+
+            $('.searchableSelect').select2({
+                dropdownParent: $('.searchableSelect').parent()
+            });
+
         }
     });
+
 }
 
 
@@ -212,19 +219,6 @@ Date Code Start
     $('#val-date').val(formatDate[2]+' / '+formatDate[1]+' / '+formatDate[0]);
 })
 // setting current date code end
-
-
-// // Update date code start
-// $(document).ready(function() {
-//     var today = $('#update-date').val();
-//     let formatDate = today.split('-');
-//     $('#update-date').val(formatDate[2]+' / '+formatDate[1]+' / '+formatDate[0]);
-// })
-// // Update date code end
-
-
-
-
 
 
 function checkValue(str, max) {
@@ -258,3 +252,24 @@ date.addEventListener('input', function(e) {
 /*================
 Date Code end
 ================*/
+
+
+
+
+/*================
+searchable Select Code start
+================*/
+
+$(document).ready(function() {
+    $('.searchableSelect').select2({
+        dropdownParent: $('.searchableSelect').parent()
+    });
+});
+
+
+
+
+/*================
+searchable Select Code end
+================*/
+

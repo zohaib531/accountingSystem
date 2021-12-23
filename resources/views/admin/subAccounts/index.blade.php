@@ -98,7 +98,7 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label px-0" for="val-account">General Accounts<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <select class="form-control" id="val-account" name="account_id">
+                                <select class="form-control searchableSelect" id="val-account" name="account_id">
                                     <option value="" disabled selected>Select General Accounts</option>
                                     @foreach ($accounts as $account)
                                         <option value="{{str_pad($account->code, 2, '0', STR_PAD_LEFT)}}">{{$account->title}}</option>

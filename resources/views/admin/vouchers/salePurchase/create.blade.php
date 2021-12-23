@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Sale/Purchase Voucher List')
+@section('title','Add Sale/Purchase Voucher')
 
 
 @section('content')

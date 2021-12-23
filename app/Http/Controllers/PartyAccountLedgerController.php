@@ -25,6 +25,7 @@ class PartyAccountLedgerController extends Controller
         $totalDebit = VoucherDetail::where('sub_account_id',$request->sub_account)->whereBetween('date',[Carbon::createFromFormat('d / m / Y', $request->start_date)->format('Y-m-d'), Carbon::createFromFormat('d / m / Y', $request->end_date)->format('Y-m-d')])->sum('debit_amount');
         $totalCredit = VoucherDetail::where('sub_account_id',$request->sub_account)->whereBetween('date',[Carbon::createFromFormat('d / m / Y', $request->start_date)->format('Y-m-d'), Carbon::createFromFormat('d / m / Y', $request->end_date)->format('Y-m-d')])->sum('credit_amount');
         $subAccount = SubAccount::where('id', $request->sub_account)->first();
-        return response()->json(['success' => true, 'html' => view('admin.reports.partyAccountLedger.get_data',compact('vouchers','totalDebit','totalCredit','subAccount'))->render()]);
+        $endDate = Carbon::createFromFormat('d / m / Y', $request->end_date)->format('Y-m-d');
+        return response()->json(['success' => true, 'html' => view('admin.reports.partyAccountLedger.get_data',compact('vouchers','totalDebit','totalCredit','subAccount','endDate'))->render()]);
     }
 }

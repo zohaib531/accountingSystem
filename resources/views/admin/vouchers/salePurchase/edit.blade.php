@@ -15,7 +15,7 @@
      </div>
      <!-- row --> --}}
 
-     
+
      <div class="container-fluid">
          <div class="row">
              <div class="col-12">
@@ -114,7 +114,7 @@
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2">
                                                                     <select name="credit_products[]" class="form-control">
-                                                                        <option selected value="">Product</option>
+                                                                        <option value="">Product</option>
                                                                         @foreach ($products as $product)
                                                                             <option @if($detail->product_narration==$product->title." - ".$product->narration." - ".$product->product_unit) selected @endif value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
                                                                         @endforeach
