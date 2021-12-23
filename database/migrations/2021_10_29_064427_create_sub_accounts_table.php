@@ -19,7 +19,7 @@ class CreateSubAccountsTable extends Migration
             $table->unsignedInteger('account_id');
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
             $table->string('title');
-            $table->integer('opening_balance');
+            $table->string('opening_balance');
             $table->softDeletes();
             $table->timestamps();
         });

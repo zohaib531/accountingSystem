@@ -68,7 +68,7 @@ class SubAccountController extends Controller
         $subAccounts->account_id = $request->account_id;
         $subAccounts->date = Carbon::createFromFormat('d / m / Y', $request->opening_date)->format('Y-m-d');
         $subAccounts->transaction_type = $request->transaction_type;
-        $subAccounts->opening_balance = $request->opening_balance;
+        $subAccounts->opening_balance = str_replace(',','',$request->opening_balance);
         if($subAccounts->save()){
             $subAccounts->code =  $subAccounts->id;
             $subAccounts->save();
@@ -127,7 +127,7 @@ class SubAccountController extends Controller
         $subAccount->account_id = $request->account_id;
         $subAccount->date = Carbon::createFromFormat('d / m / Y', $request->opening_date)->format('Y-m-d');
         $subAccount->transaction_type = $request->transaction_type;
-        $subAccount->opening_balance = $request->opening_balance;
+        $subAccount->opening_balance = str_replace(',','',$request->opening_balance);
         if($subAccount->save()){
 
             return response()->json(['success' => true, 'message' =>'Sub Accounts has been updated successfully']);
