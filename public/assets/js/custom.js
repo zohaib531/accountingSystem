@@ -261,9 +261,9 @@ $(document).ready(function() {
         dropdownParent: $('.searchableSelect').parent()
     });
 
-    $('.updateSearchableSelect').select2({
-        dropdownParent: $('.updateSearchableSelect').parent()
-    });
+    // $('.updateSearchableSelect').select2({
+    //     dropdownParent: $('.updateSearchableSelect').parent()
+    // });
 });
 
 
