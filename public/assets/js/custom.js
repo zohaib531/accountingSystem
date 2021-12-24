@@ -260,12 +260,13 @@ $(document).ready(function() {
     $('.searchableSelect').select2({
         dropdownParent: $('.searchableSelect').parent()
     });
-
-    // $('.updateSearchableSelect').select2({
-    //     dropdownParent: $('.updateSearchableSelect').parent()
-    // });
 });
 
+function initializeSelect2() {
+    $('.searchableSelect').select2({
+        dropdownParent: $('.searchableSelect').parent()
+    });
+};
 
 
 

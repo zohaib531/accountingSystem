@@ -30,7 +30,7 @@
                         </div>
                         @can('create-sub-account')
                             <div class="col-6 text-right">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addsubaccount">Add new +</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addsubaccount" onclick="initializeSelect2()">Add new +</button>
                             </div>
                         @endcan
                     </div>

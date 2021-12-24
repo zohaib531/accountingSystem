@@ -57,8 +57,8 @@
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2">
-                                                 <select name="credit_accounts[]" class="form-control">
-                                                     <option selected value="">Sub account</option>
+                                                 <select name="credit_accounts[]" class="form-control searchableSelectCredit">
+                                                     <option selected disabled value="">Sub account</option>
                                                      @foreach ($subAccounts as $subAccount)
                                                          <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                                      @endforeach
@@ -71,8 +71,8 @@
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Product<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2">
-                                                 <select name="credit_products[]" class="form-control">
-                                                     <option selected value="">Product</option>
+                                                 <select name="credit_products[]" class="form-control searchableSelectCreditProduct">
+                                                     <option selected disabled value="">Product</option>
                                                      @foreach ($products as $product)
                                                          <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
                                                      @endforeach
@@ -135,8 +135,8 @@
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2">
-                                                 <select name="debit_accounts[]" class="form-control">
-                                                     <option selected value="">Sub account</option>
+                                                 <select name="debit_accounts[]" class="form-control searchableSelectDebit">
+                                                     <option selected disabled value="">Sub account</option>
                                                      @foreach ($subAccounts as $subAccount)
                                                          <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                                      @endforeach
@@ -149,8 +149,8 @@
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Product<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2">
-                                                 <select name="debit_products[]" class="form-control">
-                                                     <option selected value="">Product</option>
+                                                 <select name="debit_products[]" class="form-control searchableSelectDebitProduct">
+                                                     <option selected disabled value="">Product</option>
                                                      @foreach ($products as $product)
                                                          <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
                                                      @endforeach
@@ -237,8 +237,8 @@
                                      <div class="form-group row m-0 align-items-center">
                                          <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                          <div class="col-lg-12 pl-0 pr-2">
-                                             <select name="suspense_account" class="form-control">
-                                                 <option selected value="">Sub account</option>
+                                             <select name="suspense_account" class="form-control searchableSelectSuspense">
+                                                 <option selected disabled value="">Sub account</option>
                                                  @foreach ($subAccounts as $subAccount)
                                                      <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                                  @endforeach
@@ -325,8 +325,11 @@
 @section('script')
 
 <script>
-
+    let count = 0;
     const addNewRow=(elem, id, side , commonClass)=>{
+
+        count++;
+
         $(elem).parent().parent().find(id).append(`
             <div class="row mt-2 mx-0 justify-content-between position-relative w-100">
                 <div class="col-2 px-0">
@@ -342,8 +345,8 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
-                                <select name="${side}accounts[]" class="form-control">
-                                    <option selected value="">Sub account</option>
+                                <select name="${side}accounts[]" class="form-control searchableSelect${side}${count}">
+                                    <option selected disabled value="">Sub account</option>
                                     @foreach ($subAccounts as $subAccount)
                                         <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                     @endforeach
@@ -356,8 +359,8 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
-                                <select name="${side}products[]" class="form-control">
-                                    <option selected value="">Product</option>
+                                <select name="${side}products[]" class="form-control searchableSelect${side}Product${count}">
+                                    <option selected disabled value="">Product</option>
                                     @foreach ($products as $product)
                                         <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
                                     @endforeach
@@ -402,9 +405,25 @@
             </div>
 
         `);
+        // Initialize select2 in add more
+        $(`.searchableSelect${side}${count}`).select2({ dropdownParent: $(`.searchableSelect${side}${count}`).parent() });
+        $(`.searchableSelect${side}Product${count}`).select2({ dropdownParent: $(`.searchableSelect${side}Product${count}`).parent() });
+        // Initialize select2 in add more
+
     }
 
 
+
+
+    $(document).ready(function() {
+
+        $('.searchableSelectCredit').select2({ dropdownParent: $('.searchableSelectCredit').parent() });
+        $('.searchableSelectCreditProduct').select2({ dropdownParent: $('.searchableSelectCreditProduct').parent() });
+        $('.searchableSelectDebit').select2({ dropdownParent: $('.searchableSelectDebit').parent() });
+        $('.searchableSelectDebitProduct').select2({ dropdownParent: $('.searchableSelectDebitProduct').parent() });
+        $('.searchableSelectSuspense').select2({ dropdownParent: $('.searchableSelectSuspense').parent() });
+
+    });
 </script>
 
 @endsection

@@ -29,7 +29,7 @@
                             <h4 class="card-title">All Products</h4>
                         </div>
                         <div class="col-6 text-right">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addProduct">Add new +</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addProduct" onclick="initializeSelect2()">Add new +</button>
                         </div>
                     </div>
                     <div class="table-responsive">

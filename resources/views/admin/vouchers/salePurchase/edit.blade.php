@@ -3,6 +3,8 @@
 
 @section('content')
 
+<script src="{{ asset('assets/template/plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/template/plugins/select2/js/select2.full.min.js') }}"></script>
 
 
      {{-- <div class="row page-titles mx-0">
@@ -51,31 +53,31 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-2 px-0">
+                                                <div class="col-3 px-0">
                                                     <div class="form-group row m-0 align-items-center">
                                                         <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-2 px-0">
+                                                <div class="col-4 px-0">
                                                     <div class="form-group row m-0 align-items-center">
                                                         <label class="col-lg-12 col-form-label px-0">Product<span class="text-danger">*</span></label>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-2 px-0">
+                                                <div class="col-1 px-0">
                                                     <div class="form-group row m-0 align-items-center">
                                                         <label class="col-lg-12 col-form-label px-0">Quantity<span class="text-danger">*</span></label>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-2 px-0">
+                                                <div class="col-1 px-0">
                                                     <div class="form-group row m-0 align-items-center">
                                                         <label class="col-lg-12 col-form-label px-0">Rate<span class="text-danger">*</span></label>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-2 px-0">
+                                                <div class="col-1 px-0">
                                                     <div class="form-group row m-0 align-items-center">
                                                         <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
                                                     </div>
@@ -95,12 +97,12 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-2 px-0">
+                                                        <div class="col-3 px-0">
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2">
-                                                                    <select name="credit_accounts[]" class="form-control updateSearchableSelect">
-                                                                        <option selected value="">Sub account</option>
+                                                                    <select name="credit_accounts[]" class="form-control updateSearchableSelectCredit{{$detail->id}}">
+                                                                        <option disabled value="">Sub account</option>
                                                                         @foreach ($subAccounts as $subAccount)
                                                                             <option @if($subAccount->id==$detail->sub_account_id) selected @endif value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                                                         @endforeach
@@ -109,12 +111,12 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-2 px-0">
+                                                        <div class="col-4 px-0">
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2">
-                                                                    <select name="credit_products[]" class="form-control updateSearchableSelect">
-                                                                        <option value="">Product</option>
+                                                                    <select name="credit_products[]" class="form-control updateSearchableSelectCreditProduct{{$detail->id}}">
+                                                                        <option disabled value="">Product</option>
                                                                         @foreach ($products as $product)
                                                                             <option @if($detail->product_narration==$product->title." - ".$product->narration." - ".$product->product_unit) selected @endif value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
                                                                         @endforeach
@@ -122,7 +124,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-2 px-0">
+                                                        <div class="col-1 px-0">
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2">
@@ -131,7 +133,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-2 px-0">
+                                                        <div class="col-1 px-0">
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2 ">
@@ -140,7 +142,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-2 px-0">
+                                                        <div class="col-1 px-0">
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2 ">
@@ -155,6 +157,11 @@
                                                             </div>
                                                         @endif --}}
                                                     </div>
+
+                                                    <script>
+                                                        $('.updateSearchableSelectCredit{{ $detail->id }}').select2({ dropdownParent: $('.updateSearchableSelectCredit{{ $detail->id }}').parent() });
+                                                        $('.updateSearchableSelectCreditProduct{{ $detail->id }}').select2({ dropdownParent: $('.updateSearchableSelectCreditProduct{{ $detail->id }}').parent() });
+                                                    </script>
 
                                                 @endforeach
                                             @endif
@@ -177,31 +184,31 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-2 px-0">
+                                                <div class="col-3 px-0">
                                                     <div class="form-group row m-0 align-items-center">
                                                         <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-2 px-0">
+                                                <div class="col-4 px-0">
                                                     <div class="form-group row m-0 align-items-center">
                                                         <label class="col-lg-12 col-form-label px-0">Product<span class="text-danger">*</span></label>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-2 px-0">
+                                                <div class="col-1 px-0">
                                                     <div class="form-group row m-0 align-items-center">
                                                         <label class="col-lg-12 col-form-label px-0">Quantity<span class="text-danger">*</span></label>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-2 px-0">
+                                                <div class="col-1 px-0">
                                                     <div class="form-group row m-0 align-items-center">
                                                         <label class="col-lg-12 col-form-label px-0">Rate<span class="text-danger">*</span></label>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-2 px-0">
+                                                <div class="col-1 px-0">
                                                     <div class="form-group row m-0 align-items-center">
                                                         <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
                                                     </div>
@@ -221,12 +228,12 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-2 px-0">
+                                                        <div class="col-3 px-0">
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2">
-                                                                    <select name="debit_accounts[]" class="form-control updateSearchableSelect">
-                                                                        <option selected value="">Sub account</option>
+                                                                    <select name="debit_accounts[]" class="form-control updateSearchableSelectDebit{{ $detail->id }}">
+                                                                        <option disabled value="">Sub account</option>
                                                                         @foreach ($subAccounts as $subAccount)
                                                                             <option @if($subAccount->id==$detail->sub_account_id) selected @endif value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                                                         @endforeach
@@ -235,12 +242,12 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-2 px-0">
+                                                        <div class="col-4 px-0">
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2">
-                                                                    <select name="debit_products[]" class="form-control updateSearchableSelect">
-                                                                        <option selected value="">Product</option>
+                                                                    <select name="debit_products[]" class="form-control updateSearchableSelectDebitProduct{{ $detail->id }}">
+                                                                        <option disabled value="">Product</option>
                                                                         @foreach ($products as $product)
                                                                             <option @if($detail->product_narration==$product->title." - ".$product->narration." - ".$product->product_unit) selected @endif value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
                                                                         @endforeach
@@ -248,7 +255,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-2 px-0">
+
+                                                        <div class="col-1 px-0">
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2">
@@ -257,7 +265,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-2 px-0">
+                                                        <div class="col-1 px-0">
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2 ">
@@ -266,7 +274,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-2 px-0">
+                                                        <div class="col-1 px-0">
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2 ">
@@ -283,6 +291,10 @@
 
                                                     </div>
 
+                                                    <script>
+                                                        $('.updateSearchableSelectDebit{{ $detail->id }}').select2({ dropdownParent: $('.updateSearchableSelectDebit{{ $detail->id }}').parent() });
+                                                        $('.updateSearchableSelectDebitProduct{{ $detail->id }}').select2({ dropdownParent: $('.updateSearchableSelectDebitProduct{{ $detail->id }}').parent() });
+                                                    </script>
                                                 @endforeach
                                             @endif
 
@@ -338,8 +350,8 @@
                                                 <div class="form-group row m-0 align-items-center">
                                                     <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                                     <div class="col-lg-12 pl-0 pr-2">
-                                                        <select name="suspense_account" class="form-control updateSearchableSelect">
-                                                            <option selected value="">Sub account</option>
+                                                        <select name="suspense_account" class="form-control updateSearchableSelectSuspense">
+                                                            <option disabled value="">Sub account</option>
                                                             @foreach ($subAccounts as $subAccount)
                                                                 <option @if($suspenseEntry !=null && $subAccount->id==$suspenseEntry->sub_account_id) selected @endif value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                                             @endforeach
@@ -421,7 +433,7 @@
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
                                 <select name="${side}accounts[]" class="form-control updateSearchableSelect">
-                                    <option selected value="">Sub account</option>
+                                    <option disabled value="">Sub account</option>
                                     @foreach ($subAccounts as $subAccount)
                                         <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                     @endforeach
@@ -435,7 +447,7 @@
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
                                 <select name="${side}products[]" class="form-control updateSearchableSelect">
-                                    <option selected value="">Product</option>
+                                    <option disabled value="">Product</option>
                                     @foreach ($products as $product)
                                         <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
                                     @endforeach
@@ -483,6 +495,14 @@
     }
 
 
+
+    $(document).ready(function() {
+
+        $('.updateSearchableSelectCredit').select2({ dropdownParent: $('.updateSearchableSelectCredit').parent() });
+        $('.updateSearchableSelectCreditProduct').select2({ dropdownParent: $('.updateSearchableSelectCreditProduct').parent() });
+        $('.updateSearchableSelectSuspense').select2({ dropdownParent: $('.updateSearchableSelectSuspense').parent() });
+
+    });
 
 </script>
 

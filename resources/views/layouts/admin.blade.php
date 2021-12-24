@@ -363,15 +363,15 @@
     <script src="{{ asset('assets/template/js/gleek.js') }}"></script>
     <script src="{{ asset('assets/template/plugins/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ asset('assets/js/protectCode.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+    <script src="{{ asset('assets/template/plugins/jquery/jquery.min.js') }}"></script>
+    {{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script> --}}
     <!-- Select2 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script> --}}
     <script src="{{ asset('assets/js/vouchers.js') }}"></script>
     <script src="{{ asset('assets/template/plugins/select2/js/select2.full.min.js') }}"></script>
 
     @yield('script')
-    <script>$(".select_2").select2({allowClear: true});</script>
+    {{-- <script>$(".select_2").select2({allowClear: true});</script> --}}
     <script src="{{ asset('assets/js/custom.js') }}"></script>
 
 
@@ -381,7 +381,7 @@
     <script src="{{asset('assets/template/plugins/tables/js/datatable-init/datatable-basic.min.js')}}"></script>
 
 
-    
+
 </body>
 
 </html>
