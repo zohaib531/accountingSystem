@@ -75,7 +75,7 @@
                                             <div class="form-group row m-0 align-items-center">
                                                 <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
                                                 <div class="col-lg-12 pl-0 pr-2 ">
-                                                    <input type="text" name="credit_amounts[]" class="form-control commonCredit" onchange="updateTextView(this)" onkeyup="updateTextView(this)" oninput="createAmount(this , false, false)">
+                                                    <input type="text" name="credit_amounts[]" class="form-control commonCredit" oninput="createAmount(this , false, false)" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" onkeyup="getValue(this)">
                                                 </div>
                                             </div>
                                         </div>
@@ -129,7 +129,7 @@
                                             <div class="form-group row m-0 align-items-center">
                                                 <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
                                                 <div class="col-lg-12 pl-0 pr-2 ">
-                                                    <input type="text" name="debit_amounts[]" class="form-control commonDebit" onchange="updateTextView(this)" onkeyup="updateTextView(this)" oninput="createAmount(this, false, false)">
+                                                    <input type="text" name="debit_amounts[]" class="form-control commonDebit" oninput="createAmount(this, false, false)" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" onkeyup="getValue(this)">
                                                 </div>
                                             </div>
                                         </div>
@@ -198,7 +198,7 @@
                                         <div class="form-group row m-0 align-items-center">
                                             <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
                                             <div class="col-lg-12 pl-0 pr-2 ">
-                                                <input type="number" id="suspense_amount" name="suspense_amount" class="form-control" value="0" readonly>
+                                                <input type="text" id="suspense_amount" name="suspense_amount" class="form-control" value="0" readonly data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" onkeyup="getValue(this)">
                                             </div>
                                         </div>
                                     </div>
@@ -313,7 +313,7 @@ const addNewRow=(elem, id, side , commonClass)=>{
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2 ">
-                                <input type="text" name="${side}amounts[]" class="form-control ${commonClass}" onchange="updateTextView(this)" onkeyup="updateTextView(this)" oninput="createAmount(this , false, false)">
+                                <input type="text" name="${side}amounts[]" class="form-control ${commonClass}" oninput="createAmount(this , false, false)" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" onkeyup="getValue(this)">
                             </div>
                         </div>
                     </div>
@@ -329,6 +329,10 @@ const addNewRow=(elem, id, side , commonClass)=>{
         // Initialize select2 in add more
         $(`.searchableSelect${side}${count}`).select2({ dropdownParent: $(`.searchableSelect${side}${count}`).parent() });
         // Initialize select2 in add more
+
+        // Initialize coma in add more
+        defaultScope.ready();
+        // Initialize coma in add more
 
 }
 

@@ -191,7 +191,6 @@ function editResource(targetUrl,targetTag) {
         success: function(data) {
             $(targetTag).html(data);
             $('.updateSearchableSelect').select2({dropdownParent: $('.updateSearchableSelect').parent()});
-            defaultScope.ready();
         }
     });
 
@@ -274,3 +273,35 @@ function initializeSelect2() {
 /*================
 searchable Select Code end
 ================*/
+
+
+
+
+/*================
+Input coma seperated Code start
+================*/
+
+function updateTextView(e){
+    var num = getNumber($(e).val());
+    if(num==0){
+      $(e).val('');
+    }else{
+      $(e).val(num.toLocaleString());
+    }
+}
+  function getNumber(_str){
+    var arr = _str.split('');
+    var out = new Array();
+    for(var cnt=0;cnt<arr.length;cnt++){
+      if(isNaN(arr[cnt])==false){
+        out.push(arr[cnt]);
+      }
+    }
+    return Number(out.join(''));
+  }
+
+
+/*================
+Input coma seperated Code end
+================*/
+

@@ -128,7 +128,7 @@
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2">
-                                                                    <input type="text" name="credit_quantities[]"  class="form-control" onchange="updateTextView(this)" onkeyup="updateTextView(this)" oninput="createAmount(this , true, true)" value="{{$detail->quantity}}">
+                                                                    <input type="text" name="credit_quantities[]"  class="form-control" oninput="createAmount(this , true, true)" value="{{$detail->quantity}}"  data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="{{$detail->quantity}}" data-common="common" onkeyup="getValue(this)">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -137,7 +137,7 @@
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2 ">
-                                                                    <input type="text" name="credit_rates[]"  class="form-control" onchange="updateTextView(this)" onkeyup="updateTextView(this)" oninput="createAmount(this , false, true)" value="{{$detail->rate}}">
+                                                                    <input type="text" name="credit_rates[]"  class="form-control" oninput="createAmount(this , false, true)" value="{{$detail->rate}}"  data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="{{$detail->rate}}" data-common="common" onkeyup="getValue(this)">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -146,7 +146,7 @@
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2 ">
-                                                                    <input type="number" name="credit_amounts[]" class="form-control commonCredit" readonly oninput="totalCreditAmount(this)" value="{{$detail->credit_amount}}">
+                                                                    <input type="text" name="credit_amounts[]" class="form-control commonCredit" readonly oninput="totalCreditAmount(this)" value="{{$detail->credit_amount}}"  data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="{{$detail->credit_amount}}"  data-common="common" onkeyup="getValue(this)">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -260,7 +260,7 @@
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2">
-                                                                    <input type="text" name="debit_quantities[]"  class="form-control" onchange="updateTextView(this)" onkeyup="updateTextView(this)" oninput="createAmount(this , true, true)" value="{{$detail->quantity}}">
+                                                                    <input type="text" name="debit_quantities[]"  class="form-control" oninput="createAmount(this , true, true)" value="{{$detail->quantity}}"  data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="{{$detail->quantity}}" data-common="common" onkeyup="getValue(this)">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -269,7 +269,7 @@
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2 ">
-                                                                    <input type="text" name="debit_rates[]"  class="form-control" onchange="updateTextView(this)" onkeyup="updateTextView(this)" oninput="createAmount(this , false, true)" value="{{$detail->rate}}">
+                                                                    <input type="text" name="debit_rates[]"  class="form-control" oninput="createAmount(this , false, true)" value="{{$detail->rate}}"  data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="{{$detail->rate}}" data-common="common" onkeyup="getValue(this)">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -278,7 +278,7 @@
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2 ">
-                                                                    <input type="number" name="debit_amounts[]" class="form-control commonDebit" readonly oninput="totalCreditAmount(this)" value="{{$detail->debit_amount}}">
+                                                                    <input type="text" name="debit_amounts[]" class="form-control commonDebit" readonly oninput="totalCreditAmount(this)" value="{{$detail->debit_amount}}"  data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="{{$detail->debit_amount}}" data-common="common" onkeyup="getValue(this)">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -364,7 +364,7 @@
                                                 <div class="form-group row m-0 align-items-center">
                                                     <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
                                                     <div class="col-lg-12 pl-0 pr-2 ">
-                                                        <input type="number" id="suspense_amount" name="suspense_amount" class="form-control" value="{{$suspenseEntry !=null? $suspenseEntry->$str:0}}" readonly>
+                                                        <input type="text" id="suspense_amount" name="suspense_amount" class="form-control" value="{{$suspenseEntry !=null? $suspenseEntry->$str:0}}" readonly  data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="{{$suspenseEntry !=null? $suspenseEntry->$str:0}}" data-common="common" onkeyup="getValue(this)">
                                                     </div>
                                                 </div>
                                             </div>
@@ -462,7 +462,7 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
-                                <input type="text" name="${side}quantities[]" onchange="updateTextView(this)" onkeyup="updateTextView(this)" class="form-control" oninput="createAmount(this , true, true)">
+                                <input type="text" name="${side}quantities[]" class="form-control" oninput="createAmount(this , true, true)"  data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" onkeyup="getValue(this)">
                             </div>
                         </div>
                     </div>
@@ -471,7 +471,7 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2 ">
-                                <input type="text" name="${side}rates[]" onchange="updateTextView(this)" onkeyup="updateTextView(this)" class="form-control" oninput="createAmount(this , false, true)">
+                                <input type="text" name="${side}rates[]" class="form-control" oninput="createAmount(this , false, true)"  data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" onkeyup="getValue(this)">
                             </div>
                         </div>
                     </div>
@@ -480,7 +480,7 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 px-0">
-                                <input type="number" name="${side}amounts[]" readonly class="form-control ${commonClass}">
+                                <input type="text" name="${side}amounts[]" readonly class="form-control ${commonClass}"  data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" onkeyup="getValue(this)">
                             </div>
                         </div>
                     </div>
@@ -492,6 +492,10 @@
             </div>
 
         `);
+
+        // Initialize coma in add more
+            defaultScope.ready();
+        // Initialize coma in add more
     }
 
 

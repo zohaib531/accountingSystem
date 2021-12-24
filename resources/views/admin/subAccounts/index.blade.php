@@ -58,7 +58,7 @@
                                     <td>{{$sub_account->get_account->title}}</td>
                                     <td>{{$sub_account->title}}</td>
                                     <td>{{ucwords($sub_account->transaction_type)}}</td>
-                                    <td>{{number_format($sub_account->opening_balance)}}</td>
+                                    <td>{{number_format($sub_account->opening_balance, 2)}}</td>
                                     @canany(['update-sub-account' , 'delete-sub-account'])
                                     <td class="text-right">
                                         @can('update-sub-account')
@@ -118,7 +118,7 @@
                             <div class="col-lg-9">
                                 <div class="row m-0">
                                     <div class="col-6 pl-0">
-                                        <input type="text" class="form-control" id="opening-balance" value="0" name="opening_balance" placeholder="Enter Opening Balance.." onchange="updateTextView(this)" onkeyup="updateTextView(this)" maxlength="12" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                        <input type="text" class="form-control" id="opening-balance" value="0" name="opening_balance" placeholder="Enter Opening Balance.."  maxlength="12" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" onkeyup="getValue(this)">
                                     </div>
                                     <div class="col-6 pr-0">
                                         <select class="form-control" id="transaction-type" name="transaction_type">
