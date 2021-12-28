@@ -48,14 +48,13 @@ const totalShouldSame = (elem)=>{
     if($(elem).parent().parent().parent().parent().parent().parent().find('input[id="checkedEntery"]').is(":checked")){
         let totalDebit = getTotalOfTargetSide('commonDebit');
         let totalCredit = getTotalOfTargetSide('commonCredit');
-
         if((totalDebit - totalCredit)>0){
             let targetElem = $(elem).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]');
-            targetElem.val(parseInt(targetElem.val()) + (totalDebit-totalCredit));
+            targetElem.val((parseFloat(targetElem.val()) + (totalDebit-totalCredit)).toFixed(2));
         }
         else if((totalCredit-totalDebit)>0){
             let targetElem = $(elem).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]');
-            targetElem.val(parseInt(targetElem.val()) + (totalCredit-totalDebit));
+            targetElem.val((parseFloat(targetElem.val()) + (totalCredit-totalDebit)).toFixed(2));
         }
     }
 }
@@ -71,7 +70,6 @@ const getTotalOfTargetSide=(targetClass)=>{
 
 
 const createAmount = (e, action, voucherType)=>{
-
 
     if (voucherType) {
         if (action) {
@@ -184,7 +182,6 @@ const commonCodeForSuspenseEntryDifference = (e)=>{
 }
 
 const commonCodeForSuspenseEntry = (elem,targetAction)=>{
-    console.log("commonCodeForSuspenseEntry");
     let differenceBetweenDebitCredit = $(elem).parent().parent().parent().parent().parent().parent().find('input[id="differenceInput"]').val();
     let suspenseEntryType = $(elem).parent().parent().parent().parent().parent().parent().find('input[id="suspense_entry"]').val();
     let targetSide = suspenseEntryType=="debit"?'debit-amount':'credit-amount';
@@ -219,11 +216,7 @@ const commonCodeForSuspenseEntry = (elem,targetAction)=>{
     $(elem).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(differenceInputRevertVal);
 }
 
-
 const suspenseAccountEntryVerification = (e)=>{$(e).is(":checked")? commonCodeForSuspenseEntry(e,'add') : commonCodeForSuspenseEntry(e,'minus'); }
-
-
-
 
 function getValue(e) {
     let inputValue = e.value;
