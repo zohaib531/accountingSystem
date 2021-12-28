@@ -19,12 +19,11 @@ const totalDebitAmount=(e)=>{
     let totalDebit = 0;
     let allDebitAmount = document.getElementsByClassName('commonDebit')
     for(let singleDebit of allDebitAmount){
-
         totalDebit += +singleDebit.getAttribute('data-val');
     }
     let targetElem =  $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]');
-    targetElem.val(totalDebit);
-    targetElem.attr('data-val', totalDebit);
+    targetElem.val(totalDebit.toFixed(2));
+    targetElem.attr('data-val', totalDebit.toFixed(2));
 
     return targetElem.attr('data-val');
 
@@ -40,8 +39,8 @@ const totalCreditAmount=(e)=>{
         totalCredit += +singleCredit.getAttribute('data-val');
     }
     let targetElem = $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]');
-    targetElem.val(totalCredit);
-    targetElem.attr('data-val', totalCredit);
+    targetElem.val(totalCredit.toFixed(2));
+    targetElem.attr('data-val', totalCredit.toFixed(2));
     return targetElem.attr('data-val');
 }
 
