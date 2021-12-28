@@ -243,7 +243,7 @@
                                                 <div class="col-12 pr-0">
                                                     <div class="form-group row m-0 align-items-center">
                                                         <div class="col-lg-12 pl-0 pr-2 ">
-                                                            <input type="hidden" class="form-control differenceInput" id="differenceInput" value="{{$suspenseEntry !=null?ucfirst($suspenseEntry->$str):0}}" readonly>
+                                                            <input type="hidden" class="form-control differenceInput" id="differenceInput" value="0" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -253,7 +253,7 @@
                                     </div>
 
                                     <div class="row mx-0 justify-content-between pt-3 differenceRow {{ $suspenseEntry ==null ? 'd-none' : ' '}}">
-                                        <input type="hidden" id="suspense_entry" name="suspense_entry">
+                                        <input type="hidden" id="suspense_entry" name="suspense_entry" value="{{$suspenseEntry !=null?$suspenseEntry->entry_type:''}}">
                                         <div class="col-4 px-0">
                                             <div class="form-group row m-0 align-items-center">
                                                 <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
@@ -294,7 +294,7 @@
                                                     <div class="form-group row m-0 align-items-center">
                                                         <label class="col-lg-12 col-form-label px-0" for="debit-amount">Total Debit<span class="text-danger">*</span></label>
                                                         <div class="col-lg-12 pl-0 pr-2 ">
-                                                            <input type="number" class="form-control" id="debit-amount" name="total_debit" value="{{$voucher->total_debit}}" readonly data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="{{$voucher->total_debit}}" data-common="common" onkeyup="getValue(this)">
+                                                            <input type="text" class="form-control" id="debit-amount" name="total_debit" value="{{$voucher->total_debit}}" readonly data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="{{$voucher->total_debit}}" data-common="common" onkeyup="getValue(this)">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -302,7 +302,7 @@
                                                     <div class="form-group row m-0 align-items-center">
                                                         <label class="col-lg-12 col-form-label px-0" for="credit-amount">Total Credit<span class="text-danger">*</span></label>
                                                         <div class="col-lg-12 pl-0 pr-2 ">
-                                                            <input type="number" class="form-control" id="credit-amount" name="total_credit" value="{{$voucher->total_credit}}" readonly data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="{{$voucher->total_credit}}" data-common="common" onkeyup="getValue(this)">
+                                                            <input type="text" class="form-control" id="credit-amount" name="total_credit" value="{{$voucher->total_credit}}" readonly data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="{{$voucher->total_credit}}" data-common="common" onkeyup="getValue(this)">
                                                         </div>
                                                     </div>
                                                 </div>

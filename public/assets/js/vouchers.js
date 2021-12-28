@@ -110,17 +110,16 @@ const createAmount = (e, action, voucherType)=>{
 
     let totalDebit = totalDebitAmount(e);
     let totalCredit = totalCreditAmount(e);
-    getValue(e)
     let differenceBetweenDebitCredit = 0;
     let labelTxt = "Difference";
     let entryTxt = "";
     if((totalDebit-totalCredit)>0){
-        differenceBetweenDebitCredit = (totalDebit-totalCredit);
+        differenceBetweenDebitCredit = parseFloat(totalDebit-totalCredit);
         labelTxt = "Credit";
         entryTxt ="credit";
     }
     else if((totalCredit-totalDebit)>0){
-        differenceBetweenDebitCredit = (totalCredit-totalDebit);
+        differenceBetweenDebitCredit = parseFloat(totalCredit-totalDebit);
         labelTxt = "Debit";
         entryTxt ="debit";
     }else if((totalCredit-totalDebit)==0){
@@ -139,9 +138,8 @@ const createAmount = (e, action, voucherType)=>{
     $(e).parent().parent().parent().parent().parent().parent().find('#suspense_entry').val(entryTxt);
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').removeClass('d-none');
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').removeClass('d-none');
-    totalShouldSame(e);
-    // console.log("createAmount");
     commonCodeForSuspenseEntryDifference(e);
+    // getValue(e);
 
 }
 
@@ -152,12 +150,12 @@ const commonCodeForSuspenseEntryDifference = (e)=>{
     let labelTxt = "Difference";
     let entryTxt = "";
     if((totalDebit-totalCredit)>0){
-        differenceBetweenDebitCredit = (totalDebit-totalCredit);
+        differenceBetweenDebitCredit = parseFloat(totalDebit-totalCredit);
         labelTxt = "Credit";
         entryTxt ="credit";
     }
     else if((totalCredit-totalDebit)>0){
-        differenceBetweenDebitCredit = (totalCredit-totalDebit);
+        differenceBetweenDebitCredit = parseFloat(totalCredit-totalDebit);
         labelTxt = "Debit";
         entryTxt ="debit";
     }else if((totalCredit-totalDebit)==0){
@@ -188,14 +186,15 @@ const commonCodeForSuspenseEntry = (elem,targetAction)=>{
     let targetClassForTotal = suspenseEntryType=="debit"?'commonDebit':'commonCredit';
     let targetElem = $(elem).parent().parent().parent().parent().parent().parent().find(`input[id="${targetSide}"]`);
     let targetElemVal = targetElem.attr('data-val');
-
-
+    let targetTotalAmount = parseFloat(targetSide == "debit-amount"? totalDebitAmount(elem): totalCreditAmount(elem));
     if(targetAction=="add"){
-        targetElem.val((+targetElemVal) + (+differenceBetweenDebitCredit))
-        targetElem.attr('data-val' , (+targetElemVal) + (+differenceBetweenDebitCredit))
+        targetTotalAmount = targetTotalAmount + parseFloat(differenceBetweenDebitCredit);
+        targetElem.val(targetTotalAmount);
+        targetElem.attr('data-val' ,targetTotalAmount);
     }else{
-        targetElem.val((+targetElemVal) - (+differenceBetweenDebitCredit))
-        targetElem.attr('data-val' , (+targetElemVal) - (+differenceBetweenDebitCredit))
+        targetTotalAmount = targetTotalAmount - parseFloat(differenceBetweenDebitCredit);
+        targetElem.val(targetTotalAmount);
+        targetElem.attr('data-val' , targetTotalAmount);
     }
 
     let differenceInputRevertVal = 0;
@@ -221,6 +220,7 @@ const suspenseAccountEntryVerification = (e)=>{$(e).is(":checked")? commonCodeFo
 function getValue(e) {
     let inputValue = e.value;
     let withoutComa = inputValue.toLocaleString().replace(/\D/g,'');
+    e.setAttribute('value', withoutComa/100);
     e.setAttribute('data-val', withoutComa/100);
 }
 
