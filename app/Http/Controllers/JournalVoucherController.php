@@ -49,8 +49,8 @@ class JournalVoucherController extends Controller
         $journal_voucher = new Voucher();
         $journal_voucher->date = Carbon::createFromFormat('d / m / Y', $request->date)->format('Y-m-d');
         $journal_voucher->voucher_type = "journal_voucher";
-        $journal_voucher->total_debit = $request->total_debit;
-        $journal_voucher->total_credit = $request->total_credit;
+        $journal_voucher->total_debit = str_replace(',','',$request->total_debit);
+        $journal_voucher->total_credit = str_replace(',','',$request->total_credit);
         $journal_voucher->save();
         $this->commonCode($journal_voucher, false, $request);
         return response()->json(['success' => true, 'message' => 'Journal voucher has been added successfully']);
@@ -95,8 +95,8 @@ class JournalVoucherController extends Controller
         }
         $journal_voucher = Voucher::find($id);
         $journal_voucher->date = Carbon::createFromFormat('d / m / Y', $request->date)->format('Y-m-d');
-        $journal_voucher->total_debit = $request->total_debit;
-        $journal_voucher->total_credit = $request->total_credit;
+        $journal_voucher->total_debit = str_replace(',','',$request->total_debit);
+        $journal_voucher->total_credit = str_replace(',','',$request->total_credit);
         $journal_voucher->save();
         $this->commonCode($journal_voucher, true, $request);
         return response()->json(['success' => true, 'message' => 'Journal voucher has been updated successfully']);
@@ -140,25 +140,25 @@ class JournalVoucherController extends Controller
         $transactionType = isset($request->suspense_account)? getOpeningBalance($request->suspense_account,$request->suspense_date,false,0)["opening_balance_type"]:'';
 
         if ($transactionType == "debit" && $request->suspense_entry == "debit") {
-            $remainingBalance = $openingBalance + $request->suspense_amount;
+            $remainingBalance = $openingBalance + str_replace(',','',$request->suspense_amount);
             $remainingBalanceType = "debit";
         } else if ($transactionType == "credit" && $request->suspense_entry == "debit") {
-            if ($openingBalance >= $request->suspense_amount) {
-                $remainingBalance = $openingBalance - $request->suspense_amount;
+            if ($openingBalance >= str_replace(',','',$request->suspense_amount)) {
+                $remainingBalance = $openingBalance - str_replace(',','',$request->suspense_amount);
                 $remainingBalanceType = "credit";
-            } else if ($openingBalance < $request->suspense_amount) {
-                $remainingBalance = $request->suspense_amount - $openingBalance;
+            } else if ($openingBalance < str_replace(',','',$request->suspense_amount)) {
+                $remainingBalance = str_replace(',','',$request->suspense_amount) - $openingBalance;
                 $remainingBalanceType = "debit";
             }
         } else if ($transactionType == "credit" && $request->suspense_entry == "credit") {
-            $remainingBalance = $openingBalance + $request->suspense_amount;
+            $remainingBalance = $openingBalance + str_replace(',','',$request->suspense_amount);
             $remainingBalanceType = "credit";
         } else if ($transactionType == "debit" && $request->suspense_entry == "credit") {
-            if ($openingBalance >= $request->suspense_amount) {
-                $remainingBalance = $openingBalance - $request->suspense_amount;
+            if ($openingBalance >= str_replace(',','',$request->suspense_amount)) {
+                $remainingBalance = $openingBalance - str_replace(',','',$request->suspense_amount);
                 $remainingBalanceType = "debit";
-            } else if ($openingBalance < $request->suspense_amount) {
-                $remainingBalance = $request->suspense_amount - $openingBalance;
+            } else if ($openingBalance < str_replace(',','',$request->suspense_amount)) {
+                $remainingBalance = str_replace(',','',$request->suspense_amount) - $openingBalance;
                 $remainingBalanceType = "credit";
             }
         }
@@ -168,7 +168,7 @@ class JournalVoucherController extends Controller
             $suspenseEntryDetail->voucher_id = $voucher->id;
             $suspenseEntryDetail->date = Carbon::createFromFormat('d / m / Y', $request->suspense_date)->format('Y-m-d');
             $suspenseEntryDetail->sub_account_id = $request->suspense_account;
-            $suspenseEntryDetail->$str = $request->suspense_amount;
+            $suspenseEntryDetail->$str = str_replace(',','',$request->suspense_amount);
             $suspenseEntryDetail->entry_type = $request->suspense_entry;
             // $suspenseEntryDetail->opening_balance = $openingBalance;
             // $suspenseEntryDetail->opening_balance_type = $transactionType;
@@ -197,14 +197,14 @@ class JournalVoucherController extends Controller
                 $transactionType = getOpeningBalance($request->debit_accounts[$key],$request->debit_dates[$key],false,0)["opening_balance_type"];
 
                 if ($transactionType == "debit") {
-                    $remainingBalance = $openingBalance + $request->debit_amounts[$key];
+                    $remainingBalance = $openingBalance + str_replace(',','',$request->debit_amounts[$key]);
                     $remainingBalanceType = "debit";
                 } else if ($transactionType == "credit") {
-                    if ($openingBalance >= $request->debit_amounts[$key]) {
-                        $remainingBalance = $openingBalance - $request->debit_amounts[$key];
+                    if ($openingBalance >= str_replace(',','',$request->debit_amounts[$key])) {
+                        $remainingBalance = $openingBalance - str_replace(',','',$request->debit_amounts[$key]);
                         $remainingBalanceType = "credit";
-                    } else if ($openingBalance < $request->debit_amounts[$key]) {
-                        $remainingBalance = $request->debit_amounts[$key] - $openingBalance;
+                    } else if ($openingBalance < str_replace(',','',$request->debit_amounts[$key])) {
+                        $remainingBalance = str_replace(',','',$request->debit_amounts[$key]) - $openingBalance;
                         $remainingBalanceType = "debit";
                     }
                 }
@@ -213,7 +213,7 @@ class JournalVoucherController extends Controller
                 $VoucherDetail->date = isset($request->debit_dates[$key]) ? Carbon::createFromFormat('d / m / Y', $request->debit_dates[$key])->format('Y-m-d') : '';
                 $VoucherDetail->product_narration = isset($request->debit_narrations[$key]) ? $request->debit_narrations[$key] : '';
                 $VoucherDetail->sub_account_id = isset($request->debit_accounts[$key]) ? $request->debit_accounts[$key] : '';
-                $VoucherDetail->debit_amount = isset($request->debit_amounts[$key]) ? $request->debit_amounts[$key] : 0;
+                $VoucherDetail->debit_amount = isset($request->debit_amounts[$key]) ? str_replace(',','',$request->debit_amounts[$key]) : 0;
                 // $VoucherDetail->opening_balance = $openingBalance;
                 // $VoucherDetail->opening_balance_type = $transactionType;
                 $VoucherDetail->remaining_balance = $remainingBalance;
@@ -237,14 +237,14 @@ class JournalVoucherController extends Controller
                 $openingBalance =  getOpeningBalance($request->credit_accounts[$key],$request->credit_dates[$key],false,0)["opening_balance"];
                 $transactionType = getOpeningBalance($request->credit_accounts[$key],$request->credit_dates[$key],false,0)["opening_balance_type"];
                 if ($transactionType == "credit") {
-                    $remainingBalance = $openingBalance + $request->credit_amounts[$key];
+                    $remainingBalance = $openingBalance + str_replace(',','',$request->credit_amounts[$key]);
                     $remainingBalanceType = "credit";
                 } else if ($transactionType == "debit") {
-                    if ($openingBalance >= $request->credit_amounts[$key]) {
-                        $remainingBalance = $openingBalance - $request->credit_amounts[$key];
+                    if ($openingBalance >= str_replace(',','',$request->credit_amounts[$key])) {
+                        $remainingBalance = $openingBalance - str_replace(',','',$request->credit_amounts[$key]);
                         $remainingBalanceType = "debit";
-                    } else if ($openingBalance < $request->credit_amounts[$key]) {
-                        $remainingBalance = $request->credit_amounts[$key] - $openingBalance;
+                    } else if ($openingBalance < str_replace(',','',$request->credit_amounts[$key])) {
+                        $remainingBalance = str_replace(',','',$request->credit_amounts[$key]) - $openingBalance;
                         $remainingBalanceType = "credit";
                     }
                 }
@@ -253,7 +253,7 @@ class JournalVoucherController extends Controller
                 $VoucherDetail->date = isset($request->credit_dates[$key]) ? Carbon::createFromFormat('d / m / Y', $request->credit_dates[$key])->format('Y-m-d'): '';
                 $VoucherDetail->product_narration = isset($request->credit_narrations[$key]) ? $request->credit_narrations[$key] : '';
                 $VoucherDetail->sub_account_id = isset($request->credit_accounts[$key]) ? $request->credit_accounts[$key] : '';
-                $VoucherDetail->credit_amount = isset($request->credit_amounts[$key]) ? $request->credit_amounts[$key] : 0;
+                $VoucherDetail->credit_amount = isset($request->credit_amounts[$key]) ? str_replace(',','',$request->credit_amounts[$key]) : 0;
                 // $VoucherDetail->opening_balance = $openingBalance;
                 // $VoucherDetail->opening_balance_type = $transactionType;
                 $VoucherDetail->remaining_balance = $remainingBalance;

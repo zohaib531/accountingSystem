@@ -110,7 +110,7 @@ const createAmount = (e, action, voucherType)=>{
 
     let totalDebit = totalDebitAmount(e);
     let totalCredit = totalCreditAmount(e);
-    getValue(e)
+    getValue(e);
     let differenceBetweenDebitCredit = 0;
     let labelTxt = "Difference";
     let entryTxt = "";
@@ -139,9 +139,8 @@ const createAmount = (e, action, voucherType)=>{
     $(e).parent().parent().parent().parent().parent().parent().find('#suspense_entry').val(entryTxt);
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').removeClass('d-none');
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').removeClass('d-none');
-    totalShouldSame(e);
-    // console.log("createAmount");
     commonCodeForSuspenseEntryDifference(e);
+    totalShouldSame(e);
 
 }
 
@@ -188,13 +187,13 @@ const commonCodeForSuspenseEntry = (elem,targetAction)=>{
     let targetClassForTotal = suspenseEntryType=="debit"?'commonDebit':'commonCredit';
     let targetElem = $(elem).parent().parent().parent().parent().parent().parent().find(`input[id="${targetSide}"]`);
     let targetElemVal = targetElem.attr('data-val');
-
-
+    console.log(targetElem);
     if(targetAction=="add"){
-        targetElem.val((+targetElemVal) + (+differenceBetweenDebitCredit))
-        targetElem.attr('data-val' , (+targetElemVal) + (+differenceBetweenDebitCredit))
+        console.log(targetElem.attr('data-val'),);
+        targetElem.val((+targetElemVal) + (+differenceBetweenDebitCredit));
+        targetElem.attr('data-val' , (+targetElemVal) + (+differenceBetweenDebitCredit));
     }else{
-        targetElem.val((+targetElemVal) - (+differenceBetweenDebitCredit))
+        targetElem.val((targetElemVal) - (+differenceBetweenDebitCredit));
         targetElem.attr('data-val' , (+targetElemVal) - (+differenceBetweenDebitCredit))
     }
 
@@ -221,6 +220,7 @@ const suspenseAccountEntryVerification = (e)=>{$(e).is(":checked")? commonCodeFo
 function getValue(e) {
     let inputValue = e.value;
     let withoutComa = inputValue.toLocaleString().replace(/\D/g,'');
+    e.setAttribute('value', withoutComa/100);
     e.setAttribute('data-val', withoutComa/100);
 }
 

@@ -54,8 +54,8 @@ class SalePurchaseVoucherController extends Controller
         if ($validations->fails()) {return response()->json(['success' => false, 'message' => $validations->errors()]);}
         $sale_purchase_voucher = new Voucher();
         $sale_purchase_voucher->date = Carbon::createFromFormat('d / m / Y', $request->date)->format('Y-m-d');
-        $sale_purchase_voucher->total_debit = $request->total_debit;
-        $sale_purchase_voucher->total_credit = $request->total_credit;
+        $sale_purchase_voucher->total_debit = str_replace(',','',$request->total_debit);
+        $sale_purchase_voucher->total_credit = str_replace(',','',$request->total_credit);
         $sale_purchase_voucher->save();
         $this->commonCode($sale_purchase_voucher,false,$request);
         return response()->json(['success' => true, 'message' => 'Sale/Purchase voucher has been added successfully']);
@@ -104,8 +104,8 @@ class SalePurchaseVoucherController extends Controller
         if ($validations->fails()) {return response()->json(['success' => false, 'message' => $validations->errors()]);}
         $sale_purchase_voucher = Voucher::find($id);
         $sale_purchase_voucher->date = Carbon::createFromFormat('d / m / Y', $request->date)->format('Y-m-d') ;
-        $sale_purchase_voucher->total_debit = $request->total_debit;
-        $sale_purchase_voucher->total_credit = $request->total_credit;
+        $sale_purchase_voucher->total_debit = str_replace(',','',$request->total_debit);
+        $sale_purchase_voucher->total_credit = str_replace(',','',$request->total_credit);
         $sale_purchase_voucher->save();
         $this->commonCode($sale_purchase_voucher,true,$request);
         return response()->json(['success' => true, 'message' => 'Sale purchase voucher has been updated successfully']);
