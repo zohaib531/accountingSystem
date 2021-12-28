@@ -336,7 +336,7 @@
                                         </div>
 
                                         <div class="row mx-0 justify-content-between pt-3 differenceRow {{ $suspenseEntry ==null ? 'd-none' : ' '}}">
-                                            <input type="hidden" id="suspense_entry" name="suspense_entry">
+                                            <input type="hidden" id="suspense_entry" name="suspense_entry" value="{{$suspenseEntry->entry_type}}">
                                             <div class="col-4 px-0">
                                                 <div class="form-group row m-0 align-items-center">
                                                     <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
