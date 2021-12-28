@@ -24,15 +24,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php 
+                                        $totalDebit = 0;
+                                        $totalCredit = 0;
+                                    @endphp 
                                     @foreach($subAccounts as $key=>$subAccount)
                                         @php
                                             $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, $endDate, false , 0);
+                                            $openingBalance = $getOpeningBalanceResponse["opening_balance"];
+                                            $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                                         @endphp
 
-                                        @if ($subAccount->transaction_type == 'debit')
+                                        @if ($entryType == 'debit')
+                                            @php $totalDebit += $openingBalance; @endphp
                                             <tr>
                                                 <td>{{$subAccount->title}}</td>
-                                                <td>{{$subAccount->opening_balance}}</td>
+                                                <td>{{$openingBalance}}</td>
                                             </tr>
                                         @endif
                                     @endforeach
@@ -52,12 +59,19 @@
                                 </thead>
                                 <tbody>
                                     @foreach($subAccounts as $key=>$subAccount)
-                                    @if ($subAccount->transaction_type == 'credit')
-                                        <tr>
-                                            <td>{{$subAccount->title}}</td>
-                                            <td>{{$subAccount->opening_balance}}</td>
-                                        </tr>
-                                    @endif
+                                        @php
+                                            $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, $endDate, false , 0);
+                                            $openingBalance = $getOpeningBalanceResponse["opening_balance"];
+                                            $entryType = $getOpeningBalanceResponse["opening_balance_type"];
+                                        @endphp
+
+                                        @if ($entryType == 'credit')
+                                            @php $totalCredit += $openingBalance; @endphp
+                                            <tr>
+                                                <td>{{$subAccount->title}}</td>
+                                                <td>{{$openingBalance}}</td>
+                                            </tr>
+                                        @endif
                                 @endforeach
                                 </tbody>
                             </table>
@@ -71,7 +85,7 @@
                     <tbody>
                         <tr>
                             <td class="text-center h5">Total</td>
-                            <td class="h5">400</td>
+                            <td class="h5">{{$totalDebit}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -82,7 +96,7 @@
                     <tbody>
                         <tr>
                             <td class="text-center h5">Total</td>
-                            <td class="h5">400</td>
+                            <td class="h5">{{$totalCredit}}</td>
                         </tr>
                     </tbody>
                 </table>
