@@ -110,17 +110,16 @@ const createAmount = (e, action, voucherType)=>{
 
     let totalDebit = totalDebitAmount(e);
     let totalCredit = totalCreditAmount(e);
-    getValue(e);
     let differenceBetweenDebitCredit = 0;
     let labelTxt = "Difference";
     let entryTxt = "";
     if((totalDebit-totalCredit)>0){
-        differenceBetweenDebitCredit = (totalDebit-totalCredit);
+        differenceBetweenDebitCredit = parseFloat(totalDebit-totalCredit);
         labelTxt = "Credit";
         entryTxt ="credit";
     }
     else if((totalCredit-totalDebit)>0){
-        differenceBetweenDebitCredit = (totalCredit-totalDebit);
+        differenceBetweenDebitCredit = parseFloat(totalCredit-totalDebit);
         labelTxt = "Debit";
         entryTxt ="debit";
     }else if((totalCredit-totalDebit)==0){
@@ -140,7 +139,7 @@ const createAmount = (e, action, voucherType)=>{
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').removeClass('d-none');
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').removeClass('d-none');
     commonCodeForSuspenseEntryDifference(e);
-    totalShouldSame(e);
+    // getValue(e);
 
 }
 
@@ -151,12 +150,12 @@ const commonCodeForSuspenseEntryDifference = (e)=>{
     let labelTxt = "Difference";
     let entryTxt = "";
     if((totalDebit-totalCredit)>0){
-        differenceBetweenDebitCredit = (totalDebit-totalCredit);
+        differenceBetweenDebitCredit = parseFloat(totalDebit-totalCredit);
         labelTxt = "Credit";
         entryTxt ="credit";
     }
     else if((totalCredit-totalDebit)>0){
-        differenceBetweenDebitCredit = (totalCredit-totalDebit);
+        differenceBetweenDebitCredit = parseFloat(totalCredit-totalDebit);
         labelTxt = "Debit";
         entryTxt ="debit";
     }else if((totalCredit-totalDebit)==0){
@@ -187,14 +186,15 @@ const commonCodeForSuspenseEntry = (elem,targetAction)=>{
     let targetClassForTotal = suspenseEntryType=="debit"?'commonDebit':'commonCredit';
     let targetElem = $(elem).parent().parent().parent().parent().parent().parent().find(`input[id="${targetSide}"]`);
     let targetElemVal = targetElem.attr('data-val');
-    console.log(targetElem);
+    let targetTotalAmount = parseFloat(targetSide == "debit-amount"? totalDebitAmount(elem): totalCreditAmount(elem));
     if(targetAction=="add"){
-        console.log(targetElem.attr('data-val'),);
-        targetElem.val((+targetElemVal) + (+differenceBetweenDebitCredit));
-        targetElem.attr('data-val' , (+targetElemVal) + (+differenceBetweenDebitCredit));
+        targetTotalAmount = targetTotalAmount + parseFloat(differenceBetweenDebitCredit);
+        targetElem.val(targetTotalAmount);
+        targetElem.attr('data-val' ,targetTotalAmount);
     }else{
-        targetElem.val((targetElemVal) - (+differenceBetweenDebitCredit));
-        targetElem.attr('data-val' , (+targetElemVal) - (+differenceBetweenDebitCredit))
+        targetTotalAmount = targetTotalAmount - parseFloat(differenceBetweenDebitCredit);
+        targetElem.val(targetTotalAmount);
+        targetElem.attr('data-val' , targetTotalAmount);
     }
 
     let differenceInputRevertVal = 0;
