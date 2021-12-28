@@ -19,7 +19,7 @@
             @foreach($vouchers as $key=>$detail)
                 @if($loop->first)
                     @php
-                        $getOpeningBalanceResponse = getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id);
+                        $getOpeningBalanceResponse = getOpeningBalance($detail->sub_account_id, $detail->date , true , $detail->id);
                         $openingBalance = $getOpeningBalanceResponse["opening_balance"];
                         $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                     @endphp
