@@ -231,3 +231,5 @@ function getValue(e) {
     let withoutComa = inputValue.toLocaleString().replace(/\D/g,'');
     e.setAttribute('data-val', withoutComa/100);
 }
+
+
