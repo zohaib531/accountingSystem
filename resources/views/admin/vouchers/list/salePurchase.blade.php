@@ -38,8 +38,8 @@
                                             <td>{{ ++$key }}</td>
                                             <td>{{date('d/m/Y',strtotime($sale_purchase_voucher->date))}}</td>
                                             <td></td>
-                                            <td>{{ number_format($sale_purchase_voucher->total_debit) }}</td>
-                                            <td>{{ number_format($sale_purchase_voucher->total_credit) }}</td>
+                                            <td>{{ number_format($sale_purchase_voucher->total_debit , 2) }}</td>
+                                            <td>{{ number_format($sale_purchase_voucher->total_credit , 2) }}</td>
 
                                             <td class="text-right">
                                                 <a href="{{route('salePurchase.edit',$sale_purchase_voucher->id)}}">

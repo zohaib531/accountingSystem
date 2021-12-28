@@ -3070,10 +3070,3 @@ $(document).ready(function () {
     defaultScope.ready();
 });
 
-
-
-function getValue(e) {
-    let inputValue = e.value;
-    let withoutComa = inputValue.toLocaleString().replace(/\D/g,'');
-    e.setAttribute('data-val', withoutComa/100);
-}

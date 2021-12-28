@@ -14,43 +14,35 @@ function removeParentElement(e){
 
 
 const totalDebitAmount=(e)=>{
-
     // Total Debit Amount
     let totalDebit = 0;
     let allDebitAmount = document.getElementsByClassName('commonDebit')
     for(let singleDebit of allDebitAmount){
-
-        totalDebit += +singleDebit.getAttribute('data-val');
+        totalDebit += +singleDebit.value;
     }
     let targetElem =  $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]');
     targetElem.val(totalDebit);
-    targetElem.attr('data-val', totalDebit);
-
-    return targetElem.attr('data-val');
-
+    return targetElem.val();
 }
 
 
 const totalCreditAmount=(e)=>{
-
     // Total Credit Amount
     let totalCredit = 0;
     let allCreditAmmount = document.getElementsByClassName('commonCredit')
     for(let singleCredit of allCreditAmmount){
-        totalCredit += +singleCredit.getAttribute('data-val');
+        totalCredit += +singleCredit.value;
     }
     let targetElem = $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]');
     targetElem.val(totalCredit);
-    targetElem.attr('data-val', totalCredit);
-    return targetElem.attr('data-val');
+    return targetElem.val();
 }
 
 const totalShouldSame = (elem)=>{
     if($(elem).parent().parent().parent().parent().parent().parent().find('input[id="checkedEntery"]').is(":checked")){
         let totalDebit = getTotalOfTargetSide('commonDebit');
         let totalCredit = getTotalOfTargetSide('commonCredit');
-
-        if((totalDebit - totalCredit)>0){
+        if((totalDebit-totalCredit)>0){
             let targetElem = $(elem).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]');
             targetElem.val(parseInt(targetElem.val()) + (totalDebit-totalCredit));
         }
@@ -65,7 +57,8 @@ const getTotalOfTargetSide=(targetClass)=>{
     let total = 0;
     let allAmount = document.getElementsByClassName(targetClass);
     for(let single of allAmount){
-        total += +single.getAttribute('data-val');
+        console.log(single);
+        total += +single.value;
     }
     return total;
 }
@@ -73,33 +66,22 @@ const getTotalOfTargetSide=(targetClass)=>{
 
 const createAmount = (e, action, voucherType)=>{
 
-
     if (voucherType) {
         if (action) {
-            if($(e).parent().parent().parent().next('div').children('div').children('div').children('input').attr('data-val') >= 0){
+            if($(e).parent().parent().parent().next('div').children('div').children('div').children('input').val() >= 0){
                 let elem = $(e).parent().parent().parent().next('div').children('div').children('div').children('input');
                 let amount = elem.parent().parent().parent().next('div').children('div').children('div').children('input');
-
-                if ( $(e).attr('data-val') >=0 && elem.attr('data-val') >=0 ) {
-                    getValue(e)
-                    getValue(elem[0])
-                    amount.val(($(e).attr('data-val') * elem.attr('data-val')).toFixed(2));
-                    amount.attr('data-val', ($(e).attr('data-val') * elem.attr('data-val')).toFixed(2));
+                if ( $(e).val() >=0 && elem.val() >=0 ) {
+                    amount.val($(e).val() * elem.val());
                 }
-
             }
         }else{
-            if($(e).parent().parent().parent().prev('div').children('div').children('div').children('input').attr('data-val') >= 0){
+            if($(e).parent().parent().parent().prev('div').children('div').children('div').children('input').val() >= 0){
                 let elem = $(e).parent().parent().parent().prev('div').children('div').children('div').children('input');
                 let amount = $(e).parent().parent().parent().next('div').children('div').children('div').children('input');
-
-                if ($(e).attr('data-val') >=0 && elem.attr('data-val') >=0 ) {
-                    getValue(e)
-                    getValue(elem[0])
-                    amount.val(($(e).attr('data-val') * elem.attr('data-val')).toFixed(2));
-                    amount.attr('data-val', ($(e).attr('data-val') * elem.attr('data-val')).toFixed(2));
+                if ($(e).val() >=0 && elem.val()>=0) {
+                    amount.val($(e).val() * elem.val());
                 }
-
             }
 
         }
@@ -109,11 +91,8 @@ const createAmount = (e, action, voucherType)=>{
     // totalCreditAmount(e);
     // let totalDebit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]').val();
     // let totalCredit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]').val();
-
-
     let totalDebit = totalDebitAmount(e);
     let totalCredit = totalCreditAmount(e);
-    getValue(e)
     let differenceBetweenDebitCredit = 0;
     let labelTxt = "Difference";
     let entryTxt = "";
@@ -138,13 +117,12 @@ const createAmount = (e, action, voucherType)=>{
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceLabel').html("<b>"+labelTxt+"</b> difference of "+"<b>"+differenceBetweenDebitCredit+"</b> do you want to adjust?");
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(differenceBetweenDebitCredit);
     $(e).parent().parent().parent().parent().parent().parent().find('#suspense_amount').val(differenceBetweenDebitCredit);
-    $(e).parent().parent().parent().parent().parent().parent().find('#suspense_amount').attr('data-val' , differenceBetweenDebitCredit);
     $(e).parent().parent().parent().parent().parent().parent().find('#suspense_entry').val(entryTxt);
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').removeClass('d-none');
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').removeClass('d-none');
     totalShouldSame(e);
     // console.log("createAmount");
-    commonCodeForSuspenseEntryDifference(e);
+    // commonCodeForSuspenseEntryDifference(e);
 
 }
 
@@ -172,12 +150,9 @@ const commonCodeForSuspenseEntryDifference = (e)=>{
         return false;
     }
 
-    differenceBetweenDebitCredit= differenceBetweenDebitCredit.toFixed(2);
-
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceLabel').html("<b>"+labelTxt+"</b> difference of "+"<b>"+differenceBetweenDebitCredit+"</b> do you want to adjust?");
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(differenceBetweenDebitCredit);
     $(e).parent().parent().parent().parent().parent().parent().find('#suspense_amount').val(differenceBetweenDebitCredit);
-    $(e).parent().parent().parent().parent().parent().parent().find('#suspense_amount').attr('data-val' , differenceBetweenDebitCredit);
     $(e).parent().parent().parent().parent().parent().parent().find('#suspense_entry').val(entryTxt);
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').removeClass('d-none');
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').removeClass('d-none');
@@ -186,32 +161,14 @@ const commonCodeForSuspenseEntryDifference = (e)=>{
 
 const commonCodeForSuspenseEntry = (elem,targetAction)=>{
     console.log("commonCodeForSuspenseEntry");
-    let differenceBetweenDebitCredit = $(elem).parent().parent().parent().parent().parent().parent().find('input[id="differenceInput"]').val();
+    let differenceBetweenDebitCredit = parseInt($(elem).parent().parent().parent().parent().parent().parent().find('input[id="differenceInput"]').val());
     let suspenseEntryType = $(elem).parent().parent().parent().parent().parent().parent().find('input[id="suspense_entry"]').val();
     let targetSide = suspenseEntryType=="debit"?'debit-amount':'credit-amount';
     let targetClassForTotal = suspenseEntryType=="debit"?'commonDebit':'commonCredit';
     let targetElem = $(elem).parent().parent().parent().parent().parent().parent().find(`input[id="${targetSide}"]`);
-    let targetElemVal = targetElem.attr('data-val');
-
-
-    if(targetAction=="add"){
-        targetElem.val((+targetElemVal) + (+differenceBetweenDebitCredit))
-        targetElem.attr('data-val' , (+targetElemVal) + (+differenceBetweenDebitCredit))
-    }else{
-        targetElem.val((+targetElemVal) - (+differenceBetweenDebitCredit))
-        targetElem.attr('data-val' , (+targetElemVal) - (+differenceBetweenDebitCredit))
-    }
-
-    let differenceInputRevertVal = 0;
-    if(targetAction!="add"){
-        differenceInputRevertVal = $(elem).parent().parent().parent().parent().parent().parent().find('#suspense_amount').attr('data-val');
-        targetElem.attr('data-val', targetElem.val() - (+differenceInputRevertVal))
-    }else{
-        differenceInputRevertVal = 0;
-    }
-    differenceInputRevertVal =  targetAction!="add" ? $(elem).parent().parent().parent().parent().parent().parent().find('#suspense_amount').attr('data-val') : 0;
-
-
+    let targetElemVal = parseInt(targetElem.val());
+    targetAction=="add"? (targetElem.val(targetElemVal + differenceBetweenDebitCredit)) : (targetElem.val(targetElemVal - differenceBetweenDebitCredit));
+    differenceInputRevertVal =  targetAction!="add"? parseInt($(elem).parent().parent().parent().parent().parent().parent().find('#suspense_amount').val()):0;
     if(targetAction!="add")
     {
         let targetRevertElem = suspenseEntryType=="debit"?'debit-amount':'credit-amount';
@@ -220,14 +177,4 @@ const commonCodeForSuspenseEntry = (elem,targetAction)=>{
     $(elem).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(differenceInputRevertVal);
 }
 
-
 const suspenseAccountEntryVerification = (e)=>{$(e).is(":checked")? commonCodeForSuspenseEntry(e,'add') : commonCodeForSuspenseEntry(e,'minus'); }
-
-
-
-
-function getValue(e) {
-    let inputValue = e.value;
-    let withoutComa = inputValue.toLocaleString().replace(/\D/g,'');
-    e.setAttribute('data-val', withoutComa/100);
-}

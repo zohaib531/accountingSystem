@@ -21,10 +21,10 @@ class CreateDetailVouchersTable extends Migration
             $table->date('date');
             $table->string('product_narration')->nullable();
             $table->string('entry_type');
-            $table->integer('quantity')->default(0);
-            $table->integer('rate')->default(0);
-            $table->integer('debit_amount')->default(0);
-            $table->integer('credit_amount')->default(0);
+            $table->float('quantity')->default(0);
+            $table->float('rate')->default(0);
+            $table->float('debit_amount')->default(0);
+            $table->float('credit_amount')->default(0);
             $table->string('suspense_account')->default(0);
             $table->softDeletes();
             $table->timestamps();

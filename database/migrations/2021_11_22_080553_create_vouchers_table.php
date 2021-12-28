@@ -17,8 +17,8 @@ class CreateVouchersTable extends Migration
             $table->bigIncrements('id');
             $table->date('date');
             $table->string('voucher_type')->default('sale_purchase_voucher');
-            $table->integer('total_debit')->default(0);
-            $table->integer('total_credit')->default(0);
+            $table->float('total_debit')->default(0);
+            $table->float('total_credit')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });
