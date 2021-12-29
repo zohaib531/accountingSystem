@@ -35,11 +35,11 @@
                                             $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                                         @endphp
 
-                                        @if ($entryType == 'debit')
+                                        @if ($entryType == 'debit' && $openingBalance>0)
                                             @php $totalDebit += $openingBalance; @endphp
                                             <tr>
                                                 <td>{{$subAccount->title}}</td>
-                                                <td>{{$openingBalance}}</td>
+                                                <td>{{number_format($openingBalance,2)}}</td>
                                             </tr>
                                         @endif
                                     @endforeach
@@ -65,11 +65,11 @@
                                             $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                                         @endphp
 
-                                        @if ($entryType == 'credit')
+                                        @if ($entryType == 'credit' && $openingBalance>0)
                                             @php $totalCredit += $openingBalance; @endphp
                                             <tr>
                                                 <td>{{$subAccount->title}}</td>
-                                                <td>{{$openingBalance}}</td>
+                                                <td>{{number_format($openingBalance,2)}}</td>
                                             </tr>
                                         @endif
                                 @endforeach
@@ -85,7 +85,7 @@
                     <tbody>
                         <tr>
                             <td class="text-center h5">Total</td>
-                            <td class="h5">{{$totalDebit}}</td>
+                            <td class="h5">{{number_format($totalDebit,2)}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -96,7 +96,7 @@
                     <tbody>
                         <tr>
                             <td class="text-center h5">Total</td>
-                            <td class="h5">{{$totalCredit}}</td>
+                            <td class="h5">{{number_format($totalCredit,2)}}</td>
                         </tr>
                     </tbody>
                 </table>

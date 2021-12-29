@@ -48,6 +48,6 @@ Route::middleware(['auth'])->group(function(){
     Route::post('getPartyAccountData', 'PartyAccountLedgerController@entriesBetweenDates')->name('getPartyAccountData');
     Route::get('agingReport', 'AgingReportController@index')->name('aging_report');
     Route::post('getAgentReportData', 'AgingReportController@entriesBetweenDates')->name('getAgentReportData');
-    Route::get('balanceSheet', 'BalanceSheetController@index')->name('balance_sheet');
-    Route::post('getbalanceSheet', 'BalanceSheetController@entriesBetweenDates')->name('getbalanceSheet');
+    Route::get('trialBalance', 'TrialBalanceController@index')->name('trialBalance');
+    Route::post('getTrialBalance', 'TrialBalanceController@getTrialBalance')->name('getTrialBalance');
 });
