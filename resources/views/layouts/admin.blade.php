@@ -16,59 +16,6 @@
     <link href="{{ asset('assets/template/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/template/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
 
-    <style>
-        .select2-container {
-            display: block !important;
-            width: 100% !important
-        }
-
-        .checkVariationDisplay {
-            display: inline;
-        }
-
-        .variation_style {
-            border: none;
-            width: 55% !important;
-        }
-
-        .variation_style_only_img {
-            border: none;
-            width: 120% !important;
-        }
-        .form-control{
-            height: 38px !important;
-            min-height: 38px !important;
-        }
-        .scrollModal{
-            max-height: 80vh !important;
-            overflow-y: auto;
-        }
-        .dataTable > thead > tr > th[class*="sort"]:before,
-        .dataTable > thead > tr > th[class*="sort"]:after {
-            content: "" !important;
-        }
-
-        /* Chrome, Safari, Edge, Opera */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-        }
-
-        /* Firefox */
-        input[type=number] {
-        -moz-appearance: textfield;
-        padding:3px !important ;
-        }
-
-
-        @media (min-width: 992px){
-            .saleParchaseWidth {
-                max-width:80% !important;
-            }
-        }
-
-    </style>
     @yield('style')
 
 </head>

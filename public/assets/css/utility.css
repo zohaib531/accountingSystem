@@ -55,12 +55,65 @@ input[type="search"],select[name="DataTables_Table_0_length"]{
     min-height: 32px !important;
 }
 
+input[data-common="common"]{
+    padding: 3px !important;
+    -moz-appearance: textfield;
+}
+input.form-control:focus{
+    border: 1px solid rgb(34, 33, 33) !important;
+}
+
+.select2-container--focus .selection .select2-selection--single {
+    border: 1px solid rgb(34, 33, 33) !important;
+}
 
 
-/*
-input[type="date"]{position: relative; width: 100%;color: white;}
-input[type="date"]:before{ content: attr(data-date); display: inline-block; color: black;}
-input[type="date"]::-webkit-datetime-edit,
-input[type="date"]::-webkit-inner-spin-button,
-input[type="date"]::-webkit-clear-button{display: none;}
-input[type="date"]::-webkit-calendar-picker-indicator{position: absolute; top: 3px; right: 0; color: black; opacity: 1;} */
+
+
+.select2-container {
+    display: block !important;
+    width: 100% !important
+}
+
+.checkVariationDisplay {
+    display: inline;
+}
+
+.variation_style {
+    border: none;
+    width: 55% !important;
+}
+
+.variation_style_only_img {
+    border: none;
+    width: 120% !important;
+}
+.form-control{
+    height: 38px !important;
+    min-height: 38px !important;
+}
+.scrollModal{
+    max-height: 80vh !important;
+    overflow-y: auto;
+}
+.dataTable > thead > tr > th[class*="sort"]:before,
+.dataTable > thead > tr > th[class*="sort"]:after {
+    content: "" !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+
+
+
+
+@media (min-width: 992px){
+    .saleParchaseWidth {
+        max-width:80% !important;
+    }
+}
+

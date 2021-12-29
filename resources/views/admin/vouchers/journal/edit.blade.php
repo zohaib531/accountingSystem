@@ -27,7 +27,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-3 col-form-label px-0" for="update-date">Voucher Date<span class="text-danger">*</span></label>
                                         <div class="col-lg-9">
-                                            <input class="form-control editDate" id="update-date" name="date" value="{{\Carbon\Carbon::createFromFormat('Y-m-d', $voucher->date)->format('d / m / Y')}}" placeholder="dd/mm/yyyy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                            <input class="form-control editDate" id="update-date" name="date" value="{{\Carbon\Carbon::createFromFormat('Y-m-d', $voucher->date)->format('d / m / Y')}}" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -74,7 +74,7 @@
                                                         <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                             <div class="col-lg-12 pl-0 pr-2">
-                                                                <input class="form-control editDate" name="credit_dates[]" value="{{\Carbon\Carbon::createFromFormat('Y-m-d', $detail->date)->format('d / m / Y')}}" placeholder="dd/mm/yyyy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                                                <input class="form-control editDate" name="credit_dates[]" value="{{\Carbon\Carbon::createFromFormat('Y-m-d', $detail->date)->format('d / m / Y')}}" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -167,7 +167,7 @@
                                                         <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                             <div class="col-lg-12 pl-0 pr-2">
-                                                                <input class="form-control editDate" name="debit_dates[]" value="{{\Carbon\Carbon::createFromFormat('Y-m-d', $detail->date)->format('d / m / Y')}}" placeholder="dd/mm/yyyy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                                                <input class="form-control editDate" name="debit_dates[]" value="{{\Carbon\Carbon::createFromFormat('Y-m-d', $detail->date)->format('d / m / Y')}}" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -258,7 +258,7 @@
                                             <div class="form-group row m-0 align-items-center">
                                                 <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
                                                 <div class="col-lg-12 pl-0 pr-2">
-                                                    <input class="form-control editDate" name="suspense_date" value="{{ $suspenseEntry !=null ? \Carbon\Carbon::createFromFormat('Y-m-d', $suspenseEntry->date)->format('d / m / Y') :''}}" placeholder="dd/mm/yyyy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                                    <input class="form-control editDate" name="suspense_date" value="{{ $suspenseEntry !=null ? \Carbon\Carbon::createFromFormat('Y-m-d', $suspenseEntry->date)->format('d / m / Y') :''}}" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -337,7 +337,7 @@
                             <div class="form-group row m-0 align-items-center">
                                 <label></label>
                                 <div class="col-lg-12 pl-0 pr-2">
-                                    <input class="form-control editDate" name="${side}dates[]" placeholder="dd/mm/yyyy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                    <input class="form-control editDate" name="${side}dates[]" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
                                 </div>
                             </div>
                         </div>

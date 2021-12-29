@@ -37,7 +37,7 @@
                         <input type="text" class="form-control" id="opening-balance" value="{{number_format($subAccount->opening_balance, 2)}}"  name="opening_balance" placeholder="Enter Opening Balance.."  maxlength="12" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="{{$subAccount->opening_balance}}" data-common="common" onkeyup="getValue(this)">
                     </div>
                     <div class="col-6 pr-0">
-                        <select class="form-control" id="transaction-type" name="transaction_type">
+                        <select class="form-control updateSearchableSelectTransaction" id="transaction-type" name="transaction_type">
                             <option value="" disabled>Select Debit/Credit</option>
                             <option value="debit" @if($subAccount->transaction_type=='debit') selected @endif >Debit</option>
                             <option value="credit" @if($subAccount->transaction_type=='credit') selected @endif>Credit</option>
@@ -50,7 +50,7 @@
         <div class="form-group row">
             <label class="col-lg-3 col-form-label" for="opening-date">Opening Date<span class="text-danger">*</span></label>
             <div class="col-lg-9">
-                <input class="form-control" id="opening-date" value="{{\Carbon\Carbon::createFromFormat('Y-m-d', $subAccount->date)->format('d / m / Y')}}" name="opening_date" placeholder="dd/mm/yyyy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);"  autocomplete="off" type="text">
+                <input class="form-control" id="opening-date" value="{{\Carbon\Carbon::createFromFormat('Y-m-d', $subAccount->date)->format('d / m / Y')}}" name="opening_date" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);"  autocomplete="off" type="text">
             </div>
         </div>
 
@@ -63,5 +63,10 @@
    <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Close</button>
    <button type="button" class="btn btn-success text-white" onclick="commonFunction(false,'{{ route('sub-accounts.update',$subAccount->id) }}','{{route('sub-accounts.index')}}','post','','update-form');">Update</button>
 </div>
+
+
+<script>
+    $('.updateSearchableSelectTransaction').select2({dropdownParent: $('.updateSearchableSelectTransaction').parent()});
+</script>
 
 

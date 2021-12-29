@@ -37,7 +37,7 @@
                                     @foreach ($journal_vouchers as $key=> $journalVoucher)
                                     <tr>
                                         <td>{{++$key}}</td>
-                                        <td>{{date('d/m/Y',strtotime($journalVoucher->date))}}</td>
+                                        <td>{{date('d/m/y',strtotime($journalVoucher->date))}}</td>
                                         <td></td>
                                         <td>{{number_format($journalVoucher->total_debit)}}</td>
                                         <td>{{number_format($journalVoucher->total_credit)}}</td>

@@ -30,7 +30,7 @@
                         </div>
                         @can('create-sub-account')
                             <div class="col-6 text-right">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addsubaccount" onclick="initializeSelect2()">Add new +</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addsubaccount" onclick="initializeSelect2(), transactionSelect2()">Add new +</button>
                             </div>
                         @endcan
                     </div>
@@ -54,7 +54,7 @@
                                 <tr>
 
                                     <td>{{++$key}}</td>
-                                    <td>{{date('d/m/Y', strtotime($sub_account->date))}}</td>
+                                    <td>{{date('d/m/y', strtotime($sub_account->date))}}</td>
                                     <td>{{$sub_account->get_account->title}}</td>
                                     <td>{{$sub_account->title}}</td>
                                     <td>{{ucwords($sub_account->transaction_type)}}</td>
@@ -121,7 +121,7 @@
                                         <input type="text" class="form-control" id="opening-balance" value="0" name="opening_balance" placeholder="Enter Opening Balance.."  maxlength="12" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" onkeyup="getValue(this)">
                                     </div>
                                     <div class="col-6 pr-0">
-                                        <select class="form-control" id="transaction-type" name="transaction_type">
+                                        <select class="form-control searchableSelectTransaction" id="transaction-type" name="transaction_type">
                                             <option value="" disabled selected>Select Debit/Credit</option>
                                             <option value="debit">Debit</option>
                                             <option value="credit">Credit</option>
@@ -134,7 +134,7 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label px-0" for="opening-date">Opening Date<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input class="form-control" id="opening-date" name="opening_date" placeholder="dd/mm/yyyy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                <input class="form-control" id="opening-date" name="opening_date" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
                             </div>
                         </div>
 
@@ -169,4 +169,11 @@
     <script src="{{asset('assets/template/plugins/tables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('assets/template/plugins/tables/js/datatable/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{asset('assets/template/plugins/tables/js/datatable-init/datatable-basic.min.js')}}"></script>
+
+    <script>
+        function transactionSelect2(){
+            $('.searchableSelectTransaction').select2({dropdownParent: $('.searchableSelectTransaction').parent()});
+        }
+
+    </script>
 @endsection

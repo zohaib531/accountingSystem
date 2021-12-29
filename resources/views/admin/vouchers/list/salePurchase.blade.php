@@ -36,7 +36,7 @@
                                     @foreach ($vouchers as $key => $sale_purchase_voucher)
                                         <tr>
                                             <td>{{ ++$key }}</td>
-                                            <td>{{date('d/m/Y',strtotime($sale_purchase_voucher->date))}}</td>
+                                            <td>{{date('d/m/y',strtotime($sale_purchase_voucher->date))}}</td>
                                             <td></td>
                                             <td>{{ number_format($sale_purchase_voucher->total_debit , 2) }}</td>
                                             <td>{{ number_format($sale_purchase_voucher->total_credit , 2) }}</td>
