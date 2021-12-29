@@ -37,7 +37,7 @@
                                 <div class="form-group row m-0 align-items-center">
                                     <label class="col-lg-12 col-form-label px-0" for="val-start_date">Sub Account<span class="text-danger">*</span></label>
                                     <div class="col-lg-12 px-0">
-                                        <select name="sub_account" class="form-control" id="">
+                                        <select name="sub_account" class="form-control searchableSelect" id="">
                                             <option selected value="">Sub Account</option>
                                             @foreach ($subAccounts as $subAccount)
                                                 <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
