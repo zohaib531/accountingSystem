@@ -23,7 +23,9 @@ class SalePurchaseVoucherController extends Controller
     public function index()
     {
         $vouchers = Voucher::where('voucher_type','sale_purchase_voucher')->get();
-        return view('admin.vouchers.list.salePurchase', compact('vouchers'));
+        $products = Product::select('id', 'title','narration','product_unit')->get();
+        $subAccounts = SubAccount::select('id', 'title')->get();
+        return view('admin.vouchers.list.salePurchase', compact('vouchers','products','subAccounts'));
     }
 
     /**

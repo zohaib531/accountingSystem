@@ -83,7 +83,7 @@
                                                         <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                             <div class="col-lg-12 pl-0 pr-2">
-                                                                <select name="credit_accounts[]" class="form-control updateSearchableSelect">
+                                                                <select name="credit_accounts[]" class="form-control updateSearchableSelectCredit">
                                                                     <option selected value="">Sub account</option>
                                                                     @foreach ($subAccounts as $subAccount)
                                                                         <option @if($subAccount->id==$detail->sub_account_id) selected @endif value="{{$subAccount->id}}">{{$subAccount->title}}</option>
@@ -176,7 +176,7 @@
                                                         <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                             <div class="col-lg-12 pl-0 pr-2">
-                                                                <select name="debit_accounts[]" class="form-control updateSearchableSelect">
+                                                                <select name="debit_accounts[]" class="form-control updateSearchableSelectDebit">
                                                                     <option selected value="">Sub account</option>
                                                                     @foreach ($subAccounts as $subAccount)
                                                                         <option @if($subAccount->id==$detail->sub_account_id) selected @endif value="{{$subAccount->id}}">{{$subAccount->title}}</option>
@@ -267,7 +267,7 @@
                                             <div class="form-group row m-0 align-items-center">
                                                 <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                                 <div class="col-lg-12 pl-0 pr-2">
-                                                    <select name="suspense_account" class="form-control updateSearchableSelect">
+                                                    <select name="suspense_account" class="form-control updateSearchableSelectSuspense">
                                                         <option selected value="">Sub account</option>
                                                         @foreach ($subAccounts as $subAccount)
                                                             <option @if($suspenseEntry !=null && $subAccount->id==$suspenseEntry->sub_account_id) selected @endif value="{{$subAccount->id}}">{{$subAccount->title}}</option>
@@ -329,7 +329,9 @@
 
 <script>
 
+    let i = 0;
     const addNewRow=(elem, id, side , commonClass)=>{
+        ++i;
         $(elem).parent().parent().find(id).append(`
                 <div class="row mt-2 mx-0 justify-content-between position-relative w-100">
 
@@ -346,7 +348,7 @@
                             <div class="form-group row m-0 align-items-center">
                                 <label></label>
                                 <div class="col-lg-12 pl-0 pr-2">
-                                    <select name="${side}accounts[]" class="form-control updateSearchableSelect">
+                                    <select name="${side}accounts[]" class="form-control updateSearchableSelect${i}">
                                         <option selected value="">Sub account</option>
                                         @foreach ($subAccounts as $subAccount)
                                             <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
@@ -387,8 +389,18 @@
                 defaultScope.ready();
             // Initialize coma in add more
 
-    }
+            $('.updateSearchableSelect'+i).select2({ dropdownParent: $('.updateSearchableSelect'+i).parent() });
+        }
 
+
+
+    $(document).ready(function() {
+
+        $('.updateSearchableSelectCredit').select2({ dropdownParent: $('.updateSearchableSelectCredit').parent() });
+        $('.updateSearchableSelectDebit').select2({ dropdownParent: $('.updateSearchableSelectDebit').parent() });
+        $('.updateSearchableSelectSuspense').select2({ dropdownParent: $('.updateSearchableSelectSuspense').parent() });
+
+    });
 </script>
 
 @endsection

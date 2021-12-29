@@ -19,6 +19,53 @@
                                     </button>
                                 </a>
                             </div>
+                            {{-- Filter Code Start --}}
+                            <div class="col-10">
+                                <form action="">
+
+                                    <div class="row mt-2 align-items-end">
+
+                                        <div class="col-3">
+                                            <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
+                                            <select name="filter_subaccount" class="form-control searchableSelectFilterSubaccount">
+                                                <option selected value="all">All</option>
+                                                @foreach ($subAccounts as $subAccount)
+                                                <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <label class="col-lg-12 col-form-label px-0">Product<span class="text-danger">*</span></label>
+                                            <select name="filter_product" class="form-control searchableSelectFilterProduct">
+                                                <option selected value="all">All</option>
+                                                @foreach ($products as $product)
+                                                    <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <label class="col-lg-12 col-form-label px-0">Transaction Type<span class="text-danger">*</span></label>
+                                            <select name="filter_transaction_type" class="form-control searchableSelectFilterTransaction">
+                                                <option selected value="all">All</option>
+                                                <option value="debit">Debit</option>
+                                                <option value="credit">Credit</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-3 text-center">
+                                            <button type="button" class="btn btn-primary">
+                                                Apply Filter
+                                            </button>
+                                        </div>
+
+                                    </div>
+
+                                </form>
+                            </div>
+                            {{-- Filter Code Start --}}
+
                         </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered zero-configuration">
@@ -26,6 +73,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Date</th>
+                                        <th>Sub account</th>
                                         <th>Product</th>
                                         <th>Debit</th>
                                         <th>Credit</th>
@@ -37,6 +85,7 @@
                                         <tr>
                                             <td>{{ ++$key }}</td>
                                             <td>{{date('d/m/y',strtotime($sale_purchase_voucher->date))}}</td>
+                                            <td></td>
                                             <td></td>
                                             <td>{{ number_format($sale_purchase_voucher->total_debit , 2) }}</td>
                                             <td>{{ number_format($sale_purchase_voucher->total_credit , 2) }}</td>
@@ -61,5 +110,18 @@
             </div>
         </div>
     </div>
+
+@endsection
+
+
+@section('script')
+
+    <script>
+        $(document).ready(function() {
+            $('.searchableSelectFilterSubaccount').select2({dropdownParent: $('.searchableSelectFilterSubaccount').parent()});
+            $('.searchableSelectFilterProduct').select2({dropdownParent: $('.searchableSelectFilterProduct').parent()});
+            $('.searchableSelectFilterTransaction').select2({dropdownParent: $('.searchableSelectFilterTransaction').parent()});
+        });
+    </script>
 
 @endsection
