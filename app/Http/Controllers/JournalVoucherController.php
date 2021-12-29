@@ -47,7 +47,7 @@ class JournalVoucherController extends Controller
             return response()->json(['success' => false, 'message' => $validations->errors()]);
         }
         $journal_voucher = new Voucher();
-        $journal_voucher->date = Carbon::createFromFormat('d / m / Y', $request->date)->format('Y-m-d');
+        $journal_voucher->date = Carbon::createFromFormat('d / m / y', $request->date)->format('Y-m-d');
         $journal_voucher->voucher_type = "journal_voucher";
         $journal_voucher->total_debit = str_replace(',','',$request->total_debit);
         $journal_voucher->total_credit = str_replace(',','',$request->total_credit);
@@ -94,7 +94,7 @@ class JournalVoucherController extends Controller
             return response()->json(['success' => false, 'message' => $validations->errors()]);
         }
         $journal_voucher = Voucher::find($id);
-        $journal_voucher->date = Carbon::createFromFormat('d / m / Y', $request->date)->format('Y-m-d');
+        $journal_voucher->date = Carbon::createFromFormat('d / m / y', $request->date)->format('Y-m-d');
         $journal_voucher->total_debit = str_replace(',','',$request->total_debit);
         $journal_voucher->total_credit = str_replace(',','',$request->total_credit);
         $journal_voucher->save();
@@ -166,7 +166,7 @@ class JournalVoucherController extends Controller
         if ($check) {
             $str = $request->suspense_entry . "_amount";
             $suspenseEntryDetail->voucher_id = $voucher->id;
-            $suspenseEntryDetail->date = Carbon::createFromFormat('d / m / Y', $request->suspense_date)->format('Y-m-d');
+            $suspenseEntryDetail->date = Carbon::createFromFormat('d / m / y', $request->suspense_date)->format('Y-m-d');
             $suspenseEntryDetail->sub_account_id = $request->suspense_account;
             $suspenseEntryDetail->$str = str_replace(',','',$request->suspense_amount);
             $suspenseEntryDetail->entry_type = $request->suspense_entry;
@@ -210,7 +210,7 @@ class JournalVoucherController extends Controller
                 }
 
                 $VoucherDetail->voucher_id = $voucher->id;
-                $VoucherDetail->date = isset($request->debit_dates[$key]) ? Carbon::createFromFormat('d / m / Y', $request->debit_dates[$key])->format('Y-m-d') : '';
+                $VoucherDetail->date = isset($request->debit_dates[$key]) ? Carbon::createFromFormat('d / m / y', $request->debit_dates[$key])->format('Y-m-d') : '';
                 $VoucherDetail->product_narration = isset($request->debit_narrations[$key]) ? $request->debit_narrations[$key] : '';
                 $VoucherDetail->sub_account_id = isset($request->debit_accounts[$key]) ? $request->debit_accounts[$key] : '';
                 $VoucherDetail->debit_amount = isset($request->debit_amounts[$key]) ? str_replace(',','',$request->debit_amounts[$key]) : 0;
@@ -250,7 +250,7 @@ class JournalVoucherController extends Controller
                 }
 
                 $VoucherDetail->voucher_id = $voucher->id;
-                $VoucherDetail->date = isset($request->credit_dates[$key]) ? Carbon::createFromFormat('d / m / Y', $request->credit_dates[$key])->format('Y-m-d'): '';
+                $VoucherDetail->date = isset($request->credit_dates[$key]) ? Carbon::createFromFormat('d / m / y', $request->credit_dates[$key])->format('Y-m-d'): '';
                 $VoucherDetail->product_narration = isset($request->credit_narrations[$key]) ? $request->credit_narrations[$key] : '';
                 $VoucherDetail->sub_account_id = isset($request->credit_accounts[$key]) ? $request->credit_accounts[$key] : '';
                 $VoucherDetail->credit_amount = isset($request->credit_amounts[$key]) ? str_replace(',','',$request->credit_amounts[$key]) : 0;

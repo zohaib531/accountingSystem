@@ -1,10 +1,24 @@
+
 <style>
-    td{
-        width: 50% !important;
+    .trail_tr{
+        background-color: #7571f9 !important;
     }
+    .trail_tr th{
+        font-size:20px !important;
+        color: #f1f1f1 !important;
+    }
+    .trail_tr th:nth-child(1) , .trailTotal th:nth-child(1){
+        width: 70% !important;
+    }
+    .trail_tr th:nth-child(2) , .trailTotal th:nth-child(2){
+        width: 30% !important;
+    }
+    .blackBorder td, .blackBorder th {
+        border: 1px solid #938f8f !important;
+    }
+
+
 </style>
-
-
 <table class="table table-striped table-bordered zero-configuration">
     <thead>
         <tr>
@@ -16,18 +30,18 @@
         <tr>
             {{-- Debit Table code Start --}}
                         <td style="vertical-align: top !important;">
-                            <table class="w-100">
+                            <table class="w-100 blackBorder">
                                 <thead>
-                                    <tr>
+                                    <tr class="trail_tr">
                                         <th>Sub Account</th>
                                         <th>Closing Balance</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php 
+                                    @php
                                         $totalDebit = 0;
                                         $totalCredit = 0;
-                                    @endphp 
+                                    @endphp
                                     @foreach($subAccounts as $key=>$subAccount)
                                         @php
                                             $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, $endDate, false , 0);
@@ -50,9 +64,9 @@
 
             {{-- Credit Table code Start --}}
                         <td style="vertical-align: top !important;">
-                            <table class="w-100">
+                            <table class="w-100 blackBorder">
                                 <thead>
-                                    <tr>
+                                    <tr class="trail_tr">
                                         <th>Sub Account</th>
                                         <th>Closing Balance</th>
                                     </tr>
@@ -83,9 +97,9 @@
             <td>
                 <table class="w-100">
                     <tbody>
-                        <tr>
-                            <td class="text-center h5">Total</td>
-                            <td class="h5">{{number_format($totalDebit,2)}}</td>
+                        <tr class="trailTotal">
+                            <th class="text-center h5">Total</th>
+                            <th class="h5">{{number_format($totalDebit,2)}}</th>
                         </tr>
                     </tbody>
                 </table>
@@ -94,9 +108,9 @@
             <td>
                 <table class="w-100">
                     <tbody>
-                        <tr>
-                            <td class="text-center h5">Total</td>
-                            <td class="h5">{{number_format($totalCredit,2)}}</td>
+                        <tr class="trailTotal">
+                            <th class="text-center h5">Total</th>
+                            <th class="h5">{{number_format($totalCredit,2)}}</th>
                         </tr>
                     </tbody>
                 </table>

@@ -248,13 +248,13 @@
 
                                 @can('')
                                 <li>
-                                    <a href="{{ route('salePurchase.index')}}">Sale/Purchase Voucher list</a>
+                                    <a href="{{ route('salePurchase.index')}}">Sale/Purchase List</a>
                                 </li>
                                 @endcan
 
                                 @can('')
                                 <li>
-                                    <a href="{{ route('journal.index') }}">Journal Voucher list</a>
+                                    <a href="{{ route('journal.index') }}">Journal List</a>
                                 </li>
                                 @endcan
 

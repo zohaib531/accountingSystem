@@ -27,7 +27,7 @@
                                     <div class="form-group row m-0 align-items-center">
                                         <label class="col-lg-3 col-form-label px-0" for="update-date">Voucher Date<span class="text-danger">*</span></label>
                                         <div class="col-lg-9">
-                                            <input class="form-control editDate" id="update-date" name="date" value="{{\Carbon\Carbon::createFromFormat('Y-m-d', $voucher->date)->format('d / m / Y')}}" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                            <input class="form-control editDate" id="update-date" name="date" value="{{\Carbon\Carbon::createFromFormat('Y-m-d', $voucher->date)->format('d / m / y')}}" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -37,30 +37,30 @@
                             </div>
                             <div class="form-validation mb-3">
                                   {{-- Credit Section Start --}}
-                                    <div  id="journal_credit" class="mt-5">
+                                    <div  id="journal_credit" class="mt-3">
                                         <h3>Credit</h3>
-                                        <div class="row mx-0 justify-content-between pt-3">
+                                        <div class="row mx-0 justify-content-between">
                                             <div class="col-3 px-0">
                                                 <div class="form-group row m-0 align-items-center">
-                                                    <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
+                                                    <label class="col-lg-12 col-form-label px-0 pb-0">Date<span class="text-danger">*</span></label>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 px-0">
                                                 <div class="form-group row m-0 align-items-center">
-                                                    <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
+                                                    <label class="col-lg-12 col-form-label px-0 pb-0">Sub Account<span class="text-danger">*</span></label>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 px-0">
                                                 <div class="form-group row m-0 align-items-center">
-                                                    <label class="col-lg-12 col-form-label px-0">Naration<span class="text-danger">*</span></label>
+                                                    <label class="col-lg-12 col-form-label px-0 pb-0">Naration<span class="text-danger">*</span></label>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 px-0">
                                                 <div class="form-group row m-0 align-items-center">
-                                                    <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
+                                                    <label class="col-lg-12 col-form-label px-0 pb-0">Amount<span class="text-danger">*</span></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -68,13 +68,13 @@
                                         @if($voucher->voucherDetails()->where('entry_type','credit')->where('suspense_account','0')->get()->count() > 0)
                                             @foreach($voucher->voucherDetails()->where('entry_type','credit')->where('suspense_account','0')->get() as $detail)
 
-                                                <div class="row mx-0 justify-content-between pt-3">
+                                                <div class="row mx-0 justify-content-between mt-2">
                                                     <input type="hidden" name="credit_voucher_detail_ids[]" value="{{$detail->id}}">
                                                     <div class="col-3 px-0">
                                                         <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                             <div class="col-lg-12 pl-0 pr-2">
-                                                                <input class="form-control editDate" name="credit_dates[]" value="{{\Carbon\Carbon::createFromFormat('Y-m-d', $detail->date)->format('d / m / Y')}}" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                                                <input class="form-control editDate" name="credit_dates[]" value="{{\Carbon\Carbon::createFromFormat('Y-m-d', $detail->date)->format('d / m / y')}}" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -123,7 +123,7 @@
                                         @endif
 
                                     </div>
-                                    <div class="text-right pl-2 mt-3">
+                                    <div class="text-right pl-2 mt-2">
                                         <button onclick="addNewRow(this,'#journal_credit' , 'credit_' , 'commonCredit')" class="btn btn-light" type="button">Add more +</button>
                                     </div>
                                     {{-- Credit Section end --}}
@@ -131,43 +131,43 @@
 
 
                                     {{-- Debit Section Start --}}
-                                    <div  id="journal_debit" class="mt-4">
+                                    <div  id="journal_debit">
                                         <h3>Debit</h3>
-                                        <div class="row mx-0 justify-content-between pt-3">
+                                        <div class="row mx-0 justify-content-between">
                                             <div class="col-3 px-0">
                                                 <div class="form-group row m-0 align-items-center">
-                                                    <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
+                                                    <label class="col-lg-12 col-form-label px-0 pb-0">Date<span class="text-danger">*</span></label>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 px-0">
                                                 <div class="form-group row m-0 align-items-center">
-                                                    <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
+                                                    <label class="col-lg-12 col-form-label px-0 pb-0">Sub Account<span class="text-danger">*</span></label>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 px-0">
                                                 <div class="form-group row m-0 align-items-center">
-                                                    <label class="col-lg-12 col-form-label px-0">Naration<span class="text-danger">*</span></label>
+                                                    <label class="col-lg-12 col-form-label px-0 pb-0">Naration<span class="text-danger">*</span></label>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 px-0">
                                                 <div class="form-group row m-0 align-items-center">
-                                                    <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
+                                                    <label class="col-lg-12 col-form-label px-0 pb-0">Amount<span class="text-danger">*</span></label>
                                                 </div>
                                             </div>
                                         </div>
                                         @if($voucher->voucherDetails()->where('entry_type','debit')->where('suspense_account','0')->get()->count() > 0)
                                             @foreach($voucher->voucherDetails()->where('entry_type','debit')->where('suspense_account','0')->get() as $detail)
 
-                                                <div class="row mx-0 justify-content-between pt-3">
+                                                <div class="row mx-0 justify-content-between mt-2">
                                                     <input type="hidden" name="debit_voucher_detail_ids[]" value="{{$detail->id}}">
                                                     <div class="col-3 px-0">
                                                         <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                             <div class="col-lg-12 pl-0 pr-2">
-                                                                <input class="form-control editDate" name="debit_dates[]" value="{{\Carbon\Carbon::createFromFormat('Y-m-d', $detail->date)->format('d / m / Y')}}" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                                                <input class="form-control editDate" name="debit_dates[]" value="{{\Carbon\Carbon::createFromFormat('Y-m-d', $detail->date)->format('d / m / y')}}" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -216,7 +216,7 @@
                                         @endif
 
                                     </div>
-                                    <div class="text-right pl-2 mt-3">
+                                    <div class="text-right pl-2 mt-2">
                                         <button onclick="addNewRow(this,'#journal_debit', 'debit_' , 'commonDebit')" class="btn btn-light" type="button">Add more +</button>
                                     </div>
                                     {{-- Debit Section end --}}
@@ -226,7 +226,7 @@
                                         $str = $suspenseEntry!=null ? $suspenseEntry->entry_type."_amount":'';
                                     @endphp
 
-                                    <div class="row m-0 justify-content-between align-items-end mt-5">
+                                    <div class="row m-0 justify-content-between align-items-end mt-3">
                                         <div class="col-6 pl-0">
                                             <div class="form-group row m-0 align-items-center differenceEntryCheck {{ $suspenseEntry ==null ? 'd-none' : ' '}}">
                                                 <label class="col-lg-9 col-form-label px-0 differenceLabel" for="checkedEntery">@if($suspenseEntry !=null)<b>{{ucfirst($suspenseEntry->entry_type)}}</b> difference of <b>{{ucfirst($suspenseEntry->$str)}}</b> has been adjusted @else Do you want to adujst? @endif</label>
@@ -258,7 +258,7 @@
                                             <div class="form-group row m-0 align-items-center">
                                                 <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
                                                 <div class="col-lg-12 pl-0 pr-2">
-                                                    <input class="form-control editDate" name="suspense_date" value="{{ $suspenseEntry !=null ? \Carbon\Carbon::createFromFormat('Y-m-d', $suspenseEntry->date)->format('d / m / Y') :''}}" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                                    <input class="form-control editDate" name="suspense_date" value="{{ $suspenseEntry !=null ? \Carbon\Carbon::createFromFormat('Y-m-d', $suspenseEntry->date)->format('d / m / y') :''}}" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -287,7 +287,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row m-0 justify-content-end  mt-5">
+                                    <div class="row m-0 justify-content-end  mt-3">
                                         <div class="col-4 px-0">
                                             <div class="row m-0">
                                                 <div class="col-6 pr-0">

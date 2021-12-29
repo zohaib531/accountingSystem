@@ -53,7 +53,7 @@ class SalePurchaseVoucherController extends Controller
         $validations = Validator::make($request->all(),$this->rules($request),$this->messages($request));
         if ($validations->fails()) {return response()->json(['success' => false, 'message' => $validations->errors()]);}
         $sale_purchase_voucher = new Voucher();
-        $sale_purchase_voucher->date = Carbon::createFromFormat('d / m / Y', $request->date)->format('Y-m-d');
+        $sale_purchase_voucher->date = Carbon::createFromFormat('d / m / y', $request->date)->format('Y-m-d');
         $sale_purchase_voucher->total_debit = str_replace(',','',$request->total_debit);
         $sale_purchase_voucher->total_credit = str_replace(',','',$request->total_credit);
         $sale_purchase_voucher->save();
@@ -103,7 +103,7 @@ class SalePurchaseVoucherController extends Controller
         $validations = Validator::make($request->all(),$this->rules($request),$this->messages($request));
         if ($validations->fails()) {return response()->json(['success' => false, 'message' => $validations->errors()]);}
         $sale_purchase_voucher = Voucher::find($id);
-        $sale_purchase_voucher->date = Carbon::createFromFormat('d / m / Y', $request->date)->format('Y-m-d') ;
+        $sale_purchase_voucher->date = Carbon::createFromFormat('d / m / y', $request->date)->format('Y-m-d') ;
         $sale_purchase_voucher->total_debit = str_replace(',','',$request->total_debit);
         $sale_purchase_voucher->total_credit = str_replace(',','',$request->total_credit);
         $sale_purchase_voucher->save();
@@ -170,7 +170,7 @@ class SalePurchaseVoucherController extends Controller
         if($check){
             $str = $request->suspense_entry."_amount";
             $suspenseEntryDetail->voucher_id = $voucher->id;
-            $suspenseEntryDetail->date = Carbon::createFromFormat('d / m / Y', $request->suspense_date)->format('Y-m-d');
+            $suspenseEntryDetail->date = Carbon::createFromFormat('d / m / y', $request->suspense_date)->format('Y-m-d');
             $suspenseEntryDetail->sub_account_id = $request->suspense_account;
             $suspenseEntryDetail->$str = str_replace(',','',$request->suspense_amount);
             $suspenseEntryDetail->entry_type = $request->suspense_entry;
@@ -214,7 +214,7 @@ class SalePurchaseVoucherController extends Controller
                 }
 
                 $VoucherDetail->voucher_id = $voucher->id;
-                $VoucherDetail->date = isset($request->debit_dates[$key])? Carbon::createFromFormat('d / m / Y', $request->debit_dates[$key])->format('Y-m-d'):'';
+                $VoucherDetail->date = isset($request->debit_dates[$key])? Carbon::createFromFormat('d / m / y', $request->debit_dates[$key])->format('Y-m-d'):'';
                 $VoucherDetail->product_narration = isset($request->debit_products[$key])?$request->debit_products[$key]:'';
                 $VoucherDetail->sub_account_id = isset($request->debit_accounts[$key])?$request->debit_accounts[$key]:'';
                 $VoucherDetail->debit_amount = isset($request->debit_amounts[$key])?str_replace(',','',$request->debit_amounts[$key]):0;
@@ -256,7 +256,7 @@ class SalePurchaseVoucherController extends Controller
                 }
 
                 $VoucherDetail->voucher_id = $voucher->id;
-                $VoucherDetail->date = isset($request->credit_dates[$key])? Carbon::createFromFormat('d / m / Y', $request->credit_dates[$key])->format('Y-m-d'):'';
+                $VoucherDetail->date = isset($request->credit_dates[$key])? Carbon::createFromFormat('d / m / y', $request->credit_dates[$key])->format('Y-m-d'):'';
                 $VoucherDetail->product_narration = isset($request->credit_products[$key])?$request->credit_products[$key]:'';
                 $VoucherDetail->sub_account_id = isset($request->credit_accounts[$key])?$request->credit_accounts[$key]:'';
                 $VoucherDetail->credit_amount = isset($request->credit_amounts[$key])?str_replace(',','',$request->credit_amounts[$key]):0;
