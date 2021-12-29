@@ -264,8 +264,8 @@
 
 
                         <li>
-                            <a href="{{ route('balance_sheet') }}" aria-expanded="false">
-                                <i class="mdi mdi-clipboard-text menu-icon"></i><span class="nav-text">Balance Sheet</span>
+                            <a href="{{ route('trialBalance') }}" aria-expanded="false">
+                                <i class="mdi mdi-clipboard-text menu-icon"></i><span class="nav-text">Trial Balance</span>
                             </a>
                         </li>
 

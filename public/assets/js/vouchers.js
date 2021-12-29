@@ -48,13 +48,13 @@ const totalShouldSame = (elem)=>{
     if($(elem).parent().parent().parent().parent().parent().parent().find('input[id="checkedEntery"]').is(":checked")){
         let totalDebit = getTotalOfTargetSide('commonDebit');
         let totalCredit = getTotalOfTargetSide('commonCredit');
-        if((totalDebit - totalCredit)>0){
+        if(parseFloat(totalDebit - totalCredit)>0){
             let targetElem = $(elem).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]');
-            targetElem.val((parseFloat(targetElem.val()) + (totalDebit-totalCredit)).toFixed(2));
+            targetElem.val((parseFloat(totalCredit) + parseFloat(totalDebit-totalCredit)).toFixed(2));
         }
-        else if((totalCredit-totalDebit)>0){
+        else if(parseFloat(totalCredit-totalDebit)>0){
             let targetElem = $(elem).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]');
-            targetElem.val((parseFloat(targetElem.val()) + (totalCredit-totalDebit)).toFixed(2));
+            targetElem.val((parseFloat(totalDebit) + parseFloat(totalCredit-totalDebit)).toFixed(2));
         }
     }
 }
@@ -70,7 +70,6 @@ const getTotalOfTargetSide=(targetClass)=>{
 
 
 const createAmount = (e, action, voucherType)=>{
-
     if (voucherType) {
         if (action) {
             if($(e).parent().parent().parent().next('div').children('div').children('div').children('input').attr('data-val') >= 0){
@@ -99,6 +98,10 @@ const createAmount = (e, action, voucherType)=>{
 
             }
 
+        }
+    }else{
+        if($(e).val() >= 0){
+            $(e).attr('data-val',$(e).val()); 
         }
     }
     // $(e).attr('name').split('_')[0] =="debit"? totalDebitAmount(e) :totalCreditAmount(e);
@@ -139,7 +142,7 @@ const createAmount = (e, action, voucherType)=>{
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').removeClass('d-none');
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').removeClass('d-none');
     commonCodeForSuspenseEntryDifference(e);
-    // getValue(e);
+    // getValue(e)
 
 }
 
