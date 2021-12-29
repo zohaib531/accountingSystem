@@ -415,8 +415,9 @@
 @section('script')
 
 <script>
-
+    let i = 0;
     const addNewRow=(elem, id, side , commonClass)=>{
+        ++i
         $(elem).parent().parent().find(id).append(`
             <div class="row mt-2 mx-0 justify-content-between position-relative w-100">
                 <div class="col-2 px-0">
@@ -432,7 +433,7 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
-                                <select name="${side}accounts[]" class="form-control updateSearchableSelect">
+                                <select name="${side}accounts[]" class="form-control updateSearchableSelect${i}">
                                     <option disabled value="">Sub account</option>
                                     @foreach ($subAccounts as $subAccount)
                                         <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
@@ -446,7 +447,7 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
-                                <select name="${side}products[]" class="form-control updateSearchableSelect">
+                                <select name="${side}products[]" class="form-control updateSearchableSelectProduct${i}">
                                     <option disabled value="">Product</option>
                                     @foreach ($products as $product)
                                         <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
@@ -496,14 +497,14 @@
         // Initialize coma in add more
             defaultScope.ready();
         // Initialize coma in add more
+
+        $('.updateSearchableSelect'+i).select2({ dropdownParent: $('.updateSearchableSelect'+i).parent() });
+        $('.updateSearchableSelectProduct'+i).select2({ dropdownParent: $('.updateSearchableSelectProduct'+i).parent() });
     }
 
 
 
     $(document).ready(function() {
-
-        $('.updateSearchableSelectCredit').select2({ dropdownParent: $('.updateSearchableSelectCredit').parent() });
-        $('.updateSearchableSelectCreditProduct').select2({ dropdownParent: $('.updateSearchableSelectCreditProduct').parent() });
         $('.updateSearchableSelectSuspense').select2({ dropdownParent: $('.updateSearchableSelectSuspense').parent() });
 
     });
