@@ -102,6 +102,7 @@ class SalePurchaseVoucherController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // return $request->all();
         $validations = Validator::make($request->all(),$this->rules($request),$this->messages($request));
         if ($validations->fails()) {return response()->json(['success' => false, 'message' => $validations->errors()]);}
         $sale_purchase_voucher = Voucher::find($id);
@@ -131,20 +132,23 @@ class SalePurchaseVoucherController extends Controller
         $check = false;
         $remainingBalance = 0;
         $remainingBalanceType = '';
-        if($action && str_replace(',','',$request->suspense_amount) > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
+        if($action && str_replace(',','',$request->suspense_amount) > 0 && (array_sum(str_replace(',','',array_values($request->debit_amounts)))>array_sum(str_replace(',','',array_values($request->credit_amounts))) || array_sum(str_replace(',','',array_values($request->credit_amounts)))>array_sum(str_replace(',','',array_values($request->debit_amounts))))){
             $suspenseEntryDetail = $voucher->voucherDetails()->where('suspense_account','1')->first() !=null ?$voucher->voucherDetails()->where('suspense_account','1')->first():new VoucherDetail();
             $check = true;
-        }else if($action && (array_sum($request->debit_amounts)==array_sum($request->credit_amounts))){
+            return "first";
+        }else if($action && str_replace(',','',$request->suspense_amount) > 0 && (array_sum(str_replace(',','',array_values($request->debit_amounts)))==array_sum(str_replace(',','',array_values($request->credit_amounts))))){
+            return "second";
             if($voucher->voucherDetails()->where('suspense_account','1')->first() !=null){
                 VoucherDetail::where('id',$voucher->voucherDetails()->where('suspense_account','1')->first()->id)->delete();
             }
-        }else if(!$action && str_replace(',','',$request->suspense_amount) > 0 && (array_sum($request->debit_amounts)>array_sum($request->credit_amounts) || array_sum($request->credit_amounts)>array_sum($request->debit_amounts))){
+        }else if(!$action && str_replace(',','',$request->suspense_amount) > 0 && (array_sum(str_replace(',','',array_values($request->debit_amounts)))>array_sum(str_replace(',','',array_values($request->credit_amounts))) || array_sum(str_replace(',','',array_values($request->credit_amounts)))>array_sum(str_replace(',','',array_values($request->debit_amounts))))){
             $suspenseEntryDetail = new VoucherDetail();
+            return "third";
             $check = true;
         }
-
-        $openingBalance = isset($request->suspense_account)? getOpeningBalance($request->suspense_account,$request->suspense_date,false,0)["opening_balance"]:0;
-        $transactionType = isset($request->suspense_account)? getOpeningBalance($request->suspense_account,$request->suspense_date,false,0)["opening_balance_type"]:'';
+        $openingBalance = isset($request->suspense_account) && isset($request->suspense_date)? getOpeningBalance($request->suspense_account,$request->suspense_date,false,0)["opening_balance"]:0;
+        $transactionType = isset($request->suspense_account) && isset($request->suspense_date)? getOpeningBalance($request->suspense_account,$request->suspense_date,false,0)["opening_balance_type"]:'';
+        
         if($transactionType=="debit" && $request->suspense_entry=="debit"){
             $remainingBalance = $openingBalance + str_replace(',','',$request->suspense_amount);
             $remainingBalanceType = "debit";
