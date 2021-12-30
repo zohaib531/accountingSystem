@@ -22,8 +22,28 @@ class SalePurchaseVoucherController extends Controller
      */
     public function index(Request $request)
     {
-        // return $request;
-        $vouchers = Voucher::where('voucher_type','sale_purchase_voucher')->get();
+        $vouchers = VoucherDetail::all();
+        $products = Product::select('id', 'title','narration','product_unit')->get();
+        $subAccounts = SubAccount::select('id', 'title')->get();
+        return view('admin.vouchers.list.salePurchase', compact('vouchers','products','subAccounts'));
+    }
+
+    public function applyFilter(Request $request)
+    {
+        $request = $request->except('_token');
+        $vouchers = null;
+        if(count($this->getFilledField($request))>0){
+            foreach($this->getFilledField($request) as $key=>$value){
+                if($key === array_key_first($this->getFilledField($request))){
+                    $vouchers = VoucherDetail::where($key, $value);
+                }else{
+                    $vouchers->where($key, $value);
+                }
+            }
+            $vouchers = $vouchers->get();
+        }else{
+            $vouchers = VoucherDetail::get();
+        }
         $products = Product::select('id', 'title','narration','product_unit')->get();
         $subAccounts = SubAccount::select('id', 'title')->get();
         return view('admin.vouchers.list.salePurchase', compact('vouchers','products','subAccounts'));
@@ -128,10 +148,18 @@ class SalePurchaseVoucherController extends Controller
         }
     }
 
-    private function filterSalePurchaseVoucher($sub_account , $product_narration , $entry_type){
+    private function getFilledField($array){
+
+        $newArr = [];
+        foreach($array as $x=>$value)
+        {
+          if($value!="all"){
+            $newArr[$x] = $value;
+          }
+        }
+        return $newArr;
 
     }
-
 
 
 
