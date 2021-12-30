@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('sub-accounts', SubAccountController::class);
     Route::resource('products', ProductController::class);
     Route::resource('salePurchase', SalePurchaseVoucherController::class);
+    Route::post('applyFilter', 'SalePurchaseVoucherController@applyFilter')->name('applyFilter');
     Route::resource('journal', JournalVoucherController::class);
     Route::get('partyAccount', 'PartyAccountLedgerController@index')->name('partyAccount');
     Route::post('getPartyAccountData', 'PartyAccountLedgerController@entriesBetweenDates')->name('getPartyAccountData');

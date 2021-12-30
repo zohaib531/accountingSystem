@@ -19,25 +19,27 @@
                                     </button>
                                 </a>
                             </div>
+                            @dd()
                             {{-- Filter Code Start --}}
                             <div class="col-10">
-                                <form method="post">
 
+                                <form method="post" action="{{ route('applyFilter') }}" >
+                                    @csrf
                                     <div class="row mt-2 align-items-end">
 
                                         <div class="col-3">
                                             <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
-                                            <select name="filter_subaccount" class="form-control searchableSelectFilterSubaccount">
+                                            <select name="sub_account_id" class="form-control searchableSelectFilterSubaccount">
                                                 <option selected value="all">All</option>
                                                 @foreach ($subAccounts as $subAccount)
-                                                <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
+                                                <option value="{{$subAccount->id}}" >{{$subAccount->title}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
 
                                         <div class="col-3">
                                             <label class="col-lg-12 col-form-label px-0">Product<span class="text-danger">*</span></label>
-                                            <select name="filter_product" class="form-control searchableSelectFilterProduct">
+                                            <select name="product_narration" class="form-control searchableSelectFilterProduct">
                                                 <option selected value="all">All</option>
                                                 @foreach ($products as $product)
                                                     <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
@@ -47,9 +49,9 @@
 
                                         <div class="col-3">
                                             <label class="col-lg-12 col-form-label px-0">Transaction Type<span class="text-danger">*</span></label>
-                                            <select name="filter_transaction_type" class="form-control searchableSelectFilterTransaction">
+                                            <select name="entry_type" class="form-control searchableSelectFilterTransaction">
                                                 <option selected value="all">All</option>
-                                                <option value="debit">Debit</option>
+                                                <option value="debit" >Debit</option>
                                                 <option value="credit">Credit</option>
                                             </select>
                                         </div>
@@ -63,10 +65,15 @@
                                     </div>
 
                                 </form>
+
+
                             </div>
                             {{-- Filter Code Start --}}
 
                         </div>
+
+
+
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered zero-configuration">
                                 <thead>
@@ -85,10 +92,23 @@
                                         <tr>
                                             <td>{{ ++$key }}</td>
                                             <td>{{date('d/m/y',strtotime($sale_purchase_voucher->date))}}</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>{{ number_format($sale_purchase_voucher->total_debit , 2) }}</td>
-                                            <td>{{ number_format($sale_purchase_voucher->total_credit , 2) }}</td>
+                                            <td>{{ $sale_purchase_voucher->subAccount->title }}</td>
+                                            <td>{{ $sale_purchase_voucher->product_narration }}</td>
+                                            {{-- Code for Debit start --}}
+                                            @if ($sale_purchase_voucher->entry_type =='debit')
+                                                <td>{{ number_format($sale_purchase_voucher->debit_amount , 2) }}</td>
+                                            @else
+                                                <td>0.00</td>
+                                            @endif
+                                            {{-- Code for Debit start --}}
+
+                                            {{-- Code for Credit start --}}
+                                            @if ($sale_purchase_voucher->entry_type == 'credit')
+                                                <td>{{ number_format($sale_purchase_voucher->credit_amount , 2) }}</td>
+                                            @else
+                                                <td>0.00</td>
+                                            @endif
+                                            {{-- Code for Credit start --}}
 
                                             <td class="text-right">
                                                 <a href="{{route('salePurchase.edit',$sale_purchase_voucher->id)}}">
