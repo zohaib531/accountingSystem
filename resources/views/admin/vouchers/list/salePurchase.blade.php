@@ -21,7 +21,7 @@
                             </div>
                             {{-- Filter Code Start --}}
                             <div class="col-10">
-                                <form action="">
+                                <form method="post">
 
                                     <div class="row mt-2 align-items-end">
 
@@ -55,7 +55,7 @@
                                         </div>
 
                                         <div class="col-3 text-center">
-                                            <button type="button" class="btn btn-primary">
+                                            <button type="submit" class="btn btn-primary">
                                                 Apply Filter
                                             </button>
                                         </div>
