@@ -1,13 +1,48 @@
 function removeParentElement(e){
     if($(e).parent().parent().find('input[name="debit_amounts[]"]').val()>= 0){
         let elem = $(e).parent().parent().parent().parent().find('input[id="debit-amount"]');
-        elem.val(elem.val() - $(e).parent().parent().find('input[name="debit_amounts[]"]').val());
+        elem.val(parseFloat(elem.val().replace(',','')) - parseFloat($(e).parent().parent().find('input[name="debit_amounts[]"]').val().replace(',','')));
     }
     if($(e).parent().parent().find('input[name="credit_amounts[]"]').val()>= 0){
         let elem = $(e).parent().parent().parent().parent().find('input[id="credit-amount"]');
-        elem.val(elem.val() - $(e).parent().parent().find('input[name="credit_amounts[]"]').val());
+        elem.val(parseFloat(elem.val().replace(',','')) - parseFloat($(e).parent().parent().find('input[name="credit_amounts[]"]').val().replace(',','')));
     }
-    e.parentNode.parentNode.remove();
+    $(e).parent().parent().remove();
+
+    let totalDebit = getTotalOfTargetSide('commonDebit');
+    let totalCredit = getTotalOfTargetSide('commonCredit');
+    let differenceBetweenDebitCredit = 0;
+    let labelTxt = "Difference";
+    let entryTxt = "";
+    if((totalDebit-totalCredit)>0){
+        differenceBetweenDebitCredit = parseFloat(totalDebit-totalCredit).toFixed(2);
+        labelTxt = "Credit";
+        entryTxt ="credit";
+    }
+    else if((totalCredit-totalDebit)>0){
+        differenceBetweenDebitCredit = parseFloat(totalCredit-totalDebit).toFixed(2);
+        labelTxt = "Debit";
+        entryTxt ="debit";
+    }else if((totalCredit-totalDebit)==0){
+        $('.differenceLabel').text(labelTxt);
+        $('.differenceInput').val(0);
+        $('.differenceRow').addClass('d-none');
+        $('.differenceEntryCheck').addClass('d-none');
+        return false;
+    }
+    $('.differenceLabel').html("<b>"+labelTxt+"</b> difference of "+"<b>"+differenceBetweenDebitCredit+"</b> do you want to adjust?");
+    $('.differenceInput').val(differenceBetweenDebitCredit);
+    $('#suspense_amount').val(differenceBetweenDebitCredit);
+    $('#suspense_amount').attr('data-val' , differenceBetweenDebitCredit);
+    $('#suspense_entry').val(entryTxt);
+    $('.differenceRow').removeClass('d-none');
+    $('.differenceEntryCheck').removeClass('d-none');
+    let debitElem = $('input[id="debit-amount"]');
+    debitElem.val(totalDebit);
+    debitElem.attr('data-val',totalDebit);
+    let creditElem = $('input[id="credit-amount"]');
+    creditElem.val(totalCredit);
+    creditElem.attr('data-val',totalCredit);
 }
 
 
@@ -22,7 +57,6 @@ const totalDebitAmount=(e)=>{
         totalDebit += parseFloat(singleDebit.getAttribute('data-val').replace(',',''));
     }
     let targetElem =  $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]');
-    console.log(targetElem.val());
     targetElem.val(totalDebit.toFixed(2));
     targetElem.attr('data-val', totalDebit.toFixed(2));
     return totalDebit.toFixed(2);
@@ -60,12 +94,12 @@ const totalShouldSame = (elem)=>{
 }
 
 const getTotalOfTargetSide=(targetClass)=>{
-    let total = 0;
+    let total = 0.00;
     let allAmount = document.getElementsByClassName(targetClass);
     for(let single of allAmount){
-        total += +single.getAttribute('data-val');
+        total += parseFloat(single.getAttribute('data-val').replace(',',''));
     }
-    return total;
+    return (total).toFixed(2);
 }
 
 
@@ -107,7 +141,6 @@ const createAmount = (e, action, voucherType)=>{
 
     let totalDebit = totalDebitAmount(e);
     let totalCredit = totalCreditAmount(e);
-    console.log(totalDebit,totalCredit);
     let differenceBetweenDebitCredit = 0;
     let labelTxt = "Difference";
     let entryTxt = "";
