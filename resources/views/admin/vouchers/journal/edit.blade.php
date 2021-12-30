@@ -281,7 +281,7 @@
                                             <div class="form-group row m-0 align-items-center">
                                                 <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
                                                 <div class="col-lg-12 pl-0 pr-2 ">
-                                                    <input type="number" id="suspense_amount" name="suspense_amount" class="form-control" value="{{$suspenseEntry !=null? $suspenseEntry->$str:0}}" readonly data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="{{$suspenseEntry !=null? $suspenseEntry->$str:0}}" data-common="common" onkeyup="getValue(this)">
+                                                    <input type="text" id="suspense_amount" name="suspense_amount" class="form-control" value="{{$suspenseEntry !=null? $suspenseEntry->$str:0}}" readonly data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="{{$suspenseEntry !=null? $suspenseEntry->$str:0}}" data-common="common" onkeyup="getValue(this)">
                                                 </div>
                                             </div>
                                         </div>
