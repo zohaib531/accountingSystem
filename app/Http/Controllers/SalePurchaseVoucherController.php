@@ -20,8 +20,9 @@ class SalePurchaseVoucherController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        // return $request;
         $vouchers = Voucher::where('voucher_type','sale_purchase_voucher')->get();
         $products = Product::select('id', 'title','narration','product_unit')->get();
         $subAccounts = SubAccount::select('id', 'title')->get();
@@ -126,6 +127,16 @@ class SalePurchaseVoucherController extends Controller
             return response()->json(['success' => true, 'message' => 'Sale/Purchase voucher has been deleted successfully']);
         }
     }
+
+    private function filterSalePurchaseVoucher($sub_account , $product_narration , $entry_type){
+
+    }
+
+
+
+
+
+
 
     // suspense entry common code
     private function suspenseEntryCommonCode($voucher,$action,$request){
