@@ -39,8 +39,8 @@
                                         <td>{{++$key}}</td>
                                         <td>{{date('d/m/y',strtotime($journalVoucher->date))}}</td>
                                         <td></td>
-                                        <td>{{number_format($journalVoucher->total_debit)}}</td>
-                                        <td>{{number_format($journalVoucher->total_credit)}}</td>
+                                        <td>{{number_format($journalVoucher->total_debit,2)}}</td>
+                                        <td>{{number_format($journalVoucher->total_credit,2)}}</td>
                                         <td class="text-right">
                                             <a href="{{route('journal.edit',$journalVoucher->id)}}">
                                                 <button class="btn btn-info text-white btn-sm">
