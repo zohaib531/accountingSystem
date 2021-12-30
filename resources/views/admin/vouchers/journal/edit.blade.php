@@ -107,7 +107,7 @@
                                                         <div class="form-group row m-0 align-items-center">
                                                             <label></label>
                                                             <div class="col-lg-12 pl-0 pr-2 ">
-                                                                <input type="text" name="credit_amounts[]" class="form-control commonCredit" oninput="createAmount(this , false, false)"value="{{$detail->credit_amount}}" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="{{$detail->credit_amount}}" data-common="common" onkeyup="getValue(this)">
+                                                                <input type="text" name="credit_amounts[]" class="form-control commonCredit" oninput="createAmount(this , false, false)" value="{{$detail->credit_amount}}" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="{{$detail->credit_amount}}" data-common="common" onkeyup="getValue(this)">
                                                             </div>
                                                         </div>
                                                     </div>

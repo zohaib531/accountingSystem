@@ -16,16 +16,16 @@ function removeParentElement(e){
 const totalDebitAmount=(e)=>{
 
     // Total Debit Amount
-    let totalDebit = 0;
+    let totalDebit = 0.00;
     let allDebitAmount = document.getElementsByClassName('commonDebit')
     for(let singleDebit of allDebitAmount){
-        totalDebit += +singleDebit.getAttribute('data-val');
+        totalDebit += parseFloat(singleDebit.getAttribute('data-val').replace(',',''));
     }
     let targetElem =  $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]');
+    console.log(targetElem.val());
     targetElem.val(totalDebit.toFixed(2));
     targetElem.attr('data-val', totalDebit.toFixed(2));
-
-    return targetElem.attr('data-val');
+    return totalDebit.toFixed(2);
 
 }
 
@@ -33,15 +33,15 @@ const totalDebitAmount=(e)=>{
 const totalCreditAmount=(e)=>{
 
     // Total Credit Amount
-    let totalCredit = 0;
+    let totalCredit = 0.00;
     let allCreditAmmount = document.getElementsByClassName('commonCredit')
     for(let singleCredit of allCreditAmmount){
-        totalCredit += +singleCredit.getAttribute('data-val');
+        totalCredit += parseFloat(singleCredit.getAttribute('data-val').replace(',',''));
     }
     let targetElem = $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]');
     targetElem.val(totalCredit.toFixed(2));
     targetElem.attr('data-val', totalCredit.toFixed(2));
-    return targetElem.attr('data-val');
+    return totalCredit.toFixed(2);
 }
 
 const totalShouldSame = (elem)=>{
@@ -100,7 +100,7 @@ const createAmount = (e, action, voucherType)=>{
 
         }
     }else{
-        if($(e).val() >= 0){
+        if(parseFloat($(e).val()) >= 0){
             $(e).attr('data-val',$(e).val()); 
         }
     }
