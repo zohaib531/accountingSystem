@@ -104,15 +104,10 @@ const createAmount = (e, action, voucherType)=>{
             $(e).attr('data-val',$(e).val()); 
         }
     }
-    // $(e).attr('name').split('_')[0] =="debit"? totalDebitAmount(e) :totalCreditAmount(e);
-    // totalDebitAmount(e);
-    // totalCreditAmount(e);
-    // let totalDebit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="debit-amount"]').val();
-    // let totalCredit = $(e).parent().parent().parent().parent().parent().parent().find('input[id="credit-amount"]').val();
-
 
     let totalDebit = totalDebitAmount(e);
     let totalCredit = totalCreditAmount(e);
+    console.log(totalDebit,totalCredit);
     let differenceBetweenDebitCredit = 0;
     let labelTxt = "Difference";
     let entryTxt = "";
@@ -130,7 +125,7 @@ const createAmount = (e, action, voucherType)=>{
         $(e).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(0);
         $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').addClass('d-none');
         $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').addClass('d-none');
-        totalShouldSame(e);
+        commonCodeForSuspenseEntryDifference(e);
         return false;
     }
 
