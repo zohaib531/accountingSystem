@@ -87,35 +87,35 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($vouchers as $key => $sale_purchase_voucher)
+                                    @foreach ($vouchers as $key => $voucherDetail)
                                         <tr>
                                             <td>{{ ++$key }}</td>
-                                            <td>{{date('d/m/y',strtotime($sale_purchase_voucher->date))}}</td>
-                                            <td>{{ $sale_purchase_voucher->subAccount->title }}</td>
-                                            <td>{{ $sale_purchase_voucher->product_narration }}</td>
+                                            <td>{{date('d/m/y',strtotime($voucherDetail->date))}}</td>
+                                            <td>{{ $voucherDetail->subAccount->title }}</td>
+                                            <td>{{ $voucherDetail->product_narration }}</td>
                                             {{-- Code for Debit start --}}
-                                            @if ($sale_purchase_voucher->entry_type =='debit')
-                                                <td>{{ number_format($sale_purchase_voucher->debit_amount , 2) }}</td>
+                                            @if ($voucherDetail->entry_type =='debit')
+                                                <td>{{ number_format($voucherDetail->debit_amount , 2) }}</td>
                                             @else
                                                 <td>0.00</td>
                                             @endif
                                             {{-- Code for Debit start --}}
 
                                             {{-- Code for Credit start --}}
-                                            @if ($sale_purchase_voucher->entry_type == 'credit')
-                                                <td>{{ number_format($sale_purchase_voucher->credit_amount , 2) }}</td>
+                                            @if ($voucherDetail->entry_type == 'credit')
+                                                <td>{{ number_format($voucherDetail->credit_amount , 2) }}</td>
                                             @else
                                                 <td>0.00</td>
                                             @endif
                                             {{-- Code for Credit start --}}
 
                                             <td class="text-right">
-                                                <a href="{{route('salePurchase.edit',$sale_purchase_voucher->id)}}">
+                                                <a href="{{route('salePurchase.edit',$voucherDetail->voucher->id)}}">
                                                     <button class="btn btn-info text-white btn-sm">
                                                         Update
                                                     </button>
                                                 </a>
-                                                <button class="btn btn-danger btn-sm" onclick="commonFunction(true,'{{ route('salePurchase.destroy', $sale_purchase_voucher->id) }}','{{ route('salePurchase.index') }}','delete','Are you sure you want to delete?','');">
+                                                <button class="btn btn-danger btn-sm" onclick="commonFunction(true,'{{ route('salePurchase.destroy', $voucherDetail->voucher->id) }}','{{ route('salePurchase.index') }}','delete','Are you sure you want to delete?','');">
                                                     Delete
                                                 </button>
                                             </td>
