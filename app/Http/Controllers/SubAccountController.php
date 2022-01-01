@@ -66,7 +66,7 @@ class SubAccountController extends Controller
         $subAccounts = new SubAccount();
         $subAccounts->title = $request->title;
         $subAccounts->account_id = $request->account_id;
-        $subAccounts->date = Carbon::createFromFormat('d / m / y', $request->opening_date)->format('Y-m-d');
+        $subAccounts->date = Carbon::createFromFormat('d / m / y', $request->opening_date)->format('y-m-d');
         $subAccounts->transaction_type = $request->transaction_type;
         $subAccounts->opening_balance = str_replace(',','',$request->opening_balance);
         if($subAccounts->save()){
@@ -125,7 +125,7 @@ class SubAccountController extends Controller
 
         $subAccount->title = $request->title;
         $subAccount->account_id = $request->account_id;
-        $subAccount->date = Carbon::createFromFormat('d / m / y', $request->opening_date)->format('Y-m-d');
+        $subAccount->date = Carbon::createFromFormat('d / m / y', $request->opening_date)->format('y-m-d');
         $subAccount->transaction_type = $request->transaction_type;
         $subAccount->opening_balance = str_replace(',','',$request->opening_balance);
         if($subAccount->save()){

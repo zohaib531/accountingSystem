@@ -135,7 +135,7 @@ const createAmount = (e, action, voucherType)=>{
         }
     }else{
         if(parseFloat($(e).val()) >= 0){
-            $(e).attr('data-val',$(e).val()); 
+            $(e).attr('data-val',$(e).val());
         }
     }
 

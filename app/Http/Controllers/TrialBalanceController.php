@@ -28,7 +28,7 @@ class TrialBalanceController extends Controller
         $validations = Validator::make($request->all(), ['date' => 'required']);
         if ($validations->fails()) { return response()->json(['success' => false, 'message' => $validations->errors()]);}
         $subAccounts = SubAccount::all();
-        $endDate = Carbon::createFromFormat('d / m / Y', $request->date)->format('Y-m-d');
+        $endDate = Carbon::createFromFormat('d / m / y', $request->date)->format('y-m-d');
         return response()->json(['success' => true, 'html' => view('admin.trialBalance.get_data',compact('subAccounts','endDate'))->render()]);
     }
 }

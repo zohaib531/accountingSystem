@@ -25,13 +25,12 @@
                                 <form method="post" action="{{ route('applyFilter') }}" >
                                     @csrf
                                     <div class="row mt-2 align-items-end">
-
                                         <div class="col-3">
                                             <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                             <select name="sub_account_id" class="form-control searchableSelectFilterSubaccount">
                                                 <option selected value="all">All</option>
                                                 @foreach ($subAccounts as $subAccount)
-                                                <option value="{{$subAccount->id}}" >{{$subAccount->title}}</option>
+                                                <option value="{{$subAccount->id}}" @if(in_array($subAccount->id, $filterElementsArr)) selected @endif>{{$subAccount->title}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -39,9 +38,9 @@
                                         <div class="col-3">
                                             <label class="col-lg-12 col-form-label px-0">Product<span class="text-danger">*</span></label>
                                             <select name="product_narration" class="form-control searchableSelectFilterProduct">
-                                                <option selected value="all">All</option>
+                                                <option selected value="all" >All</option>
                                                 @foreach ($products as $product)
-                                                    <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
+                                                    <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}"  @if(in_array($product->title." - ".$product->narration." - ".$product->product_unit , $filterElementsArr)) selected @endif>{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -50,8 +49,8 @@
                                             <label class="col-lg-12 col-form-label px-0">Transaction Type<span class="text-danger">*</span></label>
                                             <select name="entry_type" class="form-control searchableSelectFilterTransaction">
                                                 <option selected value="all">All</option>
-                                                <option value="debit" >Debit</option>
-                                                <option value="credit">Credit</option>
+                                                <option value="debit" @if(in_array('debit', $filterElementsArr)) selected @endif>Debit</option>
+                                                <option value="credit" @if(in_array('credit', $filterElementsArr)) selected @endif>Credit</option>
                                             </select>
                                         </div>
 
@@ -87,10 +86,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $num = 0;
+                                    @endphp
                                     @foreach ($vouchers as $key => $voucherDetail)
                                         @if($voucherDetail->voucher->voucher_type=='sale_purchase_voucher')
                                             <tr>
-                                                <td>{{ ++$key }}</td>
+                                                <td>{{ ++$num }}</td>
                                                 <td>{{date('d/m/y',strtotime($voucherDetail->date))}}</td>
                                                 <td>{{ $voucherDetail->subAccount->title }}</td>
                                                 <td>{{ $voucherDetail->product_narration }}</td>
@@ -116,9 +118,9 @@
                                                             Update
                                                         </button>
                                                     </a>
-                                                    <button class="btn btn-danger btn-sm" onclick="commonFunction(true,'{{ route('salePurchase.destroy', $voucherDetail->voucher->id) }}','{{ route('salePurchase.index') }}','delete','Are you sure you want to delete?','');">
+                                                    {{-- <button class="btn btn-danger btn-sm" onclick="commonFunction(true,'{{ route('salePurchase.destroy', $voucherDetail->voucher->id) }}','{{ route('salePurchase.index') }}','delete','Are you sure you want to delete?','');">
                                                         Delete
-                                                    </button>
+                                                    </button> --}}
                                                 </td>
                                             </tr>
                                         @endif

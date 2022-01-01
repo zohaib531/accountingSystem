@@ -37,8 +37,8 @@
                     }
 
 
-                    $to = \Carbon\Carbon::createFromFormat('Y-m-d', $detail->date);
-                    $from = \Carbon\Carbon::createFromFormat('Y-m-d', date('Y-m-d'));
+                    $to = \Carbon\Carbon::createFromFormat('y-m-d', $detail->date);
+                    $from = \Carbon\Carbon::createFromFormat('y-m-d', date('y-m-d'));
                     $diff_in_days = $to->diffInDays($from);
                     @endphp
 

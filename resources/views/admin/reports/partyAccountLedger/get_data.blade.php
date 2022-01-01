@@ -27,7 +27,7 @@
                         <td>{{date('d/m/y',strtotime($detail->date))}}</td>
                         <td>Opening Balance</td>
                         <td colspan="2"></td>
-                        <td>{{ number_format(getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance"]) }}</td>
+                        <td>{{ number_format(getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance"], 2) }}</td>
                         <td>{{ getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance_type"] }}</td>
                         <td></td>
                     </tr>
@@ -43,9 +43,9 @@
                 <tr>
                     <td>{{date('d/m/y',strtotime($detail->date))}}</td>
                     <td>{{$detail->product_narration}} @if($detail->quantity!=0 && $detail->rate!=0)  (<span style="font-weight:bold;">{{$detail->quantity}} x {{$detail->rate}}</span>) @endif</td>
-                    <td>{{ $detail->debit_amount!=0?number_format($detail->debit_amount):"" }}</td>
-                    <td>{{ $detail->credit_amount!=0?number_format($detail->credit_amount):"" }}</td>
-                    <td>{{ number_format($openingBalance) }}</td>
+                    <td>{{ $detail->debit_amount!=0?number_format($detail->debit_amount, 2):"" }}</td>
+                    <td>{{ $detail->credit_amount!=0?number_format($detail->credit_amount, 2):"" }}</td>
+                    <td>{{ number_format($openingBalance, 2) }}</td>
                     <td>{{$entryType}}</td>
                     <td class="text-center">
                         <a href="{{route($voucherType,$detail->voucher_id)}}">
@@ -73,11 +73,11 @@
 
 
             <tr>
-                <td>{{ Carbon\Carbon::createFromFormat('Y-m-d', $endDate)->format('d / m / Y') }}</td>
+                <td>{{ Carbon\Carbon::createFromFormat('y-m-d', $endDate)->format('d / m / y') }}</td>
                 {{-- <td>{{date('d/m/Y',strtotime($endDate))}}</td> --}}
                 <td>Opening Balance</td>
                 <td colspan="2"></td>
-                <td>{{ number_format($openingBalance) }}</td>
+                <td>{{ number_format($openingBalance , 2) }}</td>
                 <td>{{ $entryType }}</td>
                 <td></td>
             </tr>
@@ -91,9 +91,9 @@
         <tfoot>
             <tr>
                 <td colspan="2"><h5 class="text-center">Total</h5></td>
-                <td>{{number_format($totalDebit)}}</td>
-                <td>{{number_format($totalCredit)}}</td>
-                <td>{{number_format($openingBalance)}}</td>
+                <td>{{number_format($totalDebit, 2)}}</td>
+                <td>{{number_format($totalCredit, 2)}}</td>
+                <td>{{number_format($openingBalance, 2)}}</td>
                 <td>{{$entryType}}</td>
                 <td></td>
             </tr>
