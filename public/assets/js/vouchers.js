@@ -139,28 +139,32 @@ const createAmount = (e, action, voucherType)=>{
         }
     }
 
-    let totalDebit = totalDebitAmount(e);
-    let totalCredit = totalCreditAmount(e);
     let differenceBetweenDebitCredit = 0;
     let labelTxt = "Difference";
     let entryTxt = "";
-    if((totalDebit-totalCredit)>0){
-        differenceBetweenDebitCredit = parseFloat(totalDebit-totalCredit);
-        labelTxt = "Credit";
-        entryTxt ="credit";
+    if(!voucherType){
+        getValue(e)
+        let totalDebit = totalDebitAmount(e);
+        let totalCredit = totalCreditAmount(e);
+        if((totalDebit-totalCredit)>0){
+            differenceBetweenDebitCredit = parseFloat(totalDebit-totalCredit);
+            labelTxt = "Credit";
+            entryTxt ="credit";
+        }
+        else if((totalCredit-totalDebit)>0){
+            differenceBetweenDebitCredit = parseFloat(totalCredit-totalDebit);
+            labelTxt = "Debit";
+            entryTxt ="debit";
+        }else if((totalCredit-totalDebit)==0){
+            $(e).parent().parent().parent().parent().parent().parent().find('.differenceLabel').text(labelTxt);
+            $(e).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(0);
+            $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').addClass('d-none');
+            $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').addClass('d-none');
+            commonCodeForSuspenseEntryDifference(e);
+            return false;
+        }
     }
-    else if((totalCredit-totalDebit)>0){
-        differenceBetweenDebitCredit = parseFloat(totalCredit-totalDebit);
-        labelTxt = "Debit";
-        entryTxt ="debit";
-    }else if((totalCredit-totalDebit)==0){
-        $(e).parent().parent().parent().parent().parent().parent().find('.differenceLabel').text(labelTxt);
-        $(e).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(0);
-        $(e).parent().parent().parent().parent().parent().parent().find('.differenceRow').addClass('d-none');
-        $(e).parent().parent().parent().parent().parent().parent().find('.differenceEntryCheck').addClass('d-none');
-        commonCodeForSuspenseEntryDifference(e);
-        return false;
-    }
+
 
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceLabel').html("<b>"+labelTxt+"</b> difference of "+"<b>"+differenceBetweenDebitCredit+"</b> do you want to adjust?");
     $(e).parent().parent().parent().parent().parent().parent().find('.differenceInput').val(differenceBetweenDebitCredit);
