@@ -26,45 +26,22 @@
                                     @csrf
                                     <div class="row mt-2 align-items-end">
                                         <div class="col-3">
-                                            <label class="col-lg-12 col-form-label px-0">Start Date<span class="text-danger">*</span></label>
-                                            <div class="col-lg-12 px-0">
-                                                <input name="start_date" id="val-start_date" class="form-control" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3">
-                                            <label class="col-lg-12 col-form-label px-0" for="val-end_date">End date<span class="text-danger">*</span></label>
-                                            <div class="col-lg-12 px-0">
-                                                <input name="end_date" id="val-end_date"  class="form-control" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3">
-                                            <label class="col-lg-12 col-form-label px-0">Product Type<span class="text-danger">*</span></label>
-                                            <select class="form-control searchableSelectFilterProductType" onchange="productChange(this)">
-                                                <option selected value="all">All</option>
-                                                @foreach ($unique_product_titles as $product)
-                                                    <option value="{{$product->title}}"  @if(in_array($product->title , $filterElementsArr)) selected @endif>{{$product->title}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mt-2 align-items-end">
-                                        <div class="col-3">
                                             <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                             <select name="sub_account_id" class="form-control searchableSelectFilterSubaccount">
                                                 <option selected value="all">All</option>
                                                 @foreach ($subAccounts as $subAccount)
-                                                    <option value="{{$subAccount->id}}" @if(in_array($subAccount->id, $filterElementsArr)) selected @endif>{{$subAccount->title}}</option>
+                                                <option value="{{$subAccount->id}}" @if(in_array($subAccount->id, $filterElementsArr)) selected @endif>{{$subAccount->title}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
 
                                         <div class="col-3">
                                             <label class="col-lg-12 col-form-label px-0">Product<span class="text-danger">*</span></label>
-                                            <select name="product_narration" id="productWithFilter" class="form-control searchableSelectFilterProduct">
+                                            <select name="product_narration" class="form-control searchableSelectFilterProduct">
                                                 <option selected value="all" >All</option>
+                                                @foreach ($products as $product)
+                                                    <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}"  @if(in_array($product->title." - ".$product->narration." - ".$product->product_unit , $filterElementsArr)) selected @endif>{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
 
@@ -167,26 +144,7 @@
             $('.searchableSelectFilterSubaccount').select2({dropdownParent: $('.searchableSelectFilterSubaccount').parent()});
             $('.searchableSelectFilterProduct').select2({dropdownParent: $('.searchableSelectFilterProduct').parent()});
             $('.searchableSelectFilterTransaction').select2({dropdownParent: $('.searchableSelectFilterTransaction').parent()});
-            $('.searchableSelectFilterProductType').select2({dropdownParent: $('.searchableSelectFilterProductType').parent()});
         });
-
-        const productChange = (e) => {
-            // productWithFilter.innerHTML = '<option selected value="all" >All</option>';
-            let html = '<option selected value="all" >All</option>';
-            var allproduct = {!! $products !!};
-            for(let singleProduct of allproduct){
-                // if(e.value == 'all'){
-                //     html +=`<option value="${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}" >${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}</option>`;
-                // }
-                if(e.value == singleProduct.title){
-
-                    html +=`<option value="${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}" >${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}</option>`;
-
-                }
-
-            }
-            productWithFilter.innerHTML= html;
-        }
     </script>
 
 @endsection

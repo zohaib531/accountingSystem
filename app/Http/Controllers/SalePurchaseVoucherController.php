@@ -25,16 +25,32 @@ class SalePurchaseVoucherController extends Controller
         $vouchers = VoucherDetail::all();
         $products = Product::select('id', 'title','narration','product_unit')->get();
         $subAccounts = SubAccount::select('id', 'title')->get();
+        $unique_product_titles = Product::select('title')->distinct()->get();
         $filterElementsArr = [];
-        return view('admin.vouchers.list.salePurchase', compact('vouchers','products','subAccounts','filterElementsArr'));
+        return view('admin.vouchers.list.salePurchase', compact('vouchers','products','subAccounts','filterElementsArr','unique_product_titles'));
     }
 
     public function applyFilter(Request $request)
     {
+
+        // $validations = Validator::make($request->all(), ['start_date' => 'after:end_date',]);
+        // if ($validations->fails()) {return response()->json(['success' => false, 'message' => $validations->errors()]);}
+
         $request = $request->except('_token');
         $vouchers = null;
+        $start_date = null;
+        $end_date = null;
         if(count($this->getFilledField($request))>0){
             foreach($this->getFilledField($request) as $key=>$value){
+
+                if($key === 'start_date'){
+                    $start_date = Carbon::createFromFormat('d / m / y', $value)->format('y-m-d');
+                }
+
+                if($key === 'end_date'){
+                    $end_date = Carbon::createFromFormat('d / m / y', $value)->format('y-m-d');
+                }
+
                 if($key === array_key_first($this->getFilledField($request))){
                     $vouchers = VoucherDetail::where($key, $value);
                 }else{
@@ -46,9 +62,10 @@ class SalePurchaseVoucherController extends Controller
             $vouchers = VoucherDetail::get();
         }
         $products = Product::select('id', 'title','narration','product_unit')->get();
+        $unique_product_titles = Product::select('title')->distinct()->get();
         $subAccounts = SubAccount::select('id', 'title')->get();
         $filterElementsArr = array_values($request);
-        return view('admin.vouchers.list.salePurchase', compact('vouchers','products','subAccounts','filterElementsArr'));
+        return view('admin.vouchers.list.salePurchase', compact('vouchers','products','subAccounts','filterElementsArr','unique_product_titles'));
     }
 
     /**
