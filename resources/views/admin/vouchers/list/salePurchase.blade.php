@@ -22,35 +22,47 @@
                             {{-- Filter Code Start --}}
                             <div class="col-10">
 
-                                <form method="post" action="{{ route('applyFilter') }}" >
+                                <form method="post" action="{{ route('applyFilter') }}">
                                     @csrf
                                     <div class="row mt-2 align-items-end">
                                         <div class="col-3">
                                             <label class="col-lg-12 col-form-label px-0">Start Date<span class="text-danger">*</span></label>
                                             <div class="col-lg-12 px-0">
-                                                <input name="start_date" id="val-start_date" class="form-control" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                                {{-- <input name="start_date" id="val-start_date" class="form-control @error('start_date') border-danger @enderror" @if(in_array($start_date, $filterElementsArr)) value="{{$start_date}}" @endif placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text"> --}}
+                                                <input name="start_date" id="val-start_date" class="form-control @error('start_date') border-danger @enderror" value="{{old('start_date')}}" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+
+                                                @if ($errors->has('start_date'))
+                                                    <span class="text-danger">Please start end date.</span>
+                                                @else
+                                                    <span class="fade">Some Data</span>
+                                                @endif
                                             </div>
                                         </div>
 
                                         <div class="col-3">
                                             <label class="col-lg-12 col-form-label px-0" for="val-end_date">End date<span class="text-danger">*</span></label>
                                             <div class="col-lg-12 px-0">
-                                                <input name="end_date" id="val-end_date"  class="form-control" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                                <input name="end_date" id="val-end_date"  class="form-control  @error('end_date') border-danger @enderror" value="{{old('end_date')}}"  placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                                @if ($errors->has('end_date'))
+                                                    <span class="text-danger">Please enter end date.</span>
+                                                @else
+                                                    <span class="fade">Some Data</span>
+                                                @endif
                                             </div>
                                         </div>
-
                                         <div class="col-3">
                                             <label class="col-lg-12 col-form-label px-0">Product Type<span class="text-danger">*</span></label>
-                                            <select class="form-control searchableSelectFilterProductType" onchange="productChange(this)">
+                                            <select class="form-control searchableSelectFilterProductType" name="product_type" onchange="productChange(this)">
                                                 <option selected value="all">All</option>
                                                 @foreach ($unique_product_titles as $product)
                                                     <option value="{{$product->title}}"  @if(in_array($product->title , $filterElementsArr)) selected @endif>{{$product->title}}</option>
                                                 @endforeach
                                             </select>
+                                            <span class="fade">Some Data</span>
                                         </div>
                                     </div>
 
-                                    <div class="row mt-2 align-items-end">
+                                    <div class="row align-items-end">
                                         <div class="col-3">
                                             <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                             <select name="sub_account_id" class="form-control searchableSelectFilterSubaccount">
@@ -65,6 +77,9 @@
                                             <label class="col-lg-12 col-form-label px-0">Product<span class="text-danger">*</span></label>
                                             <select name="product_narration" id="productWithFilter" class="form-control searchableSelectFilterProduct">
                                                 <option selected value="all" >All</option>
+                                                @foreach ($products as $product)
+                                                    <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}"  @if(in_array($product->title." - ".$product->narration." - ".$product->product_unit , $filterElementsArr)) selected @endif>{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
 
@@ -81,6 +96,11 @@
                                             <button type="submit" class="btn btn-primary">
                                                 Apply Filter
                                             </button>
+                                            <a href="{{ route('salePurchase.index') }} "  class="{{ Request::is('applyFilter') ? 'd-inline' : 'd-none' }}">
+                                                <button type="button" class="btn btn-danger">
+                                                    Refresh Filter
+                                                </button>
+                                            </a>
                                         </div>
 
                                     </div>
@@ -173,19 +193,22 @@
         const productChange = (e) => {
             // productWithFilter.innerHTML = '<option selected value="all" >All</option>';
             let html = '<option selected value="all" >All</option>';
+            let newSingleHTML = '';
+
             var allproduct = {!! $products !!};
             for(let singleProduct of allproduct){
-                // if(e.value == 'all'){
-                //     html +=`<option value="${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}" >${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}</option>`;
-                // }
+                if(e.value == 'all'){
+                    html +=`<option value="${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}" >${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}</option>`;
+                }
                 if(e.value == singleProduct.title){
 
-                    html +=`<option value="${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}" >${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}</option>`;
+                    newSingleHTML +=`<option value="${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}" >${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}</option>`;
 
                 }
 
             }
-            productWithFilter.innerHTML= html;
+
+            e.value == 'all' ? productWithFilter.innerHTML = html : productWithFilter.innerHTML = newSingleHTML;
         }
     </script>
 

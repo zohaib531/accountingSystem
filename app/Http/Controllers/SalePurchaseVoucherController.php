@@ -22,50 +22,65 @@ class SalePurchaseVoucherController extends Controller
      */
     public function index(Request $request)
     {
+
         $vouchers = VoucherDetail::all();
         $products = Product::select('id', 'title','narration','product_unit')->get();
         $subAccounts = SubAccount::select('id', 'title')->get();
         $unique_product_titles = Product::select('title')->distinct()->get();
         $filterElementsArr = [];
-        return view('admin.vouchers.list.salePurchase', compact('vouchers','products','subAccounts','filterElementsArr','unique_product_titles'));
+        $start_date = '';
+        $end_date = '';
+        return view('admin.vouchers.list.salePurchase', compact('vouchers','products','subAccounts','filterElementsArr','unique_product_titles','start_date','end_date'));
     }
 
     public function applyFilter(Request $request)
     {
-
-        // $validations = Validator::make($request->all(), ['start_date' => 'after:end_date',]);
-        // if ($validations->fails()) {return response()->json(['success' => false, 'message' => $validations->errors()]);}
+        $validations = Validator::make($request->all(), ['start_date' => 'required_with_all:end_date','end_date' => 'required_with_all:start_date']);
+        if ($validations->fails()) { return back()->withInput()->withErrors($validations) ;}
 
         $request = $request->except('_token');
         $vouchers = null;
-        $start_date = null;
-        $end_date = null;
-        if(count($this->getFilledField($request))>0){
-            foreach($this->getFilledField($request) as $key=>$value){
+        $dataCheck = true;
+        $start_date = '';
+        $end_date = '';
 
-                if($key === 'start_date'){
+        $filledFieldsArray = $this->getFilledField($request);
+        if(count($filledFieldsArray)>0){
+            foreach($filledFieldsArray as $key=>$value){
+
+                if($key === 'start_date' && $start_date !== ''){
                     $start_date = Carbon::createFromFormat('d / m / y', $value)->format('y-m-d');
                 }
 
-                if($key === 'end_date'){
+                if($key === 'end_date'  && $end_date !== ''){
                     $end_date = Carbon::createFromFormat('d / m / y', $value)->format('y-m-d');
                 }
 
-                if($key === array_key_first($this->getFilledField($request))){
-                    $vouchers = VoucherDetail::where($key, $value);
-                }else{
+                if($key === array_key_first($filledFieldsArray)){
+                    if(($key =="start_date" || $key=="end_date") && $dataCheck){
+                        $vouchers = VoucherDetail::whereBetween('date',[Carbon::createFromFormat('d / m / y', $filledFieldsArray['start_date'])->format('y-m-d'), Carbon::createFromFormat('d / m / y', $filledFieldsArray['end_date'])->format('y-m-d')]);
+                    }else if(($key !="start_date" || $key !="end_date") ){
+                        $vouchers = VoucherDetail::where($key, $value);
+                    }
+                }
+                else if(($key !=="start_date" && $key !=="end_date")){
                     $vouchers->where($key, $value);
                 }
+
+
             }
             $vouchers = $vouchers->get();
         }else{
             $vouchers = VoucherDetail::get();
         }
+
+
         $products = Product::select('id', 'title','narration','product_unit')->get();
         $unique_product_titles = Product::select('title')->distinct()->get();
         $subAccounts = SubAccount::select('id', 'title')->get();
         $filterElementsArr = array_values($request);
-        return view('admin.vouchers.list.salePurchase', compact('vouchers','products','subAccounts','filterElementsArr','unique_product_titles'));
+        
+        return view('admin.vouchers.list.salePurchase', compact('vouchers','products','subAccounts','filterElementsArr','unique_product_titles','start_date','end_date'));
     }
 
     /**
@@ -172,7 +187,7 @@ class SalePurchaseVoucherController extends Controller
         $newArr = [];
         foreach($array as $x=>$value)
         {
-          if($value!="all"){
+          if($value!="all" && $value != '' && $x != 'product_type'){
             $newArr[$x] = $value;
           }
         }
