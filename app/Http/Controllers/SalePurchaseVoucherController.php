@@ -60,7 +60,13 @@ class SalePurchaseVoucherController extends Controller
                     if(($key =="start_date" || $key=="end_date") && $dataCheck){
                         $vouchers = VoucherDetail::whereBetween('date',[Carbon::createFromFormat('d / m / y', $filledFieldsArray['start_date'])->format('y-m-d'), Carbon::createFromFormat('d / m / y', $filledFieldsArray['end_date'])->format('y-m-d')]);
                     }else if(($key !="start_date" || $key !="end_date") ){
-                        $vouchers = VoucherDetail::where($key, $value);
+
+                        if($key == 'product_type'){
+                            $vouchers = VoucherDetail::where('product_narration','LIKE','%'.$value.'%');
+                        }else{
+                            $vouchers = VoucherDetail::where($key, $value);
+                        }
+
                     }
                 }
                 else if(($key !=="start_date" && $key !=="end_date")){
@@ -79,7 +85,7 @@ class SalePurchaseVoucherController extends Controller
         $unique_product_titles = Product::select('title')->distinct()->get();
         $subAccounts = SubAccount::select('id', 'title')->get();
         $filterElementsArr = array_values($request);
-        
+
         return view('admin.vouchers.list.salePurchase', compact('vouchers','products','subAccounts','filterElementsArr','unique_product_titles','start_date','end_date'));
     }
 
@@ -187,7 +193,7 @@ class SalePurchaseVoucherController extends Controller
         $newArr = [];
         foreach($array as $x=>$value)
         {
-          if($value!="all" && $value != '' && $x != 'product_type'){
+          if($value!="all" && $value != ''){
             $newArr[$x] = $value;
           }
         }

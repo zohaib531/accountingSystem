@@ -78,8 +78,7 @@
          <div class="modal-content">
              <div class="modal-header">
                  <h5 class="modal-title">Add General Account</h5>
-                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                 </button>
+                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
              </div>
              <div class="modal-body px-5">
                 <div class="form-validation my-5">

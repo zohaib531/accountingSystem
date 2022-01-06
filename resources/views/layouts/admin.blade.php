@@ -295,7 +295,7 @@
         <div class="footer">
             <div class="copyright">
                 <p>Copyright &copy; Designed & Developed by <a href="https://www.ewdtech.com">EWD TECH</a>
-                    2018</p>
+                    2021</p>
             </div>
         </div>
         <!--**********************************

@@ -14,7 +14,7 @@ class AddColumnsOpeningBalanceType extends Migration
     public function up()
     {
         Schema::table('voucher_details', function (Blueprint $table) {
-            $table->integer('opening_balance')->after('suspense_account')->default(0);
+            $table->string('opening_balance')->after('suspense_account')->default(0);
             $table->string('opening_balance_type')->after('opening_balance')->nullable();
         });
     }

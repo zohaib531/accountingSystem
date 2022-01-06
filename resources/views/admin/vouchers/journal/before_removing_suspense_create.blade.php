@@ -142,8 +142,92 @@
                                 </div>
                                 {{-- Debit Section end --}}
 
+                                <div class="row m-0 justify-content-between align-items-end mt-3">
+                                    <div class="col-4 pl-0">
+                                        <div class="form-group row m-0 align-items-center differenceEntryCheck d-none">
+                                            <label class="col-lg-10 col-form-label px-0 differenceLabel" for="checkedEntery">Do you want suspense Entry?<span class="text-danger">*</span></label>
+                                            <div class="col-lg-2 pl-0 pr-2 ">
+                                                <div>
+                                                    <input type="checkbox" class="" name="suspense_entry_check" id="checkedEntery" onchange="suspenseAccountEntryVerification(this);">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                <div class="row m-0 justify-content-end align-items-end mt-3">
+                                    <div class="col-4 px-0">
+                                        <div class="row m-0">
+                                            <div class="col-12 pr-0">
+                                                <div class="form-group row m-0 align-items-center">
+                                                    <div class="col-lg-12 pl-0 pr-2 ">
+                                                        {{-- <label class="col-form-label px-0 differenceLabel" for="differenceInput">Difference</label> --}}
+                                                        <input type="hidden" class="form-control differenceInput" id="differenceInput" name="total_debit" value="0" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row mx-0 justify-content-between pt-3 differenceRow d-none">
+                                    <input type="hidden" id="suspense_entry" name="suspense_entry">
+                                    <div class="col-4 px-0">
+                                        <div class="form-group row m-0 align-items-center">
+                                            <label class="col-lg-12 col-form-label px-0">Date<span class="text-danger">*</span></label>
+                                            <div class="col-lg-12 pl-0 pr-2">
+                                                <input class="form-control" name="suspense_date" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4 px-0">
+                                        <div class="form-group row m-0 align-items-center">
+                                            <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
+                                            <div class="col-lg-12 pl-0 pr-2">
+                                                <select name="suspense_account" class="form-control searchableSelectSuspense">
+                                                    <option selected disabled value="">Sub account</option>
+                                                    @foreach ($subAccounts as $subAccount)
+                                                        <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4 px-0">
+                                        <div class="form-group row m-0 align-items-center">
+                                            <label class="col-lg-12 col-form-label px-0">Amount<span class="text-danger">*</span></label>
+                                            <div class="col-lg-12 pl-0 pr-2 ">
+                                                <input type="text" id="suspense_amount" name="suspense_amount" class="form-control" value="0" readonly data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" onkeyup="getValue(this)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row m-0 justify-content-between align-items-end mt-3">
+                                    <div class="col-4 pr-0">
+                                        {{-- <div class="form-group row m-0 align-items-center differenceEntryCheck d-none">
+                                            <label class="col-lg-9 col-form-label px-0" for="checkedEntery">Do you want suspense Entry?<span class="text-danger">*</span></label>
+                                            <div class="col-lg-3 pl-0 pr-2 ">
+                                                <div>
+                                                    <input type="checkbox" class="" name="suspense_entry_check" id="checkedEntery" onchange="suspenseAccountEntryVerification(this);">
+                                                </div>
+                                            </div>
+                                        </div> --}}
+                                    </div>
+
+                                    <div class="col-4 px-0">
+                                        {{-- <div class="row m-0">
+                                            <div class="col-12 pr-0">
+                                                <div class="form-group row m-0 align-items-center">
+                                                    <div class="col-lg-12 pl-0 pr-2 ">
+                                                        <label class="col-form-label px-0 differenceLabel" for="differenceInput">Difference</label>
+                                                        <input type="number" class="form-control differenceInput" id="differenceInput" name="total_debit" value="0" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> --}}
+                                    </div>
 
                                     <div class="col-4 px-0">
                                         <div class="row m-0">

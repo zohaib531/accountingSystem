@@ -77,9 +77,18 @@
                                             <label class="col-lg-12 col-form-label px-0">Product<span class="text-danger">*</span></label>
                                             <select name="product_narration" id="productWithFilter" class="form-control searchableSelectFilterProduct">
                                                 <option selected value="all" >All</option>
-                                                @foreach ($products as $product)
-                                                    <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}"  @if(in_array($product->title." - ".$product->narration." - ".$product->product_unit , $filterElementsArr)) selected @endif>{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
-                                                @endforeach
+                                                @if (isset($filterElementsArr[2]) && $filterElementsArr[2] != 'all')
+                                                    @foreach ($products as $product)
+                                                        @if(in_array($product->title , $filterElementsArr) )
+                                                            <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}"  @if(in_array($product->title." - ".$product->narration." - ".$product->product_unit , $filterElementsArr)) selected @endif>{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                @else
+                                                    @foreach ($products as $product)
+                                                            <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}"  @if(in_array($product->title." - ".$product->narration." - ".$product->product_unit , $filterElementsArr)) selected @endif>{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
+                                                    @endforeach
+                                                @endif
+
                                             </select>
                                         </div>
 
@@ -190,25 +199,40 @@
             $('.searchableSelectFilterProductType').select2({dropdownParent: $('.searchableSelectFilterProductType').parent()});
         });
 
-        const productChange = (e) => {
-            // productWithFilter.innerHTML = '<option selected value="all" >All</option>';
-            let html = '<option selected value="all" >All</option>';
-            let newSingleHTML = '';
+        // const productChange = (e) => {
+        //     // productWithFilter.innerHTML = '<option selected value="all" >All</option>';
+        //     let html = '<option selected value="all" >All</option>';
+        //     let newSingleHTML = '';
 
+        //     var allproduct = {!! $products !!};
+        //     for(let singleProduct of allproduct){
+        //         if(e.value == 'all'){
+        //             html +=`<option value="${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}" >${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}</option>`;
+        //         }
+        //         if(e.value == singleProduct.title){
+
+        //             newSingleHTML +=`<option value="${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}" >${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}</option>`;
+
+        //         }
+
+        //     }
+
+        //     e.value == 'all' ? productWithFilter.innerHTML = html : productWithFilter.innerHTML = newSingleHTML;
+        // }
+
+
+        const productChange = (e) => {
+            let html = '<option selected value="all" >All</option>';
             var allproduct = {!! $products !!};
             for(let singleProduct of allproduct){
                 if(e.value == 'all'){
                     html +=`<option value="${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}" >${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}</option>`;
                 }
                 if(e.value == singleProduct.title){
-
-                    newSingleHTML +=`<option value="${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}" >${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}</option>`;
-
+                    html +=`<option value="${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}" >${singleProduct.title} - ${singleProduct.narration} - ${singleProduct.product_unit}</option>`;
                 }
-
             }
-
-            e.value == 'all' ? productWithFilter.innerHTML = html : productWithFilter.innerHTML = newSingleHTML;
+            productWithFilter.innerHTML= html;
         }
     </script>
 
