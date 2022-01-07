@@ -68,7 +68,7 @@
                             <td>{{ $voucherDetail->product_narration }}</td>
                             {{-- Code for Debit start --}}
                             @if ($voucherDetail->entry_type =='debit')
-                                <td>{{ $voucherDetail->debit_amount }}</td>
+                                <td>{{ number_format($voucherDetail->debit_amount) }}</td>
                             @else
                                 <td>0</td>
                             @endif
@@ -76,7 +76,7 @@
 
                             {{-- Code for Credit start --}}
                             @if ($voucherDetail->entry_type == 'credit')
-                                <td>{{ $voucherDetail->credit_amount }}</td>
+                                <td>{{ number_format($voucherDetail->credit_amount) }}</td>
                             @else
                                 <td>0</td>
                             @endif

@@ -80,7 +80,7 @@
                                 <td>{{$num++}}</td>
                                 <td>{{date('d/m/y',strtotime($detail->date))}}</td>
                                 <td colspan="3">Opening Balance</td>
-                                <td>{{ getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance"] }}</td>
+                                <td>{{number_format( getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance"] )}}</td>
                                 <td style="text-transform: capitalize;">{{ getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance_type"] }}</td>
                             </tr>
                         @endif
@@ -96,8 +96,8 @@
                             <td>{{$num++}}</td>
                             <td>{{date('d/m/y',strtotime($detail->date))}}</td>
                             <td>{{$detail->product_narration}} @if($detail->quantity!=0 && $detail->rate!=0)  (<span style="font-weight:bold;">{{$detail->quantity}} x {{$detail->rate}}</span>) @endif</td>
-                            <td>{{ $detail->debit_amount!=0?$detail->debit_amount:"" }}</td>
-                            <td>{{ $detail->credit_amount!=0?$detail->credit_amount:"" }}</td>
+                            <td>{{ $detail->debit_amount!=0? number_format($detail->debit_amount):"" }}</td>
+                            <td>{{ $detail->credit_amount!=0?number_format($detail->credit_amount):"" }}</td>
                             <td>{{ $openingBalance}}</td>
                             <td style="text-transform: capitalize;">{{$entryType}}</td>
                         </tr>
@@ -140,9 +140,9 @@
                 <tfoot>
                     <tr>
                         <th colspan="3">Total</th>
-                        <td>{{ $totalDebit }}</td>
-                        <td>{{ $totalCredit }}</td>
-                        <td>{{ $openingBalance }}</td>
+                        <td>{{ number_format($totalDebit) }}</td>
+                        <td>{{ number_format($totalCredit) }}</td>
+                        <td>{{ number_format($openingBalance) }}</td>
                         <td style="text-transform: capitalize;">{{$entryType}}</td>
                     </tr>
                 </tfoot>

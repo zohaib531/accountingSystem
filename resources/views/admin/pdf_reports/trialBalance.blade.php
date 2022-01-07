@@ -76,7 +76,7 @@
                                                     @php $totalDebit += $openingBalance; @endphp
                                                     <tr>
                                                         <td>{{$subAccount->title}}</td>
-                                                        <td>{{ $openingBalance }}</td>
+                                                        <td>{{ number_format($openingBalance) }}</td>
                                                     </tr>
                                                 @endif
                                             @endforeach
@@ -107,7 +107,7 @@
                                                     @php $totalCredit += $openingBalance; @endphp
                                                     <tr>
                                                         <td>{{$subAccount->title}}</td>
-                                                        <td>{{ $openingBalance }}</td>
+                                                        <td>{{ number_format($openingBalance )}}</td>
                                                     </tr>
                                                 @endif
                                         @endforeach
@@ -123,7 +123,7 @@
                             <tbody>
                                 <tr class="trailTotal">
                                     <th class="text-center h5" style="width: 70%">Total</th>
-                                    <th class="h5" style="width: 30%">{{ $totalDebit }}</th>
+                                    <th class="h5" style="width: 30%">{{ number_format($totalDebit) }}</th>
                                 </tr>
                             </tbody>
                         </table>
@@ -134,7 +134,7 @@
                             <tbody>
                                 <tr class="trailTotal">
                                     <th class="text-center h5" style="width: 70%">Total</th>
-                                    <th class="h5" style="width: 30%">{{ $totalCredit }}</th>
+                                    <th class="h5" style="width: 30%">{{ number_format($totalCredit) }}</th>
                                 </tr>
                             </tbody>
                         </table>
