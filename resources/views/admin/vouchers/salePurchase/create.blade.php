@@ -16,7 +16,15 @@
 </div>
 <!-- row --> --}}
 
+<div class="alert alert-success alert-dismissible fade show successAlert d-none" style="width: fit-content;position:absolute; z-index:1111;right:0;">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+</div>
+
+
 <div class="container-fluid">
+
+
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -383,8 +391,8 @@
                </div>
            </div>
            <div class="modal-footer">
-               <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Close</button>
-               <button type="button" class="btn btn-success text-white" onclick="commonFunction(false,'{{ route('sub-accounts.store') }}', '', 'post','','create-form-sub');">Save</button>
+               <button type="button" class="btn btn-danger text-white customModalClose" data-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-success text-white" onclick="addRealTimeFunction(false,'{{ route('sub-accounts.store') }}', '', 'post','','create-form-sub');">Save</button>
             </div>
         </div>
     </div>

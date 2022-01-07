@@ -98,7 +98,7 @@
                             <td>{{$detail->product_narration}} @if($detail->quantity!=0 && $detail->rate!=0)  (<span style="font-weight:bold;">{{$detail->quantity}} x {{$detail->rate}}</span>) @endif</td>
                             <td>{{ $detail->debit_amount!=0? number_format($detail->debit_amount):"" }}</td>
                             <td>{{ $detail->credit_amount!=0?number_format($detail->credit_amount):"" }}</td>
-                            <td>{{ $openingBalance}}</td>
+                            <td>{{ number_format($openingBalance)}}</td>
                             <td style="text-transform: capitalize;">{{$entryType}}</td>
                         </tr>
                         {{-- @if($loop->last)
@@ -126,7 +126,7 @@
                         {{-- <td>{{date('d/m/Y',strtotime($endDate))}}</td> --}}
                         <td>Opening Balance</td>
                         <td colspan="2"></td>
-                        <td>{{ $openingBalance }}</td>
+                        <td>{{ number_format($openingBalance) }}</td>
                         <td>{{ $entryType }}</td>
                         <td></td>
                     </tr>
