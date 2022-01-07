@@ -16,10 +16,7 @@
 </div>
 <!-- row --> --}}
 
-<div class="alert alert-success alert-dismissible fade show successAlert d-none" style="width: fit-content;position:absolute; z-index:1111;right:0;">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-</div>
+
 
 
 <div class="container-fluid">
@@ -70,11 +67,12 @@
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2">
-                                                 <select name="credit_accounts[]" class="form-control searchableSelectCredit">
+                                                 <select name="credit_accounts[]" class="form-control pushSubAccount searchableSelectCredit">
                                                      <option selected disabled value=""> Sub account</option>
                                                      @foreach ($subAccounts as $subAccount)
                                                          <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                                      @endforeach
+
                                                  </select>
                                              </div>
                                          </div>
@@ -84,7 +82,7 @@
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Product<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2">
-                                                 <select name="credit_products[]" class="form-control searchableSelectCreditProduct">
+                                                 <select name="credit_products[]" class="form-control pushProduct searchableSelectCreditProduct">
                                                      <option selected disabled value="">Product</option>
                                                      @foreach ($products as $product)
                                                          <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
@@ -148,7 +146,7 @@
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2">
-                                                 <select name="debit_accounts[]" class="form-control searchableSelectDebit">
+                                                 <select name="debit_accounts[]" class="form-control pushSubAccount searchableSelectDebit">
                                                      <option selected disabled value="">Sub account</option>
                                                      @foreach ($subAccounts as $subAccount)
                                                          <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
@@ -162,7 +160,7 @@
                                          <div class="form-group row m-0 align-items-center">
                                              <label class="col-lg-12 col-form-label px-0">Product<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2">
-                                                 <select name="debit_products[]" class="form-control searchableSelectDebitProduct">
+                                                 <select name="debit_products[]" class="form-control pushProduct searchableSelectDebitProduct">
                                                      <option selected disabled value="">Product</option>
                                                      @foreach ($products as $product)
                                                          <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
@@ -347,7 +345,7 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label px-0" for="val-account">General Accounts<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <select class="form-control searchableSelectSubAccount" id="val-account" name="account_id">
+                                <select class="form-control searchableSelectSubAccount removeVal" id="val-account" name="account_id">
                                     <option value="" disabled selected>Select General Accounts</option>
                                     @foreach ($accounts as $account)
                                         <option value="{{str_pad($account->id, 2, '0', STR_PAD_LEFT)}}">{{$account->title}}</option>
@@ -358,7 +356,7 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label px-0" for="val-title">Sub Accounts<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input type="text" class="form-control" id="val-title" name="title" placeholder="Enter Sub Accounts..">
+                                <input type="text" class="form-control removeVal" id="val-title" name="title" placeholder="Enter Sub Accounts..">
                             </div>
                         </div>
 
@@ -367,10 +365,10 @@
                             <div class="col-lg-9">
                                 <div class="row m-0">
                                     <div class="col-6 pl-0">
-                                        <input type="text" class="form-control" id="opening-balance" value="0" name="opening_balance" placeholder="Enter Opening Balance.."  maxlength="12" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" onkeyup="getValue(this)">
+                                        <input type="text" class="form-control removeVal" id="opening-balance" value="0" name="opening_balance" placeholder="Enter Opening Balance.."  maxlength="12" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" onkeyup="getValue(this)">
                                     </div>
                                     <div class="col-6 pr-0">
-                                        <select class="form-control searchableSelectTransaction" id="transaction-type" name="transaction_type">
+                                        <select class="form-control searchableSelectTransaction removeVal" id="transaction-type" name="transaction_type">
                                             <option value="" disabled selected>Select Debit/Credit</option>
                                             <option value="debit">Debit</option>
                                             <option value="credit">Credit</option>
@@ -383,7 +381,7 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label px-0" for="opening-date">Opening Date<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input class="form-control" id="opening-date" name="opening_date" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                <input class="form-control removeVal" id="opening-date" name="opening_date" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
                             </div>
                         </div>
 
@@ -392,7 +390,7 @@
            </div>
            <div class="modal-footer">
                <button type="button" class="btn btn-danger text-white customModalClose" data-dismiss="modal">Close</button>
-               <button type="button" class="btn btn-success text-white" onclick="addRealTimeFunction(false,'{{ route('sub-accounts.store') }}', '', 'post','','create-form-sub');">Save</button>
+               <button type="button" class="btn btn-success text-white" onclick="addRealTimeFunction(false,'{{ route('sub-accounts.store') }}', 'subAccount', 'post','','create-form-sub');">Save</button>
             </div>
         </div>
     </div>
@@ -412,7 +410,7 @@
             </div>
             <div class="modal-body px-5">
                <div class="form-validation my-5">
-                   <form class="form-valide" id="create-form">
+                   <form class="form-valide" id="create-form-pro">
                        <input type="hidden" name="unique_product" id="productUniqueAdd">
 
                        <div class="row m-0">
@@ -420,7 +418,7 @@
                                <div class="form-group row">
                                    <label class="col-lg-5 col-form-label px-0" for="product-title">Product Name<span class="text-danger">*</span></label>
                                    <div class="col-lg-7 pr-0" style="padding-left: 1.3rem !important;">
-                                       <input type="text" class="form-control" id="product-title" name="title" placeholder="Enter Product Name.." oninput="getUniqueProduct('#product-title', '#product-naration', '#product-unit' , '#productUniqueAdd')">
+                                       <input type="text" class="form-control removeVal" id="product-title" name="title" placeholder="Enter Product Name.." oninput="getUniqueProduct('#product-title', '#product-naration', '#product-unit' , '#productUniqueAdd')">
                                    </div>
                                </div>
                            </div>
@@ -428,7 +426,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label px-0 text-right" for="product-unit">Unit<span class="text-danger">*</span></label>
                                     <div class="col-lg-9 pr-0">
-                                        <select class="form-control searchableSelect" id="product-unit" name="product_unit" onchange="getUniqueProduct('#product-title', '#product-naration', '#product-unit', '#productUniqueAdd')">
+                                        <select class="form-control searchableSelect removeVal" id="product-unit" name="product_unit" onchange="getUniqueProduct('#product-title', '#product-naration', '#product-unit', '#productUniqueAdd')">
                                             <option value="" disabled selected>Select Product unit</option>
                                             <option value="meter">Meter</option>
                                             <option value="bags">Bags</option>
@@ -445,7 +443,7 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label px-0" for="product-naration">Narration<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input type="text" class="form-control" id="product-naration" name="narration" placeholder="Enter Narration.." oninput="getUniqueProduct('#product-title', '#product-naration', '#product-unit', '#productUniqueAdd')">
+                                <input type="text" class="form-control removeVal" id="product-naration" name="narration" placeholder="Enter Narration.." oninput="getUniqueProduct('#product-title', '#product-naration', '#product-unit', '#productUniqueAdd')">
                             </div>
                         </div>
 
@@ -453,8 +451,8 @@
                </div>
            </div>
            <div class="modal-footer">
-               <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Close</button>
-               <button type="button" class="btn btn-success text-white" onclick="commonFunction(false,'{{ route('products.store') }}','{{route('products.index')}}','post','','create-form');">Save</button>
+               <button type="button" class="btn btn-danger text-white customModalClose" data-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-success text-white" onclick="addRealTimeFunction(false,'{{ route('products.store') }}','product','post','','create-form-pro');">Save</button>
             </div>
         </div>
     </div>
@@ -494,7 +492,7 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
-                                <select name="${side}accounts[]" class="form-control searchableSelect${side}${count}">
+                                <select name="${side}accounts[]" class="form-control pushSubAccount searchableSelect${side}${count}">
                                     <option selected disabled value="">Sub account</option>
                                     @foreach ($subAccounts as $subAccount)
                                         <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
@@ -508,7 +506,7 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
-                                <select name="${side}products[]" class="form-control searchableSelect${side}Product${count}">
+                                <select name="${side}products[]" class="form-control pushProduct searchableSelect${side}Product${count}">
                                     <option selected disabled value="">Product</option>
                                     @foreach ($products as $product)
                                         <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>

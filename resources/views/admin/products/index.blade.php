@@ -152,11 +152,5 @@
     <script src="{{asset('assets/template/plugins/tables/js/datatable-init/datatable-basic.min.js')}}"></script>
 
 
-    <script>
-        const getUniqueProduct = (title , naration , unit, setTo)=>{
-            if($(title).val() != '' && $(naration).val() != '' && $(unit).val() != ''){
-                $(setTo).val($(title).val()+'-'+$(naration).val()+'-'+$(unit).val());
-            }
-        }
-    </script>
+   
 @endsection

@@ -65,7 +65,7 @@ class ProductController extends Controller
 
         $products->save();
 
-        return response()->json(['success' => true, 'message' => 'Product has been added successfully']);
+        return response()->json(['success' => true, 'message' => 'Product has been added successfully','data'=>$products]);
     }
 
     /**

@@ -288,38 +288,8 @@ searchable Select Code end
 
 
 
-function addRealTimeFunction(confirmation=false,targetUrl,returnUrl,method,msg='',formID=''){
-    if(confirmation){
-        swal({
-            text: msg,
-            icon: "warning",
-            buttons: {
-                cancel: "Cancel",
-                confirm: "OK"
-            },
-        }).then((willDelete) => {
-            if (willDelete)
-            {
-                $.ajax({
-                    type: method,
-                    url: targetUrl,
-                    data: {_token: $('#laravelToken').val()},
-                    success: function(data) {
-                        if(data.success==true){
-                            swal("success", data.message, "success").then((value) => {
-                                window.location = returnUrl;
-                            });
-                        }else if(data.success==false ){
-                            swal("warning", data.message, "warning").then((value) => {
-                                // window.location = returnUrl;
-                            });
-                        }
+function addRealTimeFunction(confirmation=false, targetUrl, whichData, method,msg='',formID=''){
 
-                    }
-                });
-            }
-        });
-    }else{
         var myform = document.getElementById(formID);
         var fd = new FormData(myform);
         fd.append("_token", $('#laravelToken').val());
@@ -329,19 +299,28 @@ function addRealTimeFunction(confirmation=false,targetUrl,returnUrl,method,msg='
             processData: false,
             contentType: false,
             data: fd,
-            success: function (data) {
+            success: function (res) {
 
-                if (data.success == true) {
+                if (res.success == true) {
+
                     $('.successAlert').removeClass('d-none');
+                    $('.removeVal').val('')
                     $('.customModalClose').click();
                     setTimeout(()=>{
                         $('.successAlert').addClass('d-none');
                     },2000)
+                    if(whichData == 'subAccount'){
+                        $('.pushSubAccount').append(` <option value="${res.data.id}">${res.data.title}</option>`)
+                    }
+                    if(whichData == 'product'){
+                        $('.pushProduct').append(` <option value="${res.data.title} - ${res.data.narration} - ${res.data.product_unit}"> ${res.data.title} - ${res.data.narration} - ${res.data.product_unit} </option>`)
+                    }
+
                 } else {
-                    if (data.hasOwnProperty("message")) {
+                    if (res.hasOwnProperty("message")) {
                         var wrapper = document.createElement("div");
                         var err = "";
-                        $.each(data.message, function (i, e) {
+                        $.each(res.message, function (i, e) {
                             err += "<p>" + e + "</p>";
                         });
 
@@ -357,6 +336,15 @@ function addRealTimeFunction(confirmation=false,targetUrl,returnUrl,method,msg='
                 }
             },
         });
-    }
 
+
+}
+
+
+
+
+const getUniqueProduct = (title , naration , unit, setTo)=>{
+    if($(title).val() != '' && $(naration).val() != '' && $(unit).val() != ''){
+        $(setTo).val($(title).val()+'-'+$(naration).val()+'-'+$(unit).val());
+    }
 }

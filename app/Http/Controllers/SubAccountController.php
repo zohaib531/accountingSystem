@@ -63,6 +63,7 @@ class SubAccountController extends Controller
             return response()->json(['success' => false, 'message' => $validations->errors()]);
         }
 
+
         $subAccounts = new SubAccount();
         $subAccounts->title = $request->title;
         $subAccounts->account_id = $request->account_id;
@@ -72,8 +73,9 @@ class SubAccountController extends Controller
         if($subAccounts->save()){
             $subAccounts->code =  $subAccounts->id;
             $subAccounts->save();
-            return response()->json(['success' => true, 'message' =>'Sub Accounts has been added successfully']);
+            return response()->json(['success' => true, 'message' =>'Sub Accounts has been added successfully', 'data'=>$subAccounts]);
         }
+
     }
 
     /**
