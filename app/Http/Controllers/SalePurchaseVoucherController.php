@@ -97,10 +97,12 @@ class SalePurchaseVoucherController extends Controller
     public function create()
     {
         $subAccounts = SubAccount::select('id', 'title')->get();
+        $accounts = Account::select('id', 'title')->get();
         $products = Product::select('id', 'title','narration','product_unit')->get();
         $data = [
             'subAccounts' => $subAccounts,
             'products' => $products,
+            'accounts' => $accounts,
         ];
         return view('admin.vouchers.salePurchase.create' , $data);
     }
@@ -146,10 +148,12 @@ class SalePurchaseVoucherController extends Controller
         $sale_purchase_voucher = Voucher::where('id', $id)->first();
         $subAccounts = SubAccount::select('id', 'title')->get();
         $products = Product::select('id', 'title','narration','product_unit')->get();
+
         $data = [
             'subAccounts' => $subAccounts,
             'products' => $products,
             'voucher' => $sale_purchase_voucher,
+            'id'=> $id
         ];
         return view('admin.vouchers.salePurchase.edit', $data)->render();
     }

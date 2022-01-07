@@ -122,6 +122,9 @@
 
                         </div>
 
+                        <div class="d-flex justify-content-end px-3 ">
+                            <a class="btn btn-success text-white" href="{{ route('salePurchaseReport') }}">Export to PDF</a>
+                        </div>
 
 
                         <div class="table-responsive">

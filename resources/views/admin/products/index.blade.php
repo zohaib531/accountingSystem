@@ -68,7 +68,7 @@
 <!-- #/ container -->
 
 
-<!--Add subaccount modal start-->
+<!--Add Product modal start-->
 
 <div class="modal fade addProduct" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">

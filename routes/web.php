@@ -52,4 +52,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('trialBalance', 'TrialBalanceController@index')->name('trialBalance');
     Route::post('getTrialBalance', 'TrialBalanceController@getTrialBalance')->name('getTrialBalance');
     Route::post('checkPassword', 'TrialBalanceController@checkPassword')->name('checkPassword');
+
+    // Reports Routes Start
+    Route::get('partyAccountReport/{sub_account_id}/{start_date}/{end_date}', 'ReportsController@partyAccountReport')->name('partyAccountReport');
+    Route::get('salePurchaseReport', 'ReportsController@salePurchaseReport')->name('salePurchaseReport');
+    Route::get('journalReport', 'ReportsController@journalReport')->name('journalReport');
+    Route::get('trialReport/{start_date}/{end_date}', 'ReportsController@trialReport')->name('trialReport');
 });

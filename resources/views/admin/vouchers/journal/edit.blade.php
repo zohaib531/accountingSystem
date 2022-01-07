@@ -32,8 +32,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-4 text-center">
                                     <h4 class="card-title">Update Journal Voucher</h4>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <button type="button" class="btn btn-danger" onclick="commonFunction(true,'{{ route('journal.destroy', $id) }}','{{route('journal.index')}}','delete','Are you sure you want to delete complete voucher?','');">Delete Voucher</button>
                                 </div>
                             </div>
                             <div class="form-validation mb-3">

@@ -21,6 +21,11 @@
                                 </a>
                             </div>
                         </div>
+
+                        <div class="d-flex justify-content-end px-3 mt-4">
+                            <a class="btn btn-success text-white" href="{{ route('journalReport') }}">Export to PDF</a>
+                        </div>
+
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered zero-configuration">
                                 <thead>

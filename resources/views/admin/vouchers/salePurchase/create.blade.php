@@ -31,9 +31,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <h4 class="card-title">Sale/Purchase Voucher</h4>
                         </div>
+                        <div class="col-4 text-right">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addsubaccount" onclick="initializeSelect2(), transactionSelect2()">Add Sub account</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addProduct" onclick="initializeSelect2()">Add Product</button>
+                        </div>
+
                     </div>
 
 
@@ -58,7 +63,7 @@
                                              <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                              <div class="col-lg-12 pl-0 pr-2">
                                                  <select name="credit_accounts[]" class="form-control searchableSelectCredit">
-                                                     <option selected disabled value="">Sub account</option>
+                                                     <option selected disabled value=""> Sub account</option>
                                                      @foreach ($subAccounts as $subAccount)
                                                          <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                                      @endforeach
@@ -318,6 +323,142 @@
 
 
 
+<!--Add subaccount modal start-->
+
+<div class="modal fade addsubaccount" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Sub Accounts</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body px-5">
+               <div class="form-validation my-5">
+                   <form class="form-valide" id="create-form-sub">
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label px-0" for="val-account">General Accounts<span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                                <select class="form-control searchableSelectSubAccount" id="val-account" name="account_id">
+                                    <option value="" disabled selected>Select General Accounts</option>
+                                    @foreach ($accounts as $account)
+                                        <option value="{{str_pad($account->id, 2, '0', STR_PAD_LEFT)}}">{{$account->title}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label px-0" for="val-title">Sub Accounts<span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" id="val-title" name="title" placeholder="Enter Sub Accounts..">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label px-0" for="opening-balance">Opening Balance<span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                                <div class="row m-0">
+                                    <div class="col-6 pl-0">
+                                        <input type="text" class="form-control" id="opening-balance" value="0" name="opening_balance" placeholder="Enter Opening Balance.."  maxlength="12" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" onkeyup="getValue(this)">
+                                    </div>
+                                    <div class="col-6 pr-0">
+                                        <select class="form-control searchableSelectTransaction" id="transaction-type" name="transaction_type">
+                                            <option value="" disabled selected>Select Debit/Credit</option>
+                                            <option value="debit">Debit</option>
+                                            <option value="credit">Credit</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label px-0" for="opening-date">Opening Date<span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                                <input class="form-control" id="opening-date" name="opening_date" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                            </div>
+                        </div>
+
+                   </form>
+               </div>
+           </div>
+           <div class="modal-footer">
+               <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-success text-white" onclick="commonFunction(false,'{{ route('sub-accounts.store') }}', '', 'post','','create-form-sub');">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Add subaccount modal start-->
+
+
+<!--Add Product modal start-->
+
+<div class="modal fade addProduct" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Products</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body px-5">
+               <div class="form-validation my-5">
+                   <form class="form-valide" id="create-form">
+                       <input type="hidden" name="unique_product" id="productUniqueAdd">
+
+                       <div class="row m-0">
+                           <div class="col-7 px-0">
+                               <div class="form-group row">
+                                   <label class="col-lg-5 col-form-label px-0" for="product-title">Product Name<span class="text-danger">*</span></label>
+                                   <div class="col-lg-7 pr-0" style="padding-left: 1.3rem !important;">
+                                       <input type="text" class="form-control" id="product-title" name="title" placeholder="Enter Product Name.." oninput="getUniqueProduct('#product-title', '#product-naration', '#product-unit' , '#productUniqueAdd')">
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-5 pl-0">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label px-0 text-right" for="product-unit">Unit<span class="text-danger">*</span></label>
+                                    <div class="col-lg-9 pr-0">
+                                        <select class="form-control searchableSelect" id="product-unit" name="product_unit" onchange="getUniqueProduct('#product-title', '#product-naration', '#product-unit', '#productUniqueAdd')">
+                                            <option value="" disabled selected>Select Product unit</option>
+                                            <option value="meter">Meter</option>
+                                            <option value="bags">Bags</option>
+                                            <option value="kgs">Kgs</option>
+                                            <option value="pounds">Pounds</option>
+                                        </select>
+                                    </div>
+                                </div>
+                           </div>
+                       </div>
+
+
+
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label px-0" for="product-naration">Narration<span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" id="product-naration" name="narration" placeholder="Enter Narration.." oninput="getUniqueProduct('#product-title', '#product-naration', '#product-unit', '#productUniqueAdd')">
+                            </div>
+                        </div>
+
+                   </form>
+               </div>
+           </div>
+           <div class="modal-footer">
+               <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-success text-white" onclick="commonFunction(false,'{{ route('products.store') }}','{{route('products.index')}}','post','','create-form');">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Add Product modal start-->
+
+
+
+
+
+
+
 
 @endsection
 
@@ -429,7 +570,13 @@
         $('.searchableSelectDebitProduct').select2({ dropdownParent: $('.searchableSelectDebitProduct').parent() });
         $('.searchableSelectSuspense').select2({ dropdownParent: $('.searchableSelectSuspense').parent() });
 
+
+        $('.searchableSelectSubAccount').select2({ dropdownParent: $('.searchableSelectSubAccount').parent() });
     });
+
+    function transactionSelect2(){
+            $('.searchableSelectTransaction').select2({dropdownParent: $('.searchableSelectTransaction').parent()});
+        }
 </script>
 
 @endsection
