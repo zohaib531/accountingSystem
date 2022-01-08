@@ -303,17 +303,17 @@ function addRealTimeFunction(confirmation=false, targetUrl, whichData, method,ms
 
                 if (res.success == true) {
 
-                    $('.successAlert').removeClass('d-none');
+                    $('.successAlert').addClass('show');
                     $('.removeVal').val('')
                     $('.customModalClose').click();
                     setTimeout(()=>{
-                        $('.successAlert').addClass('d-none');
-                    },2000)
+                        $('.successAlert').removeClass('show');
+                    }, 2000)
                     if(whichData == 'subAccount'){
-                        $('.pushSubAccount').append(` <option value="${res.data.id}">${res.data.title}</option>`)
+                        $('.pushSubAccount').append(` <option class="realtimeSubAccount" value="${res.data.id}">${res.data.title}</option>`)
                     }
                     if(whichData == 'product'){
-                        $('.pushProduct').append(` <option value="${res.data.title} - ${res.data.narration} - ${res.data.product_unit}"> ${res.data.title} - ${res.data.narration} - ${res.data.product_unit} </option>`)
+                        $('.pushProduct').append(` <option class="realtimeProduct" value="${res.data.title} - ${res.data.narration} - ${res.data.product_unit}"> ${res.data.title} - ${res.data.narration} - ${res.data.product_unit} </option>`)
                     }
 
                 } else {

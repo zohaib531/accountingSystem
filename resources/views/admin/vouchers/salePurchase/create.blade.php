@@ -16,7 +16,10 @@
 </div>
 <!-- row --> --}}
 
-
+<div class="alert alert-success alert-dismissible fade successAlert" style="width: fit-content;position:absolute; z-index:1111;right:0;">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Success</strong> data has been added successfully.
+</div>
 
 
 <div class="container-fluid">
@@ -36,7 +39,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-4 text-center">
                             <h4 class="card-title">Sale/Purchase Voucher</h4>
                         </div>
                         <div class="col-4 text-right">
@@ -492,11 +495,12 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
-                                <select name="${side}accounts[]" class="form-control pushSubAccount searchableSelect${side}${count}">
+                                <select name="${side}accounts[]" class="form-control searchableSelect${side}${count}">
                                     <option selected disabled value="">Sub account</option>
                                     @foreach ($subAccounts as $subAccount)
                                         <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                     @endforeach
+                                    <option value="${$('.realtimeSubAccount').val()}">${$('.realtimeSubAccount').html()}</option>
                                 </select>
                             </div>
                         </div>
@@ -506,11 +510,12 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
-                                <select name="${side}products[]" class="form-control pushProduct searchableSelect${side}Product${count}">
+                                <select name="${side}products[]" class="form-control searchableSelect${side}Product${count}">
                                     <option selected disabled value="">Product</option>
                                     @foreach ($products as $product)
                                         <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
                                     @endforeach
+                                    <option value="${$('.realtimeProduct').val()}">${$('.realtimeProduct').html()}</option>
                                 </select>
                             </div>
                         </div>
@@ -561,8 +566,6 @@
         defaultScope.ready();
         // Initialize coma in add more
 
-
-
     }
 
 
@@ -582,7 +585,7 @@
 
     function transactionSelect2(){
             $('.searchableSelectTransaction').select2({dropdownParent: $('.searchableSelectTransaction').parent()});
-        }
+    }
 </script>
 
 @endsection
