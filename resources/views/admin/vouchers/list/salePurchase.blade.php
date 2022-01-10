@@ -50,6 +50,7 @@
                                                 @endif
                                             </div>
                                         </div>
+
                                         <div class="col-3">
                                             <label class="col-lg-12 col-form-label px-0">Product Type<span class="text-danger">*</span></label>
                                             <select class="form-control searchableSelectFilterProductType" name="product_type" onchange="productChange(this)">

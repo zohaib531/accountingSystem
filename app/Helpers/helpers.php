@@ -38,7 +38,7 @@
             }
 
             return ["opening_balance"=>$openingBalance,"opening_balance_type"=>$transactionType];
-        }    
+        }
     }
 
     if(!function_exists('getBalanceAndType')){
@@ -67,7 +67,7 @@
                 }
             }
 
-            return ["balance"=>$openingBalance,"type"=>$transactionType]; 
+            return ["balance"=>$openingBalance,"type"=>$transactionType];
         }
-   
+
     }

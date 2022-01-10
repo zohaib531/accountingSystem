@@ -29,22 +29,63 @@
 
                     <form method="post" id="create-form">
                         @csrf
-                        <div class="row mx-0 mb-5 align-items-end">
-                            <div class="col-3">
+                        <div class="row mx-0 align-items-end">
+                            <div class="col-2">
                                 <div class="form-group row m-0 align-items-center">
-                                    <label class="col-lg-12 col-form-label px-0" for="val-start_date">Sub Account<span class="text-danger">*</span></label>
+                                    <label class="col-lg-12 col-form-label px-0">Account<span class="text-danger">*</span></label>
                                     <div class="col-lg-12 px-0">
-                                        <select name="sub_account" class="form-control searchableSelect" id="">
-                                            <option selected value="">Sub Account</option>
+                                        <select name="account" class="form-control searchableSelectAccount" onchange="accountChange(this)">
+                                            <option selected value="all">All</option>
+                                            @foreach ($accounts as $account)
+                                                <option value="{{$account->id}}">{{$account->title}}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="fade">Some Data</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group row m-0 align-items-center">
+                                    <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
+                                    <div class="col-lg-12 px-0">
+                                        <select name="sub_account" class="form-control searchableSelect" id="subAccountWithFilter">
+                                            <option selected value="all">All</option>
                                             @foreach ($subAccounts as $subAccount)
                                                 <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                             @endforeach
                                         </select>
+                                        <span class="fade">Some Data</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-2">
+                                <label class="col-lg-12 col-form-label px-0">Start Date<span class="text-danger">*</span></label>
+                                <div class="col-lg-12 px-0">
+                                    <input name="start_date" id="val-start_date" class="form-control @error('start_date') border-danger @enderror" value="{{old('start_date')}}" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                    @if ($errors->has('start_date'))
+                                        <span class="text-danger">Please enter end date.</span>
+                                    @else
+                                        <span class="fade">Some Data</span>
+                                    @endif
+                                </div>
+
+                            </div>
+
+                            <div class="col-2">
+                                <label class="col-lg-12 col-form-label px-0" for="val-end_date">End date<span class="text-danger">*</span></label>
+                                <div class="col-lg-12 px-0">
+                                    <input name="end_date" id="val-end_date"  class="form-control  @error('end_date') border-danger @enderror" value="{{old('end_date')}}"  placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                    @if ($errors->has('end_date'))
+                                        <span class="text-danger">Please enter end date.</span>
+                                    @else
+                                        <span class="fade">Some Data</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-2">
                                 <button type="button" class="btn btn-primary" onclick="commonFunctionForAllRequest(true,false,'.agingReportPortion','{{route('getAgentReportData')}}','','post','','create-form');">Create Report</button>
+                                <div class="fade">Some Data</div>
                             </div>
                         </div>
 
@@ -70,5 +111,26 @@
     <script src="{{asset('assets/template/plugins/tables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('assets/template/plugins/tables/js/datatable/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{asset('assets/template/plugins/tables/js/datatable-init/datatable-basic.min.js')}}"></script>
+
+    <script>
+            $(document).ready(function() {
+                $('.searchableSelectAccount').select2({ dropdownParent: $('.searchableSelectAccount').parent() });
+            });
+
+
+            const accountChange = (e) =>{
+                let html = '<option selected value="all" >All</option>';
+                var allsubAccounts = {!! $subAccounts !!};
+                for(let singleSubAccount of allsubAccounts){
+                    if(e.value == 'all'){
+                        html +=`<option value="${singleSubAccount.id}" >${singleSubAccount.title}</option>`;
+                    }
+                    if(e.value == singleSubAccount.account_id){
+                        html +=`<option value="${singleSubAccount.id}" >${singleSubAccount.title}</option>`;
+                    }
+                }
+                subAccountWithFilter.innerHTML= html;
+            }
+    </script>
 @endsection
 
