@@ -32,7 +32,8 @@ class JournalVoucherController extends Controller
     public function create()
     {
         $subAccounts = SubAccount::select('id', 'title')->get();
-        return view('admin.vouchers.journal.create' , ['subAccounts' => $subAccounts]);
+        $accounts = Account::select('id', 'title')->get();
+        return view('admin.vouchers.journal.create' , ['subAccounts' => $subAccounts,'accounts' => $accounts]);
     }
 
     /**
