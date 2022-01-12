@@ -147,10 +147,11 @@
                                     @endphp
                                     @foreach ($vouchers as $key => $voucherDetail)
                                         @if($voucherDetail->voucher->voucher_type=='sale_purchase_voucher')
+
                                             <tr>
                                                 <td>{{ ++$num }}</td>
                                                 <td>{{date('d/m/y',strtotime($voucherDetail->date))}}</td>
-                                                <td>{{ $voucherDetail->subAccount->title }}</td>
+                                                <td>{{ $voucherDetail->subAccount['title']  }}</td>
                                                 <td>{{ $voucherDetail->product_narration }}</td>
                                                 {{-- Code for Debit start --}}
                                                 @if ($voucherDetail->entry_type =='debit')

@@ -312,6 +312,7 @@ class SalePurchaseVoucherController extends Controller
                 $VoucherDetail->remaining_balance_type = $remainingBalanceType;
                 $VoucherDetail->quantity = isset($request->debit_quantities[$key])?str_replace(',','',$request->debit_quantities[$key]):'';
                 $VoucherDetail->rate = isset($request->debit_rates[$key])?str_replace(',','',$request->debit_rates[$key]):0;
+                $VoucherDetail->commission = isset($request->debit_commission[$key])?str_replace(',','',$request->debit_commission[$key]):0;
                 $VoucherDetail->entry_type = 'debit';
                 $VoucherDetail->save();
             }
@@ -354,6 +355,7 @@ class SalePurchaseVoucherController extends Controller
                 $VoucherDetail->remaining_balance_type = $remainingBalanceType;
                 $VoucherDetail->quantity = isset($request->credit_quantities[$key])?str_replace(',','',$request->credit_quantities[$key]):'';
                 $VoucherDetail->rate = isset($request->credit_rates[$key])?str_replace(',','',$request->credit_rates[$key]):0;
+                $VoucherDetail->commission = isset($request->credit_commission[$key])?str_replace(',','',$request->credit_commission[$key]):0;
                 $VoucherDetail->entry_type = 'credit';
                 $VoucherDetail->save();
             }

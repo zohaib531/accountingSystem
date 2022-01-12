@@ -89,6 +89,12 @@
 
                                                 <div class="col-1 px-0">
                                                     <div class="form-group row m-0 align-items-center">
+                                                        <label class="col-lg-12 col-form-label px-0 pb-0">Commission<span class="text-danger">*</span></label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-1 px-0">
+                                                    <div class="form-group row m-0 align-items-center">
                                                         <label class="col-lg-12 col-form-label px-0 pb-0">Amount<span class="text-danger">*</span></label>
                                                     </div>
                                                 </div>
@@ -155,9 +161,9 @@
 
                                                         <div class="col-1 px-0">
                                                             <div class="form-group row m-0 align-items-center">
-                                                                <label class="col-lg-12 col-form-label px-0">Commission<span class="text-danger">*</span></label>
+                                                                <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2 ">
-                                                                    <input type="text" name="credit_comission[]" oninput="comissonCalculaion(this)" value="{{$detail->commission}}" class="form-control" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" value="0">
+                                                                    <input type="text" name="credit_commission[]" oninput="comissonCalculaion(this)" value="{{$detail->commission}}" class="form-control" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" value="0">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -230,6 +236,12 @@
 
                                                 <div class="col-1 px-0">
                                                     <div class="form-group row m-0 align-items-center">
+                                                        <label class="col-lg-12 col-form-label px-0 pb-0">Commission<span class="text-danger">*</span></label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-1 px-0">
+                                                    <div class="form-group row m-0 align-items-center">
                                                         <label class="col-lg-12 col-form-label px-0 pb-0">Amount<span class="text-danger">*</span></label>
                                                     </div>
                                                 </div>
@@ -296,9 +308,9 @@
 
                                                         <div class="col-1 px-0">
                                                             <div class="form-group row m-0 align-items-center">
-                                                                <label class="col-lg-12 col-form-label px-0">Commission<span class="text-danger">*</span></label>
+                                                                <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2 ">
-                                                                    <input type="text" name="debit_comission[]" oninput="comissonCalculaion(this)" value="{{$detail->commission}}" class="form-control" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" value="0">
+                                                                    <input type="text" name="debit_commission[]" oninput="comissonCalculaion(this)" value="{{$detail->commission}}" class="form-control" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" value="0">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -643,7 +655,7 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2 ">
-                                <input type="text" name="${side}_comission[]" oninput="comissonCalculaion(this)" class="form-control" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" value="0">
+                                <input type="text" name="${side}_commission[]" oninput="comissonCalculaion(this)" class="form-control" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" value="0">
                             </div>
                         </div>
                     </div>

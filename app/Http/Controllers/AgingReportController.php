@@ -26,7 +26,7 @@ class AgingReportController extends Controller
         $validations = Validator::make($request->all(), ['account'=>'required','sub_account'=>'required','start_date' => 'required','end_date' => 'required']);
         if ($validations->fails()) { return response()->json(['success' => false, 'message' => $validations->errors()]);}
 
-        
+
         $start_date = Carbon::createFromFormat('d / m / y',  $request->start_date)->format('y-m-d');
         $end_date = Carbon::createFromFormat('d / m / y', $request->end_date)->format('y-m-d');
 
@@ -58,14 +58,14 @@ class AgingReportController extends Controller
                             $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                         }
 
-                        $str = $detail->entry_type."_amount";
+                        $str = $singleEntry->entry_type."_amount";
                             if($openingBalance > 0 ){
-                                $detail->entry_type=="debit"?$debitBalance += $detail->$str:$creditBalance += $detail->$str;
-                                $openingBalance = $openingBalance - $detail->$str;
+                                $singleEntry->entry_type=="debit"?$debitBalance += $singleEntry->$str:$creditBalance += $singleEntry->$str;
+                                $openingBalance = $openingBalance - $singleEntry->$str;
                             }else{
                                 $entryType = $entryType=="debit"? "credit":"debit";
                             }
-                            $to = Carbon::createFromFormat('Y-m-d', $detail->date);
+                            $to = Carbon::createFromFormat('Y-m-d', $singleEntry->date);
                             $from = Carbon::createFromFormat('Y-m-d', date('Y-m-d'));
                             $diff_in_days = $to->diffInDays($from);
                     }

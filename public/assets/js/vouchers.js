@@ -294,15 +294,15 @@ const comissonCalculaion = (e) =>{
             // calculation when percentage is added
             valueAfterCalculation = (elemValue * calculatedTotal) / 100;
 
-            console.log(valueAfterCalculation);
-            console.log(calculatedTotal );
             // setting total amount after calculation
             totalAmount.val(calculatedTotal - valueAfterCalculation);
             totalAmount.attr('data-val', calculatedTotal - valueAfterCalculation);
+            commonCodeForSuspenseEntryDifference(e);
         }else{
             // setting total amount
             totalAmount.val( calculatedTotal);
             totalAmount.attr('data-val', calculatedTotal);
+            commonCodeForSuspenseEntryDifference(e);
         }
 
     }
