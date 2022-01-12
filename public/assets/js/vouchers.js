@@ -113,26 +113,30 @@ const createAmount = (e, action, voucherType)=>{
         if (action) {
             if($(e).parent().parent().parent().next('div').children('div').children('div').children('input').attr('data-val') >= 0){
                 let elem = $(e).parent().parent().parent().next('div').children('div').children('div').children('input');
-                let amount = elem.parent().parent().parent().next('div').children('div').children('div').children('input');
+                let commisionValue = $(e).parent().parent().parent().next('div').next('div').children('div').children('div').children('input');
+                let amount = elem.parent().parent().parent().next('div').next('div').children('div').children('div').children('input');
 
                 if ( $(e).attr('data-val') >=0 && elem.attr('data-val') >=0 ) {
                     getValue(e)
                     getValue(elem[0])
                     amount.val(($(e).attr('data-val') * elem.attr('data-val')).toFixed(2));
                     amount.attr('data-val', ($(e).attr('data-val') * elem.attr('data-val')).toFixed(2));
+                    comissonCalculaion(commisionValue);
                 }
 
             }
         }else{
             if($(e).parent().parent().parent().prev('div').children('div').children('div').children('input').attr('data-val') >= 0){
                 let elem = $(e).parent().parent().parent().prev('div').children('div').children('div').children('input');
-                let amount = $(e).parent().parent().parent().next('div').children('div').children('div').children('input');
+                let commisionValue = $(e).parent().parent().parent().next('div').children('div').children('div').children('input');
+                let amount = $(e).parent().parent().parent().next('div').next('div').children('div').children('div').children('input');
 
                 if ($(e).attr('data-val') >=0 && elem.attr('data-val') >=0 ) {
                     getValue(e)
                     getValue(elem[0])
                     amount.val(($(e).attr('data-val') * elem.attr('data-val')).toFixed(2));
                     amount.attr('data-val', ($(e).attr('data-val') * elem.attr('data-val')).toFixed(2));
+                    comissonCalculaion(commisionValue);
                 }
 
             }
@@ -264,3 +268,43 @@ function getValue(e) {
 }
 
 
+
+
+const comissonCalculaion = (e) =>{
+    let elemValue = parseFloat($(e).val().replace(',',''))
+    let quantityValue = $(e).parent().parent().parent().prev('div').prev('div').children('div').children('div').children('input');
+    let rateValue = $(e).parent().parent().parent().prev('div').children('div').children('div').children('input');
+    let totalAmount = $(e).parent().parent().parent().next('div').children('div').children('div').children('input');
+    let calculatedTotal = quantityValue.attr('data-val') * rateValue.attr('data-val');
+
+    let valueAfterCalculation;
+
+    if(totalAmount != '' || parseFloat(totalAmount.val().replace(',','')) > 0){
+        // setting value 100 if it increase from 100
+        if (elemValue > 100){
+            $(e).val(100);
+            elemValue = 100;
+        }
+        if (elemValue < 1){
+            $(e).val(0);
+            elemValue = 0;
+        }
+
+        if(!isNaN(elemValue)){
+            // calculation when percentage is added
+            valueAfterCalculation = (elemValue * calculatedTotal) / 100;
+
+            console.log(valueAfterCalculation);
+            console.log(calculatedTotal );
+            // setting total amount after calculation
+            totalAmount.val(calculatedTotal - valueAfterCalculation);
+            totalAmount.attr('data-val', calculatedTotal - valueAfterCalculation);
+        }else{
+            // setting total amount
+            totalAmount.val( calculatedTotal);
+            totalAmount.attr('data-val', calculatedTotal);
+        }
+
+    }
+
+}

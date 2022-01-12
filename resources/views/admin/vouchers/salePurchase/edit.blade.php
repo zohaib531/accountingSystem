@@ -57,7 +57,7 @@
                                         <div  id="sale_purchase_credit" class="mt-3">
                                             <h3>Credit</h3>
                                             <div class="row mx-0 justify-content-between">
-                                                <div class="col-2 px-0">
+                                                <div class="col-1 px-0">
                                                     <div class="form-group row m-0 align-items-center">
                                                         <label class="col-lg-12 col-form-label px-0 pb-0">Date<span class="text-danger">*</span></label>
                                                     </div>
@@ -98,7 +98,7 @@
 
                                                     <div class="row mx-0 justify-content-between mt-2">
                                                         <input type="hidden" name="credit_voucher_detail_ids[]" value="{{$detail->id}}">
-                                                        <div class="col-2 px-0">
+                                                        <div class="col-1 px-0">
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2">
@@ -134,6 +134,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+
                                                         <div class="col-1 px-0">
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
@@ -148,6 +149,15 @@
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2 ">
                                                                     <input type="text" name="credit_rates[]"  class="form-control" oninput="createAmount(this , false, true)" value="{{$detail->rate}}"  data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="{{$detail->rate}}" data-common="common" onkeyup="getValue(this)">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-1 px-0">
+                                                            <div class="form-group row m-0 align-items-center">
+                                                                <label class="col-lg-12 col-form-label px-0">Commission<span class="text-danger">*</span></label>
+                                                                <div class="col-lg-12 pl-0 pr-2 ">
+                                                                    <input type="text" name="credit_comission[]" oninput="comissonCalculaion(this)" value="{{$detail->commission}}" class="form-control" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" value="0">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -188,7 +198,7 @@
                                         <div  id="sale_purchase_debit">
                                             <h3>Debit</h3>
                                             <div class="row mx-0 justify-content-between mt-2">
-                                                <div class="col-2 px-0">
+                                                <div class="col-1 px-0">
                                                     <div class="form-group row m-0 align-items-center">
                                                         <label class="col-lg-12 col-form-label px-0 pb-0">Date<span class="text-danger">*</span></label>
                                                     </div>
@@ -229,7 +239,7 @@
 
                                                     <div class="row mx-0 justify-content-between mt-2">
                                                         <input type="hidden" name="debit_voucher_detail_ids[]" value="{{$detail->id}}">
-                                                        <div class="col-2 px-0">
+                                                        <div class="col-1 px-0">
                                                             <div class="form-group row m-0 align-items-center">
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2">
@@ -280,6 +290,15 @@
                                                                 <label></label>
                                                                 <div class="col-lg-12 pl-0 pr-2 ">
                                                                     <input type="text" name="debit_rates[]"  class="form-control" oninput="createAmount(this , false, true)" value="{{$detail->rate}}"  data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="{{$detail->rate}}" data-common="common" onkeyup="getValue(this)">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-1 px-0">
+                                                            <div class="form-group row m-0 align-items-center">
+                                                                <label class="col-lg-12 col-form-label px-0">Commission<span class="text-danger">*</span></label>
+                                                                <div class="col-lg-12 pl-0 pr-2 ">
+                                                                    <input type="text" name="debit_comission[]" oninput="comissonCalculaion(this)" value="{{$detail->commission}}" class="form-control" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" value="0">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -560,7 +579,7 @@
         ++i
         $(elem).parent().parent().find(id).append(`
             <div class="row mt-2 mx-0 justify-content-between position-relative w-100">
-                <div class="col-2 px-0">
+                <div class="col-1 px-0">
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
@@ -616,6 +635,15 @@
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2 ">
                                 <input type="text" name="${side}rates[]" class="form-control" oninput="createAmount(this , false, true)"  data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" onkeyup="getValue(this)" value="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-1 px-0">
+                        <div class="form-group row m-0 align-items-center">
+                            <label></label>
+                            <div class="col-lg-12 pl-0 pr-2 ">
+                                <input type="text" name="${side}_comission[]" oninput="comissonCalculaion(this)" class="form-control" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" value="0">
                             </div>
                         </div>
                     </div>
