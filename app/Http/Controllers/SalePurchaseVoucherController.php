@@ -69,7 +69,7 @@ class SalePurchaseVoucherController extends Controller
 
                     }
                 }
-                else if(($key !=="start_date" && $key !=="end_date")){
+                else if(($key !=="start_date" && $key !=="end_date") && $key != 'product_type'){
                     $vouchers->where($key, $value);
                 }
 
