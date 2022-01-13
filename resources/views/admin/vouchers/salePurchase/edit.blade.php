@@ -89,7 +89,7 @@
 
                                                 <div class="col-1 px-0">
                                                     <div class="form-group row m-0 align-items-center">
-                                                        <label class="col-lg-12 col-form-label px-0 pb-0">Commission<span class="text-danger">*</span></label>
+                                                        <label class="col-lg-12 col-form-label px-0 pb-0">Commission %<span class="text-danger">*</span></label>
                                                     </div>
                                                 </div>
 
@@ -236,7 +236,7 @@
 
                                                 <div class="col-1 px-0">
                                                     <div class="form-group row m-0 align-items-center">
-                                                        <label class="col-lg-12 col-form-label px-0 pb-0">Commission<span class="text-danger">*</span></label>
+                                                        <label class="col-lg-12 col-form-label px-0 pb-0">Commission %<span class="text-danger">*</span></label>
                                                     </div>
                                                 </div>
 

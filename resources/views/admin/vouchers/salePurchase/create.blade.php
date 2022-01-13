@@ -117,7 +117,7 @@
 
                                      <div class="col-1 px-0">
                                         <div class="form-group row m-0 align-items-center">
-                                            <label class="col-lg-12 col-form-label px-0">Commission<span class="text-danger">*</span></label>
+                                            <label class="col-lg-12 col-form-label px-0">Commission %<span class="text-danger">*</span></label>
                                             <div class="col-lg-12 pl-0 pr-2 ">
                                                 <input type="text" name="credit_commission[]" onkeyup="comissonCalculaion(this)" class="form-control" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" value="0">
                                             </div>
@@ -206,7 +206,7 @@
 
                                      <div class="col-1 px-0">
                                         <div class="form-group row m-0 align-items-center">
-                                            <label class="col-lg-12 col-form-label px-0">Commission<span class="text-danger">*</span></label>
+                                            <label class="col-lg-12 col-form-label px-0">Commission %<span class="text-danger">*</span></label>
                                             <div class="col-lg-12 pl-0 pr-2 ">
                                                 <input type="text" name="debit_commission[]" onkeyup="comissonCalculaion(this)" class="form-control" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'" data-val="0" data-common="common" value="0">
                                             </div>
