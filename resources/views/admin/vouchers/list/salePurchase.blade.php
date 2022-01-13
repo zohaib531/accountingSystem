@@ -29,7 +29,7 @@
                                             <label class="col-lg-12 col-form-label px-0">Start Date<span class="text-danger">*</span></label>
                                             <div class="col-lg-12 px-0">
                                                 {{-- <input name="start_date" id="val-start_date" class="form-control @error('start_date') border-danger @enderror" @if(in_array($start_date, $filterElementsArr)) value="{{$start_date}}" @endif placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text"> --}}
-                                                <input name="start_date" id="val-start_date" class="form-control @error('start_date') border-danger @enderror" value="{{old('start_date')}}" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                                <input name="start_date" id="val-start_date" class="form-control @error('start_date') border-danger @enderror" value="{{ old('start_date') != null ? old('start_date') : $start_date }}" placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
 
                                                 @if ($errors->has('start_date'))
                                                     <span class="text-danger">Please start end date.</span>
@@ -42,7 +42,7 @@
                                         <div class="col-3">
                                             <label class="col-lg-12 col-form-label px-0" for="val-end_date">End date<span class="text-danger">*</span></label>
                                             <div class="col-lg-12 px-0">
-                                                <input name="end_date" id="val-end_date"  class="form-control  @error('end_date') border-danger @enderror" value="{{old('end_date')}}"  placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
+                                                <input name="end_date" id="val-end_date"  class="form-control  @error('end_date') border-danger @enderror" value="{{ old('end_date')  != null ? old('end_date') : $end_date}}"  placeholder="dd/mm/yy" onkeyup="date_reformat_dd(this);" onkeypress="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" autocomplete="off" type="text">
                                                 @if ($errors->has('end_date'))
                                                     <span class="text-danger">Please enter end date.</span>
                                                 @else
@@ -67,7 +67,7 @@
                                         <div class="col-3">
                                             <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                             <select name="sub_account_id" class="form-control searchableSelectFilterSubaccount">
-                                                <option selected value="all">All</option>
+                                                <option @if (isset($filterElementsArr[4]) && $filterElementsArr[4] == 'all') selected @endif selected value="all">All</option>
                                                 @foreach ($subAccounts as $subAccount)
                                                     <option value="{{$subAccount->id}}" @if(in_array($subAccount->id, $filterElementsArr)) selected @endif>{{$subAccount->title}}</option>
                                                 @endforeach

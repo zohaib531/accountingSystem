@@ -276,7 +276,6 @@ const comissonCalculaion = (e) =>{
     let rateValue = $(e).parent().parent().parent().prev('div').children('div').children('div').children('input');
     let totalAmount = $(e).parent().parent().parent().next('div').children('div').children('div').children('input');
     let calculatedTotal = quantityValue.attr('data-val') * rateValue.attr('data-val');
-
     let valueAfterCalculation;
 
     if(totalAmount != '' || parseFloat(totalAmount.val().replace(',','')) > 0){
@@ -285,7 +284,7 @@ const comissonCalculaion = (e) =>{
             $(e).val(100);
             elemValue = 100;
         }
-        if (elemValue < 1){
+        if (elemValue < 0){
             $(e).val(0);
             elemValue = 0;
         }
@@ -298,7 +297,8 @@ const comissonCalculaion = (e) =>{
             totalAmount.val(calculatedTotal - valueAfterCalculation);
             totalAmount.attr('data-val', calculatedTotal - valueAfterCalculation);
             commonCodeForSuspenseEntryDifference(e);
-        }else{
+        }
+        if(isNaN(elemValue) || elemValue == 0){
             // setting total amount
             totalAmount.val( calculatedTotal);
             totalAmount.attr('data-val', calculatedTotal);
