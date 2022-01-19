@@ -8,7 +8,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form method="post" id="filterForm" action="{{ route('applyFilter') }}">
+                        <form method="post" id="filterForm" action="">
                             @csrf
                             <div class="row m-0">
                                 <div class="col-6 text-right">
@@ -102,13 +102,9 @@
                                         </div>
 
                                         <div class="col-3 text-center">
-                                            <button type="submit" class="btn btn-primary">
-                                                Apply Filter
-                                            </button>
+                                            <button type="button" onclick="exportAndApplyFilter(this,'{{ route('applyFilter') }}')" class="btn btn-primary">Apply Filter</button>
                                             <a href="{{ route('salePurchase.index') }} "  class="{{ Request::is('applyFilter') ? 'd-inline' : 'd-none' }}">
-                                                <button type="button" class="btn btn-danger">
-                                                    Refresh Filter
-                                                </button>
+                                                <button type="button" class="btn btn-danger">Refresh Filter</button>
                                             </a>
                                         </div>
 
@@ -119,7 +115,7 @@
                             </div>
 
                             <div class="d-flex justify-content-end px-3 ">
-                                <button type="button" onclick="exportToPDF(this,'{{ route('salePurchaseReport') }}')" class="btn btn-success text-white">Export to PDF</button>
+                                <button type="button" onclick="exportAndApplyFilter(this,'{{ route('salePurchaseReport') }}')" class="btn btn-success text-white">Export to PDF</button>
                             </div>
                         </form>
 
@@ -192,8 +188,9 @@
 @section('script')
 
     <script>
-        function exportToPDF(elem,targetUrl){
-            let targetElement = $(elem).parent('div').parent('form');
+        
+        function exportAndApplyFilter(elem,targetUrl){
+            let targetElement = $('#filterForm');
             targetElement.attr("action",targetUrl);
             targetElement.submit();
         }
