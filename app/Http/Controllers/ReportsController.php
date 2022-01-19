@@ -35,24 +35,30 @@ class ReportsController extends Controller
     {
         $validations = Validator::make($request->all(), ['start_date' => 'required_with_all:end_date','end_date' => 'required_with_all:start_date']);
         if ($validations->fails()) { return back()->withInput()->withErrors($validations) ;}
-
         $request = $request->except('_token');
         $vouchers = null;
         $dataCheck = true;
         $start_date = '';
         $end_date = '';
 
-        $filledFieldsArray = $this->getFilledField($request);
+        $filledFieldsArray = getFilledField($request);
+        // return $filledFieldsArray;
         if(count($filledFieldsArray)>0){
             foreach($filledFieldsArray as $key=>$value){
 
-                if($key === 'start_date' && $start_date !== ''){
-                    $start_date = Carbon::createFromFormat('d / m / y', $value)->format('y-m-d');
+                if($key == 'start_date'){
+                    if($value != ''){
+                        $start_date = $value;
+                    }
                 }
 
-                if($key === 'end_date'  && $end_date !== ''){
-                    $end_date = Carbon::createFromFormat('d / m / y', $value)->format('y-m-d');
+                if($key == 'end_date'){
+                    if($value != ''){
+                        $end_date =  $value;
+                    }
                 }
+
+
 
                 if($key === array_key_first($filledFieldsArray)){
                     if(($key =="start_date" || $key=="end_date") && $dataCheck){
@@ -67,8 +73,13 @@ class ReportsController extends Controller
 
                     }
                 }
-                else if(($key !=="start_date" && $key !=="end_date")){
+
+                else if(($key !=="start_date" && $key !=="end_date") && $key != 'product_type'){
                     $vouchers->where($key, $value);
+                }
+
+                else if($key == 'product_type'){
+                    $vouchers->where("product_narration","like", "%{$value}%");
                 }
 
 
@@ -78,13 +89,11 @@ class ReportsController extends Controller
             $vouchers = VoucherDetail::get();
         }
 
-
         $products = Product::select('id', 'title','narration','product_unit')->get();
         $unique_product_titles = Product::select('title')->distinct()->get();
         $subAccounts = SubAccount::select('id', 'title')->get();
-        $filterElementsArr = array_values($request);
 
-        $pdf = PDF::loadView('admin.pdf_reports.salePurchase',  compact('vouchers','products','subAccounts','filterElementsArr','unique_product_titles','start_date','end_date'));
+        $pdf = PDF::loadView('admin.pdf_reports.salePurchase',  compact('vouchers','products','subAccounts','unique_product_titles','start_date','end_date'));
         // download PDF file with download method
           return $pdf->download('salePurchaseReport.pdf');
 
@@ -117,41 +126,6 @@ class ReportsController extends Controller
           return $pdf->download('trialBalanceReport.pdf');
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private function getFilledField($array){
-
-        $newArr = [];
-        foreach($array as $x=>$value)
-        {
-          if($value!="all" && $value != ''){
-            $newArr[$x] = $value;
-          }
-        }
-        return $newArr;
-
-    }
 }
 
 

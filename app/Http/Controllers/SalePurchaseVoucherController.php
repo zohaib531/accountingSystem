@@ -44,7 +44,7 @@ class SalePurchaseVoucherController extends Controller
         $start_date = '';
         $end_date = '';
 
-        $filledFieldsArray = $this->getFilledField($request);
+        $filledFieldsArray = getFilledField($request);
         // return $filledFieldsArray;
         if(count($filledFieldsArray)>0){
             foreach($filledFieldsArray as $key=>$value){
@@ -207,21 +207,6 @@ class SalePurchaseVoucherController extends Controller
             return response()->json(['success' => true, 'message' => 'Sale/Purchase voucher has been deleted successfully']);
         }
     }
-
-    private function getFilledField($array){
-
-        $newArr = [];
-        foreach($array as $x=>$value)
-        {
-          if($value!="all" && $value != ''){
-            $newArr[$x] = $value;
-          }
-        }
-        return $newArr;
-
-    }
-
-
 
 
 
