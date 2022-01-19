@@ -338,7 +338,7 @@ $(document).ready(function() {
 });
 
 function transactionSelect2(){
-            $('.searchableSelectTransaction').select2({dropdownParent: $('.searchableSelectTransaction').parent()});
+        $('.searchableSelectTransaction').select2({dropdownParent: $('.searchableSelectTransaction').parent()});
     }
 
 </script>
