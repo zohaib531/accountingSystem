@@ -340,7 +340,7 @@
                              </div>
                         </div>
                         <div class="text-center">
-                            <button type="button" class="btn btn-success text-white" onclick="commonFunction(false,'{{ route('salePurchase.store') }}','{{route('salePurchase.index')}}','post','','create-form') ">Save</button>
+                            <button type="button" class="btn btn-success text-white" onclick="commonFunction(false,'{{ route('salePurchase.store') }}','{{route('salePurchase.create')}}','post','','create-form') ">Save</button>
                         </div>
 
                     </div>
@@ -516,7 +516,7 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
-                                <select name="${side}accounts[]" class="form-control searchableSelect${side}${count}">
+                                <select name="${side}accounts[]" class="form-control searchableSelect${side}${count} pushSubAccount">
                                     <option selected disabled value="">Sub account</option>
                                     @foreach ($subAccounts as $subAccount)
                                         <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
@@ -531,7 +531,7 @@
                         <div class="form-group row m-0 align-items-center">
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
-                                <select name="${side}products[]" class="form-control searchableSelect${side}Product${count}">
+                                <select name="${side}products[]" class="form-control searchableSelect${side}Product${count} pushProduct">
                                     <option selected disabled value="">Product</option>
                                     @foreach ($products as $product)
                                         <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>

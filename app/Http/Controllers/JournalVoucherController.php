@@ -79,7 +79,8 @@ class JournalVoucherController extends Controller
     {
         $voucher = Voucher::where('id', $id)->first();
         $subAccounts = SubAccount::select('id', 'title')->get();
-        return view('admin.vouchers.journal.edit', ['subAccounts' => $subAccounts, 'voucher' => $voucher, 'id'=> $id])->render();
+        $accounts = Account::select('id', 'title')->get();
+        return view('admin.vouchers.journal.edit', ['subAccounts' => $subAccounts, 'accounts' => $accounts ,  'voucher' => $voucher, 'id'=> $id])->render();
     }
 
     /**

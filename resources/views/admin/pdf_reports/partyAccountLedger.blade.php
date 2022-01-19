@@ -59,7 +59,7 @@
                     <th>Debit</th>
                     <th>Credit</th>
                     <th>Balance</th>
-                    <th>Nature (Debit/Credit)</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>

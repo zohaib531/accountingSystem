@@ -51,6 +51,8 @@
                     <th>Date</th>
                     <th>Sub account</th>
                     <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Rate</th>
                     <th>Debit</th>
                     <th>Credit</th>
                 </tr>
@@ -63,12 +65,15 @@
                     @if($voucherDetail->voucher->voucher_type=='sale_purchase_voucher')
                         <tr>
                             <td>{{ ++$num }}</td>
-                            <td>{{date('d/m/y',strtotime($voucherDetail->date))}}</td>
-                            <td>{{ $voucherDetail->subAccount->title }}</td>
+                            <td>{{date('d/m/y',strtotime($voucherDetail->date)) }}</td>
+                            <td>{{ $voucherDetail->subAccount['title'] }}</td>
+
                             <td>{{ $voucherDetail->product_narration }}</td>
+                            <td>{{ $voucherDetail->quantity }}</td>
+                            <td>{{ $voucherDetail->rate }}</td>
                             {{-- Code for Debit start --}}
                             @if ($voucherDetail->entry_type =='debit')
-                                <td>{{ number_format($voucherDetail->debit_amount) }}</td>
+                                <td>{{ number_format( intVal($voucherDetail->debit_amount) ) }}</td>
                             @else
                                 <td>0</td>
                             @endif

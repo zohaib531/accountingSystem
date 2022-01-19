@@ -10,7 +10,7 @@
                 <th>Debit</th>
                 <th>Credit</th>
                 <th>Balance</th>
-                <th>Nature (Debit/Credit)</th>
+                <th>Status</th>
                 <th class="text-center">Action</th>
             </tr>
         </thead>
