@@ -97,7 +97,7 @@ class ReportsController extends Controller
         // download PDF file with download method
           return $pdf->download('salePurchaseReport.pdf');
 
-        // return view('admin.vouchers.list.salePurchase', compact('vouchers','products','subAccounts','filterElementsArr','unique_product_titles','start_date','end_date'));
+        // return view('admin.pdf_reports.salePurchase', compact('vouchers','products','subAccounts','unique_product_titles','start_date','end_date'));
     }
 
 

@@ -100,7 +100,7 @@
             @if(isset($vouchers) && $vouchers->count()>0)
                 <tfoot>
                     <tr>
-                        <td colspan="4"><h5 class="text-center">Total</h5></td>
+                        <td colspan="4"><div style="text-align: center; font-weight:bold; font-size:14px">Total</div></td>
                         <td>{{number_format($totalQuantity , 2)}}</td>
                         <td></td>
                         <td></td>
