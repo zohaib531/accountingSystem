@@ -55,7 +55,7 @@ Route::middleware(['auth'])->group(function(){
 
     // Reports Routes Start
     Route::get('partyAccountReport/{sub_account_id}/{start_date}/{end_date}', 'ReportsController@partyAccountReport')->name('partyAccountReport');
-    Route::get('salePurchaseReport', 'ReportsController@salePurchaseReport')->name('salePurchaseReport');
+    Route::post('salePurchaseReport', 'ReportsController@salePurchaseReport')->name('salePurchaseReport');
     Route::get('journalReport', 'ReportsController@journalReport')->name('journalReport');
     Route::get('trialReport/{start_date}/{end_date}', 'ReportsController@trialReport')->name('trialReport');
 });

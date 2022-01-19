@@ -71,3 +71,16 @@
         }
 
     }
+
+    if(!function_exists('getFilledField')){
+        function getFilledField($array){
+            $newArr = [];
+            foreach($array as $x=>$value)
+            {
+              if($value!="all" && $value != ''){
+                $newArr[$x] = $value;
+              }
+            }
+            return $newArr;
+        }
+    }

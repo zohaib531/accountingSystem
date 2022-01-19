@@ -8,22 +8,21 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="row m-0">
-                            <div class="col-6 text-right">
-                                <h4 class="card-title">All Sale/Purchase Voucher</h4>
-                            </div>
-                            <div class="col-6 text-right">
-                                <a href="{{ route('salePurchase.create') }}">
-                                    <button type="button" class="btn btn-primary">
-                                        Add new +
-                                    </button>
-                                </a>
-                            </div>
-                            {{-- Filter Code Start --}}
-                            <div class="col-10">
-
-                                <form method="post" action="{{ route('applyFilter') }}">
-                                    @csrf
+                        <form method="post" id="filterForm" action="{{ route('applyFilter') }}">
+                            @csrf
+                            <div class="row m-0">
+                                <div class="col-6 text-right">
+                                    <h4 class="card-title">All Sale/Purchase Voucher</h4>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <a href="{{ route('salePurchase.create') }}">
+                                        <button type="button" class="btn btn-primary">
+                                            Add new +
+                                        </button>
+                                    </a>
+                                </div>
+                                {{-- Filter Code Start --}}
+                                <div class="col-10">
                                     <div class="row mt-2 align-items-end">
                                         <div class="col-3">
                                             <label class="col-lg-12 col-form-label px-0">Start Date<span class="text-danger">*</span></label>
@@ -114,19 +113,15 @@
                                         </div>
 
                                     </div>
-
-                                </form>
-
+                                </div>
+                                {{-- Filter Code Start --}}
 
                             </div>
-                            {{-- Filter Code Start --}}
 
-                        </div>
-
-                        <div class="d-flex justify-content-end px-3 ">
-                            <a class="btn btn-success text-white" href="{{ route('salePurchaseReport') }}">Export to PDF</a>
-                        </div>
-
+                            <div class="d-flex justify-content-end px-3 ">
+                                <button type="button" onclick="exportToPDF(this,'{{ route('salePurchaseReport') }}')" class="btn btn-success text-white">Export to PDF</button>
+                            </div>
+                        </form>
 
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered zero-configuration">
@@ -197,6 +192,12 @@
 @section('script')
 
     <script>
+        function exportToPDF(elem,targetUrl){
+            let targetElement = $(elem).parent('div').parent('form');
+            targetElement.attr("action",targetUrl);
+            targetElement.submit();
+        }
+
         $(document).ready(function() {
             $('.searchableSelectFilterSubaccount').select2({dropdownParent: $('.searchableSelectFilterSubaccount').parent()});
             $('.searchableSelectFilterProduct').select2({dropdownParent: $('.searchableSelectFilterProduct').parent()});
