@@ -84,7 +84,7 @@
     <button type="button" class="btn btn-primary trailBalance d-none" data-toggle="modal" data-target="#myModal">ABC</button>
 
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form class="form-valide" id="password-form"  method="POST">

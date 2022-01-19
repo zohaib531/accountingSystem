@@ -90,6 +90,8 @@ class ReportsController extends Controller
 
         // return view('admin.vouchers.list.salePurchase', compact('vouchers','products','subAccounts','filterElementsArr','unique_product_titles','start_date','end_date'));
     }
+
+
     // Sale Purchase Report code end
 
 
