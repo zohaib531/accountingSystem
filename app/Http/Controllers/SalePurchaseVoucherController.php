@@ -45,6 +45,7 @@ class SalePurchaseVoucherController extends Controller
         $end_date = '';
 
         $filledFieldsArray = $this->getFilledField($request);
+        // return $filledFieldsArray;
         if(count($filledFieldsArray)>0){
             foreach($filledFieldsArray as $key=>$value){
 
@@ -75,8 +76,13 @@ class SalePurchaseVoucherController extends Controller
 
                     }
                 }
+
                 else if(($key !=="start_date" && $key !=="end_date") && $key != 'product_type'){
                     $vouchers->where($key, $value);
+                }
+
+                else if($key == 'product_type'){
+                    $vouchers->where("product_narration","like", "%{$value}%");
                 }
 
 
@@ -92,6 +98,7 @@ class SalePurchaseVoucherController extends Controller
         $subAccounts = SubAccount::select('id', 'title')->get();
         $filterElementsArr = array_values($request);
 
+        // return $filterElementsArr;
 
         return view('admin.vouchers.list.salePurchase', compact('vouchers','products','subAccounts','filterElementsArr','unique_product_titles','start_date','end_date'));
     }

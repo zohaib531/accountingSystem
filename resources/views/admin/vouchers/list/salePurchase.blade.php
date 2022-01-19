@@ -69,7 +69,7 @@
                                             <select name="sub_account_id" class="form-control searchableSelectFilterSubaccount">
                                                 <option @if (isset($filterElementsArr[4]) && $filterElementsArr[4] == 'all') selected @endif selected value="all">All</option>
                                                 @foreach ($subAccounts as $subAccount)
-                                                    <option value="{{$subAccount->id}}" @if(in_array($subAccount->id, $filterElementsArr)) selected @endif>{{$subAccount->title}}</option>
+                                                    <option value="{{$subAccount->id}}" @if(array_search($subAccount->id, $filterElementsArr)!='') selected @endif>{{$subAccount->title}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
