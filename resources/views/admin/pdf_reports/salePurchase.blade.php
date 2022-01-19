@@ -58,11 +58,16 @@
                 </tr>
             </thead>
             <tbody>
+
                 @php
                     $num = 0;
+                    $totalQuantity = 0;
                 @endphp
                 @foreach ($vouchers as $key => $voucherDetail)
                     @if($voucherDetail->voucher->voucher_type=='sale_purchase_voucher')
+                    @php
+                        $totalQuantity += $voucherDetail->quantity;
+                    @endphp
                         <tr>
                             <td>{{ ++$num }}</td>
                             <td>{{date('d/m/y',strtotime($voucherDetail->date)) }}</td>
@@ -91,6 +96,18 @@
                     @endif
                 @endforeach
             </tbody>
+
+            @if(isset($vouchers) && $vouchers->count()>0)
+                <tfoot>
+                    <tr>
+                        <td colspan="4"><h5 class="text-center">Total</h5></td>
+                        <td>{{number_format($totalQuantity , 2)}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            @endif
         </table>
 
     </div>
