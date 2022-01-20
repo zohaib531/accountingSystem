@@ -124,12 +124,13 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Voucher Id</th>
                                         <th>Date</th>
                                         <th>Sub account</th>
                                         <th>Product</th>
                                         <th>Debit</th>
                                         <th>Credit</th>
-                                        <th class="text-right">Action</th>
+                                        {{-- <th class="text-right">Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -141,8 +142,17 @@
 
                                             <tr>
                                                 <td>{{ ++$num }}</td>
+                                                <td>
+                                                    <a href="{{route('salePurchase.edit',$voucherDetail->voucher->id)}}">
+                                                        {{$voucherDetail->voucher_id}}
+                                                    </a>
+                                                </td>
                                                 <td>{{date('d/m/y',strtotime($voucherDetail->date))}}</td>
-                                                <td>{{ $voucherDetail->subAccount['title']  }}</td>
+                                                <td>
+                                                    <a href="{{route('partyAccount')}}">
+                                                        {{ $voucherDetail->subAccount['title']  }}
+                                                    </a>
+                                                </td>
                                                 <td>{{ $voucherDetail->product_narration }}</td>
                                                 {{-- Code for Debit start --}}
                                                 @if ($voucherDetail->entry_type =='debit')
@@ -160,16 +170,16 @@
                                                 @endif
                                                 {{-- Code for Credit start --}}
 
-                                                <td class="text-right">
+                                                {{-- <td class="text-right">
                                                     <a href="{{route('salePurchase.edit',$voucherDetail->voucher->id)}}">
                                                         <button class="btn btn-info text-white btn-sm">
                                                             Update
                                                         </button>
                                                     </a>
-                                                    {{-- <button class="btn btn-danger btn-sm" onclick="commonFunction(true,'{{ route('salePurchase.destroy', $voucherDetail->voucher->id) }}','{{ route('salePurchase.index') }}','delete','Are you sure you want to delete?','');">
+                                                     <button class="btn btn-danger btn-sm" onclick="commonFunction(true,'{{ route('salePurchase.destroy', $voucherDetail->voucher->id) }}','{{ route('salePurchase.index') }}','delete','Are you sure you want to delete?','');">
                                                         Delete
-                                                    </button> --}}
-                                                </td>
+                                                    </button>
+                                                </td> --}}
                                             </tr>
                                         @endif
                                     @endforeach
@@ -188,7 +198,7 @@
 @section('script')
 
     <script>
-        
+
         function exportAndApplyFilter(elem,targetUrl){
             let targetElement = $('#filterForm');
             targetElement.attr("action",targetUrl);

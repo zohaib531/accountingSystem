@@ -50,7 +50,7 @@
                                         @endphp
                                         @foreach($subAccounts as $key=>$subAccount)
                                             @php
-                                                $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, $endDate, false , 0);
+                                                $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, $startDate, $endDate, false , 0);
                                                 $openingBalance = $getOpeningBalanceResponse["opening_balance"];
                                                 $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                                             @endphp
@@ -59,7 +59,7 @@
                                                 @php $totalDebit += $openingBalance; @endphp
                                                 <tr>
                                                     <td>{{$subAccount->title}}</td>
-                                                    <td>{{number_format($openingBalance,2)}}</td>
+                                                    <td>{{number_format($subAccount->opening_balance,2)}}</td>
                                                 </tr>
                                             @endif
                                         @endforeach
