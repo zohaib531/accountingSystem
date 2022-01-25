@@ -16,9 +16,9 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 px-0">
                 <div class="card">
-                    <div class="card-body px-5">
+                    <div class="card-body px-4">
                         <form class="form-valide" id="create-form">
                             <div class="row m-0 justify-content-between">
                                 <div class="col-4 px-0">

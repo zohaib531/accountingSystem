@@ -55,7 +55,10 @@ input[type="search"],select[name="DataTables_Table_0_length"]{
     min-height: 32px !important;
 }
 
-input[data-common="common"]{
+input[data-common="common"],
+input[onkeypress="date_reformat_dd(this);"]
+
+{
     padding: 3px !important;
     -moz-appearance: textfield;
 }

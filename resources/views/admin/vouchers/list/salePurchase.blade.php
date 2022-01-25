@@ -128,6 +128,8 @@
                                         <th>Date</th>
                                         <th>Sub account</th>
                                         <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Rate</th>
                                         <th>Debit</th>
                                         <th>Credit</th>
                                         {{-- <th class="text-right">Action</th> --}}
@@ -154,6 +156,8 @@
                                                     </a>
                                                 </td>
                                                 <td>{{ $voucherDetail->product_narration }}</td>
+                                                <td>{{ $voucherDetail->quantity }}</td>
+                                                <td>{{ $voucherDetail->rate }}</td>
                                                 {{-- Code for Debit start --}}
                                                 @if ($voucherDetail->entry_type =='debit')
                                                     <td>{{ number_format($voucherDetail->debit_amount , 2) }}</td>

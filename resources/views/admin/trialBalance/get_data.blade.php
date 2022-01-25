@@ -53,13 +53,14 @@
                                                 $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, $startDate, $endDate, false , 0);
                                                 $openingBalance = $getOpeningBalanceResponse["opening_balance"];
                                                 $entryType = $getOpeningBalanceResponse["opening_balance_type"];
-                                                $totalDebit += $openingBalance;
                                             @endphp
-
                                             @if ($entryType == 'debit' && $openingBalance > 0)
+                                                @php
+                                                    $totalDebit += $openingBalance;
+                                                @endphp
                                                 <tr>
                                                     <td>{{$subAccount->title}}</td>
-                                                    <td>{{number_format($openingBalance,2)}}</td>
+                                                    <td data-last-balance ="{{$totalDebit}}">{{number_format($openingBalance,2)}}</td>
                                                 </tr>
                                             @endif
                                         @endforeach
@@ -83,10 +84,12 @@
                                                 $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, $startDate, $endDate,  false , 0);
                                                 $openingBalance = $getOpeningBalanceResponse["opening_balance"];
                                                 $entryType = $getOpeningBalanceResponse["opening_balance_type"];
-                                                $totalCredit += $openingBalance;
                                             @endphp
 
                                             @if ($entryType == 'credit' && $openingBalance>0)
+                                                @php
+                                                    $totalCredit += $openingBalance;
+                                                @endphp
                                                 <tr>
                                                     <td>{{$subAccount->title}}</td>
                                                     <td>{{number_format($openingBalance,2)}}</td>
@@ -98,6 +101,7 @@
                             </td>
                 {{-- Credit Table code end --}}
             </tr>
+
 
             <tr style="background-color: rgba(0, 0, 0, 0.05) !important;">
                 <td>
@@ -132,5 +136,7 @@
         {{-- Total Debit and Credit code Start --}}
     </table>
 </div>
+
+
 
 
