@@ -18,6 +18,7 @@
             @php
                 $openingBalance = 0;
                 $entryType = '';
+
             @endphp
             @if(isset($vouchers) && $vouchers->count()>0)
                 @foreach($vouchers as $key=>$detail)
@@ -70,7 +71,7 @@
                 @php
                     // $endDate =  $_POST['end_date'];
                     // $accound_id = $_POST['sub_account'];
-                    $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, $endDate  , false , 0);
+                    $getOpeningBalanceResponse = getOpeningBalance($subAccount->id,$startDate, $endDate  , false , 0);
                     $openingBalance = $getOpeningBalanceResponse["opening_balance"];
                     $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                 @endphp

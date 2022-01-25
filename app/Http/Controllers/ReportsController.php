@@ -42,7 +42,6 @@ class ReportsController extends Controller
         $end_date = '';
 
         $filledFieldsArray = getFilledField($request);
-        // return $filledFieldsArray;
         if(count($filledFieldsArray)>0){
             foreach($filledFieldsArray as $key=>$value){
 
@@ -123,6 +122,7 @@ class ReportsController extends Controller
         $subAccounts = SubAccount::all();
         $startDate = $start_date;
         $endDate = $end_date;
+
         $pdf = PDF::loadView('admin.pdf_reports.trialBalance', compact('vouchers','subAccounts','startDate','endDate') );
         // download PDF file with download method
           return $pdf->download('trialBalanceReport.pdf');

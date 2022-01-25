@@ -33,48 +33,16 @@ class AgingReportController extends Controller
         if($request->account!="all" && $request->sub_account=="all"){
             $account = Account::where('id',$request->account)->first();
             $subAccounts = $account->get_sub_accounts()->pluck('id');
-            $vouchers = VoucherDetail::whereIn('sub_account_id',$subAccounts)->whereBetween('date',[$start_date, $end_date])->get()->groupBy("sub_account_id");
+            $vouchers = VoucherDetail::whereIn('sub_account_id',$subAccounts)->whereBetween('date',[$start_date, $end_date])->orderBy('date','desc')->get()->groupBy("sub_account_id");
 
         }else if($request->account!="all" && $request->sub_account!="all"){
-            $vouchers = VoucherDetail::where('sub_account_id',$request->sub_account)->whereBetween('date',[$start_date, $end_date])->get()->groupBy("sub_account_id");
+            $vouchers = VoucherDetail::where('sub_account_id',$request->sub_account)->whereBetween('date',[$start_date, $end_date])->orderBy('date','desc')->get()->groupBy("sub_account_id");
 
         }else{
-            $vouchers = VoucherDetail::whereBetween('date',[$start_date, $end_date])->get()->groupBy("sub_account_id");
+            $vouchers = VoucherDetail::whereBetween('date',[$start_date, $end_date])->orderBy('date','desc')->get()->groupBy("sub_account_id");
         }
 
-        $openingBalance = 0;
-        $debitBalance = 0;
-        $creditBalance = 0;
-        $entryType = '';
-
-        if($vouchers->count()>0){
-            foreach($vouchers as $key=>$subAccountEntries){
-                $subAccount = SubAccount::where('id',$key)->first();
-                if($subAccountEntries->count()>0){
-                    foreach ($subAccountEntries as $key => $singleEntry) {
-                        if($key==0){
-                            $getOpeningBalanceResponse = getOpeningBalance($singleEntry->sub_account_id,$singleEntry->date,true,$singleEntry->id);
-                            $openingBalance = $getOpeningBalanceResponse["opening_balance"];
-                            $entryType = $getOpeningBalanceResponse["opening_balance_type"];
-                        }
-
-                        $str = $singleEntry->entry_type."_amount";
-                            if($openingBalance > 0 ){
-                                $singleEntry->entry_type=="debit"?$debitBalance += $singleEntry->$str:$creditBalance += $singleEntry->$str;
-                                $openingBalance = $openingBalance - $singleEntry->$str;
-                            }else{
-                                $entryType = $entryType=="debit"? "credit":"debit";
-                            }
-                            $to = Carbon::createFromFormat('Y-m-d', $singleEntry->date);
-                            $from = Carbon::createFromFormat('Y-m-d', date('Y-m-d'));
-                            $diff_in_days = $to->diffInDays($from);
-                    }
-                }
-            }
-        }else{
-            return "so";
-        }
-        return $vouchers;
+       
         // $subAccount = getOpeningBalance($request->sub_account,date("y-m-d"),false,0);
         // $totalDebit = VoucherDetail::where('sub_account_id',$request->sub_account)->where('entry_type', $subAccount["opening_balance_type"])->whereDate('date', '<=',date("Y-m-d"))->sum('debit_amount');
         // $totalCredit = VoucherDetail::where('sub_account_id',$request->sub_account)->where('entry_type', $subAccount["opening_balance_type"])->whereDate('date', '<=',date("Y-m-d"))->sum('credit_amount');

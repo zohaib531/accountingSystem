@@ -7,7 +7,7 @@
             $subAccount = SubAccount::where('id',$subAccountID)->first();
             $openingBalance = $subAccount->opening_balance;
             $transactionType = $subAccount->transaction_type;
-            $vouchers = $specific?VoucherDetail::where('id','!=',$id)->where('sub_account_id',$subAccount->id)->whereDate('date', '<',$date)->get():VoucherDetail::where('sub_account_id',$subAccount->id)->whereBetween('date',[$startDate, $endDate])->get();
+            $vouchers = $specific?VoucherDetail::where('id','!=',$id)->where('sub_account_id',$subAccount->id)->whereBetween('date',[$startDate, $endDate])->get():VoucherDetail::where('sub_account_id',$subAccount->id)->whereBetween('date',[$startDate, $endDate])->get();
             if($vouchers->count() > 0){
                 foreach($vouchers as $key=>$detail){
                     $str = $detail->entry_type."_amount";
@@ -66,7 +66,6 @@
                     $transactionType = "credit";
                 }
             }
-
             return ["balance"=>$openingBalance,"type"=>$transactionType];
         }
 

@@ -45,7 +45,6 @@ class SalePurchaseVoucherController extends Controller
         $end_date = '';
 
         $filledFieldsArray = getFilledField($request);
-        // return $filledFieldsArray;
         if(count($filledFieldsArray)>0){
             foreach($filledFieldsArray as $key=>$value){
 
@@ -98,7 +97,6 @@ class SalePurchaseVoucherController extends Controller
         $subAccounts = SubAccount::select('id', 'title')->get();
         $filterElementsArr = array_values($request);
 
-        // return $filterElementsArr;
 
         return view('admin.vouchers.list.salePurchase', compact('vouchers','products','subAccounts','filterElementsArr','unique_product_titles','start_date','end_date'));
     }
@@ -183,7 +181,6 @@ class SalePurchaseVoucherController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // return $request->all();
         $validations = Validator::make($request->all(),$this->rules($request),$this->messages($request));
         if ($validations->fails()) {return response()->json(['success' => false, 'message' => $validations->errors()]);}
         $sale_purchase_voucher = Voucher::find($id);

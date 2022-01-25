@@ -19,58 +19,57 @@
             $entryType = '';
         @endphp
         @if(isset($vouchers) && $vouchers->count()>0)
-            @foreach($vouchers as $key=>$detail)
+            @foreach($vouchers as $key=>$singleAccount)
+            @php
+                $subAccount = App\SubAccount::where('id',$key)->first();
 
-                @if($loop->first)
+            @endphp
+                <tr><td colspan="7"> <h3 class="mb-0">{{$subAccount->title}}</h3></td></tr>
+                @foreach($singleAccount as $key=>$detail)
+                    @if($loop->first)
+                        @php
+                            $getOpeningBalanceResponse = getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id);
+                            $openingBalance = $getOpeningBalanceResponse["opening_balance"];
+                            $entryType = $getOpeningBalanceResponse["opening_balance_type"];
+                        @endphp
+                        <tr>
+                            <td>{{date('d/m/y',strtotime($detail->date))}}</td>
+                            <td></td>
+                            <td>Opening Balance</td>
+                            <td colspan="2"></td>
+                            <td>{{ number_format(getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance"] , 2) }}</td>
+                            <td>{{ getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance_type"] }}</td>
+                        </tr>
+                    @endif
+                    {{-- @if($loop->first)
+                        @php $openingBalance = $detail->remaining_balance; @endphp;
+                    @endif --}}
                     @php
-                        $getOpeningBalanceResponse = getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id);
-                        $openingBalance = $getOpeningBalanceResponse["opening_balance"];
-                        $entryType = $getOpeningBalanceResponse["opening_balance_type"];
+                        $str = $detail->entry_type."_amount";
+                        if($openingBalance > 0 ){
+                            $detail->entry_type=="debit"?$debitBalance += $detail->$str:$creditBalance += $detail->$str;
+                            $openingBalance = $openingBalance - $detail->$str;
+                        }else{
+                            $entryType = $entryType=="debit"? "credit":"debit";
+                        }
+                        $to = \Carbon\Carbon::createFromFormat('Y-m-d', $detail->date);
+                        $from = \Carbon\Carbon::createFromFormat('Y-m-d', date('Y-m-d'));
+                        $diff_in_days = $to->diffInDays($from);
                     @endphp
+
                     <tr>
                         <td>{{date('d/m/y',strtotime($detail->date))}}</td>
-                        <td></td>
-                        <td>Opening Balance</td>
-                        <td colspan="2"></td>
-                        <td>{{ number_format(getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance"] , 2) }}</td>
-                        <td>{{ getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance_type"] }}</td>
+                        <td>{{$diff_in_days}}</td>
+                        <td>{{$detail->product_narration}} @if($detail->quantity!=0 && $detail->rate!=0)  (<span style="font-weight:bold;">{{$detail->quantity}} x {{$detail->rate}}</span>) @endif</td>
+                        <td>{{ $detail->debit_amount!=0? number_format($detail->debit_amount , 2) :"" }}</td>
+                        <td>{{ $detail->credit_amount!=0? number_format($detail->credit_amount , 2):"" }}</td>
+                        <td>{{ number_format($openingBalance , 2)}}</td>
+                        <td>{{$entryType}}</td>
                     </tr>
-                @endif
-                {{-- @if($loop->first)
-                    @php $openingBalance = $detail->remaining_balance; @endphp;
-                @endif --}}
-                @php
-                    $str = $detail->entry_type."_amount";
-                    if($openingBalance > 0 ){
-                        $detail->entry_type=="debit"?$debitBalance += $detail->$str:$creditBalance += $detail->$str;
-                        $openingBalance = $openingBalance - $detail->$str;
-                    }else{
-                        $entryType = $entryType=="debit"? "credit":"debit";
-                    }
-                    $to = \Carbon\Carbon::createFromFormat('Y-m-d', $detail->date);
-                    $from = \Carbon\Carbon::createFromFormat('Y-m-d', date('Y-m-d'));
-                    $diff_in_days = $to->diffInDays($from);
-                @endphp
-
-                <tr>
-                    <td>{{date('d/m/y',strtotime($detail->date))}}</td>
-                    <td>{{$diff_in_days}}</td>
-                    <td>{{$detail->product_narration}} @if($detail->quantity!=0 && $detail->rate!=0)  (<span style="font-weight:bold;">{{$detail->quantity}} x {{$detail->rate}}</span>) @endif</td>
-                    <td>{{ $detail->debit_amount!=0? number_format($detail->debit_amount , 2) :"" }}</td>
-                    <td>{{ $detail->credit_amount!=0? number_format($detail->credit_amount , 2):"" }}</td>
-                    {{-- <td>{{ number_format($openingBalance)}}</td> --}}
-                    <td>{{ number_format($openingBalance , 2)}}</td>
-                    <td>{{$entryType}}</td>
-                </tr>
-                @if($openingBalance < 0)
-                    @php break; @endphp
-                @endif
-                {{-- @if($loop->last)
-                    @php
-                        $openingBalance = $detail->remaining_balance;
-                        $entryType = $detail->remaining_balance_type;
-                    @endphp
-                @endif --}}
+                    @if($openingBalance < 0)
+                        @php break; @endphp
+                    @endif
+                @endforeach
             @endforeach
 
         @else
