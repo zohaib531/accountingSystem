@@ -66,9 +66,9 @@
                                         <div class="col-3">
                                             <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                             <select name="sub_account_id" class="form-control searchableSelectFilterSubaccount">
-                                                <option @if (isset($filterElementsArr[4]) && $filterElementsArr[4] == 'all') selected @endif selected value="all">All</option>
+                                                <option @if (isset($filterElementsArr[3]) && $filterElementsArr[3] == 'all') selected @endif selected value="all">All</option>
                                                 @foreach ($subAccounts as $subAccount)
-                                                    <option value="{{$subAccount->id}}" @if($filterElementsArr[3] == $subAccount->id) selected @endif>{{$subAccount->title}}</option>
+                                                    <option value="{{$subAccount->id}}" @if(isset($filterElementsArr[3]) && $filterElementsArr[3] == $subAccount->id) selected @endif>{{$subAccount->title}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
