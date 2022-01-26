@@ -62,11 +62,14 @@
                 @php
                     $num = 0;
                     $totalQuantity = 0;
+                    $totalDebit = 0;
+                    $totalCredit = 0;
                 @endphp
                 @foreach ($vouchers as $key => $voucherDetail)
                     @if($voucherDetail->voucher->voucher_type=='sale_purchase_voucher')
                     @php
                         $totalQuantity += $voucherDetail->quantity;
+                        $voucherDetail->entry_type =='debit' ? $totalDebit += $voucherDetail->debit_amount : $totalCredit += $voucherDetail->credit_amount ;
                     @endphp
                         <tr>
                             <td>{{ ++$num }}</td>
@@ -103,8 +106,8 @@
                         <td colspan="4"><div style="text-align: center; font-weight:bold; font-size:14px">Total</div></td>
                         <td>{{number_format($totalQuantity , 2)}}</td>
                         <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ number_format($totalDebit, 2) }}</td>
+                        <td>{{ number_format($totalCredit, 2) }}</td>
                     </tr>
                 </tfoot>
             @endif

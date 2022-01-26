@@ -46,7 +46,7 @@
                                     <div class="col-4 text-right">
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addsubaccount" onclick="initializeSelect2(), transactionSelect2()">Add Sub account</button>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addProduct" onclick="initializeSelect2()">Add Product</button>
-                                        <button type="button" class="btn btn-danger" onclick="commonFunction(true,'{{ route('journal.destroy', $id) }}','{{route('journal.index')}}','delete','Are you sure you want to delete complete voucher?','');">Delete Voucher</button>
+                                        <button type="button" class="btn btn-danger" onclick="commonFunction(true,'{{ route('salePurchase.destroy', $id) }}','{{route('salePurchase.index')}}','delete','Are you sure you want to delete complete voucher?','');">Delete Voucher</button>
                                     </div>
                                 </div>
 

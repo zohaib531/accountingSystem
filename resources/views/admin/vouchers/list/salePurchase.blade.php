@@ -68,7 +68,7 @@
                                             <select name="sub_account_id" class="form-control searchableSelectFilterSubaccount">
                                                 <option @if (isset($filterElementsArr[4]) && $filterElementsArr[4] == 'all') selected @endif selected value="all">All</option>
                                                 @foreach ($subAccounts as $subAccount)
-                                                    <option value="{{$subAccount->id}}" @if(array_search($subAccount->id, $filterElementsArr)!='') selected @endif>{{$subAccount->title}}</option>
+                                                    <option value="{{$subAccount->id}}" @if($filterElementsArr[3] == $subAccount->id) selected @endif>{{$subAccount->title}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -138,9 +138,16 @@
                                 <tbody>
                                     @php
                                         $num = 0;
+                                        $totalQuantity = 0;
+                                        $totalDebit = 0;
+                                        $totalCredit = 0;
                                     @endphp
                                     @foreach ($vouchers as $key => $voucherDetail)
                                         @if($voucherDetail->voucher->voucher_type=='sale_purchase_voucher')
+                                            @php
+                                                $totalQuantity += $voucherDetail->quantity;
+                                                $voucherDetail->entry_type =='debit' ? $totalDebit += $voucherDetail->debit_amount : $totalCredit += $voucherDetail->credit_amount ;
+                                            @endphp
 
                                             <tr>
                                                 <td>{{ ++$num }}</td>
@@ -188,6 +195,16 @@
                                         @endif
                                     @endforeach
                                 </tbody>
+
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="5"><h4 class="mb-0 text-center">Total</h4></td>
+                                        <td>{{ number_format($totalQuantity, 2) }}</td>
+                                        <td></td>
+                                        <td>{{ number_format($totalDebit, 2) }}</td>
+                                        <td>{{ number_format($totalCredit, 2) }}</td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>

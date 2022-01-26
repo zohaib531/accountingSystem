@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class VoucherDetail extends Model
 {
@@ -17,4 +18,6 @@ class VoucherDetail extends Model
     public function subAccount(){
         return $this->belongsTo(SubAccount::class,'sub_account_id','id');
     }
+
+    use SoftDeletes;
 }
