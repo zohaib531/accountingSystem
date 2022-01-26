@@ -143,7 +143,7 @@
                                         $totalCredit = 0;
                                     @endphp
                                     @foreach ($vouchers as $key => $voucherDetail)
-                                        @if($voucherDetail->voucher->voucher_type=='sale_purchase_voucher')
+                                        @if($voucherDetail->voucher['voucher_type']=='sale_purchase_voucher')
                                             @php
                                                 $totalQuantity += $voucherDetail->quantity;
                                                 $voucherDetail->entry_type =='debit' ? $totalDebit += $voucherDetail->debit_amount : $totalCredit += $voucherDetail->credit_amount ;

@@ -20,11 +20,11 @@
         @endphp
         @if(isset($vouchers) && $vouchers->count()>0)
             @foreach($vouchers as $key=>$singleAccount)
-            @php
-                $subAccount = App\SubAccount::where('id',$key)->first();
-
-            @endphp
+                @php
+                    $subAccount = App\SubAccount::where('id',$key)->first();
+                @endphp
                 <tr><td colspan="7"> <h3 class="mb-0">{{$subAccount->title}}</h3></td></tr>
+
                 @foreach($singleAccount as $key=>$detail)
                     @if($loop->first)
                         @php

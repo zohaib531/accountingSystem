@@ -42,7 +42,7 @@
                         $getBalanceAndTypeResponse = getBalanceAndType($openingBalance,$entryType,$detail->entry_type,$detail->$str);
                         $openingBalance = $getBalanceAndTypeResponse["balance"];
                         $entryType = $getBalanceAndTypeResponse["type"];
-                        $voucher = $detail->voucher->voucher_type;
+                        $voucher = $detail->voucher['voucher_type'];
                         $voucherType = $voucher=="sale_purchase_voucher"? 'salePurchase.edit': 'journal.edit';
                     @endphp
                     <tr>
