@@ -186,14 +186,13 @@ class JournalVoucherController extends Controller
     // create/update common code
     private function commonCode($voucher, $action, $request)
     {
-        // return $request->debit_voucher_detail_ids;
-        // return ["debit"=>[array_diff(Voucher::find($voucher->id)->voucherDetails()->where('entry_type', 'debit')->where('suspense_account', '0')->pluck('id')->toArray(), $request->debit_voucher_detail_ids)], "credit"=>[array_diff(Voucher::find($voucher->id)->voucherDetails()->where('entry_type', 'credit')->where('suspense_account', '0')->pluck('id')->toArray(), $request->credit_voucher_detail_ids)]];
         if (isset($request->debit_dates) && count($request->debit_dates) > 0) {
+            $debitEntriesDifference = $action? array_values(array_diff(Voucher::find($voucher->id)->voucherDetails()->where('entry_type','debit')->where('suspense_account','0')->pluck('id')->toArray(),$request->debit_voucher_detail_ids)):[];
             foreach ($request->debit_dates as $key => $credit) {
                 $remainingBalance = 0;
                 $remainingBalanceType = '';
                 if ($action) {
-                    // VoucherDetail::whereIn('id', array_values(array_diff(Voucher::find($voucher->id)->voucherDetails()->where('entry_type', 'debit')->where('suspense_account', '0')->pluck('id')->toArray(), $request->debit_voucher_detail_ids)))->delete();
+                    if(count($debitEntriesDifference) > 0) VoucherDetail::whereIn('id',$debitEntriesDifference)->delete();
                     $VoucherDetail = isset($request->debit_voucher_detail_ids[$key]) ? VoucherDetail::find($request->debit_voucher_detail_ids[$key]) : new VoucherDetail();
                 } else {
                     $VoucherDetail = new VoucherDetail();
@@ -230,11 +229,12 @@ class JournalVoucherController extends Controller
         }
 
         if (isset($request->credit_dates) && count($request->credit_dates) > 0) {
+            $creditEntriesDifference = $action?array_values(array_diff(Voucher::find($voucher->id)->voucherDetails()->where('entry_type','credit')->where('suspense_account','0')->pluck('id')->toArray(),$request->credit_voucher_detail_ids)):[];
             foreach ($request->credit_dates as $key => $credit) {
                 $remainingBalance = 0;
                 $remainingBalanceType = '';
                 if ($action) {
-                    VoucherDetail::whereIn('id', array_values(array_diff(Voucher::find($voucher->id)->voucherDetails()->where('entry_type', 'credit')->where('suspense_account', '0')->pluck('id')->toArray(), $request->credit_voucher_detail_ids)))->delete();
+                    if(count($creditEntriesDifference) > 0)VoucherDetail::whereIn('id',$creditEntriesDifference)->delete();
                     $VoucherDetail = isset($request->credit_voucher_detail_ids[$key]) ? VoucherDetail::find($request->credit_voucher_detail_ids[$key]) : new VoucherDetail();
                 } else {
                     $VoucherDetail = new VoucherDetail();
