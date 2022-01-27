@@ -392,7 +392,7 @@
                                                     <label class="col-lg-12 col-form-label px-0">Sub Account<span class="text-danger">*</span></label>
                                                     <div class="col-lg-12 pl-0 pr-2">
                                                         <select name="suspense_account" class="form-control updateSearchableSelectSuspense">
-                                                            <option disabled value="">Sub account</option>
+                                                            <option disabled selected value="">Sub account</option>
                                                             @foreach ($subAccounts as $subAccount)
                                                                 <option @if($suspenseEntry !=null && $subAccount->id==$suspenseEntry->sub_account_id) selected @endif value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                                             @endforeach
@@ -605,7 +605,7 @@
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
                                 <select name="${side}accounts[]" class="form-control updateSearchableSelect${i}">
-                                    <option disabled value="">Sub account</option>
+                                    <option disabled selected value="">Sub account</option>
                                     @foreach ($subAccounts as $subAccount)
                                         <option value="{{$subAccount->id}}">{{$subAccount->title}}</option>
                                     @endforeach
@@ -620,7 +620,7 @@
                             <label></label>
                             <div class="col-lg-12 pl-0 pr-2">
                                 <select name="${side}products[]" class="form-control updateSearchableSelectProduct${i}">
-                                    <option disabled value="">Product</option>
+                                    <option disabled selected value="">Product</option>
                                     @foreach ($products as $product)
                                         <option value="{{$product->title." - ".$product->narration." - ".$product->product_unit}}">{{$product->title." - ".$product->narration." - ".$product->product_unit}}</option>
                                     @endforeach

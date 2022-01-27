@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class VoucherDetail extends Model
 {
+    // use SoftDeletes;
+
     public function voucher(){
         return $this->belongsTo(Voucher::class,'voucher_id','id');
     }
@@ -19,5 +21,4 @@ class VoucherDetail extends Model
         return $this->belongsTo(SubAccount::class,'sub_account_id','id');
     }
 
-    use SoftDeletes;
 }

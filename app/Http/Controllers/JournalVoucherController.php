@@ -102,6 +102,7 @@ class JournalVoucherController extends Controller
         $journal_voucher->total_credit = str_replace(',','',$request->total_credit);
         $journal_voucher->save();
         $this->commonCode($journal_voucher, true, $request);
+        // return $this->commonCode($journal_voucher, true, $request);
         return response()->json(['success' => true, 'message' => 'Journal voucher has been updated successfully']);
     }
 
@@ -185,12 +186,14 @@ class JournalVoucherController extends Controller
     // create/update common code
     private function commonCode($voucher, $action, $request)
     {
+        // return $request->debit_voucher_detail_ids;
+        // return ["debit"=>[array_diff(Voucher::find($voucher->id)->voucherDetails()->where('entry_type', 'debit')->where('suspense_account', '0')->pluck('id')->toArray(), $request->debit_voucher_detail_ids)], "credit"=>[array_diff(Voucher::find($voucher->id)->voucherDetails()->where('entry_type', 'credit')->where('suspense_account', '0')->pluck('id')->toArray(), $request->credit_voucher_detail_ids)]];
         if (isset($request->debit_dates) && count($request->debit_dates) > 0) {
             foreach ($request->debit_dates as $key => $credit) {
                 $remainingBalance = 0;
                 $remainingBalanceType = '';
                 if ($action) {
-                    VoucherDetail::whereIn('id', array_values(array_diff(Voucher::find($voucher->id)->voucherDetails()->where('entry_type', 'debit')->where('suspense_account', '0')->pluck('id')->toArray(), $request->debit_voucher_detail_ids)))->delete();
+                    // VoucherDetail::whereIn('id', array_values(array_diff(Voucher::find($voucher->id)->voucherDetails()->where('entry_type', 'debit')->where('suspense_account', '0')->pluck('id')->toArray(), $request->debit_voucher_detail_ids)))->delete();
                     $VoucherDetail = isset($request->debit_voucher_detail_ids[$key]) ? VoucherDetail::find($request->debit_voucher_detail_ids[$key]) : new VoucherDetail();
                 } else {
                     $VoucherDetail = new VoucherDetail();

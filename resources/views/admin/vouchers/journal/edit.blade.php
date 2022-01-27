@@ -117,11 +117,11 @@
                                                         </div>
                                                     </div>
 
-                                                    {{-- @if($loop->iteration!=1)
+                                                    @if($loop->iteration!=1)
                                                         <div class="position-absolute" style="right:0px;">
-                                                            <button type="button" onclick="removeParentElement(this)" class="btn btn-danger text-white">x</button>
+                                                            <button type="button" onclick="removeParentElement(this)" class="btn btn-danger text-white px-2">x</button>
                                                         </div>
-                                                    @endif --}}
+                                                    @endif
                                                 </div>
                                                 <script>
                                                     $('.updateSearchableSelectCredit{{ $detail->id }}').select2({ dropdownParent: $('.updateSearchableSelectCredit{{ $detail->id }}').parent() });
@@ -211,11 +211,11 @@
                                                         </div>
                                                     </div>
 
-                                                    {{-- @if($loop->iteration!=1)
+                                                    @if($loop->iteration!=1)
                                                         <div class="position-absolute" style="right:0px;">
-                                                            <button type="button" onclick="removeParentElement(this)" class="btn btn-danger text-white">x</button>
+                                                            <button type="button" onclick="removeParentElement(this)" class="btn btn-danger text-white px-2">x</button>
                                                         </div>
-                                                    @endif --}}
+                                                    @endif
 
                                                 </div>
                                                 <script>
