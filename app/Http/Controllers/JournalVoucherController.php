@@ -112,10 +112,10 @@ class JournalVoucherController extends Controller
      * @param  \App\JournalVoucher  $journalVoucher
      * @return \Illuminate\Http\Response
      */
-    public function destroy($journalVoucher)
+    public function destroy($id)
     {
-
-        if (Voucher::where('id', $journalVoucher)->delete()) {
+        VoucherDetail::where('voucher_id',$id)->delete();
+        if (Voucher::where('id', $id)->delete()) {
             return response()->json(['success' => true, 'message' => 'Voucher has been deleted successfully']);
         }
     }
