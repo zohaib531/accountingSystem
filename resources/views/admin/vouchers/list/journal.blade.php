@@ -45,7 +45,7 @@
                                         $num = 0;
                                     @endphp
                                     @foreach ($vouchers as $key=> $voucherDetail)
-                                        @if($voucherDetail->voucher['voucher_type']=='journal_voucher')
+                                        @if($voucherDetail->voucher->voucher_type=='journal_voucher')
                                         <tr>
                                             <td>{{++$num}}</td>
                                             <td>
