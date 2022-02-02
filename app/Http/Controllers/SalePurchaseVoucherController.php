@@ -200,6 +200,7 @@ class SalePurchaseVoucherController extends Controller
      */
     public function destroy($id)
     {
+        VoucherDetail::where('voucher_id',$id)->delete();
         if (Voucher::where('id', $id)->delete()) {
             return response()->json(['success' => true, 'message' => 'Sale/Purchase voucher has been deleted successfully']);
         }
