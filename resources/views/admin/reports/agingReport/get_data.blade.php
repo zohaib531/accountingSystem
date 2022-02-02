@@ -26,7 +26,10 @@
                     $array = json_decode(json_encode($singleAccount), true);
                     $reverseArray = array_reverse($array);
                 @endphp
-                <tr><td colspan="7"> <h3 class="mb-0">{{$subAccount->title}}</h3></td></tr>
+
+                @if ($subAccount->opening_balance != 0)
+                    <tr><td colspan="7"> <h3 class="mb-0">{{$subAccount->title}}</h3></td></tr>
+                @endif
 
                 @foreach($reverseArray as $key=>$detail)
                     @if($loop->first)
@@ -37,18 +40,19 @@
                             $recordEntryType = $getOpeningBalanceResponse["opening_balance_type"];
 
                         @endphp
-
-                        <tr>
-                            <td>{{date('d/m/y',strtotime($detail['date']))}}</td>
-                            <td></td>
-                            <td>Opening Balance</td>
-                            <td colspan="2"></td>
-                            <td>{{ number_format(getOpeningBalance($detail['sub_account_id'],$detail['date'],true,$detail['id'])["opening_balance"] , 2) }}</td>
-                            <td>{{ getOpeningBalance($detail['sub_account_id'],$detail['date'],true,$detail['id'])["opening_balance_type"] }}</td>
-                        </tr>
+                        @if ($openingBalance != 0)
+                             <tr>
+                                <td>{{date('d/m/y',strtotime($detail['date']))}}</td>
+                                <td></td>
+                                <td>Opening Balance</td>
+                                <td colspan="2"></td>
+                                <td>{{ number_format(getOpeningBalance($detail['sub_account_id'],$detail['date'],true,$detail['id'])["opening_balance"] , 2) }}</td>
+                                <td>{{ getOpeningBalance($detail['sub_account_id'],$detail['date'],true,$detail['id'])["opening_balance_type"] }}</td>
+                            </tr>
+                        @endif
                     @endif
 
-                    @if ($recordEntryType == $detail['entry_type'])
+                    @if ($recordEntryType == $detail['entry_type'] && $openingBalance != 0)
 
                         @php
                             $str = $detail['entry_type']."_amount";
