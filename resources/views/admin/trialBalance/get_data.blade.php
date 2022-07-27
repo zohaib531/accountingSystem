@@ -60,7 +60,7 @@
                                                 @endphp
                                                 <tr>
                                                     <td>{{$subAccount->title}}</td>
-                                                    <td data-last-balance ="{{$totalDebit}}">{{number_format($openingBalance,2)}}</td>
+                                                    <td data-last-balance ="{{$totalDebit}}">{{number_format($openingBalance)}}</td>
                                                 </tr>
                                             @endif
                                         @endforeach
@@ -92,7 +92,7 @@
                                                 @endphp
                                                 <tr>
                                                     <td>{{$subAccount->title}}</td>
-                                                    <td>{{number_format($openingBalance,2)}}</td>
+                                                    <td>{{number_format($openingBalance)}}</td>
                                                 </tr>
                                             @endif
                                     @endforeach
@@ -109,7 +109,7 @@
                         <tbody>
                             <tr class="trailTotal">
                                 <th class="text-center h5">Total</th>
-                                <th class="h5">{{number_format($totalDebit,2)}}</th>
+                                <th class="h5">{{number_format($totalDebit)}}</th>
                             </tr>
                         </tbody>
                     </table>
@@ -120,7 +120,7 @@
                         <tbody>
                             <tr class="trailTotal">
                                 <th class="text-center h5">Total</th>
-                                <th class="h5">{{number_format($totalCredit,2)}}</th>
+                                <th class="h5">{{number_format($totalCredit)}}</th>
                             </tr>
                         </tbody>
                     </table>

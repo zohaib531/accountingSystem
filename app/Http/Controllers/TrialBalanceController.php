@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\SubAccount;
+use App\User;
 use App\VoucherDetail;
 use Carbon\Carbon;
 use Validator;
@@ -53,7 +54,7 @@ class TrialBalanceController extends Controller
         $validations = Validator::make($request->all(), ['password' => 'required']);
         if ($validations->fails()) { return response()->json(['success' => false, 'message' => $validations->errors()]);}
 
-        if(Hash::check($request->password, Auth::user()->password)){
+        if(Hash::check($request->password, Auth::user()->tb_password)){
             Session::put('Trial_Bal_Password_Check', 'This is check for password');
             return response()->json(['success' => true, 'message' => "Thanks for verification"]);
         }else{
@@ -62,10 +63,31 @@ class TrialBalanceController extends Controller
         // return $request->session()->has('TEST');
     }
 
+    public function changePassword(Request $request){
 
-    public function downloadDB(Request $request){
+        $validations = Validator::make($request->all(),[
+            'old_password'=>'required',
+            'new_password'=>['required','min:8','same:confirm_password'],
 
+        ]);
+        if($validations->fails())
+        {
+            return response()->json(['success' => false, 'message' => $validations->errors()]);
+        }
+        else{
+            if(Hash::check($request->old_password, Auth::user()->tb_password)){
 
-
+                $password = User::find(Auth::user()->id);
+                $password->tb_password = Hash::make($request->new_password);
+                $password->save();
+                return response()->json(['success' => true, 'message' => "Password has been changed successfully"]);
+            }
+            else{
+                return response()->json(['success' => false, 'message' => ["Old Password is wrong"]]);
+            }
+        }
     }
+
+
+
 }

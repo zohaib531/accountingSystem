@@ -13,6 +13,12 @@
     <link rel="stylesheet" href="{{ asset('assets/css/utility.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/template/css/style.css') }}">
 
+    <style>
+        html, body, main {
+            height:100%;
+        }
+    </style>
+
 </head>
 
 <body>

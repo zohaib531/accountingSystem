@@ -6,10 +6,19 @@ use App\Product;
 use Illuminate\Http\Request;
 use Validator;
 use App\Traits\ImageUploadTrait;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:view-products', ['only' => ['index']]);
+        $this->middleware('permission:create-product', ['only' => ['create', 'store']]);
+        $this->middleware('permission:update-product', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:delete-product', ['only' => ['destroy']]);
+    }
+
     use ImageUploadTrait;
     /**
      * Display a listing of the resource.
@@ -60,6 +69,7 @@ class ProductController extends Controller
         $products->title = $request->title;
         $products->narration = $request->narration;
         $products->product_unit = $request->product_unit;
+        $products->created_by = Auth::user()->id;
         $products->unique_product = $request->unique_product;
 
 
@@ -117,6 +127,7 @@ class ProductController extends Controller
         $product->title = $request->title;
         $product->narration = $request->narration;
         $product->product_unit = $request->product_unit;
+        $product->created_by = Auth::user()->id;
         $product->unique_product = $request->unique_product;
         $product->save();
 

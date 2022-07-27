@@ -6,6 +6,7 @@ use App\Account;
 use App\SubAccount;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 
 class SubAccountController extends Controller
@@ -13,10 +14,10 @@ class SubAccountController extends Controller
 
     public function __construct()
     {
-        $this->middleware('permission:view-sub-accounts', ['only' => ['index']]);
-        $this->middleware('permission:create-sub-account', ['only' => ['create', 'store']]);
-        $this->middleware('permission:update-sub-account', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:delete-sub-account', ['only' => ['destroy']]);
+        $this->middleware('permission:view-sub-categories', ['only' => ['index']]);
+        $this->middleware('permission:create-sub-category', ['only' => ['create', 'store']]);
+        $this->middleware('permission:update-sub-category', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:delete-sub-category', ['only' => ['destroy']]);
     }
 
     /**
@@ -70,6 +71,7 @@ class SubAccountController extends Controller
         $subAccounts->date = Carbon::createFromFormat('d / m / y', $request->opening_date)->format('y-m-d');
         $subAccounts->transaction_type = $request->transaction_type;
         $subAccounts->opening_balance = str_replace(',','',$request->opening_balance);
+        $subAccounts->created_by = Auth::user()->id;
         if($subAccounts->save()){
             $subAccounts->code =  $subAccounts->id;
             $subAccounts->save();
@@ -130,6 +132,7 @@ class SubAccountController extends Controller
         $subAccount->date = Carbon::createFromFormat('d / m / y', $request->opening_date)->format('y-m-d');
         $subAccount->transaction_type = $request->transaction_type;
         $subAccount->opening_balance = str_replace(',','',$request->opening_balance);
+        $subAccount->created_by = Auth::user()->id;
         if($subAccount->save()){
 
             return response()->json(['success' => true, 'message' =>'Sub Accounts has been updated successfully']);

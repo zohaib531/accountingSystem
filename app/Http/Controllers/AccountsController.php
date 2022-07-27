@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Account;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 
 class AccountsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:view-accounts', ['only' => ['index']]);
-        $this->middleware('permission:create-account', ['only' => ['create', 'store']]);
-        $this->middleware('permission:update-account', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:delete-account', ['only' => ['destroy']]);
+        $this->middleware('permission:view-categories', ['only' => ['index']]);
+        $this->middleware('permission:create-category', ['only' => ['create', 'store']]);
+        $this->middleware('permission:update-category', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:delete-category', ['only' => ['destroy']]);
     }
 
     /**
@@ -54,8 +55,10 @@ class AccountsController extends Controller
             return response()->json(['success' => false, 'message' => $validations->errors()]);
         }
 
+
         $account = new Account();
         $account->title = $request->title;
+        $account->created_by = Auth::user()->id;
         if($account->save()){
             $account->code =  str_pad($account->id, 2, '0', STR_PAD_LEFT);
             $account->save();
@@ -106,6 +109,7 @@ class AccountsController extends Controller
 
         $account = Account::find($id);
         $account->title = $request->title;
+        $account->created_by = Auth::user()->id;
         if($account->save()){
             return response()->json(['success' => true, 'message' =>'General Account has been updated successfully']);
         }

@@ -63,6 +63,13 @@
                             <div class="col-3">
                                 <button type="button" class="btn btn-primary" onclick="commonFunctionForAllRequest(true,false,'.trialBalancePortion','{{route('getTrialBalance')}}','','post','','create-form');">Create Trial Balance</button>
                             </div>
+                            <div class="col-3 text-right">
+                                <a href="#">
+                                    <form action="{{ route('our_backup_database') }}" method="get">
+                                        <button style="submit" class="btn btn-warning text-white"> Backup Database</button>
+                                    </form>
+                                </a>
+                            </div>
                         </div>
 
                     </form>
@@ -82,6 +89,7 @@
 @if(!session()->has('Trial_Bal_Password_Check'))
 <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary trailBalance d-none" data-toggle="modal" data-target="#myModal">ABC</button>
+    <button type="button" class="btn btn-primary changePasswordTb d-none" data-toggle="modal" data-target="#changePasswordTbModal">ABC</button>
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
@@ -103,8 +111,56 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+                        <button type="button" class="btn btn-danger text-white" data-dismiss="modal" onclick="openNewModal()" >Change Password</button>
                         <button type="button" class="btn btn-primary" onclick="commonFunctionForAllRequest(false,false,'','{{route('checkPassword')}}','','post','','password-form');">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Change Password Modal -->
+    <div class="modal fade" id="changePasswordTbModal" tabindex="-1" aria-labelledby="changePasswordTbModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form class="form-valide" id="changePassword-form"  method="POST">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="changePasswordTbModalLabel">Change Password Trial Balance</h5>
+                        {{-- <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button> --}}
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label" for="val_email">Email<span class="text-danger">*</span></label>
+                            <div class="col-lg-9 position-relative">
+                                <input type="email" class="form-control pr-4" id="val_email" name="email" value="{{Auth::user()->email}}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label" for="old_password">Old Password<span class="text-danger">*</span></label>
+                            <div class="col-lg-9 position-relative">
+                                <input type="password" class="form-control pr-4" id="old_password" name="old_password" placeholder="Enter old passowrd..">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label" for="new_password">New Password<span class="text-danger">*</span></label>
+                            <div class="col-lg-9 position-relative">
+                                <input type="password" class="form-control pr-4" id="new_password" name="new_password" placeholder="Enter new passowrd..">
+                                <i class="mdi mdi-eye-off trailPassword" onclick="changeType(this)"></i>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label" for="confirm_password">Confirm Password<span class="text-danger">*</span></label>
+                            <div class="col-lg-9 position-relative">
+                                <input type="password" class="form-control pr-4" id="confirm_password" name="confirm_password" placeholder="Enter confirm passowrd..">
+                                <i class="mdi mdi-eye-off trailPassword" onclick="changeType(this)"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" >Close</button>
+                        <button type="button" class="btn btn-primary" onclick="commonFunctionForAllRequest(false,false,'','{{route('changePassword')}}','','post','','changePassword-form');">Save</button>
                     </div>
                 </form>
             </div>
@@ -129,16 +185,23 @@
     });
 
     const changeType = (e) =>{
-        if(val_password.getAttribute('type') == 'password'){
-            val_password.setAttribute('type','text');
+        if(e.previousElementSibling.getAttribute('type') == 'password'){
+            e.previousElementSibling.setAttribute('type','text');
             e.classList.remove('mdi-eye-off')
             e.classList.add('mdi-eye')
         }else{
-            val_password.setAttribute('type','password');
+            e.previousElementSibling.setAttribute('type','password');
             e.classList.add('mdi-eye-off')
             e.classList.remove('mdi-eye')
         }
     }
+
+    const openNewModal = () =>{
+        setTimeout(() => {
+            $(".changePasswordTb").click();
+        }, 500);
+    }
+
 </script>
 
 @endsection

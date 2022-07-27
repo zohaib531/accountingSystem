@@ -29,7 +29,9 @@
                             <h4 class="card-title">All Products</h4>
                         </div>
                         <div class="col-6 text-right">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addProduct" onclick="initializeSelect2()">Add new +</button>
+                            @can('create-product')
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addProduct" onclick="initializeSelect2()">Add new +</button>
+                            @endcan
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -40,7 +42,9 @@
                                     <th>Title</th>
                                     <th>Narration</th>
                                     <th>Unit</th>
-                                    <th class="text-right w-25">Action</th>
+                                    @canany(['update-product' , 'delete-product'])
+                                        <th class="text-right w-25">Action</th>
+                                    @endcanany
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,10 +54,16 @@
                                     <td>{{$product->title}}</td>
                                     <td>{{$product->narration}}</td>
                                     <td>{{ucwords($product->product_unit)}}</td>
-                                    <td class="text-right">
-                                        <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateProduct" onclick="editResource('{{ route('products.edit', $product->id) }}','.updateModalProduct')">Update</button>
-                                        <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('products.destroy',$product->id) }}','{{route('products.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
-                                    </td>
+                                    @canany(['update-product' , 'delete-product'])
+                                        <td class="text-right">
+                                            @can('update-product')
+                                                <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateProduct" onclick="editResource('{{ route('products.edit', $product->id) }}','.updateModalProduct')">Update</button>
+                                            @endcan
+                                            @can('delete-product')
+                                                <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('products.destroy',$product->id) }}','{{route('products.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
+                                            @endcan
+                                        </td>
+                                    @endcanany
                                 </tr>
                                 @endforeach
 
@@ -152,5 +162,5 @@
     <script src="{{asset('assets/template/plugins/tables/js/datatable-init/datatable-basic.min.js')}}"></script>
 
 
-   
+
 @endsection

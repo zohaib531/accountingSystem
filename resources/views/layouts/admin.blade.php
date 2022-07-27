@@ -133,8 +133,8 @@
             <div class="nk-nav-scroll">
                 <ul class="metismenu" id="menu">
                     <li class="nav-label">Dashboard</li>
-                    @if (auth()->user()->can('view-users') ||
-    auth()->user()->can('create-user'))
+
+                    @if (auth()->user()->can('view-users') || auth()->user()->can('create-user'))
 
                         <li>
                             <a class="has-arrow" href="javascript:void()" aria-expanded="false">
@@ -154,12 +154,12 @@
                             <i class="mdi mdi-account-group menu-icon"></i><span class="nav-text">Accounts</span>
                         </a>
                         <ul aria-expanded="false">
-                            @can('view-accounts')
+                            @can('view-categories')
                                 <li>
                                     <a href="{{ route('accounts.index') }}">General Accounts</a>
                                 </li>
                             @endcan
-                            @can('view-sub-accounts')
+                            @can('view-sub-categories')
                                 <li>
                                     <a href="{{ route('sub-accounts.index') }}">Sub Accounts</a>
                                 </li>
@@ -168,8 +168,7 @@
                     </li>
 
 
-                    @if (auth()->user()->can('view-products') ||
-                        auth()->user()->can('create-product'))
+                    @if (auth()->user()->can('view-products') || auth()->user()->can('create-product'))
                          @can('view-products')
                             <li>
                                 <a href="{{ route('products.index') }}" aria-expanded="false">
@@ -263,11 +262,13 @@
                     @endif
 
 
-                        <li>
-                            <a href="{{ route('trialBalance') }}" aria-expanded="false">
-                                <i class="mdi mdi-clipboard-text menu-icon"></i><span class="nav-text">Trial Balance</span>
-                            </a>
-                        </li>
+                    @if (auth()->user()->can('view-users') || auth()->user()->can('create-user'))
+                    <li>
+                        <a href="{{ route('trialBalance') }}" aria-expanded="false">
+                            <i class="mdi mdi-clipboard-text menu-icon"></i><span class="nav-text">Trial Balance</span>
+                        </a>
+                    </li>
+                    @endif
 
                 </ul>
             </div>
@@ -325,10 +326,9 @@
     <script src="{{ asset('assets/js/vouchers.js') }}"></script>
     <script src="{{ asset('assets/template/plugins/select2/js/select2.full.min.js') }}"></script>
 
-    @yield('script')
     {{-- <script>$(".select_2").select2({allowClear: true});</script> --}}
-    <script src="{{ asset('assets/js/custom.js') }}"></script>
 
+    @yield('script')
 
 
     {{-- datatable links --}}
@@ -337,6 +337,7 @@
     <script src="{{asset('assets/template/plugins/tables/js/datatable-init/datatable-basic.min.js')}}"></script>
 
 
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
 
 </body>
 

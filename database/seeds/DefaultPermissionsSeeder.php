@@ -45,6 +45,7 @@ class DefaultPermissionsSeeder extends Seeder
             $user->name = 'admin';
             $user->email = 'superadmin@gmail.com';
             $user->password = Hash::make('12345678') ;
+            $user->tb_password = Hash::make('12345678') ;
             $user->save();
             $user->assignRole($admin);
 

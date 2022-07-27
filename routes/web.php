@@ -53,9 +53,14 @@ Route::middleware(['auth'])->group(function(){
     Route::post('getTrialBalance', 'TrialBalanceController@getTrialBalance')->name('getTrialBalance');
     Route::post('checkPassword', 'TrialBalanceController@checkPassword')->name('checkPassword');
 
+    Route::post('changePassword', 'TrialBalanceController@changePassword')->name('changePassword');
+
     // Reports Routes Start
     Route::get('partyAccountReport/{sub_account_id}/{start_date}/{end_date}', 'ReportsController@partyAccountReport')->name('partyAccountReport');
     Route::post('salePurchaseReport', 'ReportsController@salePurchaseReport')->name('salePurchaseReport');
     Route::get('journalReport', 'ReportsController@journalReport')->name('journalReport');
     Route::get('trialReport/{start_date}/{end_date}', 'ReportsController@trialReport')->name('trialReport');
+
+    //backup database
+    Route::get('/our_backup_database', 'HomeController@our_backup_database')->name('our_backup_database');
 });

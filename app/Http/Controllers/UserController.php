@@ -67,6 +67,7 @@ class UserController extends Controller
         $user->name = $request->username;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->tb_password = Hash::make($request->password);
         if($user->save()){
             $user->assignRole($role);
             return response()->json(['success' => true, 'message' =>'User has been added successfully']);

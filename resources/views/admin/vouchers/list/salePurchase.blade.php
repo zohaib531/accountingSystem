@@ -167,7 +167,7 @@
                                                 <td>{{ $voucherDetail->rate }}</td>
                                                 {{-- Code for Debit start --}}
                                                 @if ($voucherDetail->entry_type =='debit')
-                                                    <td>{{ number_format($voucherDetail->debit_amount , 2) }}</td>
+                                                    <td>{{ number_format($voucherDetail->debit_amount) }}</td>
                                                 @else
                                                     <td>0.00</td>
                                                 @endif
@@ -175,7 +175,7 @@
 
                                                 {{-- Code for Credit start --}}
                                                 @if ($voucherDetail->entry_type == 'credit')
-                                                    <td>{{ number_format($voucherDetail->credit_amount , 2) }}</td>
+                                                    <td>{{ number_format($voucherDetail->credit_amount) }}</td>
                                                 @else
                                                     <td>0.00</td>
                                                 @endif
@@ -199,10 +199,10 @@
                                 <tfoot>
                                     <tr>
                                         <td colspan="5"><h4 class="mb-0 text-center">Total</h4></td>
-                                        <td>{{ number_format($totalQuantity, 2) }}</td>
+                                        <td>{{ number_format($totalQuantity) }}</td>
                                         <td></td>
-                                        <td>{{ number_format($totalDebit, 2) }}</td>
-                                        <td>{{ number_format($totalCredit, 2) }}</td>
+                                        <td>{{ number_format($totalDebit) }}</td>
+                                        <td>{{ number_format($totalCredit) }}</td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -215,8 +215,11 @@
 
 @endsection
 
-
 @section('script')
+    <script src="{{asset('assets/template/plugins/tables/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('assets/template/plugins/tables/js/datatable/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('assets/template/plugins/tables/js/datatable-init/datatable-basic.min.js')}}"></script>
+
 
     <script>
 

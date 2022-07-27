@@ -25,7 +25,7 @@
                             <h4 class="card-title">All General Accounts</h4>
                         </div>
                         <div class="col-6 text-right">
-                            @can('create-account')
+                            @can('create-category')
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addAccount">Add new +</button>
                             @endcan
                         </div>
@@ -36,7 +36,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>General Accounts</th>
-                                    @canany(['update-Account' , 'delete-Account'])
+                                    @canany(['update-category' , 'delete-category'])
                                         <th class="text-right w-25">Action</th>
                                     @endcanany
                                 </tr>
@@ -48,12 +48,12 @@
                                     <td>{{++$key}}</td>
                                     <td>{{$Account->title}}</td>
 
-                                    @canany(['update-Account' , 'delete-Account'])
+                                    @canany(['update-category' , 'delete-category'])
                                         <td class="text-right">
-                                            @can('update-Account')
+                                            @can('update-category')
                                                 <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateAccount" onclick="editResource('{{ route('accounts.edit', $Account->id) }}','.updateModalAccount')">Update</button>
                                             @endcan
-                                            @can('delete-Account')
+                                            @can('delete-category')
                                                 <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('accounts.destroy',$Account->id) }}','{{route('accounts.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
                                             @endcan
                                         </td>

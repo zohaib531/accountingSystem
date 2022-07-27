@@ -71,6 +71,7 @@ function commonFunction(confirmation=false,targetUrl,returnUrl,method,msg='',for
 
 function commonFunctionForAllRequest(html=false,confirmation=false,targetElement='',targetUrl,returnUrl='',method,msg='',formID=''){
     if(confirmation){
+        $('#preloader').css('display', 'block')
         swal({
             text: msg,
             icon: "warning",
@@ -79,6 +80,8 @@ function commonFunctionForAllRequest(html=false,confirmation=false,targetElement
                 confirm: "OK"
             },
         }).then((willDelete) => {
+            $('#preloader').css('display', 'none')
+
             if (willDelete)
             {
                 $.ajax({
@@ -101,8 +104,10 @@ function commonFunctionForAllRequest(html=false,confirmation=false,targetElement
             }
         });
     }else if(html){
+        $('#preloader').css('display', 'block')
         ajaxCommonCodeForFormData(html,targetElement,targetUrl,returnUrl,method,formID);
     } else{
+        $('#preloader').css('display', 'block')
         // var myform = document.getElementById(formID);
         // var fd = new FormData(myform);
         // fd.append("_token", $('#laravelToken').val());
@@ -145,6 +150,7 @@ function commonFunctionForAllRequest(html=false,confirmation=false,targetElement
 
 // common code for ajax request for form Data
 function ajaxCommonCodeForFormData(html,targetElement,targetUrl,returnUrl,method,formID){
+    $('#preloader').css('display', 'block')
     var fd = new FormData(document.getElementById(formID));
     fd.append("_token", $('#laravelToken').val());
     $.ajax({
@@ -156,13 +162,22 @@ function ajaxCommonCodeForFormData(html,targetElement,targetUrl,returnUrl,method
         success: function (data) {
 
             if (data.success == true && html) {
-               $(targetElement).html(data.html)
+                $('#preloader').css('display', 'none')
+
+                $(targetElement).html(data.html)
+
             } else if (data.success == true && !html) {
+                $('#preloader').css('display', 'none')
+
                 swal("success", data.message, "success").then((value) => {
                     window.location=returnUrl;
                 });
             } else {
+                $('#preloader').css('display', 'none')
+
                 if (data.hasOwnProperty("message")) {
+                    $('#preloader').css('display', 'none')
+
                     var wrapper = document.createElement("div");
                     var err = "";
                     $.each(data.message, function (i, e) {

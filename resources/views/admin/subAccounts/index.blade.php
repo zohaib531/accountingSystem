@@ -28,7 +28,7 @@
                         <div class="col-6 text-right">
                             <h4 class="card-title">All Sub Accounts</h4>
                         </div>
-                        @can('create-sub-account')
+                        @can('create-sub-category')
                             <div class="col-6 text-right">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addsubaccount" onclick="initializeSelect2(), transactionSelect2()">Add new +</button>
                             </div>
@@ -44,7 +44,7 @@
                                     <th>Sub Accounts</th>
                                     <th>Transaction Type</th>
                                     <th>Opening Balance</th>
-                                    @canany(['update-sub-account' , 'delete-sub-account'])
+                                    @canany(['update-sub-category' , 'delete-sub-category'])
                                         <th class="text-right w-25">Action</th>
                                     @endcanany
                                 </tr>
@@ -58,13 +58,13 @@
                                     <td>{{$sub_account->get_account->title}}</td>
                                     <td>{{$sub_account->title}}</td>
                                     <td>{{ucwords($sub_account->transaction_type)}}</td>
-                                    <td>{{number_format($sub_account->opening_balance, 2)}}</td>
-                                    @canany(['update-sub-account' , 'delete-sub-account'])
+                                    <td>{{number_format($sub_account->opening_balance)}}</td>
+                                    @canany(['update-sub-category' , 'delete-sub-category'])
                                     <td class="text-right">
-                                        @can('update-sub-account')
+                                        @can('update-sub-category')
                                             <button class="btn btn-info text-white" data-toggle="modal" data-target=".updateSubaccount" onclick="editResource('{{ route('sub-accounts.edit', $sub_account->id) }}','.updateModalSubaccount')">Update</button>
                                         @endcan
-                                        @can('delete-sub-account')
+                                        @can('delete-sub-category')
                                             <button class="btn btn-danger" onclick="commonFunction(true,'{{ route('sub-accounts.destroy',$sub_account->id) }}','{{route('sub-accounts.index')}}','delete','Are you sure you want to delete?','');">Delete</button>
                                         @endcan
                                     </td>
