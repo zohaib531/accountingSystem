@@ -54,13 +54,13 @@
                     {{-- Debit Table code Start --}}
                                 <td style="vertical-align: top !important;">
                                     <table class="blackBorder" style="width: 100%;border-collapse: collapse;">
-                                        <thead>
+                                        {{-- <thead> --}}
                                             <tr class="trail_tr">
                                                 <th style="width: 70%">Sub Account</th>
                                                 <th style="width: 30%">Closing Balance</th>
                                             </tr>
-                                        </thead>
-                                        <tbody>
+                                        {{-- </thead>
+                                        <tbody> --}}
                                             @php
                                                 $totalDebit = 0;
                                                 $totalCredit = 0;
@@ -72,8 +72,8 @@
                                                     $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                                                 @endphp
 
-                                                @if ($entryType == 'debit' && $openingBalance>0)
-                                                    @php $totalDebit += $openingBalance; @endphp
+                                                @if ($entryType == 'debit' && number_format($openingBalance) > 0)
+                                                    @php $totalDebit += round($openingBalance); @endphp
                                                     <tr>
                                                         <td>{{$subAccount->title}}</td>
                                                         <td>{{ number_format($openingBalance) }}</td>
@@ -81,7 +81,7 @@
                                                 @endif
                                             @endforeach
 
-                                        </tbody>
+                                        {{-- </tbody> --}}
                                     </table>
                                 </td>
                     {{-- Debit Table code end --}}
@@ -89,13 +89,13 @@
                     {{-- Credit Table code Start --}}
                                 <td style="vertical-align: top !important;">
                                     <table class="blackBorder" style="width: 100%;border-collapse: collapse;">
-                                        <thead>
+                                        {{-- <thead> --}}
                                             <tr class="trail_tr">
                                                 <th style="width: 70%">Sub Account</th>
                                                 <th style="width: 30%">Closing Balance</th>
                                             </tr>
-                                        </thead>
-                                        <tbody>
+                                        {{-- </thead>
+                                        <tbody> --}}
                                             @foreach($subAccounts as $key=>$subAccount)
                                                 @php
                                                     $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, $startDate, $endDate,  false , 0);
@@ -103,15 +103,15 @@
                                                     $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                                                 @endphp
 
-                                                @if ($entryType == 'credit' && $openingBalance>0)
-                                                    @php $totalCredit += $openingBalance; @endphp
+                                                @if ($entryType == 'credit' && number_format($openingBalance) > 0)
+                                                    @php $totalCredit += round($openingBalance); @endphp
                                                     <tr>
                                                         <td>{{$subAccount->title}}</td>
                                                         <td>{{ number_format($openingBalance )}}</td>
                                                     </tr>
                                                 @endif
                                         @endforeach
-                                        </tbody>
+                                        {{-- </tbody> --}}
                                     </table>
                                 </td>
                     {{-- Credit Table code end --}}
@@ -120,23 +120,23 @@
                 <tr>
                     <td style="background-color: rgba(0, 0, 0, 0.05);">
                         <table style="width:96%;border-collapse: collapse;">
-                            <tbody>
+                            {{-- <tbody> --}}
                                 <tr class="trailTotal">
                                     <th class="text-center h5" style="width: 70%">Total</th>
                                     <th class="h5" style="width: 30%">{{ number_format($totalDebit) }}</th>
                                 </tr>
-                            </tbody>
+                            {{-- </tbody> --}}
                         </table>
                     </td>
 
                     <td style="background-color: rgba(0, 0, 0, 0.05);">
                         <table style="width:100%;border-collapse: collapse;">
-                            <tbody>
+                            {{-- <tbody> --}}
                                 <tr class="trailTotal">
                                     <th class="text-center h5" style="width: 70%">Total</th>
                                     <th class="h5" style="width: 30%">{{ number_format($totalCredit) }}</th>
                                 </tr>
-                            </tbody>
+                            {{-- </tbody> --}}
                         </table>
                     </td>
                 </tr>

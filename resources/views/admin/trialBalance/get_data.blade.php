@@ -54,9 +54,9 @@
                                                 $openingBalance = $getOpeningBalanceResponse["opening_balance"];
                                                 $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                                             @endphp
-                                            @if ($entryType == 'debit' && $openingBalance > 0)
+                                            @if ($entryType == 'debit' && number_format($openingBalance) > 0)
                                                 @php
-                                                    $totalDebit += $openingBalance;
+                                                    $totalDebit += round($openingBalance);
                                                 @endphp
                                                 <tr>
                                                     <td>{{$subAccount->title}}</td>
@@ -86,9 +86,9 @@
                                                 $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                                             @endphp
 
-                                            @if ($entryType == 'credit' && $openingBalance>0)
+                                            @if ($entryType == 'credit' && number_format($openingBalance) > 0)
                                                 @php
-                                                    $totalCredit += $openingBalance;
+                                                    $totalCredit += round($openingBalance);
                                                 @endphp
                                                 <tr>
                                                     <td>{{$subAccount->title}}</td>

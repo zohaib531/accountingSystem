@@ -65,13 +65,16 @@
                             </div>
                             <div class="col-3 text-right">
                                 <a href="#">
-                                    <form action="{{ route('our_backup_database') }}" method="get">
-                                        <button style="submit" class="btn btn-warning text-white"> Backup Database</button>
-                                    </form>
+                                    <button type="button" class="btn btn-warning text-white" onclick="backupDatabase(this)"> Backup Database</button>
                                 </a>
                             </div>
                         </div>
 
+                    </form>
+
+                    <form action="{{ route('our_backup_database') }}" method="get" class="d-none">
+                        @csrf
+                        <button style="submit" class="btn btn-warning text-white bkp_btn"></button>
                     </form>
 
                     <div class="table-responsive trialBalancePortion">
@@ -200,6 +203,11 @@
         setTimeout(() => {
             $(".changePasswordTb").click();
         }, 500);
+    }
+
+    const backupDatabase = (e) =>{
+        event.preventDefault();
+        $(".bkp_btn").click();
     }
 
 </script>

@@ -26,7 +26,7 @@
                     @foreach($vouchers as $key=>$detail)
                         @if($loop->first)
                             @php
-                                $getOpeningBalanceResponse = getOpeningBalance($detail->sub_account_id, $detail->date , true , $detail->id);
+                                $getOpeningBalanceResponse = getOpeningBalance($detail->sub_account_id, null, $detail->date , true , $detail->id);
                                 $openingBalance = $getOpeningBalanceResponse["opening_balance"];
                                 $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                             @endphp
@@ -112,7 +112,9 @@
         </table>
 
         <script>
-            $('.zero-configuration').DataTable()
+            $(document).ready(function() {
+                $('.zero-configuration').DataTable({ "ordering": false });
+            });
         </script>
 
 
