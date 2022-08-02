@@ -2,6 +2,7 @@
     <div class="d-flex justify-content-end mb-4">
         <a class="btn btn-success text-white" href="{{ route('partyAccountReport',[$subAccount->id,$startDate, $endDate]) }}">Export to PDF</a>
     </div>
+
     <div class="table-responsive">
 
         <table class="table table-striped table-bordered zero-configuration">
@@ -26,17 +27,20 @@
                     @foreach($vouchers as $key=>$detail)
                         @if($loop->first)
                             @php
-                                $getOpeningBalanceResponse = getOpeningBalance($detail->sub_account_id, null, $detail->date , true , $detail->id);
+                                // $getOpeningBalanceResponse = getOpeningBalance($detail->sub_account_id, null, $detail->date , true , $detail->id);
+                                $getOpeningBalanceResponse = getOpeningBalance($detail->sub_account_id, null, $startDate, true , $detail->id);
                                 $openingBalance = $getOpeningBalanceResponse["opening_balance"];
                                 $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                             @endphp
                             <tr>
-                                <td>{{date('d/m/y',strtotime($detail->date))}}</td>
+                                <td>{{date('d/m/y',strtotime($startDate))}}</td>
                                 <td>Opening Balance</td>
                                 <td></td>
                                 <td></td>
-                                <td>{{ number_format(getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance"]) }}</td>
-                                <td>{{ getOpeningBalance($detail->sub_account_id,$detail->date,true,$detail->id)["opening_balance_type"] }}</td>
+                                <td>{{ number_format(getOpeningBalance($detail->sub_account_id, null, $startDate, true , $detail->id)["opening_balance"]) }}</td>
+                                <td>{{ getOpeningBalance($detail->sub_account_id, null, $startDate, true , $detail->id)["opening_balance_type"] }}</td>
+                                {{-- <td>{{ number_format(getOpeningBalance($detail->sub_account_id, null, $detail->date, true, $detail->id)["opening_balance"]) }}</td>
+                                <td>{{ getOpeningBalance($detail->sub_account_id, null, $detail->date, true, $detail->id)["opening_balance_type"] }}</td> --}}
                                 <td></td>
                             </tr>
                         @endif
@@ -74,7 +78,9 @@
                     @php
                         // $endDate =  $_POST['end_date'];
                         // $accound_id = $_POST['sub_account'];
-                        $getOpeningBalanceResponse = getOpeningBalance($subAccount->id,$startDate, $endDate  , false , 0);
+                        // $getOpeningBalanceResponse = getOpeningBalance($subAccount->id,$startDate, $endDate  , false , 0);
+
+                        $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, $startDate, $endDate  , false , 0);
                         $openingBalance = $getOpeningBalanceResponse["opening_balance"];
                         $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                     @endphp

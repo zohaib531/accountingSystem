@@ -29,9 +29,31 @@
                         </div>
                     </div>
 
+                    <div class="row justify-content-end mt-3">
+                        <div class="col-3 text-right">
+                            <a href="#">
+                                <button type="button" class="btn btn-warning text-white" onclick="backupDatabase(this)"> Backup Database</button>
+                            </a>
+                        </div>
+                    </div>
+
                     <form method="post" id="create-form">
                         @csrf
                         <div class="row mx-0 mb-4 align-items-end">
+                            <div class="col-3">
+                                <div class="form-group row m-0 align-items-center">
+                                    <label class="col-lg-12 col-form-label px-0" for="val-start_date">General Account</label>
+                                    <div class="col-lg-12 px-0">
+                                        <select name="account" class="form-control searchableSelect" id="">
+                                            <option selected value="">All</option>
+                                            @foreach ($accounts as $account)
+                                                <option value="{{$account->id}}">{{$account->title}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-3">
                                 <div class="form-group row m-0 align-items-center">
                                     <label class="col-lg-12 col-form-label px-0" for="val-start_date">Start date<span class="text-danger">*</span></label>
@@ -63,11 +85,7 @@
                             <div class="col-3">
                                 <button type="button" class="btn btn-primary" onclick="commonFunctionForAllRequest(true,false,'.trialBalancePortion','{{route('getTrialBalance')}}','','post','','create-form');">Create Trial Balance</button>
                             </div>
-                            <div class="col-3 text-right">
-                                <a href="#">
-                                    <button type="button" class="btn btn-warning text-white" onclick="backupDatabase(this)"> Backup Database</button>
-                                </a>
-                            </div>
+
                         </div>
 
                     </form>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\SubAccount;
+use App\Account;
 use App\User;
 use App\VoucherDetail;
 use Carbon\Carbon;
@@ -24,8 +25,8 @@ class TrialBalanceController extends Controller
 
     public function index()
     {
-        // $subAccounts = SubAccount::select('id', 'title')->get();
-        return view('admin.trialBalance.index');
+        $accounts = Account::select('id', 'title')->get();
+        return view('admin.trialBalance.index', compact('accounts'));
     }
 
     // get trial balance of accounts
@@ -42,10 +43,10 @@ class TrialBalanceController extends Controller
         $validations = Validator::make($request->all(), ['start_date' => 'required','end_date' => 'required|after_or_equal:start_date']);
         if ($validations->fails()) { return response()->json(['success' => false, 'message' => $validations->errors()]);}
         // $vouchers = VoucherDetail::where('sub_account_id', 34)->whereBetween('date',[Carbon::createFromFormat('d / m / y', $request->start_date)->format('y-m-d'), Carbon::createFromFormat('d / m / y', $request->end_date)->format('y-m-d')])->orderBy('date','asc')->get();
-        $vouchers = VoucherDetail::whereBetween('date',[Carbon::createFromFormat('d / m / y', $request->start_date)->format('y-m-d'), Carbon::createFromFormat('d / m / y', $request->end_date)->format('y-m-d')])->orderBy('date','asc')->get();
-        $subAccounts = SubAccount::all();
         $startDate = Carbon::createFromFormat('d / m / y', $request->start_date)->format('y-m-d');
         $endDate = Carbon::createFromFormat('d / m / y', $request->end_date)->format('y-m-d');
+        $vouchers = VoucherDetail::whereBetween('date',[$startDate, $endDate])->orderBy('date','asc')->get();
+        $subAccounts = $request->account==null? SubAccount::all() : SubAccount::where('account_id', $request->account)->get();
         return response()->json(['success' => true, 'html' => view('admin.trialBalance.get_data',compact('vouchers','subAccounts','startDate','endDate'))->render()]);
     }
 

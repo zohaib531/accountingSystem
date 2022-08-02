@@ -41,84 +41,113 @@
 
 <body>
     <div>
+
         <div style="text-align: center; font-size:20px;margin-bottom:20px;font-weight:bolder;">Trial Balance</div>
-        <table style="width: 100%; ">
+
+        <table style="width: 100%">
             <thead>
                 <tr>
-                    <th class="text-center" style="width: 50%">Debit</th>
-                    <th class="text-center" style="width: 50%">Credit</th>
+                    <th style="width: 50%;padding: 10px;border: 1px solid rgb(182, 182, 182);border-right: 0;">Debit</th>
+                    <th style="width: 50%;padding: 10px;border: 1px solid rgb(182, 182, 182);">Credit</th>
                 </tr>
             </thead>
-            <tbody>
+
+            <tbody style="background-color:#f3f3f3;">
                 <tr>
-                    {{-- Debit Table code Start --}}
-                                <td style="vertical-align: top !important;">
-                                    <table class="blackBorder" style="width: 100%;border-collapse: collapse;">
-                                        {{-- <thead> --}}
-                                            <tr class="trail_tr">
-                                                <th style="width: 70%">Sub Account</th>
-                                                <th style="width: 30%">Closing Balance</th>
-                                            </tr>
-                                        {{-- </thead>
-                                        <tbody> --}}
+                    <td style="width: 50%;vertical-align: top !important; padding:10px;">
+                        {{-- Debit Table code Start --}}
+                            <table class="blackBorder" style="width: 100%;border-collapse: collapse;">
+                                {{-- <thead> --}}
+                                    <tr class="trail_tr">
+                                        {{-- <th style="width: 70%">Sub Account</th>
+                                        <th style="width: 30%">Closing Balance</th> --}}
+                                        <th>Sub Account</th>
+                                        <th>Closing Balance</th>
+                                    </tr>
+                                {{-- </thead>
+                                <tbody> --}}
+                                    @php
+                                        $totalDebit = 0;
+                                        $totalCredit = 0;
+                                        $recordCountDebit = 0;
+                                    @endphp
+                                    @foreach($subAccounts as $key=>$subAccount)
+                                        @php
+                                            $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, $startDate, $endDate,  false , 0);
+                                            $openingBalance = $getOpeningBalanceResponse["opening_balance"];
+                                            $entryType = $getOpeningBalanceResponse["opening_balance_type"];
+                                        @endphp
+
+                                        @if ($entryType == 'debit' && number_format($openingBalance) > 0)
                                             @php
-                                                $totalDebit = 0;
-                                                $totalCredit = 0;
-                                            @endphp
-                                            @foreach($subAccounts as $key=>$subAccount)
-                                                @php
-                                                    $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, $startDate, $endDate,  false , 0);
-                                                    $openingBalance = $getOpeningBalanceResponse["opening_balance"];
-                                                    $entryType = $getOpeningBalanceResponse["opening_balance_type"];
-                                                @endphp
-
-                                                @if ($entryType == 'debit' && number_format($openingBalance) > 0)
-                                                    @php $totalDebit += round($openingBalance); @endphp
-                                                    <tr>
-                                                        <td>{{$subAccount->title}}</td>
-                                                        <td>{{ number_format($openingBalance) }}</td>
-                                                    </tr>
+                                                $totalDebit += round($openingBalance);
+                                                ++$recordCountDebit;
+                                                $checkMultiple = 1;
+                                             @endphp
+                                            <tr
+                                                @if ($recordCountDebit == 52 * $checkMultiple)
+                                                    style="page-break-after: always;"
+                                                    ++$checkMultiple;
                                                 @endif
-                                            @endforeach
-
-                                        {{-- </tbody> --}}
-                                    </table>
-                                </td>
-                    {{-- Debit Table code end --}}
-
-                    {{-- Credit Table code Start --}}
-                                <td style="vertical-align: top !important;">
-                                    <table class="blackBorder" style="width: 100%;border-collapse: collapse;">
-                                        {{-- <thead> --}}
-                                            <tr class="trail_tr">
-                                                <th style="width: 70%">Sub Account</th>
-                                                <th style="width: 30%">Closing Balance</th>
+                                            >
+                                                <td>{{$subAccount->title  }}</td>
+                                                <td>{{ number_format($openingBalance) }}</td>
                                             </tr>
-                                        {{-- </thead>
-                                        <tbody> --}}
-                                            @foreach($subAccounts as $key=>$subAccount)
-                                                @php
-                                                    $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, $startDate, $endDate,  false , 0);
-                                                    $openingBalance = $getOpeningBalanceResponse["opening_balance"];
-                                                    $entryType = $getOpeningBalanceResponse["opening_balance_type"];
-                                                @endphp
+                                        @endif
+                                    @endforeach
 
-                                                @if ($entryType == 'credit' && number_format($openingBalance) > 0)
-                                                    @php $totalCredit += round($openingBalance); @endphp
-                                                    <tr>
-                                                        <td>{{$subAccount->title}}</td>
-                                                        <td>{{ number_format($openingBalance )}}</td>
-                                                    </tr>
+                                {{-- </tbody> --}}
+                            </table>
+                         {{-- Debit Table code end --}}
+                    </td>
+                    <td style="width: 50%;vertical-align: top !important; padding:10px;">
+                        {{-- Credit Table code Start --}}
+                            <table class="blackBorder" style="width: 100%;border-collapse: collapse;">
+                                {{-- <thead> --}}
+                                    <tr class="trail_tr">
+                                        <th>Sub Account</th>
+                                        <th>Closing Balance</th>
+                                    </tr>
+                                {{-- </thead>
+                                <tbody> --}}
+                                    @php
+                                        $recordCountCredit = 0;
+                                    @endphp
+                                    @foreach($subAccounts as $key=>$subAccount)
+                                        @php
+                                            $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, $startDate, $endDate,  false , 0);
+                                            $openingBalance = $getOpeningBalanceResponse["opening_balance"];
+                                            $entryType = $getOpeningBalanceResponse["opening_balance_type"];
+
+                                            ++$recordCountCredit;
+                                            @endphp
+
+                                        @if ($entryType == 'credit' && number_format($openingBalance) > 0)
+                                            @php
+                                                $totalCredit += round($openingBalance);
+                                                $checkMultiple = 1;
+                                            @endphp
+                                            <tr
+                                                @if ($recordCountCredit == 52 * $checkMultiple)
+                                                    style="page-break-after: always;"
+                                                    ++$checkMultiple;
                                                 @endif
-                                        @endforeach
-                                        {{-- </tbody> --}}
-                                    </table>
-                                </td>
-                    {{-- Credit Table code end --}}
+                                            >
+                                                <td>{{$subAccount->title}}</td>
+                                                <td>{{ number_format($openingBalance )}}</td>
+                                            </tr>
+                                        @endif
+                                @endforeach
+                                {{-- </tbody> --}}
+                            </table>
+                        {{-- Credit Table code end --}}
+                    </td>
                 </tr>
+            </tbody>
 
+            <tfoot>
                 <tr>
-                    <td style="background-color: rgba(0, 0, 0, 0.05);">
+                    <td  style="background-color: rgba(0, 0, 0, 0.05);">
                         <table style="width:96%;border-collapse: collapse;">
                             {{-- <tbody> --}}
                                 <tr class="trailTotal">
@@ -128,8 +157,7 @@
                             {{-- </tbody> --}}
                         </table>
                     </td>
-
-                    <td style="background-color: rgba(0, 0, 0, 0.05);">
+                    <td  style="background-color: rgba(0, 0, 0, 0.05);">
                         <table style="width:100%;border-collapse: collapse;">
                             {{-- <tbody> --}}
                                 <tr class="trailTotal">
@@ -140,11 +168,11 @@
                         </table>
                     </td>
                 </tr>
-
-            </tbody>
+            </tfoot>
 
 
         </table>
+
 
     </div>
 
