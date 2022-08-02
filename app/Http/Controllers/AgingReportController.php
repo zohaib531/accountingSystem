@@ -30,19 +30,25 @@ class AgingReportController extends Controller
         $start_date = Carbon::createFromFormat('d / m / y',  $request->start_date)->format('y-m-d');
         $end_date = Carbon::createFromFormat('d / m / y', $request->end_date)->format('y-m-d');
 
-        if($request->account!="all" && $request->sub_account=="all"){
+
+        if($request->account !="all" && $request->sub_account =="all"){
             $account = Account::where('id',$request->account)->first();
             $subAccounts = $account->get_sub_accounts()->pluck('id');
             $vouchers = VoucherDetail::whereIn('sub_account_id',$subAccounts)->whereBetween('date',[$start_date, $end_date])->orderBy('date','desc')->get()->groupBy("sub_account_id");
 
-        }else if($request->account!="all" && $request->sub_account!="all"){
+        }else if($request->account != "all" && $request->sub_account != "all"){
+            
             $vouchers = VoucherDetail::where('sub_account_id',$request->sub_account)->whereBetween('date',[$start_date, $end_date])->orderBy('date','desc')->get()->groupBy("sub_account_id");
+
+        }else if($request->account == "all" && $request->sub_account != "all"){
+
+            $vouchers = VoucherDetail::where('sub_account_id', $request->sub_account)->whereBetween('date',[$start_date, $end_date])->orderBy('date','desc')->get()->groupBy("sub_account_id");
 
         }else{
             $vouchers = VoucherDetail::whereBetween('date',[$start_date, $end_date])->orderBy('date','desc')->get()->groupBy("sub_account_id");
         }
 
-       
+
         // $subAccount = getOpeningBalance($request->sub_account,date("y-m-d"),false,0);
         // $totalDebit = VoucherDetail::where('sub_account_id',$request->sub_account)->where('entry_type', $subAccount["opening_balance_type"])->whereDate('date', '<=',date("Y-m-d"))->sum('debit_amount');
         // $totalCredit = VoucherDetail::where('sub_account_id',$request->sub_account)->where('entry_type', $subAccount["opening_balance_type"])->whereDate('date', '<=',date("Y-m-d"))->sum('credit_amount');

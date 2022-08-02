@@ -34,7 +34,8 @@
                 @foreach($reverseArray as $key=>$detail)
                     @if($loop->first)
                         @php
-                            $getOpeningBalanceResponse = getOpeningBalance($detail['sub_account_id'],$detail['date'],true,$detail['id']);
+                            // $getOpeningBalanceResponse = getOpeningBalance($detail['sub_account_id'], $detail['date'], true, $detail['id']);
+                            $getOpeningBalanceResponse = getOpeningBalance($detail['sub_account_id'], null, $start_date, true , $detail['id']);
                             $openingBalance = $getOpeningBalanceResponse["opening_balance"];
                             $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                             $recordEntryType = $getOpeningBalanceResponse["opening_balance_type"];
@@ -42,12 +43,12 @@
                         @endphp
                         @if ($openingBalance != 0)
                              <tr>
-                                <td>{{date('d/m/y',strtotime($detail['date']))}}</td>
+                                <td>{{date('d/m/y',strtotime($start_date))}}</td>
                                 <td></td>
                                 <td>Opening Balance</td>
                                 <td colspan="2"></td>
-                                <td>{{ number_format(getOpeningBalance($detail['sub_account_id'],$detail['date'],true,$detail['id'])["opening_balance"]) }}</td>
-                                <td>{{ getOpeningBalance($detail['sub_account_id'],$detail['date'],true,$detail['id'])["opening_balance_type"] }}</td>
+                                <td>{{ number_format($openingBalance) }}</td>
+                                <td>{{ $recordEntryType }}</td>
                             </tr>
                         @endif
                     @endif
