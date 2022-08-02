@@ -145,7 +145,7 @@
     <div class="modal fade" id="changePasswordTbModal" tabindex="-1" aria-labelledby="changePasswordTbModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form class="form-valide" id="changePassword-form"  method="POST">
+                <form autocomplete="off" class="form-valide" id="changePassword-form"  method="POST">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title" id="changePasswordTbModalLabel">Change Password Trial Balance</h5>
@@ -180,7 +180,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal" >Close</button>
+                        <a href="{{ route('trialBalance') }}">
+                            <button type="button" class="btn btn-danger">Close</button>
+                        </a>
                         <button type="button" class="btn btn-primary" onclick="commonFunctionForAllRequest(false,false,'','{{route('changePassword')}}','','post','','changePassword-form');">Save</button>
                     </div>
                 </form>
