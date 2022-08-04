@@ -23,8 +23,8 @@
                 @php
                     $subAccount = App\SubAccount::where('id',$key)->first();
                     $recordEntryType = '';
-                    $array = json_decode(json_encode($singleAccount), true);
-                    $reverseArray = array_reverse($array);
+                    $reverseArray = json_decode(json_encode($singleAccount), true);
+                    // $reverseArray = array_reverse($array);
                 @endphp
 
                 @if ($subAccount->opening_balance != 0)
@@ -35,7 +35,7 @@
                     @if($loop->first)
                         @php
                             // $getOpeningBalanceResponse = getOpeningBalance($detail['sub_account_id'], $detail['date'], true, $detail['id']);
-                            $getOpeningBalanceResponse = getOpeningBalance($detail['sub_account_id'], null, $start_date, true , $detail['id']);
+                            $getOpeningBalanceResponse = getOpeningBalance($detail['sub_account_id'], $start_date, $end_date, false , 0);
                             $openingBalance = $getOpeningBalanceResponse["opening_balance"];
                             $entryType = $getOpeningBalanceResponse["opening_balance_type"];
                             $recordEntryType = $getOpeningBalanceResponse["opening_balance_type"];
@@ -43,9 +43,9 @@
                         @endphp
                         @if ($openingBalance != 0)
                              <tr>
-                                <td>{{date('d/m/y',strtotime($start_date))}}</td>
+                                <td>{{date('d/m/y',strtotime($end_date))}}</td>
                                 <td></td>
-                                <td>Opening Balance</td>
+                                <td>Balance</td>
                                 <td colspan="2"></td>
                                 <td>{{ number_format($openingBalance) }}</td>
                                 <td>{{ $recordEntryType }}</td>
@@ -58,13 +58,15 @@
                         @php
                             $str = $detail['entry_type']."_amount";
                             if($openingBalance > 0){
-                                $detail['entry_type']=="debit"?$debitBalance += $detail[$str]:$creditBalance += $detail[$str];
+                                $detail['entry_type']=="debit" ? $debitBalance += $detail[$str] : $creditBalance += $detail[$str];
                                 $openingBalance = $openingBalance - $detail[$str];
-                                if($openingBalance < 0 && $recordEntryType == 'debit'){
-                                    $recordEntryType = 'credit';
-                                }else{
-                                    $recordEntryType = 'debit';
-                                }
+
+                                // if($openingBalance < 0 && $recordEntryType == 'debit'){
+                                //     $recordEntryType = 'credit';
+                                // }else{
+                                //     $recordEntryType = 'debit';
+                                // }
+
                             }else{
                                 $entryType = $entryType=="debit"? "credit":"debit";
                             }
