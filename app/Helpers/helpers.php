@@ -50,7 +50,8 @@
             $transactionType = $subAccount->transaction_type;
 
             if($startDate == null && $endDate != null){
-                $vouchers = $specific?VoucherDetail::where('id','!=',$id)->where('sub_account_id',$subAccount->id)->whereDate('date','<=', $endDate)->get():VoucherDetail::where('sub_account_id',$subAccount->id)->whereBetween('date',[$startDate, $endDate])->get();
+                // $vouchers = $specific?VoucherDetail::where('id','!=',$id)->where('sub_account_id',$subAccount->id)->whereDate('date','<=', $endDate)->get():VoucherDetail::where('sub_account_id',$subAccount->id)->whereBetween('date',[$startDate, $endDate])->get();
+                $vouchers = $specific?VoucherDetail::where('id','!=',$id)->where('sub_account_id',$subAccount->id)->whereDate('date','<=', $endDate)->get():VoucherDetail::where('sub_account_id',$subAccount->id)->whereDate('date','<=', $endDate)->get();
             }
             if($endDate == null && $startDate != null){
                 $vouchers = $specific?VoucherDetail::where('id','!=',$id)->where('sub_account_id',$subAccount->id)->whereDate('date','>=', $startDate)->get():VoucherDetail::where('sub_account_id',$subAccount->id)->whereBetween('date',[$startDate, $endDate])->get();

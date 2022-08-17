@@ -55,7 +55,7 @@
                             @endphp
                             @foreach ($subAccounts as $key => $subAccount)
                                 @php
-                                    $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, null, $endDate, false, 0);
+                                    $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, $startDate, $endDate, false, 0);
                                     $openingBalance = $getOpeningBalanceResponse['opening_balance'];
                                     $entryType = $getOpeningBalanceResponse['opening_balance_type'];
                                 @endphp
@@ -87,7 +87,7 @@
                         <tbody>
                             @foreach ($subAccounts as $key => $subAccount)
                                 @php
-                                    $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, null, $endDate, false, 0);
+                                    $getOpeningBalanceResponse = getOpeningBalance($subAccount->id, $startDate, $endDate, false, 0);
                                     $openingBalance = $getOpeningBalanceResponse['opening_balance'];
                                     $entryType = $getOpeningBalanceResponse['opening_balance_type'];
                                 @endphp
